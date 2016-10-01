@@ -1,0 +1,31 @@
+{
+    "name": "chubbyphp/chubbyphp-validation",
+    "description": "Chubbyphp Psr7 Middleware Adapter",
+    "keywords": ["chubbyphp", "psr7", "psr-7", "middleware", "singlepass", "multipass"],
+    "license": "MIT",
+    "authors": [
+        {
+            "name": "Dominik Zogg",
+            "email": "dominik.zogg@gmail.com"
+        }
+    ],
+    "require": {
+        "php": "~7.0",
+        "chubbyphp/chubbyphp-model": "~1.0@dev",
+        "respect/validation": "^1.1.9"
+    },
+    "require-dev": {
+        "phpunit/phpunit": "~5.5"
+    },
+    "autoload": {
+        "psr-4": { "Chubbyphp\\Validation\\": "src/" }
+    },
+    "autoload-dev": {
+        "files": [ "vendor/respect/validation/tests/library/Rules/RuleTestCase.php" ]
+    },
+    "extra": {
+        "branch-alias": {
+            "dev-master": "1.0-dev"
+        }
+    }
+}
