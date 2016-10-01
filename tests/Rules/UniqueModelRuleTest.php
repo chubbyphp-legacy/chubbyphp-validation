@@ -16,7 +16,7 @@ class UniqueModelRuleTest extends RuleTestCase
     {
         $user = $this->getUser('id1', 'firstname.lastname@domain.tld');
 
-        $uniqueModel = new UniqueModelRule($user, ['email']);
+        $uniqueModel = new UniqueModelRule(['email']);
         $uniqueModel->setRepository($this->getUserRepository([
             [
                 'arguments' => [['email' => 'firstname.lastname@domain.tld']],
@@ -25,6 +25,19 @@ class UniqueModelRuleTest extends RuleTestCase
         ]));
 
         $uniqueModel->validate($user);
+    }
+
+    public function testValidateWithInvalidInput()
+    {
+        self::expectException(\InvalidArgumentException::class);
+        self::expectExceptionMessage(
+            'The to validate value needs to be an instance of '.ValidatableModelInterface::class
+            .', stdClass given!'
+        );
+
+        $uniqueModel = new UniqueModelRule(['email']);
+
+        $uniqueModel->validate(new \stdClass());
     }
 
     public function testValidateWithoutRepositoryExceptException()
@@ -37,7 +50,7 @@ class UniqueModelRuleTest extends RuleTestCase
 
         $user = $this->getUser('id1', 'firstname.lastname@domain.tld');
 
-        $uniqueModel = new UniqueModelRule($user, ['email']);
+        $uniqueModel = new UniqueModelRule(['email']);
 
         $uniqueModel->validate($user);
     }
@@ -46,7 +59,7 @@ class UniqueModelRuleTest extends RuleTestCase
     {
         $user = $this->getUser('id1', 'firstname.lastname@domain.tld');
 
-        $uniqueModel = new UniqueModelRule($user, ['email']);
+        $uniqueModel = new UniqueModelRule(['email']);
         $uniqueModel->setRepository($this->getUserRepository([
             [
                 'arguments' => [['email' => 'firstname.lastname@domain.tld']],
@@ -63,7 +76,7 @@ class UniqueModelRuleTest extends RuleTestCase
     {
         $user1 = $this->getUser('id1', 'firstname.lastname@domain.tld');
 
-        $uniqueModel1 = new UniqueModelRule($user1, ['email']);
+        $uniqueModel1 = new UniqueModelRule(['email']);
         $uniqueModel1->setRepository($this->getUserRepository([
             [
                 'arguments' => [['email' => 'firstname.lastname@domain.tld']],
@@ -73,7 +86,7 @@ class UniqueModelRuleTest extends RuleTestCase
 
         $user2 = $this->getUser('id1', 'firstname.lastname@domain.tld');
 
-        $uniqueModel2 = new UniqueModelRule($user2, ['email']);
+        $uniqueModel2 = new UniqueModelRule(['email']);
         $uniqueModel2->setRepository($this->getUserRepository([
             [
                 'arguments' => [['email' => 'firstname.lastname@domain.tld']],

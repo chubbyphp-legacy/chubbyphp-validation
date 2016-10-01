@@ -19,10 +19,9 @@ class UniqueModelRule extends AbstractRule
     private $repository;
 
     /**
-     * @param ValidatableModelInterface $model
-     * @param string[]|array            $properties
+     * @param string[]|array $properties
      */
-    public function __construct(ValidatableModelInterface $model, array $properties)
+    public function __construct(array $properties)
     {
         $this->properties = $properties;
         $this->setName(implode(', ', $properties));
@@ -43,6 +42,43 @@ class UniqueModelRule extends AbstractRule
      */
     public function validate($model): bool
     {
+        $this->validateInputType($model);
+        $this->validateRepositoryIsSet();
+
+        $criteria = $this->getCriteriaFromModel($model);
+
+        /** @var ValidatableModelInterface $modelFromRepository */
+        $modelFromRepository = $this->repository->findOneBy($criteria);
+        if (null !== $modelFromRepository && $modelFromRepository->getId() !== $model->getId()) {
+            return false;
+        }
+
+        return true;
+    }
+
+    /**
+     * @param ValidatableModelInterface $model
+     *
+     * @throws \InvalidArgumentException
+     */
+    private function validateInputType($model)
+    {
+        if (!$model instanceof ValidatableModelInterface) {
+            throw new \InvalidArgumentException(
+                sprintf(
+                    'The to validate value needs to be an instance of %s, %s given!',
+                    ValidatableModelInterface::class,
+                    get_class($model)
+                )
+            );
+        }
+    }
+
+    /**
+     * @throws \RuntimeException
+     */
+    private function validateRepositoryIsSet()
+    {
         if (null === $this->repository) {
             throw new \RuntimeException(
                 sprintf(
@@ -52,7 +88,15 @@ class UniqueModelRule extends AbstractRule
                 )
             );
         }
+    }
 
+    /**
+     * @param ValidatableModelInterface $model
+     *
+     * @return array
+     */
+    private function getCriteriaFromModel(ValidatableModelInterface $model): array
+    {
         $reflectionClass = new \ReflectionObject($model);
 
         $criteria = [];
@@ -62,12 +106,6 @@ class UniqueModelRule extends AbstractRule
             $criteria[$property] = $reflectionProperty->getValue($model);
         }
 
-        /** @var ValidatableModelInterface $modelFromRepository */
-        $modelFromRepository = $this->repository->findOneBy($criteria);
-        if (null !== $modelFromRepository && $modelFromRepository->getId() !== $model->getId()) {
-            return false;
-        }
-
-        return true;
+        return $criteria;
     }
 }

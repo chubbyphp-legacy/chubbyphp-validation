@@ -48,7 +48,7 @@ class MyModel implements ValidatableModelInterface
      */
     public function getModelValidator()
     {
-        return RespectValidator::create()->addRule(new UniqueModelRule($this, ['email']));
+        return RespectValidator::create()->addRule(new UniqueModelRule(['email']));
     }
 
     /**
