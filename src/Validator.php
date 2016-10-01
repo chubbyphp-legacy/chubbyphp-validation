@@ -96,18 +96,13 @@ final class Validator implements ValidatorInterface
     {
         $errorMessages = [];
         foreach ($exception as $ruleException) {
-            if ($ruleException->hasParam('properties')) {
-                foreach ($ruleException->getParam('properties') as $property) {
-                    if (!isset($errorMessages[$property])) {
-                        $errorMessages[$property] = [];
-                    }
-                    $errorMessages[$property][] = $ruleException->getMainMessage();
+            $exceptionMessage = $ruleException->getMainMessage();
+            $properties = $ruleException->hasParam('properties') ? $ruleException->getParam('properties') : ['__model'];
+            foreach ($properties as $property) {
+                if (!isset($errorMessages[$property])) {
+                    $errorMessages[$property] = [];
                 }
-            } else {
-                if (!isset($errorMessages['__model'])) {
-                    $errorMessages['__model'] = [];
-                }
-                $errorMessages['__model'][] = $ruleException->getMainMessage();
+                $errorMessages[$property][] = $exceptionMessage;
             }
         }
 
