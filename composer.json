@@ -1,7 +1,7 @@
 {
     "name": "chubbyphp/chubbyphp-validation",
-    "description": "Chubbyphp Psr7 Middleware Adapter",
-    "keywords": ["chubbyphp", "psr7", "psr-7", "middleware", "singlepass", "multipass"],
+    "description": "Chubbyphp Validation",
+    "keywords": ["chubbyphp", "slim", "validation"],
     "license": "MIT",
     "authors": [
         {
