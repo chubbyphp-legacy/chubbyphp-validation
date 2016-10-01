@@ -77,26 +77,37 @@ final class Validator implements ValidatorInterface
             return [];
         }
 
-        $errorMessages = [];
-
         try {
             $this->assignRepositoryToRules(get_class($model), $modelValidator->getRules());
             $modelValidator->assert($model);
         } catch (NestedValidationException $exception) {
-            foreach ($exception as $ruleException) {
-                if ($ruleException->hasParam('properties')) {
-                    foreach ($ruleException->getParam('properties') as $property) {
-                        if (!isset($errorMessages[$property])) {
-                            $errorMessages[$property] = [];
-                        }
-                        $errorMessages[$property][] = $ruleException->getMainMessage();
+            return $this->getValidateModelErrors($exception);
+        }
+
+        return [];
+    }
+
+    /**
+     * @param NestedValidationException $exception
+     *
+     * @return array
+     */
+    private function getValidateModelErrors(NestedValidationException $exception): array
+    {
+        $errorMessages = [];
+        foreach ($exception as $ruleException) {
+            if ($ruleException->hasParam('properties')) {
+                foreach ($ruleException->getParam('properties') as $property) {
+                    if (!isset($errorMessages[$property])) {
+                        $errorMessages[$property] = [];
                     }
-                } else {
-                    if (!isset($errorMessages['__model'])) {
-                        $errorMessages['__model'] = [];
-                    }
-                    $errorMessages['__model'][] = $ruleException->getMainMessage();
+                    $errorMessages[$property][] = $ruleException->getMainMessage();
                 }
+            } else {
+                if (!isset($errorMessages['__model'])) {
+                    $errorMessages['__model'] = [];
+                }
+                $errorMessages['__model'][] = $ruleException->getMainMessage();
             }
         }
 
