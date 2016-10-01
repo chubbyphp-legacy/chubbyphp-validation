@@ -11,7 +11,7 @@ class ValidationProviderTest extends \PHPUnit_Framework_TestCase
     public function testRegister()
     {
         $container = new Container();
-        $container->register(New ValidationProvider());
+        $container->register(new ValidationProvider());
 
         self::assertTrue(isset($container['validator.repositories']));
         self::assertTrue(isset($container['validator']));
