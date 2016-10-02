@@ -142,8 +142,29 @@ $errors = $validator->validateArray($data, $validators);
 
 ```
 
-[1]: https://packagist.org/packages/chubbyphp/chubbyphp-validation
+### ValidationProvider (Pimple)
 
+```{.php}
+<?php
+
+use Chubbyphp\Validation\Validator;
+use Chubbyphp\Validation\ValidationProvider;
+use MyProject\Repository\MyRepository;
+use Pimple\Container;
+
+$container->register(new ValidationProvider);
+
+$container->extend('validator.repositories', function (array $repositories) use ($container) {
+    $repositories[] = new MyRepository;
+
+    return $repositories;
+});
+
+/** @var Validator $validator */
+$validator = $container['validator'];
+```
+
+[1]: https://packagist.org/packages/chubbyphp/chubbyphp-validation
 
 ## Copyright
 
