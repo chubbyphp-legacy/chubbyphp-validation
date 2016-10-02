@@ -11,7 +11,7 @@
          bootstrap="tests/bootstrap.php"
         >
     <testsuites>
-        <testsuite name="chubbyphp validator">
+        <testsuite name="chubbyphp validation">
             <directory>./tests</directory>
         </testsuite>
     </testsuites>
