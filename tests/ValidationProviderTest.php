@@ -6,7 +6,10 @@ use Chubbyphp\Validation\ValidationProvider;
 use Chubbyphp\Validation\Validator;
 use Pimple\Container;
 
-class ValidationProviderTest extends \PHPUnit_Framework_TestCase
+/**
+ * @covers Chubbyphp\Validation\ValidationProvider
+ */
+final class ValidationProviderTest extends \PHPUnit_Framework_TestCase
 {
     public function testRegister()
     {

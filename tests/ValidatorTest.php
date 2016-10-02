@@ -16,7 +16,7 @@ use Respect\Validation\Validator as RespectValidator;
 /**
  * @covers Chubbyphp\Validation\Validator
  */
-class ValidatorTest extends \PHPUnit_Framework_TestCase
+final class ValidatorTest extends \PHPUnit_Framework_TestCase
 {
     public static function setUpBeforeClass()
     {

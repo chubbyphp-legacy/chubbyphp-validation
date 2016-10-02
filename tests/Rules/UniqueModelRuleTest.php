@@ -10,7 +10,7 @@ use Respect\Validation\Rules\RuleTestCase;
 /**
  * @covers Chubbyphp\Validation\Rules\UniqueModelRule
  */
-class UniqueModelRuleTest extends RuleTestCase
+final class UniqueModelRuleTest extends RuleTestCase
 {
     public function testValidate()
     {
