@@ -14,6 +14,10 @@ A simple validation uses Respect/Validation.
  * php: ~7.0
  * chubbyphp/chubbyphp-model: ~1.0
 
+## Suggest
+
+ * pimple/pimple: ~3.0
+
 ## Installation
 
 Through [Composer](http://getcomposer.org) as [chubbyphp/chubbyphp-validation][1].
