@@ -1,5 +1,7 @@
 <?php
 
+declare(strict_types=1);
+
 namespace Chubbyphp\Validation\Rules;
 
 use Chubbyphp\Model\RepositoryInterface;
