@@ -5,6 +5,8 @@ declare(strict_types=1);
 namespace Chubbyphp\Validation;
 
 use Chubbyphp\Model\RepositoryInterface;
+use Psr\Log\LoggerInterface;
+use Psr\Log\NullLogger;
 use Respect\Validation\Exceptions\NestedValidationException;
 use Respect\Validation\Validatable;
 use Chubbyphp\Validation\Rules\UniqueModelRule;
@@ -17,13 +19,20 @@ final class Validator implements ValidatorInterface
     private $repositories = [];
 
     /**
-     * @param RepositoryInterface[]|array $repositories
+     * @var LoggerInterface
      */
-    public function __construct(array $repositories = [])
+    private $logger;
+
+    /**
+     * @param array                $repositories
+     * @param LoggerInterface|null $logger
+     */
+    public function __construct(array $repositories = [], LoggerInterface $logger = null)
     {
         foreach ($repositories as $repository) {
             $this->addRepository($repository);
         }
+        $this->logger = $logger ?? new NullLogger();
     }
 
     /**
@@ -55,13 +64,24 @@ final class Validator implements ValidatorInterface
         $reflectionClass = new \ReflectionObject($model);
 
         $errorMessages = [];
-        foreach ($model->getPropertyValidators() as $field => $validator) {
+        foreach ($model->getPropertyValidators() as $property => $validator) {
+            $reflectionProperty = $reflectionClass->getProperty($property);
+            $reflectionProperty->setAccessible(true);
+            $value = $reflectionProperty->getValue($model);
             try {
-                $reflectionProperty = $reflectionClass->getProperty($field);
-                $reflectionProperty->setAccessible(true);
-                $validator->assert($reflectionProperty->getValue($model));
+                $validator->assert($value);
             } catch (NestedValidationException $exception) {
-                $errorMessages[$field] = $exception->getMessages();
+                $messages = $exception->getMessages();
+                foreach ($messages as $message) {
+                    if (!isset($errorMessages[$property])) {
+                        $errorMessages[$property] = [];
+                    }
+                    $errorMessages[$property][] = $message;
+                    $this->logger->notice(
+                        'validation: property {property}, value {value}, message {message}',
+                        ['property' => $property, 'value' => $value, 'message' => $message]
+                    );
+                }
             }
         }
 
@@ -98,13 +118,17 @@ final class Validator implements ValidatorInterface
     {
         $errorMessages = [];
         foreach ($exception as $ruleException) {
-            $exceptionMessage = $ruleException->getMainMessage();
+            $message = $ruleException->getMainMessage();
             $properties = $ruleException->hasParam('properties') ? $ruleException->getParam('properties') : ['__model'];
             foreach ($properties as $property) {
                 if (!isset($errorMessages[$property])) {
                     $errorMessages[$property] = [];
                 }
-                $errorMessages[$property][] = $exceptionMessage;
+                $errorMessages[$property][] = $message;
+                $this->logger->notice(
+                    'validation: property {property}, message {message}',
+                    ['property' => $property, 'message' => $message]
+                );
             }
         }
 
@@ -121,10 +145,21 @@ final class Validator implements ValidatorInterface
     {
         $errorMessages = [];
         foreach ($validators as $key => $validator) {
+            $value = $data[$key] ?? null;
             try {
-                $validator->assert($data[$key]);
+                $validator->assert($value);
             } catch (NestedValidationException $exception) {
-                $errorMessages[$key] = $exception->getMessages();
+                $messages = $exception->getMessages();
+                foreach ($messages as $message) {
+                    if (!isset($errorMessages[$key])) {
+                        $errorMessages[$key] = [];
+                    }
+                    $errorMessages[$key][] = $message;
+                    $this->logger->notice(
+                        'validation: key {key}, value {value}, message {message}',
+                        ['key' => $key, 'value' => $value, 'message' => $message]
+                    );
+                }
             }
         }
 

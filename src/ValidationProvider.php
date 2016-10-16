@@ -19,7 +19,7 @@ final class ValidationProvider implements ServiceProviderInterface
         };
 
         $container['validator'] = function () use ($container) {
-            return new Validator($container['validator.repositories']);
+            return new Validator($container['validator.repositories'], $container['logger'] ?? null);
         };
     }
 }

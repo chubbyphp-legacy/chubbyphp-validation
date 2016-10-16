@@ -6,6 +6,7 @@ use Chubbyphp\Model\RepositoryInterface;
 use Chubbyphp\Validation\Rules\UniqueModelRule;
 use Chubbyphp\Validation\ValidatableModelInterface;
 use Chubbyphp\Validation\Validator;
+use Psr\Log\LoggerInterface;
 use Respect\Validation\Exceptions\NestedValidationException;
 use Respect\Validation\Exceptions\ValidationException;
 use Respect\Validation\Rules\AbstractRule;
@@ -50,20 +51,26 @@ EOT;
 
     public function testValidateModelWhichGotNoValidators()
     {
-        $validator = new Validator();
+        $logger = $this->getLogger();
+
+        $validator = new Validator([], $logger);
 
         $user = $this->getUser(['id' => 'id1', 'email' => 'firstname.lastname@domain.tld']);
 
         $errors = $validator->validateModel($user);
 
         self::assertSame([], $errors);
+
+        self::assertCount(0, $logger->__logs);
     }
 
     public function testValidateModelWhichGotAModelValidator()
     {
+        $logger = $this->getLogger();
+
         $validator = new Validator([
             $this->getUserRepository(),
-        ]);
+        ], $logger);
 
         $respectValidator = $this->getRespectValidator([
             ['return' => true],
@@ -81,13 +88,17 @@ EOT;
         $errors = $validator->validateModel($user);
 
         self::assertSame([], $errors);
+
+        self::assertCount(0, $logger->__logs);
     }
 
     public function testValidateModelWhichGotAModelValidatorWithException()
     {
+        $logger = $this->getLogger();
+
         $validator = new Validator([
             $this->getUserRepository(),
-        ]);
+        ], $logger);
 
         $nestedException = $this->getNestedValidationException([
             $this->getValidationException(['properties' => ['email']], 'Unique Model'),
@@ -116,11 +127,24 @@ EOT;
             ],
             $errors
         );
+
+        self::assertCount(2, $logger->__logs);
+        self::assertSame('notice', $logger->__logs[0]['level']);
+        self::assertSame('validation: property {property}, message {message}', $logger->__logs[0]['message']);
+        self::assertSame(['property' => 'email', 'message' => 'Unique Model'], $logger->__logs[0]['context']);
+        self::assertSame('notice', $logger->__logs[1]['level']);
+        self::assertSame('validation: property {property}, message {message}', $logger->__logs[1]['message']);
+        self::assertSame(
+            ['property' => '__model', 'message' => 'Something else is weird'],
+            $logger->__logs[1]['context']
+        );
     }
 
     public function testValidateModelWhichGotAPropertyValidators()
     {
-        $validator = new Validator();
+        $logger = $this->getLogger();
+
+        $validator = new Validator([], $logger);
 
         $respectEmailValidator = $this->getRespectValidator([
             ['return' => true],
@@ -145,11 +169,15 @@ EOT;
         $errors = $validator->validateModel($user);
 
         self::assertSame([], $errors);
+
+        self::assertCount(0, $logger->__logs);
     }
 
     public function testValidateModelWhichGotAPropertyValidatorsWithException()
     {
-        $validator = new Validator();
+        $logger = $this->getLogger();
+
+        $validator = new Validator([], $logger);
 
         $nestedEmailException = $this->getNestedValidationException([
             $this->getValidationException([], 'Empty email'),
@@ -189,11 +217,39 @@ EOT;
             ],
             $errors
         );
+
+        self::assertCount(3, $logger->__logs);
+        self::assertSame('notice', $logger->__logs[0]['level']);
+        self::assertSame(
+            'validation: property {property}, value {value}, message {message}',
+            $logger->__logs[0]['message']
+        );
+        self::assertSame(
+            ['property' => 'email', 'value' => '', 'message' => 'Empty email'], $logger->__logs[0]['context']
+        );
+        self::assertSame('notice', $logger->__logs[1]['level']);
+        self::assertSame(
+            'validation: property {property}, value {value}, message {message}',
+            $logger->__logs[1]['message']
+        );
+        self::assertSame(
+            ['property' => 'email', 'value' => '', 'message' => 'Invalid E-Mail Address'], $logger->__logs[1]['context']
+        );
+        self::assertSame('notice', $logger->__logs[2]['level']);
+        self::assertSame(
+            'validation: property {property}, value {value}, message {message}',
+            $logger->__logs[2]['message']
+        );
+        self::assertSame(
+            ['property' => 'password', 'value' => '', 'message' => 'Empty password'], $logger->__logs[2]['context']
+        );
     }
 
     public function testValidateArray()
     {
-        $validator = new Validator();
+        $logger = $this->getLogger();
+
+        $validator = new Validator([], $logger);
 
         $respectEmailValidator = $this->getRespectValidator([
             ['return' => true],
@@ -211,11 +267,15 @@ EOT;
         );
 
         self::assertSame([], $errors);
+
+        self::assertCount(0, $logger->__logs);
     }
 
     public function testValidateInvalidArray()
     {
-        $validator = new Validator();
+        $logger = $this->getLogger();
+
+        $validator = new Validator([], $logger);
 
         $nestedEmailException = $this->getNestedValidationException([
             $this->getValidationException([], 'Empty email'),
@@ -247,6 +307,32 @@ EOT;
                 'password' => ['Empty password'],
             ],
             $errors
+        );
+
+        self::assertCount(3, $logger->__logs);
+        self::assertSame('notice', $logger->__logs[0]['level']);
+        self::assertSame(
+            'validation: key {key}, value {value}, message {message}',
+            $logger->__logs[0]['message']
+        );
+        self::assertSame(
+            ['key' => 'email', 'value' => '', 'message' => 'Empty email'], $logger->__logs[0]['context']
+        );
+        self::assertSame('notice', $logger->__logs[1]['level']);
+        self::assertSame(
+            'validation: key {key}, value {value}, message {message}',
+            $logger->__logs[1]['message']
+        );
+        self::assertSame(
+            ['key' => 'email', 'value' => '', 'message' => 'Invalid E-Mail Address'], $logger->__logs[1]['context']
+        );
+        self::assertSame('notice', $logger->__logs[2]['level']);
+        self::assertSame(
+            'validation: key {key}, value {value}, message {message}',
+            $logger->__logs[2]['message']
+        );
+        self::assertSame(
+            ['key' => 'password', 'value' => '', 'message' => 'Empty password'], $logger->__logs[2]['context']
         );
     }
 
@@ -456,5 +542,55 @@ EOT;
         ;
 
         return $exception;
+    }
+
+    /**
+     * @return LoggerInterface
+     */
+    private function getLogger(): LoggerInterface
+    {
+        $methods = [
+            'emergency',
+            'alert',
+            'critical',
+            'error',
+            'warning',
+            'notice',
+            'info',
+            'debug',
+        ];
+
+        /** @var LoggerInterface|\PHPUnit_Framework_MockObject_MockObject $logger */
+        $logger = $this
+            ->getMockBuilder(LoggerInterface::class)
+            ->setMethods(array_merge($methods, ['log']))
+            ->getMockForAbstractClass()
+        ;
+
+        $logger->__logs = [];
+
+        foreach ($methods as $method) {
+            $logger
+                ->expects(self::any())
+                ->method($method)
+                ->willReturnCallback(
+                    function (string $message, array $context = []) use ($logger, $method) {
+                        $logger->log($method, $message, $context);
+                    }
+                )
+            ;
+        }
+
+        $logger
+            ->expects(self::any())
+            ->method('log')
+            ->willReturnCallback(
+                function (string $level, string $message, array $context = []) use ($logger) {
+                    $logger->__logs[] = ['level' => $level, 'message' => $message, 'context' => $context];
+                }
+            )
+        ;
+
+        return $logger;
     }
 }
