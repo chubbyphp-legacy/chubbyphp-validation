@@ -74,20 +74,10 @@ final class UniqueModelRuleTest extends RuleTestCase
 
     public function providerForValidInput()
     {
-        $user1 = $this->getUser('id1', 'firstname.lastname@domain.tld');
+        $user = $this->getUser('id1', 'firstname.lastname@domain.tld');
 
-        $uniqueModel1 = new UniqueModelRule(['email']);
-        $uniqueModel1->setRepository($this->getUserRepository([
-            [
-                'arguments' => [['email' => 'firstname.lastname@domain.tld']],
-                'return' => null,
-            ],
-        ]));
-
-        $user2 = $this->getUser('id1', 'firstname.lastname@domain.tld');
-
-        $uniqueModel2 = new UniqueModelRule(['email']);
-        $uniqueModel2->setRepository($this->getUserRepository([
+        $uniqueModel = new UniqueModelRule(['email']);
+        $uniqueModel->setRepository($this->getUserRepository([
             [
                 'arguments' => [['email' => 'firstname.lastname@domain.tld']],
                 'return' => $this->getUser('id1', 'firstname.lastname@domain.tld'),
@@ -95,7 +85,7 @@ final class UniqueModelRuleTest extends RuleTestCase
         ]));
 
         return [
-            [$uniqueModel2, $user2],
+            [$uniqueModel, $user],
         ];
     }
 

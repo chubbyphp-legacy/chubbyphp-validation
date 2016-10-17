@@ -3,6 +3,7 @@
 namespace Chubbyphp\Tests\Validation;
 
 use Chubbyphp\Model\RepositoryInterface;
+use Chubbyphp\Translation\TranslatorInterface;
 use Chubbyphp\Validation\Rules\UniqueModelRule;
 use Chubbyphp\Validation\ValidatableModelInterface;
 use Chubbyphp\Validation\Validator;
@@ -52,8 +53,9 @@ EOT;
     public function testValidateModelWhichGotNoValidators()
     {
         $logger = $this->getLogger();
+        $translator = $this->getTranslator();
 
-        $validator = new Validator([], $logger);
+        $validator = new Validator([], $translator, $logger);
 
         $user = $this->getUser(['id' => 'id1', 'email' => 'firstname.lastname@domain.tld']);
 
@@ -67,10 +69,11 @@ EOT;
     public function testValidateModelWhichGotAModelValidator()
     {
         $logger = $this->getLogger();
+        $translator = $this->getTranslator();
 
         $validator = new Validator([
             $this->getUserRepository(),
-        ], $logger);
+        ], $translator, $logger);
 
         $respectValidator = $this->getRespectValidator([
             ['return' => true],
@@ -95,10 +98,11 @@ EOT;
     public function testValidateModelWhichGotAModelValidatorWithException()
     {
         $logger = $this->getLogger();
+        $translator = $this->getTranslator();
 
         $validator = new Validator([
             $this->getUserRepository(),
-        ], $logger);
+        ], $translator, $logger);
 
         $nestedException = $this->getNestedValidationException([
             $this->getValidationException(['properties' => ['email']], 'Unique Model'),
@@ -130,12 +134,15 @@ EOT;
 
         self::assertCount(2, $logger->__logs);
         self::assertSame('notice', $logger->__logs[0]['level']);
-        self::assertSame('validation: property {property}, message {message}', $logger->__logs[0]['message']);
-        self::assertSame(['property' => 'email', 'message' => 'Unique Model'], $logger->__logs[0]['context']);
-        self::assertSame('notice', $logger->__logs[1]['level']);
-        self::assertSame('validation: property {property}, message {message}', $logger->__logs[1]['message']);
+        self::assertSame('validation: field {field}, value {value}, message {message}', $logger->__logs[0]['message']);
         self::assertSame(
-            ['property' => '__model', 'message' => 'Something else is weird'],
+            ['field' => 'email', 'value' => '', 'message' => 'Unique Model'],
+            $logger->__logs[0]['context']
+        );
+        self::assertSame('notice', $logger->__logs[1]['level']);
+        self::assertSame('validation: field {field}, value {value}, message {message}', $logger->__logs[1]['message']);
+        self::assertSame(
+            ['field' => '__model', 'value' => '', 'message' => 'Something else is weird'],
             $logger->__logs[1]['context']
         );
     }
@@ -143,8 +150,9 @@ EOT;
     public function testValidateModelWhichGotAPropertyValidators()
     {
         $logger = $this->getLogger();
+        $translator = $this->getTranslator();
 
-        $validator = new Validator([], $logger);
+        $validator = new Validator([], $translator, $logger);
 
         $respectEmailValidator = $this->getRespectValidator([
             ['return' => true],
@@ -176,8 +184,9 @@ EOT;
     public function testValidateModelWhichGotAPropertyValidatorsWithException()
     {
         $logger = $this->getLogger();
+        $translator = $this->getTranslator();
 
-        $validator = new Validator([], $logger);
+        $validator = new Validator([], $translator, $logger);
 
         $nestedEmailException = $this->getNestedValidationException([
             $this->getValidationException([], 'Empty email'),
@@ -221,35 +230,36 @@ EOT;
         self::assertCount(3, $logger->__logs);
         self::assertSame('notice', $logger->__logs[0]['level']);
         self::assertSame(
-            'validation: property {property}, value {value}, message {message}',
+            'validation: field {field}, value {value}, message {message}',
             $logger->__logs[0]['message']
         );
         self::assertSame(
-            ['property' => 'email', 'value' => '', 'message' => 'Empty email'], $logger->__logs[0]['context']
+            ['field' => 'email', 'value' => '', 'message' => 'Empty email'], $logger->__logs[0]['context']
         );
         self::assertSame('notice', $logger->__logs[1]['level']);
         self::assertSame(
-            'validation: property {property}, value {value}, message {message}',
+            'validation: field {field}, value {value}, message {message}',
             $logger->__logs[1]['message']
         );
         self::assertSame(
-            ['property' => 'email', 'value' => '', 'message' => 'Invalid E-Mail Address'], $logger->__logs[1]['context']
+            ['field' => 'email', 'value' => '', 'message' => 'Invalid E-Mail Address'], $logger->__logs[1]['context']
         );
         self::assertSame('notice', $logger->__logs[2]['level']);
         self::assertSame(
-            'validation: property {property}, value {value}, message {message}',
+            'validation: field {field}, value {value}, message {message}',
             $logger->__logs[2]['message']
         );
         self::assertSame(
-            ['property' => 'password', 'value' => '', 'message' => 'Empty password'], $logger->__logs[2]['context']
+            ['field' => 'password', 'value' => '', 'message' => 'Empty password'], $logger->__logs[2]['context']
         );
     }
 
     public function testValidateArray()
     {
         $logger = $this->getLogger();
+        $translator = $this->getTranslator();
 
-        $validator = new Validator([], $logger);
+        $validator = new Validator([], $translator, $logger);
 
         $respectEmailValidator = $this->getRespectValidator([
             ['return' => true],
@@ -274,8 +284,9 @@ EOT;
     public function testValidateInvalidArray()
     {
         $logger = $this->getLogger();
+        $translator = $this->getTranslator();
 
-        $validator = new Validator([], $logger);
+        $validator = new Validator([], $translator, $logger);
 
         $nestedEmailException = $this->getNestedValidationException([
             $this->getValidationException([], 'Empty email'),
@@ -339,14 +350,14 @@ EOT;
     /**
      * @param array                 $properties
      * @param RespectValidator|null $modelValidator
-     * @param array                 $propertyValidators
+     * @param array                 $fieldValidators
      *
      * @return ValidatableModelInterface|\PHPUnit_Framework_MockObject_MockObject
      */
     private function getUser(
         array $properties,
         RespectValidator $modelValidator = null,
-        array $propertyValidators = []
+        array $fieldValidators = []
     ): ValidatableModelInterface {
         $user = $this
             ->getMockBuilder(ValidatableModelInterface::class)
@@ -354,13 +365,13 @@ EOT;
             ->getMockForAbstractClass()
         ;
 
-        foreach ($properties as $property => $value) {
-            $user->$property = $value;
+        foreach ($properties as $field => $value) {
+            $user->$field = $value;
         }
 
         $user->expects(self::any())->method('getId')->willReturn($user->id);
         $user->expects(self::any())->method('getModelValidator')->willReturn($modelValidator);
-        $user->expects(self::any())->method('getPropertyValidators')->willReturn($propertyValidators);
+        $user->expects(self::any())->method('getPropertyValidators')->willReturn($fieldValidators);
 
         return $user;
     }
@@ -592,5 +603,29 @@ EOT;
         ;
 
         return $logger;
+    }
+
+    private function getTranslator(): TranslatorInterface
+    {
+        /** @var TranslatorInterface|\PHPUnit_Framework_MockObject_MockObject $translator */
+        $translator = $this
+            ->getMockBuilder(TranslatorInterface::class)
+            ->setMethods(['translate'])
+            ->getMockForAbstractClass();
+
+        $translator->__translates = [];
+
+        $translator
+            ->expects(self::any())
+            ->method('translate')
+            ->willReturnCallback(function (string $locale, string $key) use ($translator) {
+                $translator->__translates = [
+                    'locale' => $locale,
+                    'key' => $key,
+                ];
+            })
+        ;
+
+        return $translator;
     }
 }

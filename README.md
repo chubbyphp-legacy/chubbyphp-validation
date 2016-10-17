@@ -108,6 +108,8 @@ class MyRepository implements RepositoryInterface
 
 #### Object
 
+##### Without translator
+
 ```{.php}
 <?php
 
@@ -120,10 +122,29 @@ $model = new MyModel;
 $validator = new Validator([new MyRepository()]);
 
 $errors = $validator->validateModel($model);
+```
 
+##### With translator
+
+```{.php}
+<?php
+
+use Chubbyphp\Translator\Translator;
+use Chubbyphp\Validation\Validator;
+use MyProject\Model\MyModel;
+use MyProject\Repository\MyRepository;
+
+$model = new MyModel;
+
+$translator = new Translator();
+$validator = new Validator([new MyRepository()], $translator);
+
+$errors = $validator->validateModel($model);
 ```
 
 #### Array
+
+##### Without translator
 
 ```{.php}
 <?php
@@ -143,7 +164,31 @@ $validators = [
 $validator = new Validator();
 
 $errors = $validator->validateArray($data, $validators);
+```
 
+##### With translator
+
+```{.php}
+<?php
+
+use Chubbyphp\Translator\Translator;
+use Chubbyphp\Validation\Validator;
+use MyProject\Model\MyModel;
+use MyProject\Repository\MyRepository;
+use Respect\Validation\Validator as RespectValidator;
+
+$data = ['email' => '', 'passsword' => ''];
+
+$validators = [
+    'email' => RespectValidator::notBlank()->email(),
+    'password' => RespectValidator::notBlank(),
+];
+
+$translator = new Translator();
+
+$validator = new Validator([], $translator);
+
+$errors = $validator->validateArray($data, $validators);
 ```
 
 ### ValidationProvider (Pimple)

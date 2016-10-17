@@ -8,16 +8,18 @@ interface ValidatorInterface
 {
     /**
      * @param ValidatableModelInterface $model
+     * @param string                    $locale
      *
      * @return array
      */
-    public function validateModel(ValidatableModelInterface $model): array;
+    public function validateModel(ValidatableModelInterface $model, string $locale = 'en'): array;
 
     /**
-     * @param array $data
-     * @param array $validators
+     * @param array  $data
+     * @param array  $validators
+     * @param string $locale
      *
      * @return array
      */
-    public function validateArray(array $data, array $validators): array;
+    public function validateArray(array $data, array $validators, string $locale = 'en'): array;
 }

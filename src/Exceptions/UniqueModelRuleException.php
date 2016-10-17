@@ -10,10 +10,10 @@ class UniqueModelRuleException extends ValidationException
 {
     public static $defaultTemplates = [
         self::MODE_DEFAULT => [
-            self::STANDARD => 'Field {{name}} is not unique',
+            self::STANDARD => '{{name}} are not unique',
         ],
         self::MODE_NEGATIVE => [
-            self::STANDARD => 'Field {{name}} is  unique',
+            self::STANDARD => '{{name}} are unique',
         ],
     ];
 }

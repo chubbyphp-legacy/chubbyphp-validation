@@ -5,9 +5,12 @@ declare(strict_types=1);
 namespace Chubbyphp\Validation;
 
 use Chubbyphp\Model\RepositoryInterface;
+use Chubbyphp\Translation\NullTranslator;
+use Chubbyphp\Translation\TranslatorInterface;
 use Psr\Log\LoggerInterface;
 use Psr\Log\NullLogger;
 use Respect\Validation\Exceptions\NestedValidationException;
+use Respect\Validation\Exceptions\ValidationException;
 use Respect\Validation\Validatable;
 use Chubbyphp\Validation\Rules\UniqueModelRule;
 
@@ -19,19 +22,29 @@ final class Validator implements ValidatorInterface
     private $repositories = [];
 
     /**
+     * @var TranslatorInterface
+     */
+    private $translator;
+
+    /**
      * @var LoggerInterface
      */
     private $logger;
 
     /**
      * @param array                $repositories
+     * @param TranslatorInterface  $translator
      * @param LoggerInterface|null $logger
      */
-    public function __construct(array $repositories = [], LoggerInterface $logger = null)
-    {
+    public function __construct(
+        array $repositories = [],
+        TranslatorInterface $translator = null,
+        LoggerInterface $logger = null
+    ) {
         foreach ($repositories as $repository) {
             $this->addRepository($repository);
         }
+        $this->translator = $translator ?? new NullTranslator();
         $this->logger = $logger ?? new NullLogger();
     }
 
@@ -45,13 +58,14 @@ final class Validator implements ValidatorInterface
 
     /**
      * @param ValidatableModelInterface $model
+     * @param string                    $locale
      *
      * @return array
      */
-    public function validateModel(ValidatableModelInterface $model): array
+    public function validateModel(ValidatableModelInterface $model, string $locale = 'de'): array
     {
-        $errorMessagesFromProperties = $this->assertModelProperties($model);
-        $errorMessagesFromModel = $this->assertValidateModel($model);
+        $errorMessagesFromProperties = $this->assertModelProperties($model, $locale);
+        $errorMessagesFromModel = $this->assertValidateModel($model, $locale);
 
         return array_merge_recursive($errorMessagesFromProperties, $errorMessagesFromModel);
     }
@@ -59,7 +73,7 @@ final class Validator implements ValidatorInterface
     /**
      * @return array
      */
-    private function assertModelProperties(ValidatableModelInterface $model): array
+    private function assertModelProperties(ValidatableModelInterface $model, string $locale): array
     {
         $reflectionClass = new \ReflectionObject($model);
 
@@ -70,17 +84,13 @@ final class Validator implements ValidatorInterface
             $value = $reflectionProperty->getValue($model);
             try {
                 $validator->assert($value);
-            } catch (NestedValidationException $exception) {
-                $messages = $exception->getMessages();
-                foreach ($messages as $message) {
+            } catch (NestedValidationException $nestedException) {
+                foreach ($nestedException as $exception) {
                     if (!isset($errorMessages[$property])) {
                         $errorMessages[$property] = [];
                     }
-                    $errorMessages[$property][] = $message;
-                    $this->logger->notice(
-                        'validation: property {property}, value {value}, message {message}',
-                        ['property' => $property, 'value' => $value, 'message' => $message]
-                    );
+
+                    $errorMessages[$property][] = $this->getMessageByException($exception, $property, $value, $locale);
                 }
             }
         }
@@ -93,7 +103,7 @@ final class Validator implements ValidatorInterface
      *
      * @return array
      */
-    private function assertValidateModel(ValidatableModelInterface $model): array
+    private function assertValidateModel(ValidatableModelInterface $model, string $locale): array
     {
         if (null === $modelValidator = $model->getModelValidator()) {
             return [];
@@ -103,32 +113,29 @@ final class Validator implements ValidatorInterface
             $this->assignRepositoryToRules(get_class($model), $modelValidator->getRules());
             $modelValidator->assert($model);
         } catch (NestedValidationException $exception) {
-            return $this->getValidateModelErrors($exception);
+            return $this->getValidateModelErrors($exception, $locale);
         }
 
         return [];
     }
 
     /**
-     * @param NestedValidationException $exception
+     * @param NestedValidationException $exceptions
      *
      * @return array
      */
-    private function getValidateModelErrors(NestedValidationException $exception): array
+    private function getValidateModelErrors(NestedValidationException $exceptions, string $locale): array
     {
         $errorMessages = [];
-        foreach ($exception as $ruleException) {
-            $message = $ruleException->getMainMessage();
-            $properties = $ruleException->hasParam('properties') ? $ruleException->getParam('properties') : ['__model'];
+        foreach ($exceptions as $exception) {
+            /** @var ValidationException $exception */
+            $properties = $exception->hasParam('properties') ? $exception->getParam('properties') : ['__model'];
             foreach ($properties as $property) {
                 if (!isset($errorMessages[$property])) {
                     $errorMessages[$property] = [];
                 }
-                $errorMessages[$property][] = $message;
-                $this->logger->notice(
-                    'validation: property {property}, message {message}',
-                    ['property' => $property, 'message' => $message]
-                );
+
+                $errorMessages[$property][] = $this->getMessageByException($exception, $property, '', $locale);
             }
         }
 
@@ -136,12 +143,41 @@ final class Validator implements ValidatorInterface
     }
 
     /**
-     * @param array $data
-     * @param array $validators
+     * @param ValidationException $exception
+     * @param string              $field
+     * @param string              $locale
+     * @param null                $value
+     *
+     * @return string
+     */
+    private function getMessageByException(
+        ValidationException $exception,
+        string $field,
+        $value,
+        string $locale
+    ): string {
+        $exception->setParam('translator', function ($key) use ($exception, $locale) {
+            return $this->translator->translate($locale, $key);
+        });
+
+        $message = $exception->getMainMessage();
+
+        $this->logger->notice(
+            'validation: field {field}, value {value}, message {message}',
+            ['field' => $field, 'value' => $value, 'message' => $message]
+        );
+
+        return $message;
+    }
+
+    /**
+     * @param array  $data
+     * @param array  $validators
+     * @param string $locale
      *
      * @return array
      */
-    public function validateArray(array $data, array $validators): array
+    public function validateArray(array $data, array $validators, string $locale = 'de'): array
     {
         $errorMessages = [];
         foreach ($validators as $key => $validator) {
