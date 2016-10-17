@@ -45,7 +45,7 @@ class MyModel implements ValidatableModelInterface
      */
     public function getId(): string
     {
-        return $this-id;
+        return $this->id;
     }
 
     /**
