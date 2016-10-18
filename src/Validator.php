@@ -71,6 +71,9 @@ final class Validator implements ValidatorInterface
     }
 
     /**
+     * @param ValidatableModelInterface $model
+     * @param string                    $locale
+     *
      * @return array
      */
     private function assertModelProperties(ValidatableModelInterface $model, string $locale): array
@@ -100,6 +103,7 @@ final class Validator implements ValidatorInterface
 
     /**
      * @param ValidatableModelInterface $model
+     * @param string                    $locale
      *
      * @return array
      */
@@ -121,6 +125,7 @@ final class Validator implements ValidatorInterface
 
     /**
      * @param NestedValidationException $nestedException
+     * @param string                    $locale
      *
      * @return array
      */
