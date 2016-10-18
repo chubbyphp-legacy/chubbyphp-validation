@@ -80,6 +80,7 @@ EOT;
         $respectValidator = $this->getRespectValidator([
             ['return' => true],
         ]);
+
         $respectValidator->addRule($this->getUniqueModelRule());
 
         $user = $this->getUser(
@@ -116,6 +117,7 @@ EOT;
         $respectValidator = $this->getRespectValidator([
             ['exception' => $nestedException],
         ]);
+
         $respectValidator->addRule($this->getUniqueModelRule());
 
         $user = $this->getUser(
@@ -169,11 +171,13 @@ EOT;
         $respectEmailValidator = $this->getRespectValidator([
             ['return' => true],
         ]);
+
         $respectEmailValidator->addRule(new NotEmpty())->addRule($this->getEmail());
 
         $respectPasswordValidator = $this->getRespectValidator([
             ['return' => true],
         ]);
+
         $respectPasswordValidator->addRule($this->getNotEmpty());
 
         $user = $this->getUser(
@@ -210,6 +214,7 @@ EOT;
         $respectEmailValidator = $this->getRespectValidator([
             ['exception' => $nestedEmailException],
         ]);
+
         $respectEmailValidator->addRule(new NotEmpty())->addRule($this->getEmail());
 
         $nestedPasswordException = $this->getNestedValidationException([
@@ -219,6 +224,7 @@ EOT;
         $respectPasswordValidator = $this->getRespectValidator([
             ['exception' => $nestedPasswordException],
         ]);
+
         $respectPasswordValidator->addRule($this->getNotEmpty());
 
         $user = $this->getUser(
@@ -289,11 +295,13 @@ EOT;
         $respectEmailValidator = $this->getRespectValidator([
             ['return' => true],
         ]);
+
         $respectEmailValidator->addRule($this->getEmail());
 
         $respectPasswordValidator = $this->getRespectValidator([
             ['return' => true],
         ]);
+
         $respectPasswordValidator->addRule($this->getNotEmpty());
 
         $errors = $validator->validateArray(
@@ -323,6 +331,7 @@ EOT;
         $respectEmailValidator = $this->getRespectValidator([
             ['exception' => $nestedEmailException],
         ]);
+
         $respectEmailValidator->addRule($this->getEmail());
 
         $nestedPasswordException = $this->getNestedValidationException([
@@ -332,6 +341,7 @@ EOT;
         $respectPasswordValidator = $this->getRespectValidator([
             ['exception' => $nestedPasswordException],
         ]);
+
         $respectPasswordValidator->addRule($this->getNotEmpty());
 
         $errors = $validator->validateArray(
@@ -431,7 +441,9 @@ EOT;
         return $userRepository;
     }
     /**
-     * @return NestedValidationException|\PHPUnit_Framework_MockObject_MockObject
+     * @param array $assertStack
+     *
+     * @return RespectValidator|\PHPUnit_Framework_MockObject_MockObject
      */
     private function getRespectValidator(array $assertStack = []): RespectValidator
     {
