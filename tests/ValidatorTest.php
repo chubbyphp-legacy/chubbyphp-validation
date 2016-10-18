@@ -323,27 +323,27 @@ EOT;
         self::assertCount(3, $logger->__logs);
         self::assertSame('notice', $logger->__logs[0]['level']);
         self::assertSame(
-            'validation: key {key}, value {value}, message {message}',
+            'validation: field {field}, value {value}, message {message}',
             $logger->__logs[0]['message']
         );
         self::assertSame(
-            ['key' => 'email', 'value' => '', 'message' => 'Empty email'], $logger->__logs[0]['context']
+            ['field' => 'email', 'value' => '', 'message' => 'Empty email'], $logger->__logs[0]['context']
         );
         self::assertSame('notice', $logger->__logs[1]['level']);
         self::assertSame(
-            'validation: key {key}, value {value}, message {message}',
+            'validation: field {field}, value {value}, message {message}',
             $logger->__logs[1]['message']
         );
         self::assertSame(
-            ['key' => 'email', 'value' => '', 'message' => 'Invalid E-Mail Address'], $logger->__logs[1]['context']
+            ['field' => 'email', 'value' => '', 'message' => 'Invalid E-Mail Address'], $logger->__logs[1]['context']
         );
         self::assertSame('notice', $logger->__logs[2]['level']);
         self::assertSame(
-            'validation: key {key}, value {value}, message {message}',
+            'validation: field {field}, value {value}, message {message}',
             $logger->__logs[2]['message']
         );
         self::assertSame(
-            ['key' => 'password', 'value' => '', 'message' => 'Empty password'], $logger->__logs[2]['context']
+            ['field' => 'password', 'value' => '', 'message' => 'Empty password'], $logger->__logs[2]['context']
         );
     }
 
@@ -618,10 +618,10 @@ EOT;
         $translator
             ->expects(self::any())
             ->method('translate')
-            ->willReturnCallback(function (string $locale, string $key) use ($translator) {
+            ->willReturnCallback(function (string $locale, string $field) use ($translator) {
                 $translator->__translates = [
                     'locale' => $locale,
-                    'key' => $key,
+                    'field' => $field,
                 ];
             })
         ;
