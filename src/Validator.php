@@ -156,7 +156,7 @@ final class Validator implements ValidatorInterface
             $value = $data[$key] ?? null;
             try {
                 $validator->assert($value);
-            } catch (NestedValidationException $exception) {
+            } catch (NestedValidationException $nestedException) {
                 foreach ($nestedException as $exception) {
                     if (!isset($errorMessages[$key])) {
                         $errorMessages[$key] = [];
