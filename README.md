@@ -199,6 +199,7 @@ $errors = $validator->validateArray($data, $validators);
 ```{.php}
 <?php
 
+use Chubbyphp\Validation\Helper\UniqueModelRuleHelper;
 use Chubbyphp\Validation\Validator;
 use Chubbyphp\Validation\ValidationProvider;
 use MyProject\Repository\MyRepository;
@@ -206,11 +207,12 @@ use Pimple\Container;
 
 $container->register(new ValidationProvider);
 
-$container->extend('validator.repositories', function (array $repositories) use ($container) {
-    $repositories[] = new MyRepository;
+$container->extend('validator.helpers', function (array $helpers) use ($container) {
+    $helpers[] = new UniqueModelRuleHelper(new MyRepository())
 
-    return $repositories;
+    return $helpers;
 });
+
 
 /** @var Validator $validator */
 $validator = $container['validator'];
