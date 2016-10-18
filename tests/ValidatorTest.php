@@ -20,36 +20,6 @@ use Respect\Validation\Validator as RespectValidator;
  */
 final class ValidatorTest extends \PHPUnit_Framework_TestCase
 {
-    public static function setUpBeforeClass()
-    {
-        $eval = <<<'EOT'
-namespace Chubbyphp\Validation
-{
-    function get_class($object)
-    {
-        $class = \get_class($object);
-        
-        $map = [
-            'ValidatableModelInterface' => ValidatableModelInterface::class
-        ];
-
-        // mocked class
-        if ('Mock_' === \substr($class, 0, 5)) {
-            $classParts = \explode('_', $class);
-            $className = $classParts[1];
-            
-            if (isset($map[$className])) {
-                return $map[$className];
-            }
-        }
-    
-        return $class;
-    }
-}
-EOT;
-        eval($eval);
-    }
-
     public function testValidateModelWhichGotNoValidators()
     {
         $logger = $this->getLogger();
