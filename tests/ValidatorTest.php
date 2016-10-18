@@ -63,6 +63,8 @@ EOT;
 
         self::assertSame([], $errors);
 
+        self::assertCount(0, $translator->__translates);
+
         self::assertCount(0, $logger->__logs);
     }
 
@@ -91,6 +93,8 @@ EOT;
         $errors = $validator->validateModel($user);
 
         self::assertSame([], $errors);
+
+        self::assertCount(0, $translator->__translates);
 
         self::assertCount(0, $logger->__logs);
     }
@@ -131,6 +135,14 @@ EOT;
             ],
             $errors
         );
+
+        self::assertCount(2, $translator->__translates);
+
+        self::assertSame('de', $translator->__translates[0]['locale']);
+        self::assertSame('Unique Model', $translator->__translates[0]['key']);
+
+        self::assertSame('de', $translator->__translates[1]['locale']);
+        self::assertSame('Something else is weird', $translator->__translates[1]['key']);
 
         self::assertCount(2, $logger->__logs);
         self::assertSame('notice', $logger->__logs[0]['level']);
@@ -177,6 +189,8 @@ EOT;
         $errors = $validator->validateModel($user);
 
         self::assertSame([], $errors);
+
+        self::assertCount(0, $translator->__translates);
 
         self::assertCount(0, $logger->__logs);
     }
@@ -226,6 +240,17 @@ EOT;
             ],
             $errors
         );
+
+        self::assertCount(3, $translator->__translates);
+
+        self::assertSame('de', $translator->__translates[0]['locale']);
+        self::assertSame('Empty email', $translator->__translates[0]['key']);
+
+        self::assertSame('de', $translator->__translates[1]['locale']);
+        self::assertSame('Invalid E-Mail Address', $translator->__translates[1]['key']);
+
+        self::assertSame('de', $translator->__translates[2]['locale']);
+        self::assertSame('Empty password', $translator->__translates[2]['key']);
 
         self::assertCount(3, $logger->__logs);
         self::assertSame('notice', $logger->__logs[0]['level']);
@@ -278,6 +303,8 @@ EOT;
 
         self::assertSame([], $errors);
 
+        self::assertCount(0, $translator->__translates);
+
         self::assertCount(0, $logger->__logs);
     }
 
@@ -319,6 +346,17 @@ EOT;
             ],
             $errors
         );
+
+        self::assertCount(3, $translator->__translates);
+
+        self::assertSame('de', $translator->__translates[0]['locale']);
+        self::assertSame('Empty email', $translator->__translates[0]['key']);
+
+        self::assertSame('de', $translator->__translates[1]['locale']);
+        self::assertSame('Invalid E-Mail Address', $translator->__translates[1]['key']);
+
+        self::assertSame('de', $translator->__translates[2]['locale']);
+        self::assertSame('Empty password', $translator->__translates[2]['key']);
 
         self::assertCount(3, $logger->__logs);
         self::assertSame('notice', $logger->__logs[0]['level']);
@@ -485,6 +523,8 @@ EOT;
     }
 
     /**
+     * @param ValidationException[]|array $childrenExceptions
+     *
      * @return NestedValidationException|\PHPUnit_Framework_MockObject_MockObject
      */
     private function getNestedValidationException(array $childrenExceptions): NestedValidationException
@@ -492,26 +532,13 @@ EOT;
         $nestedException = $this
             ->getMockBuilder(NestedValidationException::class)
             ->disableOriginalConstructor()
-            ->setMethods(['getIterator', 'getMessages'])
+            ->setMethods(['getIterator'])
             ->getMock();
 
         $nestedException
             ->expects(self::any())
             ->method('getIterator')
             ->willReturn(new \ArrayIterator($childrenExceptions))
-        ;
-
-        $nestedException
-            ->expects(self::any())
-            ->method('getMessages')
-            ->willReturnCallback(function () use ($childrenExceptions) {
-                $messages = [];
-                foreach ($childrenExceptions as $childrenException) {
-                    $messages[] = $childrenException->getMainMessage();
-                }
-
-                return $messages;
-            })
         ;
 
         return $nestedException;
@@ -527,29 +554,46 @@ EOT;
         $exception = $this
             ->getMockBuilder(ValidationException::class)
             ->disableOriginalConstructor()
-            ->setMethods(['hasParam', 'getParam', 'getMainMessage'])
+            ->setMethods(['hasParam', 'getParam', 'setParam', 'getMainMessage'])
             ->getMock();
+
+        $exception->__params = $params;
 
         $exception
             ->expects(self::any())
             ->method('hasParam')
-            ->willReturnCallback(function (string $param) use ($params) {
-                return isset($params[$param]);
+            ->willReturnCallback(function (string $param) use ($exception) {
+                return isset($exception->__params[$param]);
             })
         ;
 
         $exception
             ->expects(self::any())
             ->method('getParam')
-            ->willReturnCallback(function (string $param) use ($params) {
-                return $params[$param];
+            ->willReturnCallback(function (string $param) use ($exception) {
+                return $exception->__params[$param];
+            })
+        ;
+
+        $exception
+            ->expects(self::any())
+            ->method('setParam')
+            ->willReturnCallback(function (string $param, $value) use ($exception) {
+                $exception->__params[$param] = $value;
             })
         ;
 
         $exception
             ->expects(self::any())
             ->method('getMainMessage')
-            ->willReturn($mainMessage)
+            ->willReturnCallback(function () use ($exception, $mainMessage) {
+                if (isset($exception->__params['translator'])) {
+                    $translator = $exception->__params['translator'];
+                    $mainMessage = $translator($mainMessage);
+                }
+
+                return $mainMessage;
+            })
         ;
 
         return $exception;
@@ -618,11 +662,13 @@ EOT;
         $translator
             ->expects(self::any())
             ->method('translate')
-            ->willReturnCallback(function (string $locale, string $field) use ($translator) {
-                $translator->__translates = [
+            ->willReturnCallback(function (string $locale, string $key) use ($translator) {
+                $translator->__translates[] = [
                     'locale' => $locale,
-                    'field' => $field,
+                    'key' => $key,
                 ];
+
+                return $key;
             })
         ;
 
