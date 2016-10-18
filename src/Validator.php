@@ -120,14 +120,14 @@ final class Validator implements ValidatorInterface
     }
 
     /**
-     * @param NestedValidationException $exceptions
+     * @param NestedValidationException $nestedException
      *
      * @return array
      */
-    private function getValidateModelErrors(NestedValidationException $exceptions, string $locale): array
+    private function getValidateModelErrors(NestedValidationException $nestedException, string $locale): array
     {
         $errorMessages = [];
-        foreach ($exceptions as $exception) {
+        foreach ($nestedException as $exception) {
             /** @var ValidationException $exception */
             $properties = $exception->hasParam('properties') ? $exception->getParam('properties') : ['__model'];
             foreach ($properties as $property) {
@@ -168,7 +168,7 @@ final class Validator implements ValidatorInterface
 
         return $errorMessages;
     }
-    
+
     /**
      * @param ValidationException $exception
      * @param string              $field
