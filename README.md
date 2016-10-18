@@ -34,7 +34,7 @@ namespace MyProject\Model;
 
 use Chubbyphp\Validation\Rules\UniqueModelRule;
 use Chubbyphp\Validation\ValidatableModelInterface;
-use Respect\Validation\Validator as RespectValidator;
+use Respect\Validation\Validator as v;
 
 class MyModel implements ValidatableModelInterface
 {
@@ -49,21 +49,21 @@ class MyModel implements ValidatableModelInterface
     }
 
     /**
-     * @return RespectValidator|null
+     * @return v|null
      */
     public function getModelValidator()
     {
-        return RespectValidator::create()->addRule(new UniqueModelRule(['email']));
+        return v::create()->addRule(new UniqueModelRule(['email']));
     }
 
     /**
-     * @return RespectValidator[]|array
+     * @return v[]|array
      */
     public function getPropertyValidators(): array
     {
         return [
-            'email' => RespectValidator::notBlank()->email(),
-            'password' => RespectValidator::notBlank(),
+            'email' => v::notBlank()->email(),
+            'password' => v::notBlank(),
         ];
     }
 }
@@ -155,13 +155,13 @@ $errors = $validator->validateModel($model);
 use Chubbyphp\Validation\Validator;
 use MyProject\Model\MyModel;
 use MyProject\Repository\MyRepository;
-use Respect\Validation\Validator as RespectValidator;
+use Respect\Validation\Validator as v;
 
 $data = ['email' => '', 'passsword' => ''];
 
 $validators = [
-    'email' => RespectValidator::notBlank()->email(),
-    'password' => RespectValidator::notBlank(),
+    'email' => v::notBlank()->email(),
+    'password' => v::notBlank(),
 ];
 
 $validator = new Validator();
@@ -178,13 +178,13 @@ use Chubbyphp\Translator\Translator;
 use Chubbyphp\Validation\Validator;
 use MyProject\Model\MyModel;
 use MyProject\Repository\MyRepository;
-use Respect\Validation\Validator as RespectValidator;
+use Respect\Validation\Validator as v;
 
 $data = ['email' => '', 'passsword' => ''];
 
 $validators = [
-    'email' => RespectValidator::notBlank()->email(),
-    'password' => RespectValidator::notBlank(),
+    'email' => v::notBlank()->email(),
+    'password' => v::notBlank(),
 ];
 
 $translator = new Translator();

@@ -12,7 +12,7 @@ use Psr\Log\NullLogger;
 use Respect\Validation\Exceptions\NestedValidationException;
 use Respect\Validation\Exceptions\ValidationException;
 use Respect\Validation\Rules\AbstractRule;
-use Respect\Validation\Validator as RespectValidator;
+use Respect\Validation\Validator as v;
 
 final class Validator implements ValidatorInterface
 {
@@ -174,14 +174,14 @@ final class Validator implements ValidatorInterface
     }
 
     /**
-     * @param RespectValidator $validator
-     * @param string           $field
+     * @param v      $validator
+     * @param string $field
      * @param $value
      * @param string $locale
      *
      * @return array
      */
-    private function assert(RespectValidator $validator, string $field, $value, string $locale)
+    private function assert(v $validator, string $field, $value, string $locale)
     {
         $fieldErrorMessages = [];
 

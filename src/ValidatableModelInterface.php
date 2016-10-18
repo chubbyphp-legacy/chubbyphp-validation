@@ -5,17 +5,17 @@ declare(strict_types=1);
 namespace Chubbyphp\Validation;
 
 use Chubbyphp\Model\ModelInterface;
-use Respect\Validation\Validator as RespectValidator;
+use Respect\Validation\Validator as v;
 
 interface ValidatableModelInterface extends ModelInterface
 {
     /**
-     * @return RespectValidator|null
+     * @return v|null
      */
     public function getModelValidator();
 
     /**
-     * @return RespectValidator[]|array
+     * @return v[]|array
      */
     public function getPropertyValidators(): array;
 }

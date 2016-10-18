@@ -13,7 +13,7 @@ use Respect\Validation\Exceptions\ValidationException;
 use Respect\Validation\Rules\AbstractRule;
 use Respect\Validation\Rules\Email;
 use Respect\Validation\Rules\NotEmpty;
-use Respect\Validation\Validator as RespectValidator;
+use Respect\Validation\Validator as v;
 
 /**
  * @covers Chubbyphp\Validation\Validator
@@ -366,15 +366,15 @@ final class ValidatorTest extends \PHPUnit_Framework_TestCase
     }
 
     /**
-     * @param array                 $properties
-     * @param RespectValidator|null $modelValidator
-     * @param array                 $fieldValidators
+     * @param array  $properties
+     * @param v|null $modelValidator
+     * @param array  $fieldValidators
      *
      * @return ValidatableModelInterface|\PHPUnit_Framework_MockObject_MockObject
      */
     private function getUser(
         array $properties,
-        RespectValidator $modelValidator = null,
+        v $modelValidator = null,
         array $fieldValidators = []
     ): ValidatableModelInterface {
         $user = $this
@@ -425,12 +425,12 @@ final class ValidatorTest extends \PHPUnit_Framework_TestCase
     /**
      * @param array $assertStack
      *
-     * @return RespectValidator|\PHPUnit_Framework_MockObject_MockObject
+     * @return v|\PHPUnit_Framework_MockObject_MockObject
      */
-    private function getRespectValidator(array $assertStack = []): RespectValidator
+    private function getRespectValidator(array $assertStack = []): v
     {
         $respectValidator = $this
-            ->getMockBuilder(RespectValidator::class)
+            ->getMockBuilder(v::class)
             ->disableOriginalConstructor()
             ->setMethods(['addRule', 'getRules', 'assert'])
             ->getMockForAbstractClass();
