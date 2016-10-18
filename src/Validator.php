@@ -143,6 +143,33 @@ final class Validator implements ValidatorInterface
     }
 
     /**
+     * @param array  $data
+     * @param array  $validators
+     * @param string $locale
+     *
+     * @return array
+     */
+    public function validateArray(array $data, array $validators, string $locale = 'de'): array
+    {
+        $errorMessages = [];
+        foreach ($validators as $key => $validator) {
+            $value = $data[$key] ?? null;
+            try {
+                $validator->assert($value);
+            } catch (NestedValidationException $exception) {
+                foreach ($nestedException as $exception) {
+                    if (!isset($errorMessages[$key])) {
+                        $errorMessages[$key] = [];
+                    }
+                    $errorMessages[$key][] = $this->getMessageByException($exception, $key, $value, $locale);
+                }
+            }
+        }
+
+        return $errorMessages;
+    }
+    
+    /**
      * @param ValidationException $exception
      * @param string              $field
      * @param string              $locale
@@ -168,38 +195,6 @@ final class Validator implements ValidatorInterface
         );
 
         return $message;
-    }
-
-    /**
-     * @param array  $data
-     * @param array  $validators
-     * @param string $locale
-     *
-     * @return array
-     */
-    public function validateArray(array $data, array $validators, string $locale = 'de'): array
-    {
-        $errorMessages = [];
-        foreach ($validators as $key => $validator) {
-            $value = $data[$key] ?? null;
-            try {
-                $validator->assert($value);
-            } catch (NestedValidationException $exception) {
-                $messages = $exception->getMessages();
-                foreach ($messages as $message) {
-                    if (!isset($errorMessages[$key])) {
-                        $errorMessages[$key] = [];
-                    }
-                    $errorMessages[$key][] = $message;
-                    $this->logger->notice(
-                        'validation: key {key}, value {value}, message {message}',
-                        ['key' => $key, 'value' => $value, 'message' => $message]
-                    );
-                }
-            }
-        }
-
-        return $errorMessages;
     }
 
     /**
