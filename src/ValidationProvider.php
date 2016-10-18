@@ -14,13 +14,13 @@ final class ValidationProvider implements ServiceProviderInterface
      */
     public function register(Container $container)
     {
-        $container['validator.repositories'] = function () {
+        $container['validator.helpers'] = function () {
             return [];
         };
 
         $container['validator'] = function () use ($container) {
             return new Validator(
-                $container['validator.repositories'],
+                $container['validator.helpers'],
                 $container['translator'] ?? null,
                 $container['logger'] ?? null
             );

@@ -16,10 +16,10 @@ final class ValidationProviderTest extends \PHPUnit_Framework_TestCase
         $container = new Container();
         $container->register(new ValidationProvider());
 
-        self::assertTrue(isset($container['validator.repositories']));
+        self::assertTrue(isset($container['validator.helpers']));
         self::assertTrue(isset($container['validator']));
 
-        self::assertSame([], $container['validator.repositories']);
+        self::assertSame([], $container['validator.helpers']);
         self::assertInstanceOf(Validator::class, $container['validator']);
     }
 }

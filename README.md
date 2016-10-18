@@ -114,13 +114,14 @@ class MyRepository implements RepositoryInterface
 ```{.php}
 <?php
 
+use Chubbyphp\Validation\Helper\UniqueModelRuleHelper;
 use Chubbyphp\Validation\Validator;
 use MyProject\Model\MyModel;
 use MyProject\Repository\MyRepository;
 
 $model = new MyModel;
 
-$validator = new Validator([new MyRepository()]);
+$validator = new Validator([new UniqueModelRuleHelper(new MyRepository())]);
 
 $errors = $validator->validateModel($model);
 ```
@@ -131,6 +132,7 @@ $errors = $validator->validateModel($model);
 <?php
 
 use Chubbyphp\Translator\Translator;
+use Chubbyphp\Validation\Helper\UniqueModelRuleHelper;
 use Chubbyphp\Validation\Validator;
 use MyProject\Model\MyModel;
 use MyProject\Repository\MyRepository;
@@ -138,7 +140,7 @@ use MyProject\Repository\MyRepository;
 $model = new MyModel;
 
 $translator = new Translator();
-$validator = new Validator([new MyRepository()], $translator);
+$validator = new Validator([new UniqueModelRuleHelper(new MyRepository())], $translator);
 
 $errors = $validator->validateModel($model);
 ```

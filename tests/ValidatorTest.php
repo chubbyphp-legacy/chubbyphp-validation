@@ -2,10 +2,10 @@
 
 namespace Chubbyphp\Tests\Validation;
 
-use Chubbyphp\Model\RepositoryInterface;
 use Chubbyphp\Translation\TranslatorInterface;
 use Chubbyphp\Validation\Rules\UniqueModelRule;
 use Chubbyphp\Validation\ValidatableModelInterface;
+use Chubbyphp\Validation\ValidationHelperInterface;
 use Chubbyphp\Validation\Validator;
 use Psr\Log\LoggerInterface;
 use Respect\Validation\Exceptions\NestedValidationException;
@@ -74,7 +74,7 @@ EOT;
         $translator = $this->getTranslator();
 
         $validator = new Validator([
-            $this->getUserRepository(),
+            $this->getHelper(true),
         ], $translator, $logger);
 
         $respectValidator = $this->getRespectValidator([
@@ -106,7 +106,7 @@ EOT;
         $translator = $this->getTranslator();
 
         $validator = new Validator([
-            $this->getUserRepository(),
+            $this->getHelper(true),
         ], $translator, $logger);
 
         $nestedException = $this->getNestedValidationException([
@@ -425,20 +425,32 @@ EOT;
     }
 
     /**
-     * @param string $class
+     * @param bool $isResponsible
      *
-     * @return RepositoryInterface|\PHPUnit_Framework_MockObject_MockObject
+     * @return ValidationHelperInterface|\PHPUnit_Framework_MockObject_MockObject
      */
-    private function getUserRepository($class = ValidatableModelInterface::class): RepositoryInterface
+    private function getHelper(bool $isResponsible): ValidationHelperInterface
     {
-        $userRepository = $this
-            ->getMockBuilder(RepositoryInterface::class)
-            ->setMethods(['getModelClass'])
+        /** @var ValidationHelperInterface|\PHPUnit_Framework_MockObject_MockObject $helper */
+        $helper = $this
+            ->getMockBuilder(ValidationHelperInterface::class)
+            ->setMethods(['isResponsible', 'help'])
             ->getMockForAbstractClass();
 
-        $userRepository->expects(self::any())->method('getModelClass')->willReturn($class);
+        $helper
+            ->expects(self::any())
+            ->method('isResponsible')
+            ->willReturnCallback(function (AbstractRule $rule, $value) use ($isResponsible) {
+                return $isResponsible;
+            });
 
-        return $userRepository;
+        $helper
+            ->expects(self::any())
+            ->method('help')
+            ->willReturnCallback(function (AbstractRule $rule, $value) {
+            });
+
+        return $helper;
     }
     /**
      * @param array $assertStack
@@ -611,6 +623,32 @@ EOT;
         return $exception;
     }
 
+    private function getTranslator(): TranslatorInterface
+    {
+        /** @var TranslatorInterface|\PHPUnit_Framework_MockObject_MockObject $translator */
+        $translator = $this
+            ->getMockBuilder(TranslatorInterface::class)
+            ->setMethods(['translate'])
+            ->getMockForAbstractClass();
+
+        $translator->__translates = [];
+
+        $translator
+            ->expects(self::any())
+            ->method('translate')
+            ->willReturnCallback(function (string $locale, string $key) use ($translator) {
+                $translator->__translates[] = [
+                    'locale' => $locale,
+                    'key' => $key,
+                ];
+
+                return $key;
+            })
+        ;
+
+        return $translator;
+    }
+
     /**
      * @return LoggerInterface
      */
@@ -659,31 +697,5 @@ EOT;
         ;
 
         return $logger;
-    }
-
-    private function getTranslator(): TranslatorInterface
-    {
-        /** @var TranslatorInterface|\PHPUnit_Framework_MockObject_MockObject $translator */
-        $translator = $this
-            ->getMockBuilder(TranslatorInterface::class)
-            ->setMethods(['translate'])
-            ->getMockForAbstractClass();
-
-        $translator->__translates = [];
-
-        $translator
-            ->expects(self::any())
-            ->method('translate')
-            ->willReturnCallback(function (string $locale, string $key) use ($translator) {
-                $translator->__translates[] = [
-                    'locale' => $locale,
-                    'key' => $key,
-                ];
-
-                return $key;
-            })
-        ;
-
-        return $translator;
     }
 }

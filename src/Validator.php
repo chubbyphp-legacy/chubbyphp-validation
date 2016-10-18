@@ -4,22 +4,22 @@ declare(strict_types=1);
 
 namespace Chubbyphp\Validation;
 
-use Chubbyphp\Model\RepositoryInterface;
+use Chubbyphp\Model\ModelInterface;
 use Chubbyphp\Translation\NullTranslator;
 use Chubbyphp\Translation\TranslatorInterface;
 use Psr\Log\LoggerInterface;
 use Psr\Log\NullLogger;
 use Respect\Validation\Exceptions\NestedValidationException;
 use Respect\Validation\Exceptions\ValidationException;
-use Respect\Validation\Validatable;
-use Chubbyphp\Validation\Rules\UniqueModelRule;
+use Respect\Validation\Rules\AbstractRule;
+use Respect\Validation\Validator as RespectValidator;
 
 final class Validator implements ValidatorInterface
 {
     /**
-     * @var RepositoryInterface[]|array
+     * @var ValidationHelperInterface[]|array
      */
-    private $repositories = [];
+    private $helpers = [];
 
     /**
      * @var TranslatorInterface
@@ -32,28 +32,28 @@ final class Validator implements ValidatorInterface
     private $logger;
 
     /**
-     * @param array                $repositories
+     * @param array                $helpers
      * @param TranslatorInterface  $translator
      * @param LoggerInterface|null $logger
      */
     public function __construct(
-        array $repositories = [],
+        array $helpers = [],
         TranslatorInterface $translator = null,
         LoggerInterface $logger = null
     ) {
-        foreach ($repositories as $repository) {
-            $this->addRepository($repository);
+        foreach ($helpers as $helper) {
+            $this->addHelper($helper);
         }
         $this->translator = $translator ?? new NullTranslator();
         $this->logger = $logger ?? new NullLogger();
     }
 
     /**
-     * @param RepositoryInterface $repository
+     * @param ValidationHelperInterface $helper
      */
-    private function addRepository(RepositoryInterface $repository)
+    private function addHelper(ValidationHelperInterface $helper)
     {
-        $this->repositories[$repository->getModelClass()] = $repository;
+        $this->helpers[] = $helper;
     }
 
     /**
@@ -78,27 +78,32 @@ final class Validator implements ValidatorInterface
      */
     private function assertModelProperties(ValidatableModelInterface $model, string $locale): array
     {
-        $reflectionClass = new \ReflectionObject($model);
-
         $errorMessages = [];
-        foreach ($model->getPropertyValidators() as $property => $validator) {
-            $reflectionProperty = $reflectionClass->getProperty($property);
-            $reflectionProperty->setAccessible(true);
-            $value = $reflectionProperty->getValue($model);
-            try {
-                $validator->assert($value);
-            } catch (NestedValidationException $nestedException) {
-                foreach ($nestedException as $exception) {
-                    if (!isset($errorMessages[$property])) {
-                        $errorMessages[$property] = [];
-                    }
 
-                    $errorMessages[$property][] = $this->getMessageByException($exception, $property, $value, $locale);
-                }
+        $reflectionClass = new \ReflectionObject($model);
+        foreach ($model->getPropertyValidators() as $property => $validator) {
+            $value = $this->getPropertyValue($reflectionClass, $model, $property);
+            if ([] !== $fieldErrorMessages = $this->assert($validator, $property, $value, $locale)) {
+                $errorMessages[$property] = $fieldErrorMessages;
             }
         }
 
         return $errorMessages;
+    }
+
+    /**
+     * @param \ReflectionObject $reflection
+     * @param ModelInterface    $model
+     * @param string            $property
+     *
+     * @return mixed
+     */
+    private function getPropertyValue(\ReflectionObject $reflection, ModelInterface $model, string $property)
+    {
+        $reflectionProperty = $reflection->getProperty($property);
+        $reflectionProperty->setAccessible(true);
+
+        return $reflectionProperty->getValue($model);
     }
 
     /**
@@ -113,11 +118,12 @@ final class Validator implements ValidatorInterface
             return [];
         }
 
+        $this->runHelpersPerRules($modelValidator->getRules(), $model);
+
         try {
-            $this->assignRepositoryToRules(get_class($model), $modelValidator->getRules());
             $modelValidator->assert($model);
-        } catch (NestedValidationException $exception) {
-            return $this->getValidateModelErrors($exception, $locale);
+        } catch (NestedValidationException $nestedException) {
+            return $this->getValidateModelErrors($nestedException, $locale);
         }
 
         return [];
@@ -159,15 +165,8 @@ final class Validator implements ValidatorInterface
         $errorMessages = [];
         foreach ($validators as $key => $validator) {
             $value = $data[$key] ?? null;
-            try {
-                $validator->assert($value);
-            } catch (NestedValidationException $nestedException) {
-                foreach ($nestedException as $exception) {
-                    if (!isset($errorMessages[$key])) {
-                        $errorMessages[$key] = [];
-                    }
-                    $errorMessages[$key][] = $this->getMessageByException($exception, $key, $value, $locale);
-                }
+            if ([] !== $fieldErrorMessages = $this->assert($validator, $key, $value, $locale)) {
+                $errorMessages[$key] = $fieldErrorMessages;
             }
         }
 
@@ -175,10 +174,59 @@ final class Validator implements ValidatorInterface
     }
 
     /**
+     * @param RespectValidator $validator
+     * @param string           $field
+     * @param $value
+     * @param string $locale
+     *
+     * @return array
+     */
+    private function assert(RespectValidator $validator, string $field, $value, string $locale)
+    {
+        $fieldErrorMessages = [];
+
+        $this->runHelpersPerRules($validator->getRules(), $value);
+
+        try {
+            $validator->assert($value);
+        } catch (NestedValidationException $nestedException) {
+            foreach ($nestedException as $exception) {
+                $fieldErrorMessages[] = $this->getMessageByException($exception, $field, $value, $locale);
+            }
+        }
+
+        return $fieldErrorMessages;
+    }
+
+    /**
+     * @param AbstractRule[]|array $rules
+     * @param $value
+     */
+    private function runHelpersPerRules(array $rules, $value)
+    {
+        foreach ($rules as $rule) {
+            $this->runHelpersPerRule($rule, $value);
+        }
+    }
+
+    /**
+     * @param AbstractRule $rule
+     * @param $value
+     */
+    private function runHelpersPerRule(AbstractRule $rule, $value)
+    {
+        foreach ($this->helpers as $helper) {
+            if ($helper->isResponsible($rule, $value)) {
+                $helper->help($rule, $value);
+            }
+        }
+    }
+
+    /**
      * @param ValidationException $exception
      * @param string              $field
      * @param string              $locale
-     * @param null                $value
+     * @param mixed               $value
      *
      * @return string
      */
@@ -200,27 +248,5 @@ final class Validator implements ValidatorInterface
         );
 
         return $message;
-    }
-
-    /**
-     * @param string $modelClass
-     * @param array  $rules
-     */
-    private function assignRepositoryToRules(string $modelClass, array $rules)
-    {
-        foreach ($rules as $rule) {
-            $this->assignRepositoryToRule($modelClass, $rule);
-        }
-    }
-
-    /**
-     * @param string      $modelClass
-     * @param Validatable $rule
-     */
-    private function assignRepositoryToRule(string $modelClass, Validatable $rule)
-    {
-        if ($rule instanceof UniqueModelRule && isset($this->repositories[$modelClass])) {
-            $rule->setRepository($this->repositories[$modelClass]);
-        }
     }
 }
