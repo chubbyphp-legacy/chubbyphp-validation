@@ -4,9 +4,9 @@ declare(strict_types=1);
 
 namespace Chubbyphp\Validation\Helper;
 
-use Chubbyphp\Model\ModelInterface;
 use Chubbyphp\Model\RepositoryInterface;
 use Chubbyphp\Validation\Rules\UniqueModelRule;
+use Chubbyphp\Validation\ValidatableModelInterface;
 use Chubbyphp\Validation\ValidationHelperInterface;
 use Respect\Validation\Rules\AbstractRule;
 
@@ -37,7 +37,7 @@ final class UniqueModelRuleHelper implements ValidationHelperInterface
             return false;
         }
 
-        if (!$value instanceof ModelInterface) {
+        if (!$value instanceof ValidatableModelInterface) {
             return false;
         }
 
