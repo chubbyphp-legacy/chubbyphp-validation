@@ -6,9 +6,10 @@ namespace Chubbyphp\Validation\Rules;
 
 use Chubbyphp\Model\RepositoryInterface;
 use Chubbyphp\Validation\ValidatableModelInterface;
+use Chubbyphp\Validation\ValidationHelperNeededInterface;
 use Respect\Validation\Rules\AbstractRule;
 
-class UniqueModelRule extends AbstractRule
+class UniqueModelRule extends AbstractRule implements ValidationHelperNeededInterface
 {
     /**
      * @var string[]|array

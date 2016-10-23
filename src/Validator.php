@@ -205,7 +205,9 @@ final class Validator implements ValidatorInterface
     private function runHelpersPerRules(array $rules, $value)
     {
         foreach ($rules as $rule) {
-            $this->runHelpersPerRule($rule, $value);
+            if ($rule instanceof ValidationHelperNeededInterface) {
+                $this->runHelpersPerRule($rule, $value);
+            }
         }
     }
 
