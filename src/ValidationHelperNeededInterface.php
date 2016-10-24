@@ -6,5 +6,4 @@ namespace Chubbyphp\Validation;
 
 interface ValidationHelperNeededInterface
 {
-
 }

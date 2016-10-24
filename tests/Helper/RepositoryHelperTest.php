@@ -3,15 +3,15 @@
 namespace Chubbyphp\Tests\Validation\Helper;
 
 use Chubbyphp\Model\RepositoryInterface;
-use Chubbyphp\Validation\Helper\UniqueModelRuleHelper;
+use Chubbyphp\Validation\Helper\RepositoryHelper;
 use Chubbyphp\Validation\Rules\UniqueModelRule;
 use Chubbyphp\Validation\ValidatableModelInterface;
 use Respect\Validation\Rules\NotEmpty;
 
 /**
- * @covers Chubbyphp\Validation\Helper\UniqueModelRuleHelper
+ * @covers Chubbyphp\Validation\Helper\RepositoryHelper
  */
-final class UniqueModelRuleHelperTest extends \PHPUnit_Framework_TestCase
+final class RepositoryHelperTest extends \PHPUnit_Framework_TestCase
 {
     public static function setUpBeforeClass()
     {
@@ -45,19 +45,9 @@ EOT;
         eval($eval);
     }
 
-    public function testIsResponsibleWithInvalidRule()
-    {
-        $helper = new UniqueModelRuleHelper($this->getUserRepository());
-
-        $rule = $this->getNotEmpty();
-        $model = $this->getModel();
-
-        self::assertFalse($helper->isResponsible($rule, $model));
-    }
-
     public function testIsResponsibleWithInvalidValue()
     {
-        $helper = new UniqueModelRuleHelper($this->getUserRepository());
+        $helper = new RepositoryHelper($this->getUserRepository());
 
         $rule = $this->getUniqueModelRule();
         $model = new \stdClass();
@@ -67,7 +57,7 @@ EOT;
 
     public function testIsResponsibleWithValidArguments()
     {
-        $helper = new UniqueModelRuleHelper($this->getUserRepository());
+        $helper = new RepositoryHelper($this->getUserRepository());
 
         $rule = $this->getUniqueModelRule();
         $model = $this->getModel();
@@ -77,12 +67,12 @@ EOT;
 
     public function testHelp()
     {
-        $helper = new UniqueModelRuleHelper($this->getUserRepository());
+        $helper = new RepositoryHelper($this->getUserRepository());
 
         $rule = $this->getUniqueModelRule(1);
         $model = $this->getModel();
 
-        $helper->help($rule, $model);
+        $helper->apply($rule, $model);
     }
 
     /**

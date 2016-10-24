@@ -20,5 +20,5 @@ interface ValidationHelperInterface
      * @param AbstractRule $rule
      * @param mixed        $value
      */
-    public function help(AbstractRule $rule, $value);
+    public function apply(AbstractRule $rule, $value);
 }

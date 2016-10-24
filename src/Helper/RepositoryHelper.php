@@ -10,7 +10,7 @@ use Chubbyphp\Validation\ValidatableModelInterface;
 use Chubbyphp\Validation\ValidationHelperInterface;
 use Respect\Validation\Rules\AbstractRule;
 
-final class UniqueModelRuleHelper implements ValidationHelperInterface
+final class RepositoryHelper implements ValidationHelperInterface
 {
     /**
      * @var RepositoryInterface
@@ -33,10 +33,6 @@ final class UniqueModelRuleHelper implements ValidationHelperInterface
      */
     public function isResponsible(AbstractRule $rule, $value): bool
     {
-        if (!$rule instanceof UniqueModelRule) {
-            return false;
-        }
-
         if (!$value instanceof ValidatableModelInterface) {
             return false;
         }
@@ -48,7 +44,7 @@ final class UniqueModelRuleHelper implements ValidationHelperInterface
      * @param UniqueModelRule|AbstractRule $rule
      * @param mixed                        $value
      */
-    public function help(AbstractRule $rule, $value)
+    public function apply(AbstractRule $rule, $value)
     {
         $rule->setRepository($this->repository);
     }

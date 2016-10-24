@@ -219,7 +219,7 @@ final class Validator implements ValidatorInterface
     {
         foreach ($this->helpers as $helper) {
             if ($helper->isResponsible($rule, $value)) {
-                $helper->help($rule, $value);
+                $helper->apply($rule, $value);
             }
         }
     }
