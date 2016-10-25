@@ -224,10 +224,20 @@ final class Validator implements ValidatorInterface
         }
 
         foreach ($rule->requires() as $require) {
-            foreach ($this->getRequirements($require) as $requirement) {
-                if ($requirement->isResponsible($value)) {
-                    $rule->setRequirement($require, $requirement->getRequirement());
-                }
+            $this->setRequirementPerRule($rule, $require, $value);
+        }
+    }
+
+    /**
+     * @param LazyRequirementInterface $rule
+     * @param string                   $require
+     * @param mixed                    $value
+     */
+    private function setRequirementPerRule(LazyRequirementInterface $rule, string $require, $value)
+    {
+        foreach ($this->getRequirements($require) as $requirement) {
+            if ($requirement->isResponsible($value)) {
+                $rule->setRequirement($require, $requirement->getRequirement());
             }
         }
     }
