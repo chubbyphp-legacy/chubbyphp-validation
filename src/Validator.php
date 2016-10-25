@@ -17,9 +17,9 @@ use Respect\Validation\Validator as v;
 final class Validator implements ValidatorInterface
 {
     /**
-     * @var ValidationHelperInterface[]|array
+     * @var RequirementInterface[]|array
      */
-    private $helpers = [];
+    private $requirements = [];
 
     /**
      * @var TranslatorInterface
@@ -32,28 +32,32 @@ final class Validator implements ValidatorInterface
     private $logger;
 
     /**
-     * @param array                $helpers
+     * @param array                $requirements
      * @param TranslatorInterface  $translator
      * @param LoggerInterface|null $logger
      */
     public function __construct(
-        array $helpers = [],
+        array $requirements = [],
         TranslatorInterface $translator = null,
         LoggerInterface $logger = null
     ) {
-        foreach ($helpers as $helper) {
-            $this->addHelper($helper);
+        foreach ($requirements as $requirement) {
+            $this->addRequirement($requirement);
         }
         $this->translator = $translator ?? new NullTranslator();
         $this->logger = $logger ?? new NullLogger();
     }
 
     /**
-     * @param ValidationHelperInterface $helper
+     * @param RequirementInterface $requirement
      */
-    private function addHelper(ValidationHelperInterface $helper)
+    private function addRequirement(RequirementInterface $requirement)
     {
-        $this->helpers[] = $helper;
+        if (!isset($this->requirements[$requirement->delivers()])) {
+            $this->requirements[$requirement->delivers()] = [];
+        }
+
+        $this->requirements[$requirement->delivers()] = $requirement;
     }
 
     /**
@@ -118,7 +122,7 @@ final class Validator implements ValidatorInterface
             return [];
         }
 
-        $this->runHelpersPerRules($modelValidator->getRules(), $model);
+        $this->setRequirementsPerRules($modelValidator->getRules(), $model);
 
         try {
             $modelValidator->assert($model);
@@ -176,7 +180,7 @@ final class Validator implements ValidatorInterface
     /**
      * @param v      $validator
      * @param string $field
-     * @param $value
+     * @param mixed  $value
      * @param string $locale
      *
      * @return array
@@ -185,7 +189,7 @@ final class Validator implements ValidatorInterface
     {
         $fieldErrorMessages = [];
 
-        $this->runHelpersPerRules($validator->getRules(), $value);
+        $this->setRequirementsPerRules($validator->getRules(), $value);
 
         try {
             $validator->assert($value);
@@ -200,28 +204,46 @@ final class Validator implements ValidatorInterface
 
     /**
      * @param AbstractRule[]|array $rules
-     * @param $value
+     * @param mixed                $value
      */
-    private function runHelpersPerRules(array $rules, $value)
+    private function setRequirementsPerRules(array $rules, $value)
     {
         foreach ($rules as $rule) {
-            if ($rule instanceof ValidationHelperNeededInterface) {
-                $this->runHelpersPerRule($rule, $value);
-            }
+            $this->setRequirementsPerRule($rule, $value);
         }
     }
 
     /**
      * @param AbstractRule $rule
-     * @param $value
+     * @param mixed        $value
      */
-    private function runHelpersPerRule(AbstractRule $rule, $value)
+    private function setRequirementsPerRule(AbstractRule $rule, $value)
     {
-        foreach ($this->helpers as $helper) {
-            if ($helper->isResponsible($rule, $value)) {
-                $helper->apply($rule, $value);
+        if (!$rule instanceof LazyRequirementInterface) {
+            return;
+        }
+
+        foreach ($rule->requires() as $require) {
+            foreach ($this->getRequirements($require) as $requirement) {
+                if ($requirement->isResponsible($value)) {
+                    $rule->setRequirement($require, $requirement->getRequirement());
+                }
             }
         }
+    }
+
+    /**
+     * @param string $require
+     *
+     * @return RequirementInterface[]|array
+     */
+    private function getRequirements(string $require): array
+    {
+        if (isset($this->requirements[$require])) {
+            return $this->requirements[$require];
+        }
+
+        return [];
     }
 
     /**

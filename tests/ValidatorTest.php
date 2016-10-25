@@ -5,7 +5,7 @@ namespace Chubbyphp\Tests\Validation;
 use Chubbyphp\Translation\TranslatorInterface;
 use Chubbyphp\Validation\Rules\UniqueModelRule;
 use Chubbyphp\Validation\ValidatableModelInterface;
-use Chubbyphp\Validation\ValidationHelperInterface;
+use Chubbyphp\Validation\RequirementInterface;
 use Chubbyphp\Validation\Validator;
 use Psr\Log\LoggerInterface;
 use Respect\Validation\Exceptions\NestedValidationException;
@@ -44,7 +44,7 @@ final class ValidatorTest extends \PHPUnit_Framework_TestCase
         $translator = $this->getTranslator();
 
         $validator = new Validator([
-            $this->getHelper(true),
+            $this->getRequirements(true),
         ], $translator, $logger);
 
         $respectValidator = $this->getRespectValidator([
@@ -76,7 +76,7 @@ final class ValidatorTest extends \PHPUnit_Framework_TestCase
         $translator = $this->getTranslator();
 
         $validator = new Validator([
-            $this->getHelper(true),
+            $this->getRequirements(true),
         ], $translator, $logger);
 
         $nestedException = $this->getNestedValidationException([
@@ -397,13 +397,13 @@ final class ValidatorTest extends \PHPUnit_Framework_TestCase
     /**
      * @param bool $isResponsible
      *
-     * @return ValidationHelperInterface|\PHPUnit_Framework_MockObject_MockObject
+     * @return RequirementInterface|\PHPUnit_Framework_MockObject_MockObject
      */
-    private function getHelper(bool $isResponsible): ValidationHelperInterface
+    private function getRequirements(bool $isResponsible): RequirementInterface
     {
-        /** @var ValidationHelperInterface|\PHPUnit_Framework_MockObject_MockObject $helper */
+        /** @var RequirementInterface|\PHPUnit_Framework_MockObject_MockObject $helper */
         $helper = $this
-            ->getMockBuilder(ValidationHelperInterface::class)
+            ->getMockBuilder(RequirementInterface::class)
             ->setMethods(['isResponsible', 'help'])
             ->getMockForAbstractClass();
 
