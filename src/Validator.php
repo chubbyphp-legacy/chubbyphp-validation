@@ -53,11 +53,11 @@ final class Validator implements ValidatorInterface
      */
     private function addRequirement(RequirementInterface $requirement)
     {
-        if (!isset($this->requirements[$requirement->delivers()])) {
-            $this->requirements[$requirement->delivers()] = [];
+        if (!isset($this->requirements[$requirement->provides()])) {
+            $this->requirements[$requirement->provides()] = [];
         }
 
-        $this->requirements[$requirement->delivers()] = $requirement;
+        $this->requirements[$requirement->provides()][] = $requirement;
     }
 
     /**

@@ -44,21 +44,23 @@ final class ValidatorTest extends \PHPUnit_Framework_TestCase
         $translator = $this->getTranslator();
 
         $validator = new Validator([
-            $this->getRequirements(true),
+            $this->getRequirements(),
         ], $translator, $logger);
-
-        $respectValidator = $this->getRespectValidator([
-            ['return' => true],
-        ]);
-
-        $respectValidator->addRule($this->getUniqueModelRule());
 
         $user = $this->getUser(
             [
                 'id' => 'id1',
+                'username' => 'user1',
                 'email' => 'firstname.lastname@domain.tld',
             ],
-            $respectValidator
+            $respectModelValidator = $this->getRespectValidator([
+                ['return' => true],
+            ])->addRule($this->getUniqueModelRule()),
+            [
+                'email' => $respectEmailPropertyValidator = $this->getRespectValidator([
+                    ['return' => true],
+                ])->addRule($this->getEmail()),
+            ]
         );
 
         $errors = $validator->validateModel($user);
@@ -76,34 +78,35 @@ final class ValidatorTest extends \PHPUnit_Framework_TestCase
         $translator = $this->getTranslator();
 
         $validator = new Validator([
-            $this->getRequirements(true),
+            $this->getRequirements(),
         ], $translator, $logger);
-
-        $nestedException = $this->getNestedValidationException([
-            $this->getValidationException(['properties' => ['email']], 'Unique Model'),
-            $this->getValidationException([], 'Something else is weird'),
-        ]);
-
-        $respectValidator = $this->getRespectValidator([
-            ['exception' => $nestedException],
-        ]);
-
-        $respectValidator->addRule($this->getUniqueModelRule());
 
         $user = $this->getUser(
             [
                 'id' => 'id1',
+                'username' => 'user1',
                 'email' => 'firstname.lastname@domain.tld',
             ],
-            $respectValidator
+            $this->getRespectValidator([
+                ['exception' => $this->getNestedValidationException([
+                    $this->getValidationException('Unique model', ['properties' => ['username']]),
+                ])],
+            ])->addRule($this->getUniqueModelRule()),
+            [
+                'email' => $this->getRespectValidator([
+                    ['exception' => $this->getNestedValidationException([
+                        $this->getValidationException('Invalid email'),
+                    ])],
+                ])->addRule($this->getEmail()),
+            ]
         );
 
         $errors = $validator->validateModel($user);
 
         self::assertSame(
             [
-                'email' => ['Unique Model'],
-                '__model' => ['Something else is weird'],
+                'email' => ['Invalid email'],
+                'username' => ['Unique model'],
             ],
             $errors
         );
@@ -111,53 +114,44 @@ final class ValidatorTest extends \PHPUnit_Framework_TestCase
         self::assertCount(2, $translator->__translates);
 
         self::assertSame('de', $translator->__translates[0]['locale']);
-        self::assertSame('Unique Model', $translator->__translates[0]['key']);
+        self::assertSame('Invalid email', $translator->__translates[0]['key']);
 
         self::assertSame('de', $translator->__translates[1]['locale']);
-        self::assertSame('Something else is weird', $translator->__translates[1]['key']);
+        self::assertSame('Unique model', $translator->__translates[1]['key']);
 
         self::assertCount(2, $logger->__logs);
         self::assertSame('notice', $logger->__logs[0]['level']);
         self::assertSame('validation: field {field}, value {value}, message {message}', $logger->__logs[0]['message']);
         self::assertSame(
-            ['field' => 'email', 'value' => '', 'message' => 'Unique Model'],
+            ['field' => 'email', 'value' => 'firstname.lastname@domain.tld', 'message' => 'Invalid email'],
             $logger->__logs[0]['context']
         );
         self::assertSame('notice', $logger->__logs[1]['level']);
         self::assertSame('validation: field {field}, value {value}, message {message}', $logger->__logs[1]['message']);
         self::assertSame(
-            ['field' => '__model', 'value' => '', 'message' => 'Something else is weird'],
+            ['field' => 'username', 'value' => '', 'message' => 'Unique model'],
             $logger->__logs[1]['context']
         );
     }
 
-    public function testValidateModelWhichGotAPropertyValidators()
+    public function testValidateModelWhichGotAModelValidatorWithoutGivenRequirement()
     {
+        self::expectException(\RuntimeException::class);
+        self::expectExceptionMessage('Some message');
+
         $logger = $this->getLogger();
         $translator = $this->getTranslator();
 
         $validator = new Validator([], $translator, $logger);
 
-        $respectEmailValidator = $this->getRespectValidator([
-            ['return' => true],
-        ]);
-
-        $respectEmailValidator->addRule(new NotEmpty())->addRule($this->getEmail());
-
-        $respectPasswordValidator = $this->getRespectValidator([
-            ['return' => true],
-        ]);
-
-        $respectPasswordValidator->addRule($this->getNotEmpty());
-
         $user = $this->getUser(
             [
                 'id' => 'id1',
-                'email' => 'firstname.lastname@domain.tld',
-                'password' => 'password',
+                'username' => 'user1',
             ],
-            null,
-            ['email' => $respectEmailValidator, 'password' => $respectPasswordValidator]
+            $this->getRespectValidator([
+                ['exception' => new \RuntimeException('Some message')],
+            ])->addRule($this->getUniqueModelRule())
         );
 
         $errors = $validator->validateModel($user);
@@ -167,92 +161,6 @@ final class ValidatorTest extends \PHPUnit_Framework_TestCase
         self::assertCount(0, $translator->__translates);
 
         self::assertCount(0, $logger->__logs);
-    }
-
-    public function testValidateModelWhichGotAPropertyValidatorsWithException()
-    {
-        $logger = $this->getLogger();
-        $translator = $this->getTranslator();
-
-        $validator = new Validator([], $translator, $logger);
-
-        $nestedEmailException = $this->getNestedValidationException([
-            $this->getValidationException([], 'Empty email'),
-            $this->getValidationException([], 'Invalid E-Mail Address'),
-        ]);
-
-        $respectEmailValidator = $this->getRespectValidator([
-            ['exception' => $nestedEmailException],
-        ]);
-
-        $respectEmailValidator->addRule(new NotEmpty())->addRule($this->getEmail());
-
-        $nestedPasswordException = $this->getNestedValidationException([
-            $this->getValidationException([], 'Empty password'),
-        ]);
-
-        $respectPasswordValidator = $this->getRespectValidator([
-            ['exception' => $nestedPasswordException],
-        ]);
-
-        $respectPasswordValidator->addRule($this->getNotEmpty());
-
-        $user = $this->getUser(
-            [
-                'id' => 'id1',
-                'email' => '',
-                'password' => '',
-            ],
-            null,
-            ['email' => $respectEmailValidator, 'password' => $respectPasswordValidator]
-        );
-
-        $errors = $validator->validateModel($user);
-
-        self::assertSame(
-            [
-                'email' => ['Empty email', 'Invalid E-Mail Address'],
-                'password' => ['Empty password'],
-            ],
-            $errors
-        );
-
-        self::assertCount(3, $translator->__translates);
-
-        self::assertSame('de', $translator->__translates[0]['locale']);
-        self::assertSame('Empty email', $translator->__translates[0]['key']);
-
-        self::assertSame('de', $translator->__translates[1]['locale']);
-        self::assertSame('Invalid E-Mail Address', $translator->__translates[1]['key']);
-
-        self::assertSame('de', $translator->__translates[2]['locale']);
-        self::assertSame('Empty password', $translator->__translates[2]['key']);
-
-        self::assertCount(3, $logger->__logs);
-        self::assertSame('notice', $logger->__logs[0]['level']);
-        self::assertSame(
-            'validation: field {field}, value {value}, message {message}',
-            $logger->__logs[0]['message']
-        );
-        self::assertSame(
-            ['field' => 'email', 'value' => '', 'message' => 'Empty email'], $logger->__logs[0]['context']
-        );
-        self::assertSame('notice', $logger->__logs[1]['level']);
-        self::assertSame(
-            'validation: field {field}, value {value}, message {message}',
-            $logger->__logs[1]['message']
-        );
-        self::assertSame(
-            ['field' => 'email', 'value' => '', 'message' => 'Invalid E-Mail Address'], $logger->__logs[1]['context']
-        );
-        self::assertSame('notice', $logger->__logs[2]['level']);
-        self::assertSame(
-            'validation: field {field}, value {value}, message {message}',
-            $logger->__logs[2]['message']
-        );
-        self::assertSame(
-            ['field' => 'password', 'value' => '', 'message' => 'Empty password'], $logger->__logs[2]['context']
-        );
     }
 
     public function testValidateArray()
@@ -284,85 +192,6 @@ final class ValidatorTest extends \PHPUnit_Framework_TestCase
         self::assertCount(0, $translator->__translates);
 
         self::assertCount(0, $logger->__logs);
-    }
-
-    public function testValidateInvalidArray()
-    {
-        $logger = $this->getLogger();
-        $translator = $this->getTranslator();
-
-        $validator = new Validator([], $translator, $logger);
-
-        $nestedEmailException = $this->getNestedValidationException([
-            $this->getValidationException([], 'Empty email'),
-            $this->getValidationException([], 'Invalid E-Mail Address'),
-        ]);
-
-        $respectEmailValidator = $this->getRespectValidator([
-            ['exception' => $nestedEmailException],
-        ]);
-
-        $respectEmailValidator->addRule($this->getEmail());
-
-        $nestedPasswordException = $this->getNestedValidationException([
-            $this->getValidationException([], 'Empty password'),
-        ]);
-
-        $respectPasswordValidator = $this->getRespectValidator([
-            ['exception' => $nestedPasswordException],
-        ]);
-
-        $respectPasswordValidator->addRule($this->getNotEmpty());
-
-        $errors = $validator->validateArray(
-            ['email' => '', 'password' => ''],
-            ['email' => $respectEmailValidator, 'password' => $respectPasswordValidator]
-        );
-
-        self::assertSame(
-            [
-                'email' => ['Empty email', 'Invalid E-Mail Address'],
-                'password' => ['Empty password'],
-            ],
-            $errors
-        );
-
-        self::assertCount(3, $translator->__translates);
-
-        self::assertSame('de', $translator->__translates[0]['locale']);
-        self::assertSame('Empty email', $translator->__translates[0]['key']);
-
-        self::assertSame('de', $translator->__translates[1]['locale']);
-        self::assertSame('Invalid E-Mail Address', $translator->__translates[1]['key']);
-
-        self::assertSame('de', $translator->__translates[2]['locale']);
-        self::assertSame('Empty password', $translator->__translates[2]['key']);
-
-        self::assertCount(3, $logger->__logs);
-        self::assertSame('notice', $logger->__logs[0]['level']);
-        self::assertSame(
-            'validation: field {field}, value {value}, message {message}',
-            $logger->__logs[0]['message']
-        );
-        self::assertSame(
-            ['field' => 'email', 'value' => '', 'message' => 'Empty email'], $logger->__logs[0]['context']
-        );
-        self::assertSame('notice', $logger->__logs[1]['level']);
-        self::assertSame(
-            'validation: field {field}, value {value}, message {message}',
-            $logger->__logs[1]['message']
-        );
-        self::assertSame(
-            ['field' => 'email', 'value' => '', 'message' => 'Invalid E-Mail Address'], $logger->__logs[1]['context']
-        );
-        self::assertSame('notice', $logger->__logs[2]['level']);
-        self::assertSame(
-            'validation: field {field}, value {value}, message {message}',
-            $logger->__logs[2]['message']
-        );
-        self::assertSame(
-            ['field' => 'password', 'value' => '', 'message' => 'Empty password'], $logger->__logs[2]['context']
-        );
     }
 
     /**
@@ -399,28 +228,32 @@ final class ValidatorTest extends \PHPUnit_Framework_TestCase
      *
      * @return RequirementInterface|\PHPUnit_Framework_MockObject_MockObject
      */
-    private function getRequirements(bool $isResponsible): RequirementInterface
+    private function getRequirements(string $provides = 'repository', bool $isResponsible = true, $getRequirement = null): RequirementInterface
     {
-        /** @var RequirementInterface|\PHPUnit_Framework_MockObject_MockObject $helper */
-        $helper = $this
+        /** @var RequirementInterface|\PHPUnit_Framework_MockObject_MockObject $requirement */
+        $requirement = $this
             ->getMockBuilder(RequirementInterface::class)
-            ->setMethods(['isResponsible', 'help'])
+            ->setMethods(['provides', 'isResponsible', 'getRequirement'])
             ->getMockForAbstractClass();
 
-        $helper
+        $requirement
+            ->expects(self::any())
+            ->method('provides')
+            ->willReturn($provides);
+
+        $requirement
             ->expects(self::any())
             ->method('isResponsible')
-            ->willReturnCallback(function (AbstractRule $rule, $value) use ($isResponsible) {
+            ->willReturnCallback(function ($value) use ($isResponsible) {
                 return $isResponsible;
             });
 
-        $helper
+        $requirement
             ->expects(self::any())
-            ->method('help')
-            ->willReturnCallback(function (AbstractRule $rule, $value) {
-            });
+            ->method('getRequirement')
+            ->willReturn($getRequirement);
 
-        return $helper;
+        return $requirement;
     }
     /**
      * @param array $assertStack
@@ -485,7 +318,10 @@ final class ValidatorTest extends \PHPUnit_Framework_TestCase
         $uniqueModelRule = $this
             ->getMockBuilder(UniqueModelRule::class)
             ->disableOriginalConstructor()
+            ->setMethods(['requires'])
             ->getMock();
+
+        $uniqueModelRule->expects(self::any())->method('requires')->willReturn(['repository']);
 
         return $uniqueModelRule;
     }
@@ -539,11 +375,12 @@ final class ValidatorTest extends \PHPUnit_Framework_TestCase
     }
 
     /**
-     * @param array $params
+     * @param string $mainMessage
+     * @param array  $params
      *
      * @return ValidationException|\PHPUnit_Framework_MockObject_MockObject
      */
-    private function getValidationException(array $params, string $mainMessage)
+    private function getValidationException(string $mainMessage, array $params = null)
     {
         $exception = $this
             ->getMockBuilder(ValidationException::class)

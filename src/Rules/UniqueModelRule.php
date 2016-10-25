@@ -6,10 +6,8 @@ namespace Chubbyphp\Validation\Rules;
 
 use Chubbyphp\Model\RepositoryInterface;
 use Chubbyphp\Validation\ValidatableModelInterface;
-use Chubbyphp\Validation\LazyRequirementInterface;
-use Respect\Validation\Rules\AbstractRule;
 
-class UniqueModelRule extends AbstractRule implements LazyRequirementInterface
+class UniqueModelRule extends AbstractLazyRequirementRule
 {
     /**
      * @var string[]|array
@@ -19,7 +17,7 @@ class UniqueModelRule extends AbstractRule implements LazyRequirementInterface
     /**
      * @var RepositoryInterface
      */
-    private $repository;
+    protected $repository;
 
     /**
      * @param string[]|array $properties
@@ -110,18 +108,5 @@ class UniqueModelRule extends AbstractRule implements LazyRequirementInterface
     public function requires(): array
     {
         return ['repository'];
-    }
-
-    /**
-     * @param string $name
-     * @param $value
-     */
-    public function setRequirement(string $name, $value)
-    {
-        if (!in_array($name, $this->requires(), true)) {
-            throw new \InvalidArgumentException(sprintf('There is no requirement with name %s', $name));
-        }
-
-        $this->$name = $value;
     }
 }

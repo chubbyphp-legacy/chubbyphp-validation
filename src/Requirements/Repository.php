@@ -7,7 +7,7 @@ namespace Chubbyphp\Validation\Requirements;
 use Chubbyphp\Model\RepositoryInterface;
 use Chubbyphp\Validation\RequirementInterface;
 
-final class RepositoryRequirement implements RequirementInterface
+final class Repository implements RequirementInterface
 {
     /**
      * @var RepositoryInterface
@@ -25,7 +25,7 @@ final class RepositoryRequirement implements RequirementInterface
     /**
      * @return string
      */
-    public function delivers(): string
+    public function provides(): string
     {
         return 'repository';
     }

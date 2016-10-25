@@ -114,14 +114,14 @@ class MyRepository implements RepositoryInterface
 ```{.php}
 <?php
 
-use Chubbyphp\Validation\Helper\RepositoryHelper;
+use Chubbyphp\Validation\Requirements\Repository;
 use Chubbyphp\Validation\Validator;
 use MyProject\Model\MyModel;
 use MyProject\Repository\MyRepository;
 
 $model = new MyModel;
 
-$validator = new Validator([new RepositoryHelper(new MyRepository())]);
+$validator = new Validator([new Repository(new MyRepository())]);
 
 $errors = $validator->validateModel($model);
 ```
@@ -132,7 +132,7 @@ $errors = $validator->validateModel($model);
 <?php
 
 use Chubbyphp\Translator\Translator;
-use Chubbyphp\Validation\Helper\RepositoryHelper;
+use Chubbyphp\Validation\Requirements\Repository;
 use Chubbyphp\Validation\Validator;
 use MyProject\Model\MyModel;
 use MyProject\Repository\MyRepository;
@@ -140,7 +140,7 @@ use MyProject\Repository\MyRepository;
 $model = new MyModel;
 
 $translator = new Translator();
-$validator = new Validator([new RepositoryHelper(new MyRepository())], $translator);
+$validator = new Validator([new Repository(new MyRepository())], $translator);
 
 $errors = $validator->validateModel($model);
 ```
@@ -199,7 +199,7 @@ $errors = $validator->validateArray($data, $validators);
 ```{.php}
 <?php
 
-use Chubbyphp\Validation\Helper\RepositoryHelper;
+use Chubbyphp\Validation\Requirements\Repository;
 use Chubbyphp\Validation\Validator;
 use Chubbyphp\Validation\ValidationProvider;
 use MyProject\Repository\MyRepository;
@@ -208,7 +208,7 @@ use Pimple\Container;
 $container->register(new ValidationProvider);
 
 $container->extend('validator.helpers', function (array $helpers) use ($container) {
-    $helpers[] = new RepositoryHelper(new MyRepository())
+    $helpers[] = new Repository(new MyRepository())
 
     return $helpers;
 });

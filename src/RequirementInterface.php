@@ -9,7 +9,7 @@ interface RequirementInterface
     /**
      * @return string
      */
-    public function delivers(): string;
+    public function provides(): string;
 
     /**
      * @param mixed $value

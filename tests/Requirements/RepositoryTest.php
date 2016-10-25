@@ -3,15 +3,13 @@
 namespace Chubbyphp\Tests\Validation\Requirements;
 
 use Chubbyphp\Model\RepositoryInterface;
-use Chubbyphp\Validation\Requirements\RepositoryRequirement;
-use Chubbyphp\Validation\Rules\UniqueModelRule;
+use Chubbyphp\Validation\Requirements\Repository;
 use Chubbyphp\Validation\ValidatableModelInterface;
-use Respect\Validation\Rules\NotEmpty;
 
 /**
- * @covers Chubbyphp\Validation\Requirements\RepositoryRequirements
+ * @covers Chubbyphp\Validation\Requirements\Repository
  */
-final class RepositoryHelperTest extends \PHPUnit_Framework_TestCase
+final class RepositoryTest extends \PHPUnit_Framework_TestCase
 {
     public static function setUpBeforeClass()
     {
@@ -45,34 +43,37 @@ EOT;
         eval($eval);
     }
 
+    public function testProvides()
+    {
+        $requirement = new Repository($this->getUserRepository());
+
+        self::assertSame('repository', $requirement->provides());
+    }
+
     public function testIsResponsibleWithInvalidValue()
     {
-        $helper = new RepositoryRequirement($this->getUserRepository());
+        $requirement = new Repository($this->getUserRepository());
 
-        $rule = $this->getUniqueModelRule();
         $model = new \stdClass();
 
-        self::assertFalse($helper->isResponsible($rule, $model));
+        self::assertFalse($requirement->isResponsible($model));
     }
 
     public function testIsResponsibleWithValidArguments()
     {
-        $helper = new RepositoryRequirement($this->getUserRepository());
+        $requirement = new Repository($this->getUserRepository());
 
-        $rule = $this->getUniqueModelRule();
         $model = $this->getModel();
 
-        self::assertTrue($helper->isResponsible($rule, $model));
+        self::assertTrue($requirement->isResponsible($model));
     }
 
-    public function testHelp()
+    public function testGetRequirement()
     {
-        $helper = new RepositoryRequirement($this->getUserRepository());
+        $repository = $this->getUserRepository();
+        $requirement = new Repository($repository);
 
-        $rule = $this->getUniqueModelRule(1);
-        $model = $this->getModel();
-
-        $helper->apply($rule, $model);
+        self::assertSame($repository, $requirement->getRequirement());
     }
 
     /**
@@ -103,40 +104,5 @@ EOT;
             ->getMock();
 
         return $model;
-    }
-
-    /**
-     * @param int $setRepositoryCallCount
-     *
-     * @return UniqueModelRule|\PHPUnit_Framework_MockObject_MockObject
-     */
-    private function getUniqueModelRule($setRepositoryCallCount = 0): UniqueModelRule
-    {
-        $uniqueModelRule = $this
-            ->getMockBuilder(UniqueModelRule::class)
-            ->disableOriginalConstructor()
-            ->setMethods(['setRepository'])
-            ->getMock();
-
-        $uniqueModelRule
-            ->expects(self::exactly($setRepositoryCallCount))
-            ->method('setRepository')
-            ->willReturnCallback(function (RepositoryInterface $repository) {
-            });
-
-        return $uniqueModelRule;
-    }
-
-    /**
-     * @return NotEmpty|\PHPUnit_Framework_MockObject_MockObject
-     */
-    private function getNotEmpty(): NotEmpty
-    {
-        $notEmptyRule = $this
-            ->getMockBuilder(NotEmpty::class)
-            ->disableOriginalConstructor()
-            ->getMock();
-
-        return $notEmptyRule;
     }
 }

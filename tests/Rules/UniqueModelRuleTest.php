@@ -17,7 +17,7 @@ final class UniqueModelRuleTest extends RuleTestCase
         $user = $this->getUser('id1', 'firstname.lastname@domain.tld');
 
         $uniqueModel = new UniqueModelRule(['email']);
-        $uniqueModel->setRepository($this->getUserRepository([
+        $uniqueModel->setRequirement('repository', $this->getUserRepository([
             [
                 'arguments' => [['email' => 'firstname.lastname@domain.tld']],
                 'return' => null,
@@ -60,7 +60,7 @@ final class UniqueModelRuleTest extends RuleTestCase
         $user = $this->getUser('id1', 'firstname.lastname@domain.tld');
 
         $uniqueModel = new UniqueModelRule(['email']);
-        $uniqueModel->setRepository($this->getUserRepository([
+        $uniqueModel->setRequirement('repository', $this->getUserRepository([
             [
                 'arguments' => [['email' => 'firstname.lastname@domain.tld']],
                 'return' => $this->getUser('id2', 'firstname.lastname@domain.tld'),
@@ -77,7 +77,7 @@ final class UniqueModelRuleTest extends RuleTestCase
         $user = $this->getUser('id1', 'firstname.lastname@domain.tld');
 
         $uniqueModel = new UniqueModelRule(['email']);
-        $uniqueModel->setRepository($this->getUserRepository([
+        $uniqueModel->setRequirement('repository', $this->getUserRepository([
             [
                 'arguments' => [['email' => 'firstname.lastname@domain.tld']],
                 'return' => $this->getUser('id1', 'firstname.lastname@domain.tld'),
