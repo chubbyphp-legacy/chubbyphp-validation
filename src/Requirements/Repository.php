@@ -37,7 +37,9 @@ final class Repository implements RequirementInterface
      */
     public function isResponsible($value): bool
     {
-        return get_class($value) === $this->repository->getModelClass();
+        $modelClass = $this->repository->getModelClass();
+
+        return $value instanceof $modelClass;
     }
 
     /**
