@@ -54,7 +54,7 @@ EOT;
     {
         $requirement = new Repository($this->getUserRepository());
 
-        $model = new \stdClass();
+        $model = [];
 
         self::assertFalse($requirement->isResponsible($model));
     }

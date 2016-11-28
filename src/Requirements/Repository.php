@@ -37,7 +37,17 @@ final class Repository implements RequirementInterface
      */
     public function isResponsible($value): bool
     {
-        return get_class($value) === $this->repository->getModelClass();
+        if (!is_object($value)) {
+            return false;
+        }
+
+        if (method_exists($this->repository, 'isResponsible')) {
+            return $this->repository->isResponsible(get_class($value));
+        }
+
+        $modelClass = $this->repository->getModelClass();
+
+        return $value instanceof $modelClass;
     }
 
     /**
