@@ -47,7 +47,7 @@ final class Repository implements RequirementInterface
 
         $modelClass = $this->repository->getModelClass();
 
-        return $value instanceof $modelClass;
+        return get_class($value) === $modelClass;
     }
 
     /**
