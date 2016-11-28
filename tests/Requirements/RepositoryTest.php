@@ -45,18 +45,18 @@ final class RepositoryTest extends \PHPUnit_Framework_TestCase
     }
 
     /**
-     * @param string $class
-     *
      * @return RepositoryInterface|\PHPUnit_Framework_MockObject_MockObject
      */
-    private function getUserRepository($class = ValidatableModelInterface::class): RepositoryInterface
+    private function getUserRepository(): RepositoryInterface
     {
         $userRepository = $this
             ->getMockBuilder(RepositoryInterface::class)
-            ->setMethods(['getModelClass'])
+            ->setMethods(['getModelClass', 'isResponsible'])
             ->getMockForAbstractClass();
 
-        $userRepository->expects(self::any())->method('getModelClass')->willReturn($class);
+        $userRepository->expects(self::any())->method('isResponsible')->willReturn(true);
+
+        $userRepository->expects(self::any())->method('getModelClass')->willReturn(ValidatableModelInterface::class);
 
         return $userRepository;
     }
