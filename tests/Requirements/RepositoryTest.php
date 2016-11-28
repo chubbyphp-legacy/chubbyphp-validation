@@ -11,38 +11,6 @@ use Chubbyphp\Validation\ValidatableModelInterface;
  */
 final class RepositoryTest extends \PHPUnit_Framework_TestCase
 {
-    public static function setUpBeforeClass()
-    {
-        $eval = <<<'EOT'
-namespace Chubbyphp\Validation\Requirements
-{
-    use Chubbyphp\Validation\ValidatableModelInterface;
-
-    function get_class($object)
-    {
-        $class = \get_class($object);
-
-        $map = [
-            'ValidatableModelInterface' => ValidatableModelInterface::class
-        ];
-
-        // mocked class
-        if ('Mock_' === \substr($class, 0, 5)) {
-            $classParts = \explode('_', $class);
-            $className = $classParts[1];
-
-            if (isset($map[$className])) {
-                return $map[$className];
-            }
-        }
-
-        return $class;
-    }
-}
-EOT;
-        eval($eval);
-    }
-
     public function testProvides()
     {
         $requirement = new Repository($this->getUserRepository());
