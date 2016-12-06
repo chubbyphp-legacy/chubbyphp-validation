@@ -11,8 +11,8 @@
     ],
     "require": {
         "php": "~7.0",
-        "chubbyphp/chubbyphp-model": "~2.0@dev|~1.0@dev",
-        "chubbyphp/chubbyphp-translation": "~1.0@dev",
+        "chubbyphp/chubbyphp-model": "~2.0|~1.0",
+        "chubbyphp/chubbyphp-translation": "~1.0",
         "psr/log": "~1.0",
         "respect/validation": "^1.1.9"
     },
