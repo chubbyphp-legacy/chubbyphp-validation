@@ -57,35 +57,59 @@ final class UniqueModelRuleTest extends RuleTestCase
 
     public function providerForInvalidInput()
     {
-        $user = $this->getUser('id1', 'firstname.lastname@domain.tld');
+        $user1 = $this->getUser('id1', 'firstname.lastname@domain.tld');
 
-        $uniqueModel = new UniqueModelRule(['email']);
-        $uniqueModel->setRequirement('repository', $this->getUserRepository([
+        $uniqueModel1 = new UniqueModelRule(['email']);
+        $uniqueModel1->setRequirement('repository', $this->getUserRepository([
             [
                 'arguments' => [['email' => 'firstname.lastname@domain.tld']],
                 'return' => $this->getUser('id2', 'firstname.lastname@domain.tld'),
             ],
         ]));
 
+        $father = $this->getUser('id3', 'firstname.lastname@domain.tld');
+        $user2 = $this->getUser('id1', 'firstname.lastname@domain.tld', $father);
+
+        $uniqueModel2 = new UniqueModelRule(['father']);
+        $uniqueModel2->setRequirement('repository', $this->getUserRepository([
+            [
+                'arguments' => [['fatherId' => 'id3']],
+                'return' => $this->getUser('id2', 'firstname.lastname@domain.tld'),
+            ],
+        ]));
+
         return [
-            [$uniqueModel, $user],
+            [$uniqueModel1, $user1],
+            [$uniqueModel2, $user2],
         ];
     }
 
     public function providerForValidInput()
     {
-        $user = $this->getUser('id1', 'firstname.lastname@domain.tld');
+        $user1 = $this->getUser('id1', 'firstname.lastname@domain.tld');
 
-        $uniqueModel = new UniqueModelRule(['email']);
-        $uniqueModel->setRequirement('repository', $this->getUserRepository([
+        $uniqueModel1 = new UniqueModelRule(['email']);
+        $uniqueModel1->setRequirement('repository', $this->getUserRepository([
             [
                 'arguments' => [['email' => 'firstname.lastname@domain.tld']],
                 'return' => $this->getUser('id1', 'firstname.lastname@domain.tld'),
             ],
         ]));
 
+        $father = $this->getUser('id3', 'firstname.lastname@domain.tld');
+        $user2 = $this->getUser('id1', 'firstname.lastname@domain.tld', $father);
+
+        $uniqueModel2 = new UniqueModelRule(['father']);
+        $uniqueModel2->setRequirement('repository', $this->getUserRepository([
+            [
+                'arguments' => [['fatherId' => 'id3']],
+                'return' => $this->getUser('id1', 'firstname.lastname@domain.tld'),
+            ],
+        ]));
+
         return [
-            [$uniqueModel, $user],
+            [$uniqueModel1, $user1],
+            [$uniqueModel2, $user2],
         ];
     }
 
@@ -94,7 +118,7 @@ final class UniqueModelRuleTest extends RuleTestCase
      *
      * @return ValidatableModelInterface|\PHPUnit_Framework_MockObject_MockObject
      */
-    private function getUser(string $id, string $email)
+    private function getUser(string $id, string $email, $father = null)
     {
         $user = $this
             ->getMockBuilder(ValidatableModelInterface::class)
@@ -104,6 +128,7 @@ final class UniqueModelRuleTest extends RuleTestCase
 
         $user->id = $id;
         $user->email = $email;
+        $user->father = $father;
 
         $user->expects(self::any())->method('getId')->willReturn($user->id);
 

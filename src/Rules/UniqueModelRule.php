@@ -4,6 +4,7 @@ declare(strict_types=1);
 
 namespace Chubbyphp\Validation\Rules;
 
+use Chubbyphp\Model\Reference\ModelReferenceInterface;
 use Chubbyphp\Model\RepositoryInterface;
 use Chubbyphp\Validation\ValidatableModelInterface;
 
@@ -96,7 +97,13 @@ class UniqueModelRule extends AbstractLazyRequirementRule
         foreach ($this->properties as $property) {
             $reflectionProperty = $reflectionClass->getProperty($property);
             $reflectionProperty->setAccessible(true);
-            $criteria[$property] = $reflectionProperty->getValue($model);
+            $value = $reflectionProperty->getValue($model);
+            if (is_object($value) && method_exists($value, 'getId')) {
+                $property = $property . 'Id';
+                $value = $value->getId();
+            }
+
+            $criteria[$property] = $value;
         }
 
         return $criteria;
