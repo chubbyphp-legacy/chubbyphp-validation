@@ -12,7 +12,7 @@ A simple validation uses Respect/Validation.
 ## Requirements
 
  * php: ~7.0
- * chubbyphp/chubbyphp-model: ~1.0
+ * chubbyphp/chubbyphp-model: ~3.0@dev|~2.0|~1.0
  * chubbyphp/chubbyphp-translation: ~1.0
 
 ## Suggest
