@@ -81,9 +81,9 @@ final class Validator implements ValidatorInterface
      */
     private function assertModelProperties(ValidatableModelInterface $model, string $locale): array
     {
-        $errorMessages = [];
-
         $reflectionClass = new \ReflectionObject($model);
+
+        $errorMessages = [];
         foreach ($model->getPropertyValidators() as $property => $validator) {
             $value = $this->getPropertyValue($reflectionClass, $model, $property);
             if ([] !== $fieldErrorMessages = $this->assert($validator, $property, $value, $locale)) {
@@ -136,6 +136,11 @@ final class Validator implements ValidatorInterface
         return $this->getModelErrorMessagesByExceptions($exceptions, $locale);
     }
 
+    /**
+     * @param array $exceptions
+     * @param string $locale
+     * @return string[]
+     */
     private function getModelErrorMessagesByExceptions(array $exceptions, string $locale)
     {
         $errorMessages = [];
@@ -149,6 +154,7 @@ final class Validator implements ValidatorInterface
                 $errorMessages[$property][] = $this->getMessageByException($exception, $property, '', $locale);
             }
         }
+
         return $errorMessages;
     }
 
@@ -157,7 +163,7 @@ final class Validator implements ValidatorInterface
      * @param array  $validators
      * @param string $locale
      *
-     * @return array
+     * @return string[]
      */
     public function validateArray(array $data, array $validators, string $locale = 'de'): array
     {
@@ -178,23 +184,22 @@ final class Validator implements ValidatorInterface
      * @param mixed  $value
      * @param string $locale
      *
-     * @return array
+     * @return string[]
      */
     private function assert(v $validator, string $field, $value, string $locale)
     {
-        $fieldErrorMessages = [];
-
+        $errorMessages = [];
         foreach ($validator->getRules() as $rule) {
             $this->setRequirementsPerRule($rule, $value);
 
             try {
                 $rule->assert($value);
             } catch (ValidationException $exception) {
-                $fieldErrorMessages[] = $this->getMessageByException($exception, $field, $value, $locale);
+                $errorMessages[] = $this->getMessageByException($exception, $field, $value, $locale);
             }
         }
 
-        return $fieldErrorMessages;
+        return $errorMessages;
     }
 
     /**
