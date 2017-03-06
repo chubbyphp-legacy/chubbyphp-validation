@@ -9,7 +9,6 @@ use Chubbyphp\Translation\NullTranslator;
 use Chubbyphp\Translation\TranslatorInterface;
 use Psr\Log\LoggerInterface;
 use Psr\Log\NullLogger;
-use Respect\Validation\Exceptions\NestedValidationException;
 use Respect\Validation\Exceptions\ValidationException;
 use Respect\Validation\Rules\AbstractRule;
 use Respect\Validation\Validator as v;
@@ -122,39 +121,27 @@ final class Validator implements ValidatorInterface
             return [];
         }
 
-        $this->setRequirementsPerRules($modelValidator->getRules(), $model);
+        $fieldErrorMessages = [];
 
-        try {
-            $modelValidator->assert($model);
-        } catch (NestedValidationException $nestedException) {
-            return $this->getValidateModelErrors($nestedException, $locale);
-        }
+        foreach ($modelValidator->getRules() as $rule) {
+            $this->setRequirementsPerRule($rule, $model);
 
-        return [];
-    }
+            try {
+                $rule->assert($model);
+            } catch (ValidationException $exception) {
+                /** @var ValidationException $exception */
+                $properties = $exception->hasParam('properties') ? $exception->getParam('properties') : ['__model'];
+                foreach ($properties as $property) {
+                    if (!isset($fieldErrorMessages[$property])) {
+                        $fieldErrorMessages[$property] = [];
+                    }
 
-    /**
-     * @param NestedValidationException $nestedException
-     * @param string                    $locale
-     *
-     * @return array
-     */
-    private function getValidateModelErrors(NestedValidationException $nestedException, string $locale): array
-    {
-        $errorMessages = [];
-        foreach ($nestedException as $exception) {
-            /** @var ValidationException $exception */
-            $properties = $exception->hasParam('properties') ? $exception->getParam('properties') : ['__model'];
-            foreach ($properties as $property) {
-                if (!isset($errorMessages[$property])) {
-                    $errorMessages[$property] = [];
+                    $fieldErrorMessages[$property][] = $this->getMessageByException($exception, $property, '', $locale);
                 }
-
-                $errorMessages[$property][] = $this->getMessageByException($exception, $property, '', $locale);
             }
         }
 
-        return $errorMessages;
+        return $fieldErrorMessages;
     }
 
     /**
@@ -189,28 +176,17 @@ final class Validator implements ValidatorInterface
     {
         $fieldErrorMessages = [];
 
-        $this->setRequirementsPerRules($validator->getRules(), $value);
+        foreach ($validator->getRules() as $rule) {
+            $this->setRequirementsPerRule($rule, $value);
 
-        try {
-            $validator->assert($value);
-        } catch (NestedValidationException $nestedException) {
-            foreach ($nestedException as $exception) {
+            try {
+                $rule->assert($value);
+            } catch (ValidationException $exception) {
                 $fieldErrorMessages[] = $this->getMessageByException($exception, $field, $value, $locale);
             }
         }
 
         return $fieldErrorMessages;
-    }
-
-    /**
-     * @param AbstractRule[]|array $rules
-     * @param mixed                $value
-     */
-    private function setRequirementsPerRules(array $rules, $value)
-    {
-        foreach ($rules as $rule) {
-            $this->setRequirementsPerRule($rule, $value);
-        }
     }
 
     /**
