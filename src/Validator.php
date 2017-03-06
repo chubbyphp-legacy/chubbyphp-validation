@@ -121,7 +121,7 @@ final class Validator implements ValidatorInterface
             return [];
         }
 
-        $fieldErrorMessages = [];
+        $exceptions = [];
 
         foreach ($modelValidator->getRules() as $rule) {
             $this->setRequirementsPerRule($rule, $model);
@@ -129,19 +129,27 @@ final class Validator implements ValidatorInterface
             try {
                 $rule->assert($model);
             } catch (ValidationException $exception) {
-                /** @var ValidationException $exception */
-                $properties = $exception->hasParam('properties') ? $exception->getParam('properties') : ['__model'];
-                foreach ($properties as $property) {
-                    if (!isset($fieldErrorMessages[$property])) {
-                        $fieldErrorMessages[$property] = [];
-                    }
-
-                    $fieldErrorMessages[$property][] = $this->getMessageByException($exception, $property, '', $locale);
-                }
+                $exceptions[] = $exception;
             }
         }
 
-        return $fieldErrorMessages;
+        return $this->getModelErrorMessagesByExceptions($exceptions, $locale);
+    }
+
+    private function getModelErrorMessagesByExceptions(array $exceptions, string $locale)
+    {
+        $errorMessages = [];
+        foreach ($exceptions as $exception) {
+            /** @var ValidationException $exception */
+            $properties = $exception->hasParam('properties') ? $exception->getParam('properties') : ['__model'];
+            foreach ($properties as $property) {
+                if (!isset($errorMessages[$property])) {
+                    $errorMessages[$property] = [];
+                }
+                $errorMessages[$property][] = $this->getMessageByException($exception, $property, '', $locale);
+            }
+        }
+        return $errorMessages;
     }
 
     /**
