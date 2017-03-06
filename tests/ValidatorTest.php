@@ -284,6 +284,7 @@ final class ValidatorTest extends \PHPUnit_Framework_TestCase
         $emailRule = $this
             ->getMockBuilder(Email::class)
             ->disableOriginalConstructor()
+            ->setMethods(['assert'])
             ->getMock();
 
         $emailRule->expects(self::any())->method('assert')->willReturnCallback(function () use ($exception) {
@@ -306,6 +307,7 @@ final class ValidatorTest extends \PHPUnit_Framework_TestCase
         $notEmptyRule = $this
             ->getMockBuilder(NotEmpty::class)
             ->disableOriginalConstructor()
+            ->setMethods(['assert'])
             ->getMock();
 
         $notEmptyRule->expects(self::any())->method('assert')->willReturnCallback(function () use ($exception) {
