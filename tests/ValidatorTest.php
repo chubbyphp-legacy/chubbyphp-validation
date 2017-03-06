@@ -89,7 +89,7 @@ final class ValidatorTest extends \PHPUnit_Framework_TestCase
                 ),
             [
                 'email' => $this->getRespectValidator()->addRule(
-                    $this->getEmail($this->getValidationException($this->getValidationException('Invalid email')))
+                    $this->getEmail($this->getValidationException('Invalid email'))
                 )
             ]
         );
