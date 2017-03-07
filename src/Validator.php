@@ -124,6 +124,7 @@ final class Validator implements ValidatorInterface
         $exceptions = [];
 
         foreach ($modelValidator->getRules() as $rule) {
+            /** @var AbstractRule $rule */
             $this->setRequirementsPerRule($rule, $model);
 
             try {
@@ -190,6 +191,7 @@ final class Validator implements ValidatorInterface
     {
         $errorMessages = [];
         foreach ($validator->getRules() as $rule) {
+            /** @var AbstractRule $rule */
             $this->setRequirementsPerRule($rule, $value);
 
             try {
