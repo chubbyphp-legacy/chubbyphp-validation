@@ -9,6 +9,7 @@ use Chubbyphp\Translation\NullTranslator;
 use Chubbyphp\Translation\TranslatorInterface;
 use Psr\Log\LoggerInterface;
 use Psr\Log\NullLogger;
+use Respect\Validation\Exceptions\NestedValidationException;
 use Respect\Validation\Exceptions\ValidationException;
 use Respect\Validation\Rules\AbstractRule;
 use Respect\Validation\Validator as v;
@@ -81,9 +82,9 @@ final class Validator implements ValidatorInterface
      */
     private function assertModelProperties(ValidatableModelInterface $model, string $locale): array
     {
-        $reflectionClass = new \ReflectionObject($model);
-
         $errorMessages = [];
+
+        $reflectionClass = new \ReflectionObject($model);
         foreach ($model->getPropertyValidators() as $property => $validator) {
             $value = $this->getPropertyValue($reflectionClass, $model, $property);
             if ([] !== $fieldErrorMessages = $this->assert($validator, $property, $value, $locale)) {
@@ -121,37 +122,34 @@ final class Validator implements ValidatorInterface
             return [];
         }
 
-        $exceptions = [];
+        $this->setRequirementsPerRules($modelValidator->getRules(), $model);
 
-        foreach ($modelValidator->getRules() as $rule) {
-            /** @var AbstractRule $rule */
-            $this->setRequirementsPerRule($rule, $model);
-
-            try {
-                $rule->assert($model);
-            } catch (ValidationException $exception) {
-                $exceptions[] = $exception;
-            }
+        try {
+            $modelValidator->assert($model);
+        } catch (NestedValidationException $nestedException) {
+            return $this->getValidateModelErrors($nestedException, $locale);
         }
 
-        return $this->getModelErrorMessagesByExceptions($exceptions, $locale);
+        return [];
     }
 
     /**
-     * @param array $exceptions
-     * @param string $locale
-     * @return string[]
+     * @param NestedValidationException $nestedException
+     * @param string                    $locale
+     *
+     * @return array
      */
-    private function getModelErrorMessagesByExceptions(array $exceptions, string $locale)
+    private function getValidateModelErrors(NestedValidationException $nestedException, string $locale): array
     {
         $errorMessages = [];
-        foreach ($exceptions as $exception) {
+        foreach ($nestedException as $exception) {
             /** @var ValidationException $exception */
             $properties = $exception->hasParam('properties') ? $exception->getParam('properties') : ['__model'];
             foreach ($properties as $property) {
                 if (!isset($errorMessages[$property])) {
                     $errorMessages[$property] = [];
                 }
+
                 $errorMessages[$property][] = $this->getMessageByException($exception, $property, '', $locale);
             }
         }
@@ -164,7 +162,7 @@ final class Validator implements ValidatorInterface
      * @param array  $validators
      * @param string $locale
      *
-     * @return string[]
+     * @return array
      */
     public function validateArray(array $data, array $validators, string $locale = 'de'): array
     {
@@ -185,23 +183,34 @@ final class Validator implements ValidatorInterface
      * @param mixed  $value
      * @param string $locale
      *
-     * @return string[]
+     * @return array
      */
     private function assert(v $validator, string $field, $value, string $locale)
     {
-        $errorMessages = [];
-        foreach ($validator->getRules() as $rule) {
-            /** @var AbstractRule $rule */
-            $this->setRequirementsPerRule($rule, $value);
+        $fieldErrorMessages = [];
 
-            try {
-                $rule->assert($value);
-            } catch (ValidationException $exception) {
-                $errorMessages[] = $this->getMessageByException($exception, $field, $value, $locale);
+        $this->setRequirementsPerRules($validator->getRules(), $value);
+
+        try {
+            $validator->assert($value);
+        } catch (NestedValidationException $nestedException) {
+            foreach ($nestedException as $exception) {
+                $fieldErrorMessages[] = $this->getMessageByException($exception, $field, $value, $locale);
             }
         }
 
-        return $errorMessages;
+        return $fieldErrorMessages;
+    }
+
+    /**
+     * @param AbstractRule[]|array $rules
+     * @param mixed                $value
+     */
+    private function setRequirementsPerRules(array $rules, $value)
+    {
+        foreach ($rules as $rule) {
+            $this->setRequirementsPerRule($rule, $value);
+        }
     }
 
     /**

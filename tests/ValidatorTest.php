@@ -8,7 +8,9 @@ use Chubbyphp\Validation\ValidatableModelInterface;
 use Chubbyphp\Validation\RequirementInterface;
 use Chubbyphp\Validation\Validator;
 use Psr\Log\LoggerInterface;
+use Respect\Validation\Exceptions\NestedValidationException;
 use Respect\Validation\Exceptions\ValidationException;
+use Respect\Validation\Rules\AbstractRule;
 use Respect\Validation\Rules\Email;
 use Respect\Validation\Rules\NotEmpty;
 use Respect\Validation\Validator as v;
@@ -51,9 +53,13 @@ final class ValidatorTest extends \PHPUnit_Framework_TestCase
                 'username' => 'user1',
                 'email' => 'firstname.lastname@domain.tld',
             ],
-            $respectModelValidator = $this->getRespectValidator()->addRule($this->getUniqueModelRule()),
+            $respectModelValidator = $this->getRespectValidator([
+                ['return' => true],
+            ])->addRule($this->getUniqueModelRule()),
             [
-                'email' => $respectEmailPropertyValidator = $this->getRespectValidator()->addRule($this->getEmail()),
+                'email' => $respectEmailPropertyValidator = $this->getRespectValidator([
+                    ['return' => true],
+                ])->addRule($this->getEmail()),
             ]
         );
 
@@ -81,16 +87,17 @@ final class ValidatorTest extends \PHPUnit_Framework_TestCase
                 'username' => 'user1',
                 'email' => 'firstname.lastname@domain.tld',
             ],
-            $this->getRespectValidator()
-                ->addRule(
-                    $this->getUniqueModelRule(
-                        $this->getValidationException('Unique model', ['properties' => ['username']])
-                    )
-                ),
+            $this->getRespectValidator([
+                ['exception' => $this->getNestedValidationException([
+                    $this->getValidationException('Unique model', ['properties' => ['username']]),
+                ])],
+            ])->addRule($this->getUniqueModelRule()),
             [
-                'email' => $this->getRespectValidator()->addRule(
-                    $this->getEmail($this->getValidationException('Invalid email'))
-                )
+                'email' => $this->getRespectValidator([
+                    ['exception' => $this->getNestedValidationException([
+                        $this->getValidationException('Invalid email'),
+                    ])],
+                ])->addRule($this->getEmail()),
             ]
         );
 
@@ -142,7 +149,9 @@ final class ValidatorTest extends \PHPUnit_Framework_TestCase
                 'id' => 'id1',
                 'username' => 'user1',
             ],
-            $this->getRespectValidator()->addRule($this->getUniqueModelRule(new \RuntimeException('Some message')))
+            $this->getRespectValidator([
+                ['exception' => new \RuntimeException('Some message')],
+            ])->addRule($this->getUniqueModelRule())
         );
 
         $errors = $validator->validateModel($user);
@@ -161,11 +170,15 @@ final class ValidatorTest extends \PHPUnit_Framework_TestCase
 
         $validator = new Validator([], $translator, $logger);
 
-        $respectEmailValidator = $this->getRespectValidator();
+        $respectEmailValidator = $this->getRespectValidator([
+            ['return' => true],
+        ]);
 
         $respectEmailValidator->addRule($this->getEmail());
 
-        $respectPasswordValidator = $this->getRespectValidator();
+        $respectPasswordValidator = $this->getRespectValidator([
+            ['return' => true],
+        ]);
 
         $respectPasswordValidator->addRule($this->getNotEmpty());
 
@@ -243,32 +256,70 @@ final class ValidatorTest extends \PHPUnit_Framework_TestCase
         return $requirement;
     }
     /**
+     * @param array $assertStack
+     *
      * @return v|\PHPUnit_Framework_MockObject_MockObject
      */
-    private function getRespectValidator(): v
+    private function getRespectValidator(array $assertStack = []): v
     {
-        return new v();
+        $respectValidator = $this
+            ->getMockBuilder(v::class)
+            ->disableOriginalConstructor()
+            ->setMethods(['addRule', 'getRules', 'assert'])
+            ->getMockForAbstractClass();
+
+        $respectValidator->__rules = [];
+        $respectValidator
+            ->expects(self::any())
+            ->method('addRule')
+            ->willReturnCallback(function (AbstractRule $rule) use ($respectValidator) {
+                $respectValidator->__rules[] = $rule;
+
+                return $respectValidator;
+            })
+        ;
+
+        $respectValidator
+            ->expects(self::any())
+            ->method('getRules')
+            ->willReturnCallback(function () use ($respectValidator) {
+                return $respectValidator->__rules;
+            })
+        ;
+
+        $assertCount = 0;
+        $respectValidator
+            ->expects(self::any())
+            ->method('assert')
+            ->willReturnCallback(function ($value) use (&$assertStack, &$assertCount) {
+                $assert = array_shift($assertStack);
+
+                self::assertNotNull(
+                    $assert,
+                    sprintf('There is no assert info within $assertStack at %d call.', $assertCount)
+                );
+
+                if (isset($assert['exception'])) {
+                    throw $assert['exception'];
+                }
+
+                return $assert['return'];
+            })
+        ;
+
+        return $respectValidator;
     }
 
     /**
-     * @param \Exception|null $exception
      * @return UniqueModelRule|\PHPUnit_Framework_MockObject_MockObject
      */
-    private function getUniqueModelRule(\Exception $exception = null): UniqueModelRule
+    private function getUniqueModelRule(): UniqueModelRule
     {
         $uniqueModelRule = $this
             ->getMockBuilder(UniqueModelRule::class)
             ->disableOriginalConstructor()
-            ->setMethods(['assert', 'requires'])
+            ->setMethods(['requires'])
             ->getMock();
-
-        $uniqueModelRule->expects(self::any())->method('assert')->willReturnCallback(function () use ($exception) {
-            if (null !== $exception) {
-                throw $exception;
-            }
-
-            return true;
-        });
 
         $uniqueModelRule->expects(self::any())->method('requires')->willReturn(['repository']);
 
@@ -276,49 +327,51 @@ final class ValidatorTest extends \PHPUnit_Framework_TestCase
     }
 
     /**
-     * @param \Exception|null $exception
      * @return Email|\PHPUnit_Framework_MockObject_MockObject
      */
-    private function getEmail(\Exception $exception = null): Email
+    private function getEmail(): Email
     {
         $emailRule = $this
             ->getMockBuilder(Email::class)
             ->disableOriginalConstructor()
-            ->setMethods(['assert'])
             ->getMock();
-
-        $emailRule->expects(self::any())->method('assert')->willReturnCallback(function () use ($exception) {
-            if (null !== $exception) {
-                throw $exception;
-            }
-
-            return true;
-        });
 
         return $emailRule;
     }
 
     /**
-     * @param \Exception|null $exception
      * @return NotEmpty|\PHPUnit_Framework_MockObject_MockObject
      */
-    private function getNotEmpty(\Exception $exception = null): NotEmpty
+    private function getNotEmpty(): NotEmpty
     {
         $notEmptyRule = $this
             ->getMockBuilder(NotEmpty::class)
             ->disableOriginalConstructor()
-            ->setMethods(['assert'])
             ->getMock();
 
-        $notEmptyRule->expects(self::any())->method('assert')->willReturnCallback(function () use ($exception) {
-            if (null !== $exception) {
-                throw $exception;
-            }
-
-            return true;
-        });
-
         return $notEmptyRule;
+    }
+
+    /**
+     * @param ValidationException[]|array $childrenExceptions
+     *
+     * @return NestedValidationException|\PHPUnit_Framework_MockObject_MockObject
+     */
+    private function getNestedValidationException(array $childrenExceptions): NestedValidationException
+    {
+        $nestedException = $this
+            ->getMockBuilder(NestedValidationException::class)
+            ->disableOriginalConstructor()
+            ->setMethods(['getIterator'])
+            ->getMock();
+
+        $nestedException
+            ->expects(self::any())
+            ->method('getIterator')
+            ->willReturn(new \ArrayIterator($childrenExceptions))
+        ;
+
+        return $nestedException;
     }
 
     /**
@@ -377,9 +430,6 @@ final class ValidatorTest extends \PHPUnit_Framework_TestCase
         return $exception;
     }
 
-    /**
-     * @return TranslatorInterface
-     */
     private function getTranslator(): TranslatorInterface
     {
         /** @var TranslatorInterface|\PHPUnit_Framework_MockObject_MockObject $translator */
