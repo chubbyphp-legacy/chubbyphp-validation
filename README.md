@@ -7,7 +7,7 @@
 
 ## Description
 
-A simple validation uses Respect/Validation.
+A simple validation.
 
 ## Requirements
 
