@@ -22,12 +22,8 @@ final class EmailConstraint implements ConstraintInterface
             return [];
         }
 
-        if (!is_string($input)) {
-            return [new Error($path, 'constraint.email.notstring', ['type' => gettype($input)])];
-        }
-
         if (!preg_match('/^.+\@\S+\.\S+$/', $input)) {
-            return [new Error($path, 'constraint.email.invalid')];
+            return [new Error($path, 'constraint.email.invalid', ['email' => $input])];
         }
 
         return [];
