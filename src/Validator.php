@@ -42,7 +42,7 @@ final class Validator implements ValidatorInterface
             $propertyValue = $propertyReflection->getValue($object);
 
             foreach ($propertyMapping->getConstraints() as $constraint) {
-                $errors = array_merge($errors, $constraint->validate($property, $propertyValue));
+                $errors = array_merge($errors, $constraint->validate($this, $property, $propertyValue));
             }
         }
 
