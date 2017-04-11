@@ -23,9 +23,10 @@ final class Validator implements ValidatorInterface
 
     /**
      * @param object $object
+     * @param string $path
      * @return string[]
      */
-    public function validateObject($object): array
+    public function validateObject($object, string $path = ''): array
     {
         $class = get_class($object);
 
@@ -41,8 +42,10 @@ final class Validator implements ValidatorInterface
 
             $propertyValue = $propertyReflection->getValue($object);
 
+            $subPath = '' !== $path ? $path . '.' . $property : $property;
+
             foreach ($propertyMapping->getConstraints() as $constraint) {
-                $errors = array_merge($errors, $constraint->validate($this, $property, $propertyValue));
+                $errors = array_merge($errors, $constraint->validate($this, $subPath, $propertyValue));
             }
         }
 
