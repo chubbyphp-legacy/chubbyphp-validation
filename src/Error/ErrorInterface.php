@@ -17,11 +17,6 @@ interface ErrorInterface
     public function getKey(): string;
 
     /**
-     * @return mixed
-     */
-    public function getInput();
-
-    /**
      * @return array
      */
     public function getArgs(): array;

@@ -17,11 +17,6 @@ final class Error implements ErrorInterface
     private $key;
 
     /**
-     * @var mixed
-     */
-    private $input;
-
-    /**
      * @var array
      */
     private $args;
@@ -29,14 +24,12 @@ final class Error implements ErrorInterface
     /**
      * @param string $path
      * @param string $key
-     * @param mixed $input
      * @param array $args
      */
-    public function __construct($path, $key, $input, array $args = [])
+    public function __construct($path, $key, array $args = [])
     {
         $this->path = $path;
         $this->key = $key;
-        $this->input = $input;
         $this->args = $args;
     }
 
@@ -54,14 +47,6 @@ final class Error implements ErrorInterface
     public function getKey(): string
     {
         return $this->key;
-    }
-
-    /**
-     * @return mixed
-     */
-    public function getInput()
-    {
-        return $this->input;
     }
 
     /**

@@ -48,7 +48,11 @@ final class RangeConstraint implements ConstraintInterface
 
         if (null !== $this->min && $input < $this->min || null !== $this->max && $input > $this->max) {
             return [
-                new Error($path, 'constraint.range.outofrange', $input, ['min' => $this->min, 'max' => $this->max])
+                new Error(
+                    $path,
+                    'constraint.range.outofrange',
+                    ['input' => $input, 'min' => $this->min, 'max' => $this->max]
+                )
             ];
         }
 

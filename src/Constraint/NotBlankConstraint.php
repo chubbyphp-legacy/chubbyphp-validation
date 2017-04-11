@@ -23,11 +23,11 @@ final class NotBlankConstraint implements ConstraintInterface
         }
 
         if (!is_string($input)) {
-            return [new Error($path, 'constraint.notblank.notstring', $input)];
+            return [new Error($path, 'constraint.notblank.notstring', ['type' => gettype($input)])];
         }
 
         if ('' === $input) {
-            return [new Error($path, 'constraint.notblank', $input)];
+            return [new Error($path, 'constraint.notblank')];
         }
 
         return [];
