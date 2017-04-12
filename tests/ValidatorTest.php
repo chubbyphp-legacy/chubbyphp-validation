@@ -7,6 +7,7 @@ namespace Chubbyphp\Tests\Validation;
 use Chubbyphp\Tests\Validation\Resources\Model;
 use Chubbyphp\Tests\Validation\Resources\ModelMapping;
 use Chubbyphp\Validation\Error\Error;
+use Chubbyphp\Validation\Error\Errors;
 use Chubbyphp\Validation\Registry\ObjectMappingRegistry;
 use Chubbyphp\Validation\Validator;
 
@@ -43,12 +44,13 @@ class ValidatorTest extends \PHPUnit_Framework_TestCase
         $model->setNotBlank('');
         $model->setRange(11);
 
-        $errors = $validator->validateObject($model);
+        $errors = new Errors($validator->validateObject($model));
 
         self::assertEquals([
-            new Error('notNull', 'constraint.notnull', null),
-            new Error('notBlank', 'constraint.notblank', ''),
-            new Error('range', 'constraint.range.outofrange', 11, ['min' => 1, 'max' => 10]),
-        ], $errors);
+            new Error('notNull', 'constraint.notnull'),
+            new Error('notBlank', 'constraint.notblank'),
+            new Error('range', 'constraint.range.outofrange', ['input' => 11, 'min' => 1, 'max' => 10]),
+        ], $errors->getErrors());
+
     }
 }
