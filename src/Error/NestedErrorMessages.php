@@ -30,6 +30,7 @@ final class NestedErrorMessages implements ErrorMessagesInterface
         foreach ($errors as $error) {
             $this->addError($error);
         }
+        $this->translate = $translate;
     }
 
     /**
