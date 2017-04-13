@@ -4,7 +4,7 @@ declare(strict_types=1);
 
 namespace Chubbyphp\Validation\Error;
 
-final class Errors implements ErrorsInterface
+final class NestedErrorMessages implements ErrorMessagesInterface
 {
     /**
      * @var ErrorInterface[]
@@ -12,14 +12,19 @@ final class Errors implements ErrorsInterface
     private $errors;
 
     /**
+     * @var callable
+     */
+    private $translate;
+
+    /**
      * @var array
      */
-    private $tree;
+    private $nestedErrorMessages;
 
     /**
      * @param ErrorInterface[] $errors
      */
-    public function __construct(array $errors)
+    public function __construct(array $errors, callable $translate)
     {
         $this->errors = [];
         foreach ($errors as $error) {
@@ -36,26 +41,37 @@ final class Errors implements ErrorsInterface
     }
 
     /**
-     * @return ErrorInterface[]
-     */
-    public function getErrors(): array
-    {
-        return $this->errors;
-    }
-
-    /**
      * @return array
      */
-    public function getTree(): array
+    public function getMessages(): array
     {
-        if (null === $this->tree) {
-            $this->tree = [];
+        if (null === $this->nestedErrorMessages) {
+            $this->nestedErrorMessages = [];
             foreach ($this->errors as $error) {
-                $this->assignError($this->tree, $error);
+                $this->assignErrorMessage($this->nestedErrorMessages, $error);
             }
         }
 
-        return $this->tree;
+        return $this->nestedErrorMessages;
+    }
+
+    /**
+     * @param array $node
+     * @param ErrorInterface $error
+     */
+    private function assignErrorMessage(array &$node, ErrorInterface $error)
+    {
+        $pathParts = $this->parsePath($error->getPath());
+        foreach ($pathParts as $pathPart) {
+            if (!isset($node[$pathPart])) {
+                $node[$pathPart] = [];
+            }
+            $node = &$node[$pathPart];
+        }
+
+        $translate = $this->translate;
+
+        $node[] = $translate($error->getKey(), $error->getArgs());
     }
 
     /**
@@ -76,22 +92,5 @@ final class Errors implements ErrorsInterface
         }
 
         return $pathParts;
-    }
-
-    /**
-     * @param array $node
-     * @param ErrorInterface $error
-     */
-    private function assignError(array &$node, ErrorInterface $error)
-    {
-        $pathParts = $this->parsePath($error->getPath());
-        foreach ($pathParts as $pathPart) {
-            if (!isset($node[$pathPart])) {
-                $node[$pathPart] = [];
-            }
-            $node = &$node[$pathPart];
-        }
-
-        $node[] = $error;
     }
 }
