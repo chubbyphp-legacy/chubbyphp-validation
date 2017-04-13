@@ -84,7 +84,7 @@ final class NestedErrorMessages implements ErrorMessagesInterface
         $pathParts = [];
         foreach (explode('.', $path) as $pathPart) {
             $matches = [];
-            if (1 === preg_match('/^(([^\[]+)\[(\d+)\])$/', $pathPart, $matches)) {
+            if (1 === preg_match('/^(([^\[]+)\[(\d+|_all)\])$/', $pathPart, $matches)) {
                 $pathParts[] = $matches[2];
                 $pathParts[] = (int) $matches[3];
             } else {
