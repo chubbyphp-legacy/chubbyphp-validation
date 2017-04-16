@@ -49,6 +49,10 @@ final class Validator implements ValidatorInterface
             }
         }
 
+        foreach ($objectMapping->getConstraints() as $constraint) {
+            $errors = array_merge($errors, $constraint->validate($this, $path, $object));
+        }
+
         return $errors;
     }
 }
