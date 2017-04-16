@@ -9,5 +9,5 @@ interface ErrorMessagesInterface
     /**
      * @return array
      */
-    public function getMessages();
+    public function getMessages(): array;
 }
