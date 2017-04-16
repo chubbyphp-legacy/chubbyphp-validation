@@ -4,6 +4,7 @@ declare(strict_types=1);
 
 namespace Chubbyphp\Tests\Validation\Resources;
 
+use Chubbyphp\Validation\Constraint\ConstraintInterface;
 use Chubbyphp\Validation\Constraint\NotBlankConstraint;
 use Chubbyphp\Validation\Constraint\NotNullConstraint;
 use Chubbyphp\Validation\Constraint\RangeConstraint;
@@ -19,6 +20,14 @@ final class ModelMapping implements ObjectMappingInterface
     public function getClass(): string
     {
         return Model::class;
+    }
+
+    /**
+     * @return ConstraintInterface[]
+     */
+    public function getConstraints(): array
+    {
+        return [];
     }
 
     /**
