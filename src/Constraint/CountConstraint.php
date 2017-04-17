@@ -42,8 +42,8 @@ final class CountConstraint implements ConstraintInterface
             return [];
         }
 
-        if (!is_array($input) || !$input instanceof \Countable) {
-            return [new Error($path, 'constraint.count.notcountable', $input)];
+        if (!is_array($input) && !$input instanceof \Countable) {
+            return [new Error($path, 'constraint.count.invalidtype', ['type' => gettype($input)])];
         }
 
         $count = count($input);
