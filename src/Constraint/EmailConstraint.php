@@ -27,7 +27,7 @@ final class EmailConstraint implements ConstraintInterface
         }
 
         if (!preg_match('/^.+\@\S+\.\S+$/', $input)) {
-            return [new Error($path, 'constraint.email.invalidformat', ['email' => $input])];
+            return [new Error($path, 'constraint.email.invalidformat', ['value' => $input])];
         }
 
         return [];
