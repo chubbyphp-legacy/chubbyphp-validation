@@ -52,8 +52,8 @@ class ValidatorTest extends \PHPUnit_Framework_TestCase
         $messages = $errorMessages->getMessages();
 
         self::assertEquals([
-            'notNull' => ['constraint.notnull'],
-            'notBlank' => ['constraint.notblank'],
+            'notNull' => ['constraint.notnull.null'],
+            'notBlank' => ['constraint.notblank.blank'],
             'range' => ['constraint.range.outofrange'],
         ], $messages);
     }
