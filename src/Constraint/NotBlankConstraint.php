@@ -23,7 +23,7 @@ final class NotBlankConstraint implements ConstraintInterface
         }
 
         if ('' === $input || [] === $input) {
-            return [new Error($path, 'constraint.notblank')];
+            return [new Error($path, 'constraint.notblank.blank')];
         }
 
         return [];

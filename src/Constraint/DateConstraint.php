@@ -33,7 +33,7 @@ final class DateConstraint implements ConstraintInterface
         try {
             new \DateTime($input);
         } catch (\Exception $exception) {
-            return [new Error($path, 'constraint.date.notparseable', ['input' => $input])];
+            return [new Error($path, 'constraint.date.invalidformat', ['input' => $input])];
         }
 
         return [];

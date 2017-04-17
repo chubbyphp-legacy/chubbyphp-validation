@@ -42,7 +42,7 @@ class NumericConstraintTest extends \PHPUnit_Framework_TestCase
     {
         $constraint = new NumericConstraint();
 
-        $error = new Error('numeric', 'constraint.numeric', ['input' => 'test']);
+        $error = new Error('numeric', 'constraint.numeric.notnumeric', ['input' => 'test']);
 
         self::assertEquals([$error], $constraint->validate('numeric', 'test'));
     }

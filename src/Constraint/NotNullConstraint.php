@@ -19,7 +19,7 @@ final class NotNullConstraint implements ConstraintInterface
     public function validate(string $path, $input, ValidatorInterface $validator = null): array
     {
         if (null === $input) {
-            return [new Error($path, 'constraint.notnull')];
+            return [new Error($path, 'constraint.notnull.null')];
         }
 
         return [];

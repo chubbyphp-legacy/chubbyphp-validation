@@ -14,7 +14,7 @@ class NotNullConstraintTest extends \PHPUnit_Framework_TestCase
     {
         $constraint = new NotNullConstraint();
 
-        $error = new Error('notnull', 'constraint.notnull');
+        $error = new Error('notnull', 'constraint.notnull.null');
 
         self::assertEquals([$error], $constraint->validate('notnull', null));
     }

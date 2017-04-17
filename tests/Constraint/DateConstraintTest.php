@@ -44,7 +44,7 @@ class DateConstraintTest extends \PHPUnit_Framework_TestCase
     {
         $constraint = new DateConstraint();
 
-        $error = new Error('date', 'constraint.date.notparseable', ['input' => '2017-13-01']);
+        $error = new Error('date', 'constraint.date.invalidformat', ['input' => '2017-13-01']);
 
         self::assertEquals([$error], $constraint->validate('date', '2017-13-01'));
     }

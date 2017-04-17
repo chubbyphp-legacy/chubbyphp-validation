@@ -28,7 +28,7 @@ class NotBlankConstraintTest extends \PHPUnit_Framework_TestCase
     {
         $constraint = new NotBlankConstraint();
 
-        $error = new Error('notblank', 'constraint.notblank');
+        $error = new Error('notblank', 'constraint.notblank.blank');
 
         self::assertEquals([$error], $constraint->validate('notblank', ''));
     }
@@ -37,7 +37,7 @@ class NotBlankConstraintTest extends \PHPUnit_Framework_TestCase
     {
         $constraint = new NotBlankConstraint();
 
-        $error = new Error('notblank', 'constraint.notblank');
+        $error = new Error('notblank', 'constraint.notblank.blank');
 
         self::assertEquals([$error], $constraint->validate('notblank', []));
     }
