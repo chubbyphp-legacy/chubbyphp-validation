@@ -3,16 +3,16 @@
 namespace Chubbyphp\Tests\Validation\Error;
 
 use Chubbyphp\Validation\Error\ErrorInterface;
-use Chubbyphp\Validation\Error\ErrorMessages;
+use Chubbyphp\Validation\Error\NestedErrorMessages;
 
 /**
- * @covers \Chubbyphp\Validation\Error\ErrorMessages
+ * @covers \Chubbyphp\Validation\Error\NestedErrorMessages
  */
-class ErrorMessagesTest extends \PHPUnit_Framework_TestCase
+class NestedErrorMessagesTest extends \PHPUnit_Framework_TestCase
 {
     public function testWithoutMessages()
     {
-        $errorMessages = new ErrorMessages([], function (string $key, array $arguments) { return $key; });
+        $errorMessages = new NestedErrorMessages([], function (string $key, array $arguments) { return $key; });
 
         self::assertEquals([], $errorMessages->getMessages());
     }
@@ -27,22 +27,28 @@ class ErrorMessagesTest extends \PHPUnit_Framework_TestCase
             $this->getError('collection[1].field1', 'constraint.collection1.constraint2')
         ];
 
-        $errorMessages = new ErrorMessages(
+        $errorMessages = new NestedErrorMessages(
             $errors,
             function (string $key, array $arguments) { return $key; }
         );
 
         self::assertEquals([
-            'collection[_all]' => [
-                'constraint.collection.all'
-            ],
-            'collection[0].field1' => [
-                'constraint.collection0.constraint1',
-                'constraint.collection0.constraint2'
-            ],
-            'collection[1].field1' => [
-                'constraint.collection1.constraint1',
-                'constraint.collection1.constraint2'
+            'collection' => [
+                '_all' => [
+                    'constraint.collection.all'
+                ],
+                0 => [
+                    'field1' => [
+                        'constraint.collection0.constraint1',
+                        'constraint.collection0.constraint2'
+                    ]
+                ],
+                1 => [
+                    'field1' => [
+                        'constraint.collection1.constraint1',
+                        'constraint.collection1.constraint2'
+                    ]
+                ]
             ]
         ], $errorMessages->getMessages());
     }
