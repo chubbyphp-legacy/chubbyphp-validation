@@ -31,12 +31,12 @@ final class CountConstraint implements ConstraintInterface
     }
 
     /**
-     * @param ValidatorInterface $validator
      * @param string $path
      * @param mixed $input
+     * @param ValidatorInterface $validator
      * @return ErrorInterface[]
      */
-    public function validate(ValidatorInterface $validator, string $path, $input): array
+    public function validate(string $path, $input, ValidatorInterface $validator = null): array
     {
         if (null === $input) {
             return [];

@@ -10,10 +10,10 @@ use Chubbyphp\Validation\ValidatorInterface;
 interface ConstraintInterface
 {
     /**
-     * @param ValidatorInterface $validator
-     * @param string             $path
-     * @param mixed              $input
+     * @param string $path
+     * @param mixed $input
+     * @param ValidatorInterface|null $validator
      * @return ErrorInterface[]
      */
-    public function validate(ValidatorInterface $validator, string $path, $input): array;
+    public function validate(string $path, $input, ValidatorInterface $validator = null): array;
 }

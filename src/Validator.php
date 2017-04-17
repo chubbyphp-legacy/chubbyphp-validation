@@ -60,7 +60,7 @@ final class Validator implements ValidatorInterface
             $subPath = '' !== $path ? $path . '.' . $property : $property;
 
             foreach ($propertyMapping->getConstraints() as $constraint) {
-                $errors = array_merge($errors, $constraint->validate($this, $subPath, $propertyValue));
+                $errors = array_merge($errors, $constraint->validate($subPath, $propertyValue, $this));
             }
         }
 
@@ -77,7 +77,7 @@ final class Validator implements ValidatorInterface
     {
         $errors = [];
         foreach ($objectMapping->getConstraints() as $constraint) {
-            $errors = array_merge($errors, $constraint->validate($this, $path, $object));
+            $errors = array_merge($errors, $constraint->validate($path, $object, $this));
         }
 
         return $errors;

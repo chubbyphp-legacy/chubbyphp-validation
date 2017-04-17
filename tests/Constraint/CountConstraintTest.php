@@ -4,7 +4,6 @@ namespace Chubbyphp\Tests\Validation\Constraint;
 
 use Chubbyphp\Validation\Constraint\CountConstraint;
 use Chubbyphp\Validation\Error\Error;
-use Chubbyphp\Validation\ValidatorInterface;
 
 /**
  * @covers \Chubbyphp\Validation\Constraint\CountConstraint
@@ -15,7 +14,7 @@ class CountConstraintTest extends \PHPUnit_Framework_TestCase
     {
         $constraint = new CountConstraint();
 
-        self::assertEquals([], $constraint->validate($this->getValidator(), 'count', null));
+        self::assertEquals([], $constraint->validate('count', null));
     }
 
     public function testInvalidType()
@@ -24,21 +23,21 @@ class CountConstraintTest extends \PHPUnit_Framework_TestCase
 
         $error = new Error('count', 'constraint.count.invalidtype', ['type' => 'string']);
 
-        self::assertEquals([$error], $constraint->validate($this->getValidator(), 'count', 'value'));
+        self::assertEquals([$error], $constraint->validate('count', 'value'));
     }
 
     public function testWithoutMinAndMax()
     {
         $constraint = new CountConstraint();
 
-        self::assertEquals([], $constraint->validate($this->getValidator(), 'count', ['value']));
+        self::assertEquals([], $constraint->validate('count', ['value']));
     }
 
     public function testWithMin()
     {
         $constraint = new CountConstraint(1);
 
-        self::assertEquals([], $constraint->validate($this->getValidator(), 'count', ['value']));
+        self::assertEquals([], $constraint->validate('count', ['value']));
     }
 
     public function testWithMinButToLessValues()
@@ -47,14 +46,14 @@ class CountConstraintTest extends \PHPUnit_Framework_TestCase
 
         $error = new Error('count', 'constraint.count.outofrange', ['count' => 1, 'min' => 2, 'max' => null]);
 
-        self::assertEquals([$error], $constraint->validate($this->getValidator(), 'count', ['value']));
+        self::assertEquals([$error], $constraint->validate('count', ['value']));
     }
 
     public function testWithMax()
     {
         $constraint = new CountConstraint(null, 1);
 
-        self::assertEquals([], $constraint->validate($this->getValidator(), 'count', ['value']));
+        self::assertEquals([], $constraint->validate('count', ['value']));
     }
 
     public function testWithMaxButToManyValues()
@@ -63,14 +62,14 @@ class CountConstraintTest extends \PHPUnit_Framework_TestCase
 
         $error = new Error('count', 'constraint.count.outofrange', ['count' => 1, 'min' => null, 'max' => 0]);
 
-        self::assertEquals([$error], $constraint->validate($this->getValidator(), 'count', ['value']));
+        self::assertEquals([$error], $constraint->validate('count', ['value']));
     }
 
     public function testWithMinAndMax()
     {
         $constraint = new CountConstraint(1, 2);
 
-        self::assertEquals([], $constraint->validate($this->getValidator(), 'count', ['value']));
+        self::assertEquals([], $constraint->validate('count', ['value']));
     }
 
     public function testWithMinAndMaxToLessValues()
@@ -79,7 +78,7 @@ class CountConstraintTest extends \PHPUnit_Framework_TestCase
 
         $error = new Error('count', 'constraint.count.outofrange', ['count' => 0, 'min' => 1, 'max' => 2]);
 
-        self::assertEquals([$error], $constraint->validate($this->getValidator(), 'count', []));
+        self::assertEquals([$error], $constraint->validate('count', []));
     }
 
     public function testWithMinAndMaxToManyValues()
@@ -88,16 +87,6 @@ class CountConstraintTest extends \PHPUnit_Framework_TestCase
 
         $error = new Error('count', 'constraint.count.outofrange', ['count' => 3, 'min' => 1, 'max' => 2]);
 
-        self::assertEquals([$error], $constraint->validate($this->getValidator(), 'count', ['value', 'value', 'value']));
-    }
-
-    /**
-     * @return ValidatorInterface|\PHPUnit_Framework_MockObject_MockObject
-     */
-    private function getValidator(): ValidatorInterface
-    {
-        return $this
-            ->getMockBuilder(ValidatorInterface::class)
-            ->getMockForAbstractClass();
+        self::assertEquals([$error], $constraint->validate('count', ['value', 'value', 'value']));
     }
 }
