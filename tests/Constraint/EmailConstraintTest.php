@@ -37,7 +37,7 @@ class EmailConstraintTest extends \PHPUnit_Framework_TestCase
     {
         $constraint = new EmailConstraint();
 
-        $error = new Error('email', 'constraint.email.invalidformat', ['value' => 'name']);
+        $error = new Error('email', 'constraint.email.invalidformat', ['input' => 'name']);
 
         self::assertEquals([$error], $constraint->validate('email', 'name'));
     }

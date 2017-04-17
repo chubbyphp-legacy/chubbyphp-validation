@@ -43,7 +43,7 @@ final class RangeConstraint implements ConstraintInterface
         }
 
         if (!is_numeric($input)) {
-            return [new Error($path, 'constraint.range.notnumeric', $input)];
+            return [new Error($path, 'constraint.range.notnumeric', ['input' => $input])];
         }
 
         if (null !== $this->min && $input < $this->min || null !== $this->max && $input > $this->max) {

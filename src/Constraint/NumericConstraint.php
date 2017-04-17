@@ -23,7 +23,7 @@ final class NumericConstraint implements ConstraintInterface
         }
 
         if (!is_numeric($input)) {
-            return [new Error($path, 'constraint.numeric', ['value' => $input])];
+            return [new Error($path, 'constraint.numeric', ['input' => $input])];
         }
 
         return [];
