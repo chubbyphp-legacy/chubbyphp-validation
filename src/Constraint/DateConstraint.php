@@ -22,12 +22,18 @@ final class DateConstraint implements ConstraintInterface
             return [];
         }
 
-        if (!$input instanceof \DateTime) {
-            try {
-                new \DateTime($input);
-            } catch (\Exception $exception) {
-                return [new Error($path, 'constraint.date.notparseable', ['date' => $input])];
-            }
+        if ($input instanceof \DateTime) {
+            return [];
+        }
+
+        if (!is_string($input)) {
+            return [new Error($path, 'constraint.date.invalidtype', ['type' => gettype($input)])];
+        }
+
+        try {
+            new \DateTime($input);
+        } catch (\Exception $exception) {
+            return [new Error($path, 'constraint.date.notparseable', ['date' => $input])];
         }
 
         return [];
