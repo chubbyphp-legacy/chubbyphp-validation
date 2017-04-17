@@ -19,5 +19,5 @@ interface ErrorInterface
     /**
      * @return array
      */
-    public function getArgs(): array;
+    public function getArguments(): array;
 }

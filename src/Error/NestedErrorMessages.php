@@ -72,7 +72,7 @@ final class NestedErrorMessages implements ErrorMessagesInterface
 
         $translate = $this->translate;
 
-        $node[] = $translate($error->getKey(), $error->getArgs());
+        $node[] = $translate($error->getKey(), $error->getArguments());
     }
 
     /**

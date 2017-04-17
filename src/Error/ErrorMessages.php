@@ -53,7 +53,7 @@ final class ErrorMessages implements ErrorMessagesInterface
                 if (!isset($this->errorMessages[$error->getPath()])) {
                     $this->errorMessages[$error->getPath()] = [];
                 }
-                $this->errorMessages[$error->getPath()][] = $translate($error->getKey(), $error->getArgs());
+                $this->errorMessages[$error->getPath()][] = $translate($error->getKey(), $error->getArguments());
             }
         }
 

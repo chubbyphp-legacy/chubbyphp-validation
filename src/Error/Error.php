@@ -19,18 +19,18 @@ final class Error implements ErrorInterface
     /**
      * @var array
      */
-    private $args;
+    private $arguments;
 
     /**
      * @param string $path
      * @param string $key
-     * @param array $args
+     * @param array $arguments
      */
-    public function __construct($path, $key, array $args = [])
+    public function __construct($path, $key, array $arguments = [])
     {
         $this->path = $path;
         $this->key = $key;
-        $this->args = $args;
+        $this->arguments = $arguments;
     }
 
     /**
@@ -52,8 +52,8 @@ final class Error implements ErrorInterface
     /**
      * @return array
      */
-    public function getArgs(): array
+    public function getArguments(): array
     {
-        return $this->args;
+        return $this->arguments;
     }
 }
