@@ -13,6 +13,10 @@ A simple validation.
 
  * php: ~7.0
 
+## Suggest
+
+ * pimple/pimple: ~3.0
+
 ## Installation
 
 Through [Composer](http://getcomposer.org) as [chubbyphp/chubbyphp-validation][1].
