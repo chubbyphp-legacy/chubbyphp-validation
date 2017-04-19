@@ -12,6 +12,9 @@ use Chubbyphp\Validation\Error\Errors;
 use Chubbyphp\Validation\Registry\ObjectMappingRegistry;
 use Chubbyphp\Validation\Validator;
 
+/**
+ * @coversNothing
+ */
 class ValidatorTest extends \PHPUnit_Framework_TestCase
 {
     public function testWithoutErrors()
