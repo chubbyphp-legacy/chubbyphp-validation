@@ -6,16 +6,14 @@ namespace Chubbyphp\Tests\Validation;
 
 use Chubbyphp\Tests\Validation\Resources\Model;
 use Chubbyphp\Tests\Validation\Resources\ModelMapping;
-use Chubbyphp\Validation\Error\Error;
 use Chubbyphp\Validation\Error\ErrorMessages;
-use Chubbyphp\Validation\Error\Errors;
 use Chubbyphp\Validation\Registry\ObjectMappingRegistry;
 use Chubbyphp\Validation\Validator;
 
 /**
  * @coversNothing
  */
-class ValidatorTest extends \PHPUnit_Framework_TestCase
+class ValidatorIntegrationTest extends \PHPUnit_Framework_TestCase
 {
     public function testWithoutErrors()
     {

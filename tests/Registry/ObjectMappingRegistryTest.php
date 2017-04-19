@@ -1,5 +1,7 @@
 <?php
 
+declare(strict_types=1);
+
 namespace Chubbyphp\Tests\Validation\Registry;
 
 use Chubbyphp\Validation\Mapping\ObjectMappingInterface;
