@@ -27,7 +27,7 @@ Through [Composer](http://getcomposer.org) as [chubbyphp/chubbyphp-validation][1
 
 #### Sample
 
-```{.php}
+```php
 <?php
 
 use Chubbyphp\Validation\Constraint\NotNullConstraint;
@@ -37,9 +37,11 @@ $constraint = new NotNullConstraint();
 
 $input = null;
 
-$errors = $constraint->validate('path.to.property', $input);
+$errors = $constraint->validate('path.to.property', '');
+// $errors[];
 
-// $errors[] = new Error('path.to.property', 'constraint.notnull.null');
+$errors = $constraint->validate('path.to.property', null);
+// $errors[new Error('path.to.property', 'constraint.notnull.null')];
 ```
 
 [1]: https://packagist.org/packages/chubbyphp/chubbyphp-validation
