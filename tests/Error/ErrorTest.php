@@ -9,7 +9,7 @@ use Chubbyphp\Validation\Error\Error;
 /**
  * @covers \Chubbyphp\Validation\Error\Error
  */
-class ErrorTest extends \PHPUnit_Framework_TestCase
+final class ErrorTest extends \PHPUnit_Framework_TestCase
 {
     public function testWithoutArguments()
     {

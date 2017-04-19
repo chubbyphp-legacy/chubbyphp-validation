@@ -10,19 +10,19 @@ use Chubbyphp\Validation\Registry\ObjectMappingRegistry;
 /**
  * @covers \Chubbyphp\Validation\Registry\ObjectMappingRegistry
  */
-class ObjectMappingRegistryTest extends \PHPUnit_Framework_TestCase
+final class ObjectMappingRegistryTest extends \PHPUnit_Framework_TestCase
 {
     public function testWithKnownObjectMappings()
     {
-        $objectMappings = [
+        $mappings = [
             $this->getObjectMapping('Namespace\To\MyModel1'),
             $this->getObjectMapping('Namespace\To\MyModel2')
         ];
 
-        $objectMappingRegistry = new ObjectMappingRegistry($objectMappings);
+        $registry = new ObjectMappingRegistry($mappings);
 
-        self::assertSame($objectMappings[0], $objectMappingRegistry->getObjectMappingForClass('Namespace\To\MyModel1'));
-        self::assertSame($objectMappings[1], $objectMappingRegistry->getObjectMappingForClass('Namespace\To\MyModel2'));
+        self::assertSame($mappings[0], $registry->getObjectMappingForClass('Namespace\To\MyModel1'));
+        self::assertSame($mappings[1], $registry->getObjectMappingForClass('Namespace\To\MyModel2'));
     }
 
     public function testWithUnknownObjectMappings()
@@ -30,9 +30,9 @@ class ObjectMappingRegistryTest extends \PHPUnit_Framework_TestCase
         self::expectException(\InvalidArgumentException::class);
         self::expectExceptionMessage('There is no mapping for class: Namespace\To\MyModel1');
 
-        $objectMappingRegistry = new ObjectMappingRegistry([]);
+        $registry = new ObjectMappingRegistry([]);
 
-        $objectMappingRegistry->getObjectMappingForClass('Namespace\To\MyModel1');
+        $registry->getObjectMappingForClass('Namespace\To\MyModel1');
     }
 
     /**
@@ -41,11 +41,11 @@ class ObjectMappingRegistryTest extends \PHPUnit_Framework_TestCase
      */
     private function getObjectMapping(string $class): ObjectMappingInterface
     {
-        /** @var ObjectMappingInterface|\PHPUnit_Framework_MockObject_MockObject $objectMapping */
-        $objectMapping = $this->getMockBuilder(ObjectMappingInterface::class)->getMockForAbstractClass();
+        /** @var ObjectMappingInterface|\PHPUnit_Framework_MockObject_MockObject $mapping */
+        $mapping = $this->getMockBuilder(ObjectMappingInterface::class)->getMockForAbstractClass();
 
-        $objectMapping->expects(self::any())->method('getClass')->willReturn($class);
+        $mapping->expects(self::any())->method('getClass')->willReturn($class);
 
-        return $objectMapping;
+        return $mapping;
     }
 }

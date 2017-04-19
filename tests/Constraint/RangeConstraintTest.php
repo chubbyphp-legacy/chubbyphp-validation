@@ -10,7 +10,7 @@ use Chubbyphp\Validation\Error\Error;
 /**
  * @covers \Chubbyphp\Validation\Constraint\RangeConstraint
  */
-class RangeConstraintTest extends \PHPUnit_Framework_TestCase
+final class RangeConstraintTest extends \PHPUnit_Framework_TestCase
 {
     public function testWithNullValue()
     {

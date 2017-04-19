@@ -6,19 +6,19 @@ namespace Chubbyphp\Validation;
 
 use Chubbyphp\Validation\Error\ErrorInterface;
 use Chubbyphp\Validation\Mapping\ObjectMappingInterface;
-use Chubbyphp\Validation\Registry\ObjectMappingRegistry;
+use Chubbyphp\Validation\Registry\ObjectMappingRegistryInterface;
 
 final class Validator implements ValidatorInterface
 {
     /**
-     * @var ObjectMappingRegistry
+     * @var ObjectMappingRegistryInterface
      */
     private $objectMappingRegistry;
 
     /**
-     * @param ObjectMappingRegistry $objectMappingRegistry
+     * @param ObjectMappingRegistryInterface $objectMappingRegistry
      */
-    public function __construct(ObjectMappingRegistry $objectMappingRegistry)
+    public function __construct(ObjectMappingRegistryInterface $objectMappingRegistry)
     {
         $this->objectMappingRegistry = $objectMappingRegistry;
     }

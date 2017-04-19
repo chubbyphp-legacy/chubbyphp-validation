@@ -17,11 +17,6 @@ final class Model
     private $notBlank;
 
     /**
-     * @var int|null
-     */
-    private $range;
-
-    /**
      * @return null|string
      */
     public function getNotNull()
@@ -51,21 +46,5 @@ final class Model
     public function setNotBlank($notBlank)
     {
         $this->notBlank = $notBlank;
-    }
-
-    /**
-     * @return int|null
-     */
-    public function getRange()
-    {
-        return $this->range;
-    }
-
-    /**
-     * @param int|null $range
-     */
-    public function setRange($range)
-    {
-        $this->range = $range;
     }
 }

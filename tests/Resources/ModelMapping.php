@@ -37,8 +37,7 @@ final class ModelMapping implements ObjectMappingInterface
     {
         return [
             new PropertyMapping('notNull', [new NotNullConstraint()]),
-            new PropertyMapping('notBlank', [new NotBlankConstraint()]),
-            new PropertyMapping('range', [new RangeConstraint(1, 10)])
+            new PropertyMapping('notBlank', [new NotBlankConstraint()])
         ];
     }
 }

@@ -10,7 +10,7 @@ use Chubbyphp\Validation\Mapping\PropertyMapping;
 /**
  * @covers \Chubbyphp\Validation\Mapping\PropertyMapping
  */
-class PropertyMappingTest extends \PHPUnit_Framework_TestCase
+final class PropertyMappingTest extends \PHPUnit_Framework_TestCase
 {
     public function test()
     {

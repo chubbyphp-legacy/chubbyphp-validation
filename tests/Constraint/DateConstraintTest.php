@@ -10,7 +10,7 @@ use Chubbyphp\Validation\Error\Error;
 /**
  * @covers \Chubbyphp\Validation\Constraint\DateConstraint
  */
-class DateConstraintTest extends \PHPUnit_Framework_TestCase
+final class DateConstraintTest extends \PHPUnit_Framework_TestCase
 {
     public function testWithNullValue()
     {

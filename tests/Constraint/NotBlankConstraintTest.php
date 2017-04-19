@@ -10,7 +10,7 @@ use Chubbyphp\Validation\Error\Error;
 /**
  * @covers \Chubbyphp\Validation\Constraint\NotBlankConstraint
  */
-class NotBlankConstraintTest extends \PHPUnit_Framework_TestCase
+final class NotBlankConstraintTest extends \PHPUnit_Framework_TestCase
 {
     public function testWithNullValue()
     {

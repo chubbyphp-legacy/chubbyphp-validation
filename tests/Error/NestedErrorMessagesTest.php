@@ -10,7 +10,7 @@ use Chubbyphp\Validation\Error\NestedErrorMessages;
 /**
  * @covers \Chubbyphp\Validation\Error\NestedErrorMessages
  */
-class NestedErrorMessagesTest extends \PHPUnit_Framework_TestCase
+final class NestedErrorMessagesTest extends \PHPUnit_Framework_TestCase
 {
     public function testWithoutMessages()
     {

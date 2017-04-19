@@ -10,7 +10,7 @@ use Chubbyphp\Validation\Error\ErrorMessages;
 /**
  * @covers \Chubbyphp\Validation\Error\ErrorMessages
  */
-class ErrorMessagesTest extends \PHPUnit_Framework_TestCase
+final class ErrorMessagesTest extends \PHPUnit_Framework_TestCase
 {
     public function testWithoutMessages()
     {

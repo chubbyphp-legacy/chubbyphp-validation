@@ -10,7 +10,7 @@ use Chubbyphp\Validation\Error\Error;
 /**
  * @covers \Chubbyphp\Validation\Constraint\EmailConstraint
  */
-class EmailConstraintTest extends \PHPUnit_Framework_TestCase
+final class EmailConstraintTest extends \PHPUnit_Framework_TestCase
 {
     public function testWithNullValue()
     {
