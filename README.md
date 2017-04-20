@@ -25,7 +25,7 @@ Through [Composer](http://getcomposer.org) as [chubbyphp/chubbyphp-validation][1
 
 ### Constraint
 
-#### Sample
+#### NotNullConstraint
 
 ```php
 <?php
@@ -51,6 +51,49 @@ $errors = $constraint->validate('path.to.property', null);
 * [NotNullConstraint][6]
 * [NumericConstraint][7]
 * [NumericRangeConstraint][8]
+
+### Error
+
+#### Error
+
+```php
+<?php
+
+use Chubbyphp\Validation\Error\Error;
+
+$error = new Error('path.to.property', 'constraint.constraint.invalidtype', ['type' => 'array']);
+$error->getPath(); // 'path.to.property'
+$error->getKey(); // 'constraint.constraint.invalidtype'
+$error->getArguments(); // ['type' => 'array']
+```
+
+#### ErrorMessages
+
+```php
+<?php
+
+use Chubbyphp\Validation\Error\Error;
+use Chubbyphp\Validation\Error\ErrorMessages;
+
+$error = new Error('path.to.property', 'constraint.constraint.invalidtype', ['type' => 'array']);
+
+$errorMessages = new ErrorMessages([$error], function () function (string $key, array $arguments) { return $key; });
+$errorMessages->getMessages(); // ['path.to.property' => ['constraint.constraint.invalidtype']]
+```
+
+#### NestedErrorMessages
+
+```php
+<?php
+
+use Chubbyphp\Validation\Error\Error;
+use Chubbyphp\Validation\Error\NestedErrorMessages;
+
+$error = new Error('path.to.property', 'constraint.constraint.invalidtype', ['type' => 'array']);
+
+$errorMessages = new NestedErrorMessages([$error], function () function (string $key, array $arguments) { return $key; });
+$errorMessages->getMessages(); // ['path' => ['to' => ['property' => ['constraint.constraint.invalidtype']]]]
+```
 
 ## Copyright
 
