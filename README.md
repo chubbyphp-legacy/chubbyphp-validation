@@ -36,10 +36,10 @@ use Chubbyphp\Validation\Error\Error;
 $constraint = new NotNullConstraint();
 
 $errors = $constraint->validate('path.to.property', '');
-// $errors[];
+// [];
 
 $errors = $constraint->validate('path.to.property', null);
-// $errors[new Error('path.to.property', 'constraint.notnull.null')];
+// [new Error('path.to.property', 'constraint.notnull.null')];
 ```
 
 #### List
@@ -166,6 +166,29 @@ use MyProject\Validation\ModelMapping;
 
 $objectMappingRegistry = new ObjectMappingRegistry([new ModelMapping]);
 $objectMappingRegistry->getObjectMappingForClass(Model::class); // new ModelMapping()
+```
+
+### Validator
+
+```php
+<?php
+
+use Chubbyphp\Validation\Registry\ObjectMappingRegistry;
+use Chubbyphp\Validation\Validator;
+use MyProject\Model\Model;
+use MyProject\Validation\ModelMapping;
+
+$validator = new Validator(ObjectMappingRegistry([new ModelMapping]));
+
+$model = new Model();
+
+$errors = $validator->validateObject($model);
+// [new Error('propertyName', 'constraint.notnull.null')];
+
+$model->setPropertyName('');
+
+$errors = $validator->validateObject($model);
+// [];
 ```
 
 ## Copyright
