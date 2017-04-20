@@ -123,7 +123,7 @@ use Chubbyphp\Validation\Mapping\PropertyMapping;
 use Chubbyphp\Validation\Mapping\PropertyMappingInterface;
 use MyProject\Model\Model;
 
-class DayMapping implements ObjectMappingInterface
+class ModelMapping implements ObjectMappingInterface
 {
     /**
      * @return string
@@ -151,6 +151,21 @@ class DayMapping implements ObjectMappingInterface
         ];
     }
 }
+```
+
+### Registry
+
+#### ObjectMappingRegistry
+
+```php
+<?php
+
+use Chubbyphp\Validation\Registry\ObjectMappingRegistry;
+use MyProject\Model\Model;
+use MyProject\Validation\ModelMapping;
+
+$objectMappingRegistry = new ObjectMappingRegistry([new ModelMapping]);
+$objectMappingRegistry->getObjectMappingForClass(Model::class); // new ModelMapping()
 ```
 
 ## Copyright
