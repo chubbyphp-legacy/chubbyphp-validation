@@ -32,7 +32,7 @@ final class EmailConstraintTest extends \PHPUnit_Framework_TestCase
     {
         $constraint = new EmailConstraint();
 
-        self::assertEquals([], $constraint->validate('email', 'name@domain.tld'));
+        self::assertEquals([], $constraint->validate('email', 'firstname.lastname@domain.tld'));
     }
 
     public function testWithInvalidEmail()
