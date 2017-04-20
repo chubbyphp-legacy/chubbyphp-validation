@@ -19,11 +19,28 @@ final class NotBlankConstraintTest extends \PHPUnit_Framework_TestCase
         self::assertEquals([], $constraint->validate('notblank', null));
     }
 
-    public function testWithNotBlank()
+    public function testWithNotBlankString()
     {
         $constraint = new NotBlankConstraint();
 
-        self::assertEquals([], $constraint->validate('notblank', 'notblank'));
+        self::assertEquals([], $constraint->validate('notblank', 'value'));
+    }
+
+    public function testWithNotBlankArray()
+    {
+        $constraint = new NotBlankConstraint();
+
+        self::assertEquals([], $constraint->validate('notblank', ['value']));
+    }
+
+    public function testWithNotBlankStdClass()
+    {
+        $constraint = new NotBlankConstraint();
+
+        $object = new \stdClass;
+        $object->key = 'value';
+
+        self::assertEquals([], $constraint->validate('notblank', $object));
     }
 
     public function testWithBlankString()
@@ -42,5 +59,14 @@ final class NotBlankConstraintTest extends \PHPUnit_Framework_TestCase
         $error = new Error('notblank', 'constraint.notblank.blank');
 
         self::assertEquals([$error], $constraint->validate('notblank', []));
+    }
+
+        public function testWithBlankStdClass()
+    {
+        $constraint = new NotBlankConstraint();
+
+        $error = new Error('notblank', 'constraint.notblank.blank');
+
+        self::assertEquals([$error], $constraint->validate('notblank', new \stdClass()));
     }
 }

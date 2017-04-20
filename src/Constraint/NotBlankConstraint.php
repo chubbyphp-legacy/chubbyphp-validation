@@ -22,7 +22,7 @@ final class NotBlankConstraint implements ConstraintInterface
             return [];
         }
 
-        if ('' === $input || [] === $input) {
+        if ('' === $input || [] === $input || ($input instanceof \stdClass && [] === (array) $input)) {
             return [new Error($path, 'constraint.notblank.blank')];
         }
 
