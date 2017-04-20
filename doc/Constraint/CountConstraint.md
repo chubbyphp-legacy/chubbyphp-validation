@@ -8,6 +8,10 @@ use Chubbyphp\Validation\Error\Error;
 
 $constraint = new CountConstraint(1, 2);
 
+// Use NotNullConstraint to prevent null
+$errors = $constraint->validate('path.to.property', null);
+// $errors[];
+
 $errors = $constraint->validate('path.to.property', '');
 // $errors[new Error('path.to.property', 'constraint.count.invalidtype', ['type' => 'string'])];
 
