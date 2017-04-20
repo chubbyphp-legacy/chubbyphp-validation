@@ -40,7 +40,16 @@ final class NumericConstraintTest extends \PHPUnit_Framework_TestCase
         self::assertEquals([], $constraint->validate('numeric', '1.1'));
     }
 
-    public function testWithoutNumeric()
+    public function testWithInvalidType()
+    {
+        $constraint = new NumericConstraint();
+
+        $error = new Error('numeric', 'constraint.numeric.invalidtype', ['type' => 'array']);
+
+        self::assertEquals([$error], $constraint->validate('numeric', []));
+    }
+
+    public function testWithoutNumericString()
     {
         $constraint = new NumericConstraint();
 
