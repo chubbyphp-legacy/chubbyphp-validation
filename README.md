@@ -95,6 +95,64 @@ $errorMessages = new NestedErrorMessages([$error], function () function (string 
 $errorMessages->getMessages(); // ['path' => ['to' => ['property' => ['constraint.constraint.invalidtype']]]]
 ```
 
+### Mapping
+
+#### PropertyMapping
+
+```php
+<?php
+
+use Chubbyphp\Validation\Constraint\NotNullConstraint;
+use Chubbyphp\Validation\Mapping\PropertyMapping;
+
+$propertyMapping = new PropertyMapping('propertyName', [new NotNullConstraint()]);
+$propertyMapping->getName(); // 'propertyName'
+$propertyMapping->getConstraints(); // [new NotNullConstraint()]
+```
+
+#### ObjectMapping (ObjectMappingInterface)
+
+```php
+<?php
+
+namespace MyProject\Validation;
+
+use Chubbyphp\Validation\Constraint\NotNullConstraint;
+use Chubbyphp\Validation\Mapping\ObjectMappingInterface;
+use Chubbyphp\Validation\Mapping\PropertyMapping;
+use Chubbyphp\Validation\Mapping\PropertyMappingInterface;
+use MyProject\Model\Model;
+
+class DayMapping implements ObjectMappingInterface
+{
+    /**
+     * @return string
+     */
+    public function getClass(): string
+    {
+        return Model::class;
+    }
+
+    /**
+     * @return ConstraintInterface[]
+     */
+    public function getConstraints(): array
+    {
+        return [];
+    }
+
+    /**
+     * @return PropertyMappingInterface[]
+     */
+    public function getPropertyMappings(): array
+    {
+        return [
+            new PropertyMapping('propertyName', [new NotNullConstraint()]),
+        ];
+    }
+}
+```
+
 ## Copyright
 
 Dominik Zogg 2017
