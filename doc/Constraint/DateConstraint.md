@@ -8,6 +8,7 @@ use Chubbyphp\Validation\Error\Error;
 
 $constraint = new DateConstraint();
 
+// Use NotNullConstraint to prevent null
 $errors = $constraint->validate('path.to.property', null);
 // $errors[];
 

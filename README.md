@@ -46,7 +46,11 @@ $errors = $constraint->validate('path.to.property', null);
 
 * [CountConstraint][2]
 * [DateConstraint][3]
-* [NotNullConstraint][4]
+* [EmailConstraint][4]
+* [NotBlankConstraint][5]
+* [NotNullConstraint][6]
+* [NumericConstraint][7]
+* [NumericRangeConstraint][8]
 
 ## Copyright
 
@@ -55,4 +59,8 @@ Dominik Zogg 2017
 [1]: https://packagist.org/packages/chubbyphp/chubbyphp-validation
 [2]: doc/Constraint/CountConstraint.md
 [3]: doc/Constraint/DateConstraint.md
-[4]: doc/Constraint/NotNullConstraint.md
+[4]: doc/Constraint/EmailConstraint.md
+[5]: doc/Constraint/NotBlankConstraint.md
+[6]: doc/Constraint/NotNullConstraint.md
+[7]: doc/Constraint/NumericConstraint.md
+[8]: doc/Constraint/NumericRangeConstraint.md
