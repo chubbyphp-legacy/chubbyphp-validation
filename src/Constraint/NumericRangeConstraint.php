@@ -8,7 +8,7 @@ use Chubbyphp\Validation\Error\Error;
 use Chubbyphp\Validation\Error\ErrorInterface;
 use Chubbyphp\Validation\ValidatorInterface;
 
-final class RangeConstraint implements ConstraintInterface
+final class NumericRangeConstraint implements ConstraintInterface
 {
     /**
      * @var int|null
@@ -38,19 +38,15 @@ final class RangeConstraint implements ConstraintInterface
      */
     public function validate(string $path, $input, ValidatorInterface $validator = null): array
     {
-        if (null === $input) {
-            return [];
-        }
-
         if (!is_numeric($input)) {
-            return [new Error($path, 'constraint.range.notnumeric', ['input' => $input])];
+            return [];
         }
 
         if (null !== $this->min && $input < $this->min || null !== $this->max && $input > $this->max) {
             return [
                 new Error(
                     $path,
-                    'constraint.range.outofrange',
+                    'constraint.numericrange.outofrange',
                     ['input' => $input, 'min' => $this->min, 'max' => $this->max]
                 )
             ];
