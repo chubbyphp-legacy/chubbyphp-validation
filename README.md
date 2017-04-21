@@ -42,18 +42,20 @@ use MyProject\Validation\ModelMapping;
 /** @var ModelRepository $modelRepository */
 $modelRepository = ...;
 
+$translate = function (string $key, array $arguments) { return $key; };
+
 $validator = new Validator(ObjectMappingRegistry([new ModelMapping($modelRepository)]));
 
 $model = new Model();
 
 // name is null
-$errorMessages = new NestedErrorMessages($validator->validateObject($model));
+$errorMessages = new NestedErrorMessages($validator->validateObject($model), $translate);
 $errorMessages->getMessages(); // ['name' => ['constraint.notnull.null']]
 
 $model->setName('name');
 
 // name is not null
-$errorMessages = new NestedErrorMessages($validator->validateObject($model));
+$errorMessages = new NestedErrorMessages($validator->validateObject($model), $translate);
 $errorMessages->getMessages(); // []
 ```
 
