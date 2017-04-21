@@ -2,9 +2,10 @@
 
 declare(strict_types=1);
 
-namespace Chubbyphp\Validation;
+namespace Chubbyphp\Validation\Provider;
 
 use Chubbyphp\Validation\Registry\ObjectMappingRegistry;
+use Chubbyphp\Validation\Validator;
 use Pimple\Container;
 use Pimple\ServiceProviderInterface;
 

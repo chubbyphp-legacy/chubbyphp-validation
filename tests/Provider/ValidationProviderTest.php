@@ -1,14 +1,14 @@
 <?php
 
-namespace Chubbyphp\Tests\Validation;
+namespace Chubbyphp\Tests\Validation\Provider;
 
 use Chubbyphp\Validation\Registry\ObjectMappingRegistry;
-use Chubbyphp\Validation\ValidationProvider;
+use Chubbyphp\Validation\Provider\ValidationProvider;
 use Chubbyphp\Validation\Validator;
 use Pimple\Container;
 
 /**
- * @covers \Chubbyphp\Validation\ValidationProvider
+ * @covers \Chubbyphp\Validation\Provider\ValidationProvider
  */
 final class ValidationProviderTest extends \PHPUnit_Framework_TestCase
 {
