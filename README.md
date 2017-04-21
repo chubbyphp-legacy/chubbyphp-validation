@@ -21,6 +21,10 @@ A simple validation.
 
 Through [Composer](http://getcomposer.org) as [chubbyphp/chubbyphp-validation][1].
 
+```sh
+composer require chubbyphp/chubbyphp-validation "~2.0@alpha"
+```
+
 ## Usage
 
 ### Constraint
