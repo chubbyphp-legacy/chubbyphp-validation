@@ -65,9 +65,24 @@ use Chubbyphp\Validation\Mapping\ObjectMappingInterface;
 use Chubbyphp\Validation\Mapping\PropertyMapping;
 use Chubbyphp\Validation\Mapping\PropertyMappingInterface;
 use MyProject\Model\Model;
+use MyProject\Repository\ModelRepository;
+use MyProject\Validation\UniqueModelConstraint;
 
 class ModelMapping implements ObjectMappingInterface
 {
+    /**
+     * @var ModelRepository
+     */
+    private $modelRepository;
+
+    /**
+     * @param ModelRepository $modelRepository
+     */
+    public function __construct(ModelRepository $modelRepository)
+    {
+        $this->modelRepository = $modelRepository;
+    }
+
     /**
      * @return string
      */
@@ -81,7 +96,7 @@ class ModelMapping implements ObjectMappingInterface
      */
     public function getConstraints(): array
     {
-        return [];
+        return [new UniqueModelConstraint($this->modelRepository, ['name'])];
     }
 
     /**
