@@ -139,6 +139,10 @@ class ModelMapping implements ObjectMappingInterface
 
 * [ObjectMappingRegistry][6]
 
+### Provider
+
+* [ValidationProvider][7]
+
 ## Copyright
 
 Dominik Zogg 2017
@@ -152,6 +156,7 @@ Dominik Zogg 2017
 [4]: doc/Error/ErrorMessages.md
 [5]: doc/Error/NestedErrorMessages.md
 [6]: doc/Registry/ObjectMappingRegistry.md
+[7]: doc/Provider/ValidationProvider.md
 
 [20]: doc/Constraint/CountConstraint.md
 [21]: doc/Constraint/DateConstraint.md
