@@ -27,92 +27,35 @@ composer require chubbyphp/chubbyphp-validation "~2.0@alpha"
 
 ## Usage
 
-### Constraint
-
-#### NotNullConstraint
+### Validator
 
 ```php
 <?php
 
-use Chubbyphp\Validation\Constraint\NotNullConstraint;
-use Chubbyphp\Validation\Error\Error;
-
-$constraint = new NotNullConstraint();
-
-$errors = $constraint->validate('path.to.property', '');
-// [];
-
-$errors = $constraint->validate('path.to.property', null);
-// [new Error('path.to.property', 'constraint.notnull.null')];
-```
-
-#### List
-
-* [CountConstraint][2]
-* [DateConstraint][3]
-* [EmailConstraint][4]
-* [NotBlankConstraint][5]
-* [NotNullConstraint][6]
-* [NumericConstraint][7]
-* [NumericRangeConstraint][8]
-
-### Error
-
-#### Error
-
-```php
-<?php
-
-use Chubbyphp\Validation\Error\Error;
-
-$error = new Error('path.to.property', 'constraint.constraint.invalidtype', ['type' => 'array']);
-$error->getPath(); // 'path.to.property'
-$error->getKey(); // 'constraint.constraint.invalidtype'
-$error->getArguments(); // ['type' => 'array']
-```
-
-#### ErrorMessages
-
-```php
-<?php
-
-use Chubbyphp\Validation\Error\Error;
-use Chubbyphp\Validation\Error\ErrorMessages;
-
-$error = new Error('path.to.property', 'constraint.constraint.invalidtype', ['type' => 'array']);
-
-$errorMessages = new ErrorMessages([$error], function () function (string $key, array $arguments) { return $key; });
-$errorMessages->getMessages(); // ['path.to.property' => ['constraint.constraint.invalidtype']]
-```
-
-#### NestedErrorMessages
-
-```php
-<?php
-
-use Chubbyphp\Validation\Error\Error;
 use Chubbyphp\Validation\Error\NestedErrorMessages;
+use Chubbyphp\Validation\Registry\ObjectMappingRegistry;
+use Chubbyphp\Validation\Validator;
+use MyProject\Model\Model;
+use MyProject\Validation\ModelMapping;
 
-$error = new Error('path.to.property', 'constraint.constraint.invalidtype', ['type' => 'array']);
+$validator = new Validator(ObjectMappingRegistry([new ModelMapping]));
 
-$errorMessages = new NestedErrorMessages([$error], function () function (string $key, array $arguments) { return $key; });
-$errorMessages->getMessages(); // ['path' => ['to' => ['property' => ['constraint.constraint.invalidtype']]]]
+$model = new Model();
+
+$errors = $validator->validateObject($model);
+
+$errorMessages = new NestedErrorMessages($errors);
+$errorMessages->getMessages(); // ['propertyName' => ['constraint.notnull.null']]
+
+$model->setPropertyName('');
+
+$errors = $validator->validateObject($model);
+// [];
 ```
 
 ### Mapping
 
-#### PropertyMapping
-
-```php
-<?php
-
-use Chubbyphp\Validation\Constraint\NotNullConstraint;
-use Chubbyphp\Validation\Mapping\PropertyMapping;
-
-$propertyMapping = new PropertyMapping('propertyName', [new NotNullConstraint()]);
-$propertyMapping->getName(); // 'propertyName'
-$propertyMapping->getConstraints(); // [new NotNullConstraint()]
-```
+#### [PropertyMapping][2]
 
 #### ObjectMapping (ObjectMappingInterface)
 
@@ -157,53 +100,44 @@ class ModelMapping implements ObjectMappingInterface
 }
 ```
 
+### Constraint
+
+* [CountConstraint][20]
+* [DateConstraint][21]
+* [EmailConstraint][22]
+* [NotBlankConstraint][23]
+* [NotNullConstraint][24]
+* [NumericConstraint][25]
+* [NumericRangeConstraint][26]
+
+### Error
+
+* [Error][3]
+* [ErrorMessages][4]
+* [NestedErrorMessages][5]
+
 ### Registry
 
-#### ObjectMappingRegistry
-
-```php
-<?php
-
-use Chubbyphp\Validation\Registry\ObjectMappingRegistry;
-use MyProject\Model\Model;
-use MyProject\Validation\ModelMapping;
-
-$objectMappingRegistry = new ObjectMappingRegistry([new ModelMapping]);
-$objectMappingRegistry->getObjectMappingForClass(Model::class); // new ModelMapping()
-```
-
-### Validator
-
-```php
-<?php
-
-use Chubbyphp\Validation\Registry\ObjectMappingRegistry;
-use Chubbyphp\Validation\Validator;
-use MyProject\Model\Model;
-use MyProject\Validation\ModelMapping;
-
-$validator = new Validator(ObjectMappingRegistry([new ModelMapping]));
-
-$model = new Model();
-
-$errors = $validator->validateObject($model);
-// [new Error('propertyName', 'constraint.notnull.null')];
-
-$model->setPropertyName('');
-
-$errors = $validator->validateObject($model);
-// [];
-```
+* [ObjectMappingRegistry][6]
 
 ## Copyright
 
 Dominik Zogg 2017
 
+
 [1]: https://packagist.org/packages/chubbyphp/chubbyphp-validation
-[2]: doc/Constraint/CountConstraint.md
-[3]: doc/Constraint/DateConstraint.md
-[4]: doc/Constraint/EmailConstraint.md
-[5]: doc/Constraint/NotBlankConstraint.md
-[6]: doc/Constraint/NotNullConstraint.md
-[7]: doc/Constraint/NumericConstraint.md
-[8]: doc/Constraint/NumericRangeConstraint.md
+
+[2]: doc/Mapping/PropertyMapping.md
+
+[3]: doc/Error/Error.md
+[4]: doc/Error/ErrorMessages.md
+[5]: doc/Error/NestedErrorMessages.md
+[6]: doc/Registry/ObjectMappingRegistry.md
+
+[20]: doc/Constraint/CountConstraint.md
+[21]: doc/Constraint/DateConstraint.md
+[22]: doc/Constraint/EmailConstraint.md
+[23]: doc/Constraint/NotBlankConstraint.md
+[24]: doc/Constraint/NotNullConstraint.md
+[25]: doc/Constraint/NumericConstraint.md
+[26]: doc/Constraint/NumericRangeConstraint.md
