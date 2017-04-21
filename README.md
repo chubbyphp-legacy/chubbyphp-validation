@@ -55,8 +55,6 @@ $errorMessages->getMessages(); // []
 
 ### Mapping
 
- * [PropertyMapping][2]
-
 ```php
 <?php
 
@@ -97,6 +95,8 @@ class ModelMapping implements ObjectMappingInterface
     }
 }
 ```
+
+ * [PropertyMapping][2]
 
 ### Constraint
 
