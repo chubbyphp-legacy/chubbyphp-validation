@@ -6,7 +6,7 @@
 use Chubbyphp\Validation\Constraint\NotNullConstraint;
 use Chubbyphp\Validation\Mapping\PropertyMapping;
 
-$propertyMapping = new PropertyMapping('propertyName', [new NotNullConstraint()]);
-$propertyMapping->getName(); // 'propertyName'
+$propertyMapping = new PropertyMapping('name', [new NotNullConstraint()]);
+$propertyMapping->getName(); // 'name'
 $propertyMapping->getConstraints(); // [new NotNullConstraint()]
 ```

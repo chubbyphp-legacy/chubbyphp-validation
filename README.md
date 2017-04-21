@@ -42,22 +42,20 @@ $validator = new Validator(ObjectMappingRegistry([new ModelMapping]));
 
 $model = new Model();
 
-$errors = $validator->validateObject($model);
+// name is null
+$errorMessages = new NestedErrorMessages($validator->validateObject($model));
+$errorMessages->getMessages(); // ['name' => ['constraint.notnull.null']]
 
-$errorMessages = new NestedErrorMessages($errors);
-$errorMessages->getMessages(); // ['propertyName' => ['constraint.notnull.null']]
+$model->setName('name');
 
-$model->setPropertyName('');
-
-$errors = $validator->validateObject($model);
-// [];
+// name is not null
+$errorMessages = new NestedErrorMessages($validator->validateObject($model));
+$errorMessages->getMessages(); // []
 ```
 
 ### Mapping
 
-#### [PropertyMapping][2]
-
-#### ObjectMapping (ObjectMappingInterface)
+ * [PropertyMapping][2]
 
 ```php
 <?php
@@ -94,7 +92,7 @@ class ModelMapping implements ObjectMappingInterface
     public function getPropertyMappings(): array
     {
         return [
-            new PropertyMapping('propertyName', [new NotNullConstraint()]),
+            new PropertyMapping('name', [new NotNullConstraint()]),
         ];
     }
 }
