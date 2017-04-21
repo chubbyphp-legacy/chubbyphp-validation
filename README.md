@@ -36,9 +36,13 @@ use Chubbyphp\Validation\Error\NestedErrorMessages;
 use Chubbyphp\Validation\Registry\ObjectMappingRegistry;
 use Chubbyphp\Validation\Validator;
 use MyProject\Model\Model;
+use MyProject\Repository\ModelRepository;
 use MyProject\Validation\ModelMapping;
 
-$validator = new Validator(ObjectMappingRegistry([new ModelMapping]));
+/** @var ModelRepository $modelRepository */
+$modelRepository = ...;
+
+$validator = new Validator(ObjectMappingRegistry([new ModelMapping($modelRepository)]));
 
 $model = new Model();
 
