@@ -8,9 +8,13 @@ use MyProject\Model\Model;
 use MyProject\Repository\ModelRepository;
 use MyProject\Validation\ModelMapping;
 
-$container['service'] = function () {
-    return new ModelMapping($modelRepository)];
+$container[ModelRepository::class] = function () {
+    return new ModelRepository(...)];
 };
 
-$lazyObjectMapping = new LazyObjectMapping($container, 'service', Model::class);
+$container[ModelMapping::class] = function () use ($container) {
+    return new ModelMapping($container[ModelRepository::class])];
+};
+
+$lazyObjectMapping = new LazyObjectMapping($container, ModelMapping::class, Model::class);
 ```
