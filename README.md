@@ -117,7 +117,8 @@ class ModelMapping implements ObjectMappingInterface
 }
 ```
 
- * [PropertyMapping][2]
+ * [LazyObjectMapping][2]
+ * [PropertyMapping][3]
 
 ### Constraint
 
@@ -131,17 +132,17 @@ class ModelMapping implements ObjectMappingInterface
 
 ### Error
 
-* [Error][3]
-* [ErrorMessages][4]
-* [NestedErrorMessages][5]
+* [Error][4]
+* [ErrorMessages][5]
+* [NestedErrorMessages][6]
 
 ### Registry
 
-* [ObjectMappingRegistry][6]
+* [ObjectMappingRegistry][7]
 
 ### Provider
 
-* [ValidationProvider][7]
+* [ValidationProvider][8]
 
 ## Copyright
 
@@ -150,13 +151,13 @@ Dominik Zogg 2017
 
 [1]: https://packagist.org/packages/chubbyphp/chubbyphp-validation
 
-[2]: doc/Mapping/PropertyMapping.md
-
-[3]: doc/Error/Error.md
-[4]: doc/Error/ErrorMessages.md
-[5]: doc/Error/NestedErrorMessages.md
-[6]: doc/Registry/ObjectMappingRegistry.md
-[7]: doc/Provider/ValidationProvider.md
+[2]: doc/Mapping/LazyObjectMapping.md
+[3]: doc/Mapping/PropertyMapping.md
+[4]: doc/Error/Error.md
+[5]: doc/Error/ErrorMessages.md
+[6]: doc/Error/NestedErrorMessages.md
+[7]: doc/Registry/ObjectMappingRegistry.md
+[8]: doc/Provider/ValidationProvider.md
 
 [20]: doc/Constraint/CountConstraint.md
 [21]: doc/Constraint/DateConstraint.md
