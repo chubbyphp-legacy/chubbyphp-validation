@@ -15,6 +15,7 @@ A simple validation.
 
 ## Suggest
 
+ * container-interop/container-interop: ~1.0
  * pimple/pimple: ~3.0
 
 ## Installation

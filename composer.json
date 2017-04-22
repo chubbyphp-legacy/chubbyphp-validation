@@ -10,12 +10,16 @@
         }
     ],
     "require": {
-        "php": "~7.0",
-        "container-interop/container-interop": "~1.0"
+        "php": "~7.0"
     },
     "require-dev": {
         "phpunit/phpunit": "~5.5",
+        "container-interop/container-interop": "~1.0",
         "pimple/pimple": "~3.0"
+    },
+    "suggest": {
+        "container-interop/container-interop": "Needed to use the LazyObjectMapping",
+        "pimple/pimple": "Needed to use the ValidationProvider"
     },
     "autoload": {
         "psr-4": { "Chubbyphp\\Validation\\": "src/" }
