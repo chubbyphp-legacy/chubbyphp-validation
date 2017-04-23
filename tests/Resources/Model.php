@@ -9,42 +9,21 @@ final class Model
     /**
      * @var string|null
      */
-    private $notNull;
-
-    /**
-     * @var string|null
-     */
-    private $notBlank;
+    private $name;
 
     /**
      * @return null|string
      */
-    public function getNotNull()
+    public function getName()
     {
-        return $this->notNull;
+        return $this->name;
     }
 
     /**
-     * @param null|string $notNull
+     * @param null|string $name
      */
-    public function setNotNull($notNull)
+    public function setName($name)
     {
-        $this->notNull = $notNull;
-    }
-
-    /**
-     * @return null|string
-     */
-    public function getNotBlank()
-    {
-        return $this->notBlank;
-    }
-
-    /**
-     * @param null|string $notBlank
-     */
-    public function setNotBlank($notBlank)
-    {
-        $this->notBlank = $notBlank;
+        $this->name = $name;
     }
 }

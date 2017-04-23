@@ -6,6 +6,7 @@ namespace Chubbyphp\Tests\Validation;
 
 use Chubbyphp\Tests\Validation\Resources\Model;
 use Chubbyphp\Validation\Constraint\ConstraintInterface;
+use Chubbyphp\Validation\Error\Error;
 use Chubbyphp\Validation\Error\ErrorInterface;
 use Chubbyphp\Validation\Mapping\ObjectMappingInterface;
 use Chubbyphp\Validation\Mapping\PropertyMappingInterface;
@@ -27,8 +28,7 @@ final class ValidatorTest extends \PHPUnit_Framework_TestCase
                     $this->getConstraint([])
                 ],
                 [
-                    $this->getPropertyMapping('notNull', [$this->getConstraint([])]),
-                    $this->getPropertyMapping('notBlank', [$this->getConstraint([])])
+                    $this->getPropertyMapping('name', [$this->getConstraint([])])
                 ]
             )
         ]);
@@ -36,8 +36,7 @@ final class ValidatorTest extends \PHPUnit_Framework_TestCase
         $validator = new Validator($objectMappingRegistry);
 
         $model = new Model();
-        $model->setNotNull('');
-        $model->setNotBlank('test');
+        $model->setName('name');
 
         $errors = $validator->validateObject($model);
 
@@ -51,17 +50,18 @@ final class ValidatorTest extends \PHPUnit_Framework_TestCase
                 Model::class,
                 [
                     $this->getConstraint([
-                        $this->getError('notNull', 'constraint.notnull.null', ['object' => true]),
-                        $this->getError('notBlank', 'constraint.notblank.blank', ['object' => true])
+                        new Error('name', 'constraint.unique.notunique',[])
                     ])
                 ],
                 [
-                    $this->getPropertyMapping('notNull', [$this->getConstraint([
-                        $this->getError('notNull', 'constraint.notnull.null', [])
-                    ])]),
-                    $this->getPropertyMapping('notBlank', [$this->getConstraint([
-                        $this->getError('notBlank', 'constraint.notblank.blank', [])
-                    ])])
+                    $this->getPropertyMapping('name', [
+                        $this->getConstraint([
+                            new Error('name', 'constraint.notnull.null', [])
+                        ]),
+                        $this->getConstraint([
+                            new Error('name', 'constraint.notblank.blank', [])
+                        ])
+                    ])
                 ]
             )
         ]);
@@ -69,16 +69,13 @@ final class ValidatorTest extends \PHPUnit_Framework_TestCase
         $validator = new Validator($objectMappingRegistry);
 
         $model = new Model();
-        $model->setNotNull('');
-        $model->setNotBlank('test');
 
         $errors = $validator->validateObject($model);
 
         self::assertEquals([
-            $this->getError('notNull', 'constraint.notnull.null', ['object' => true]),
-            $this->getError('notBlank', 'constraint.notblank.blank', ['object' => true]),
-            $this->getError('notNull', 'constraint.notnull.null', []),
-            $this->getError('notBlank', 'constraint.notblank.blank', [])
+            new Error('name', 'constraint.notnull.null', []),
+            new Error('name', 'constraint.notblank.blank', []),
+            new Error('name', 'constraint.unique.notunique', []),
         ], $errors);
     }
 
@@ -172,27 +169,5 @@ final class ValidatorTest extends \PHPUnit_Framework_TestCase
         );
 
         return $constraint;
-    }
-
-    /**
-     * @param string $path
-     * @param string $key
-     * @param array $arguments
-     * @return ErrorInterface
-     */
-    private function getError(string $path, string $key, array $arguments): ErrorInterface
-    {
-        /** @var ErrorInterface|\PHPUnit_Framework_MockObject_MockObject $error */
-        $error = $this
-            ->getMockBuilder(ErrorInterface::class)
-            ->setMethods(['getPath', 'getKey', 'getArguments'])
-            ->getMockForAbstractClass()
-        ;
-
-        $error->expects(self::any())->method('getPath')->willReturn($path);
-        $error->expects(self::any())->method('getKey')->willReturn($key);
-        $error->expects(self::any())->method('getArguments')->willReturn($arguments);
-
-        return $error;
     }
 }
