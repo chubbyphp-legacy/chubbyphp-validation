@@ -12,6 +12,7 @@ A simple validation.
 ## Requirements
 
  * php: ~7.0
+ * psr/log: ~1.0
 
 ## Suggest
 

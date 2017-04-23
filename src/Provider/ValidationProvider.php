@@ -8,6 +8,7 @@ use Chubbyphp\Validation\Registry\ObjectMappingRegistry;
 use Chubbyphp\Validation\Validator;
 use Pimple\Container;
 use Pimple\ServiceProviderInterface;
+use Psr\Log\NullLogger;
 
 final class ValidationProvider implements ServiceProviderInterface
 {
@@ -25,7 +26,7 @@ final class ValidationProvider implements ServiceProviderInterface
         };
 
         $container['validator'] = function () use ($container) {
-            return new Validator($container['validator.objectmappingregistry']);
+            return new Validator($container['validator.objectmappingregistry'], $container['logger'] ?? null);
         };
     }
 }

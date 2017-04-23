@@ -13,6 +13,8 @@ use Chubbyphp\Validation\Mapping\PropertyMappingInterface;
 use Chubbyphp\Validation\Registry\ObjectMappingRegistryInterface;
 use Chubbyphp\Validation\Validator;
 use Chubbyphp\Validation\ValidatorInterface;
+use Psr\Log\LoggerInterface;
+use Psr\Log\LogLevel;
 
 /**
  * @covers \Chubbyphp\Validation\Validator
@@ -33,7 +35,9 @@ final class ValidatorTest extends \PHPUnit_Framework_TestCase
             )
         ]);
 
-        $validator = new Validator($objectMappingRegistry);
+        $logger = $this->getLogger();
+
+        $validator = new Validator($objectMappingRegistry, $logger);
 
         $model = new Model();
         $model->setName('name');
@@ -41,6 +45,7 @@ final class ValidatorTest extends \PHPUnit_Framework_TestCase
         $errors = $validator->validateObject($model);
 
         self::assertEquals([], $errors);
+        self::assertEquals([], $logger->__logs);
     }
 
     public function testWithErrors()
@@ -66,7 +71,9 @@ final class ValidatorTest extends \PHPUnit_Framework_TestCase
             )
         ]);
 
-        $validator = new Validator($objectMappingRegistry);
+        $logger = $this->getLogger();
+
+        $validator = new Validator($objectMappingRegistry, $logger);
 
         $model = new Model();
 
@@ -77,6 +84,36 @@ final class ValidatorTest extends \PHPUnit_Framework_TestCase
             new Error('name', 'constraint.notblank.blank', []),
             new Error('name', 'constraint.unique.notunique', []),
         ], $errors);
+
+        self::assertEquals([
+            [
+                'level' => LogLevel::NOTICE,
+                'message' => 'validation: path {path}, key {key}, arguments {arguments}',
+                'context' => [
+                    'path' => 'name',
+                    'key' => 'constraint.notnull.null',
+                    'arguments' => [],
+                ]
+            ],
+            [
+                'level' => LogLevel::NOTICE,
+                'message' => 'validation: path {path}, key {key}, arguments {arguments}',
+                'context' => [
+                    'path' => 'name',
+                    'key' => 'constraint.notblank.blank',
+                    'arguments' => [],
+                ]
+            ],
+            [
+                'level' => LogLevel::NOTICE,
+                'message' => 'validation: path {path}, key {key}, arguments {arguments}',
+                'context' => [
+                    'path' => 'name',
+                    'key' => 'constraint.unique.notunique',
+                    'arguments' => [],
+                ]
+            ],
+        ], $logger->__logs);
     }
 
     /**
@@ -169,5 +206,55 @@ final class ValidatorTest extends \PHPUnit_Framework_TestCase
         );
 
         return $constraint;
+    }
+
+        /**
+     * @return LoggerInterface
+     */
+    private function getLogger(): LoggerInterface
+    {
+        $methods = [
+            'emergency',
+            'alert',
+            'critical',
+            'error',
+            'warning',
+            'notice',
+            'info',
+            'debug',
+        ];
+
+        /** @var LoggerInterface|\PHPUnit_Framework_MockObject_MockObject $logger */
+        $logger = $this
+            ->getMockBuilder(LoggerInterface::class)
+            ->setMethods(array_merge($methods, ['log']))
+            ->getMockForAbstractClass()
+        ;
+
+        $logger->__logs = [];
+
+        foreach ($methods as $method) {
+            $logger
+                ->expects(self::any())
+                ->method($method)
+                ->willReturnCallback(
+                    function (string $message, array $context = []) use ($logger, $method) {
+                        $logger->log($method, $message, $context);
+                    }
+                )
+            ;
+        }
+
+        $logger
+            ->expects(self::any())
+            ->method('log')
+            ->willReturnCallback(
+                function (string $level, string $message, array $context = []) use ($logger) {
+                    $logger->__logs[] = ['level' => $level, 'message' => $message, 'context' => $context];
+                }
+            )
+        ;
+
+        return $logger;
     }
 }

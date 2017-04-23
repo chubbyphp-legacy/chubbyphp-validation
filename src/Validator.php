@@ -7,6 +7,8 @@ namespace Chubbyphp\Validation;
 use Chubbyphp\Validation\Error\ErrorInterface;
 use Chubbyphp\Validation\Mapping\ObjectMappingInterface;
 use Chubbyphp\Validation\Registry\ObjectMappingRegistryInterface;
+use Psr\Log\LoggerInterface;
+use Psr\Log\NullLogger;
 
 final class Validator implements ValidatorInterface
 {
@@ -16,11 +18,18 @@ final class Validator implements ValidatorInterface
     private $objectMappingRegistry;
 
     /**
-     * @param ObjectMappingRegistryInterface $objectMappingRegistry
+     * @var LoggerInterface
      */
-    public function __construct(ObjectMappingRegistryInterface $objectMappingRegistry)
+    private $logger;
+
+    /**
+     * @param ObjectMappingRegistryInterface $objectMappingRegistry
+     * @param LoggerInterface                $logger
+     */
+    public function __construct(ObjectMappingRegistryInterface $objectMappingRegistry, LoggerInterface $logger = null)
     {
         $this->objectMappingRegistry = $objectMappingRegistry;
+        $this->logger = $logger ?? new NullLogger();
     }
 
     /**
@@ -34,10 +43,14 @@ final class Validator implements ValidatorInterface
 
         $objectMapping = $this->objectMappingRegistry->getObjectMappingForClass($class);
 
-        return array_merge(
+        $errors = array_merge(
             $this->propertyConstraints($objectMapping, $object, $path),
             $this->objectConstraints($objectMapping, $object, $path)
         );
+
+        $this->logErrors($errors);
+
+        return $errors;
     }
 
     /**
@@ -81,5 +94,26 @@ final class Validator implements ValidatorInterface
         }
 
         return $errors;
+    }
+
+    /**
+     * @param ErrorInterface[] $errors
+     */
+    private function logErrors(array $errors)
+    {
+        foreach ($errors as $error) {
+            $this->logError($error);
+        }
+    }
+
+    /**
+     * @param ErrorInterface $error
+     */
+    private function logError(ErrorInterface $error)
+    {
+        $this->logger->notice(
+            'validation: path {path}, key {key}, arguments {arguments}',
+            ['path' => $error->getPath(), 'key' => $error->getKey(), 'arguments' => $error->getArguments()]
+        );
     }
 }
