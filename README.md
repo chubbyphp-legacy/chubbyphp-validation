@@ -46,7 +46,7 @@ $modelRepository = ...;
 
 $translate = function (string $key, array $arguments) { return $key; };
 
-$validator = new Validator(ObjectMappingRegistry([new ModelMapping($modelRepository)]));
+$validator = new Validator(new ObjectMappingRegistry([new ModelMapping($modelRepository)]));
 
 $model = new Model();
 
