@@ -125,13 +125,14 @@ class ModelMapping implements ObjectMappingInterface
 
 ### Constraint
 
-* [CountConstraint][20]
-* [DateConstraint][21]
-* [EmailConstraint][22]
-* [NotBlankConstraint][23]
-* [NotNullConstraint][24]
-* [NumericConstraint][25]
-* [NumericRangeConstraint][26]
+* [CallbackConstraint][20]
+* [CountConstraint][21]
+* [DateConstraint][22]
+* [EmailConstraint][23]
+* [NotBlankConstraint][24]
+* [NotNullConstraint][25]
+* [NumericConstraint][26]
+* [NumericRangeConstraint][27]
 
 ### Error
 
@@ -162,10 +163,11 @@ Dominik Zogg 2017
 [7]: doc/Registry/ObjectMappingRegistry.md
 [8]: doc/Provider/ValidationProvider.md
 
-[20]: doc/Constraint/CountConstraint.md
-[21]: doc/Constraint/DateConstraint.md
-[22]: doc/Constraint/EmailConstraint.md
-[23]: doc/Constraint/NotBlankConstraint.md
-[24]: doc/Constraint/NotNullConstraint.md
-[25]: doc/Constraint/NumericConstraint.md
-[26]: doc/Constraint/NumericRangeConstraint.md
+[20]: doc/Constraint/CallbackConstraint.md
+[21]: doc/Constraint/CountConstraint.md
+[22]: doc/Constraint/DateConstraint.md
+[23]: doc/Constraint/EmailConstraint.md
+[24]: doc/Constraint/NotBlankConstraint.md
+[25]: doc/Constraint/NotNullConstraint.md
+[26]: doc/Constraint/NumericConstraint.md
+[27]: doc/Constraint/NumericRangeConstraint.md
