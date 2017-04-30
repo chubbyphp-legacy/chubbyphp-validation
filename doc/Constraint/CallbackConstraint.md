@@ -13,7 +13,7 @@ $constraint = new CallbackConstraint(function (string $path, $input, ValidatorIn
     }
 
     return [
-        new Error($path, 'constrain.callback', ['input' => $input])
+        new Error($path, 'constraint.callback', ['input' => $input])
     ];
 });
 
