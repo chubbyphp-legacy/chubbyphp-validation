@@ -8,7 +8,6 @@ use Chubbyphp\Validation\Registry\ObjectMappingRegistry;
 use Chubbyphp\Validation\Validator;
 use Pimple\Container;
 use Pimple\ServiceProviderInterface;
-use Psr\Log\NullLogger;
 
 final class ValidationProvider implements ServiceProviderInterface
 {
