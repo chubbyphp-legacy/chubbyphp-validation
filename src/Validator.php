@@ -65,12 +65,14 @@ final class Validator implements ValidatorInterface
         foreach ($objectMapping->getPropertyMappings() as $propertyMapping) {
             $property = $propertyMapping->getName();
 
+            $subPath = '' !== $path ? $path . '.' . $property : $property;
+
+            $this->logger->info('validation: path {path}', ['path' => $subPath]);
+
             $propertyReflection = new \ReflectionProperty($object, $property);
             $propertyReflection->setAccessible(true);
 
             $propertyValue = $propertyReflection->getValue($object);
-
-            $subPath = '' !== $path ? $path . '.' . $property : $property;
 
             foreach ($propertyMapping->getConstraints() as $constraint) {
                 $errors = array_merge($errors, $constraint->validate($subPath, $propertyValue, $this));
@@ -89,6 +91,9 @@ final class Validator implements ValidatorInterface
     private function objectConstraints(ObjectMappingInterface $objectMapping, $object, string $path): array
     {
         $errors = [];
+
+        $this->logger->info('validation: path {path}', ['path' => $path]);
+
         foreach ($objectMapping->getConstraints() as $constraint) {
             $errors = array_merge($errors, $constraint->validate($path, $object, $this));
         }

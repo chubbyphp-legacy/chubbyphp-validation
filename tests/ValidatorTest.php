@@ -45,7 +45,22 @@ final class ValidatorTest extends \PHPUnit_Framework_TestCase
         $errors = $validator->validateObject($model);
 
         self::assertEquals([], $errors);
-        self::assertEquals([], $logger->__logs);
+        self::assertEquals([
+            [
+                'level' => LogLevel::INFO,
+                'message' => 'validation: path {path}',
+                'context' => [
+                    'path' => 'name',
+                ]
+            ],
+            [
+                'level' => LogLevel::INFO,
+                'message' => 'validation: path {path}',
+                'context' => [
+                    'path' => '',
+                ]
+            ],
+        ], $logger->__logs);
     }
 
     public function testWithErrors()
@@ -55,16 +70,16 @@ final class ValidatorTest extends \PHPUnit_Framework_TestCase
                 Model::class,
                 [
                     $this->getConstraint([
-                        new Error('name', 'constraint.unique.notunique',[])
+                        new Error('name', 'constraint.unique.notunique')
                     ])
                 ],
                 [
                     $this->getPropertyMapping('name', [
                         $this->getConstraint([
-                            new Error('name', 'constraint.notnull.null', [])
+                            new Error('name', 'constraint.notnull.null')
                         ]),
                         $this->getConstraint([
-                            new Error('name', 'constraint.notblank.blank', [])
+                            new Error('name', 'constraint.notblank.blank')
                         ])
                     ])
                 ]
@@ -86,6 +101,20 @@ final class ValidatorTest extends \PHPUnit_Framework_TestCase
         ], $errors);
 
         self::assertEquals([
+                        [
+                'level' => LogLevel::INFO,
+                'message' => 'validation: path {path}',
+                'context' => [
+                    'path' => 'name',
+                ]
+            ],
+            [
+                'level' => LogLevel::INFO,
+                'message' => 'validation: path {path}',
+                'context' => [
+                    'path' => '',
+                ]
+            ],
             [
                 'level' => LogLevel::NOTICE,
                 'message' => 'validation: path {path}, key {key}, arguments {arguments}',
