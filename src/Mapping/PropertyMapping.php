@@ -20,7 +20,7 @@ final class PropertyMapping implements PropertyMappingInterface
 
     /**
      * @param string $name
-     * @param array $constraints
+     * @param array  $constraints
      */
     public function __construct(string $name, array $constraints = [])
     {

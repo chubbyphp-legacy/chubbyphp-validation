@@ -37,7 +37,7 @@ final class NotBlankConstraintTest extends \PHPUnit_Framework_TestCase
     {
         $constraint = new NotBlankConstraint();
 
-        $object = new \stdClass;
+        $object = new \stdClass();
         $object->key = 'value';
 
         self::assertEquals([], $constraint->validate('notblank', $object));
@@ -61,7 +61,7 @@ final class NotBlankConstraintTest extends \PHPUnit_Framework_TestCase
         self::assertEquals([$error], $constraint->validate('notblank', []));
     }
 
-        public function testWithBlankStdClass()
+    public function testWithBlankStdClass()
     {
         $constraint = new NotBlankConstraint();
 

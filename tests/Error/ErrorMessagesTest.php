@@ -26,7 +26,7 @@ final class ErrorMessagesTest extends \PHPUnit_Framework_TestCase
             $this->getError('collection[0].field1', 'constraint.collection0.constraint1'),
             $this->getError('collection[0].field1', 'constraint.collection0.constraint2'),
             $this->getError('collection[1].field1', 'constraint.collection1.constraint1'),
-            $this->getError('collection[1].field1', 'constraint.collection1.constraint2')
+            $this->getError('collection[1].field1', 'constraint.collection1.constraint2'),
         ];
 
         $errorMessages = new ErrorMessages(
@@ -36,23 +36,24 @@ final class ErrorMessagesTest extends \PHPUnit_Framework_TestCase
 
         self::assertEquals([
             'collection[_all]' => [
-                'constraint.collection.all'
+                'constraint.collection.all',
             ],
             'collection[0].field1' => [
                 'constraint.collection0.constraint1',
-                'constraint.collection0.constraint2'
+                'constraint.collection0.constraint2',
             ],
             'collection[1].field1' => [
                 'constraint.collection1.constraint1',
-                'constraint.collection1.constraint2'
-            ]
+                'constraint.collection1.constraint2',
+            ],
         ], $errorMessages->getMessages());
     }
 
     /**
      * @param string $path
      * @param string $key
-     * @param array $arguments
+     * @param array  $arguments
+     *
      * @return ErrorInterface
      */
     private function getError(string $path, string $key, array $arguments = []): ErrorInterface

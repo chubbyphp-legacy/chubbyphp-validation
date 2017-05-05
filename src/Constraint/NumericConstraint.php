@@ -11,9 +11,10 @@ use Chubbyphp\Validation\ValidatorInterface;
 final class NumericConstraint implements ConstraintInterface
 {
     /**
-     * @param string $path
-     * @param mixed $input
+     * @param string             $path
+     * @param mixed              $input
      * @param ValidatorInterface $validator
+     *
      * @return ErrorInterface[]
      */
     public function validate(string $path, $input, ValidatorInterface $validator = null): array

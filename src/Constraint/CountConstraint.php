@@ -31,9 +31,10 @@ final class CountConstraint implements ConstraintInterface
     }
 
     /**
-     * @param string $path
-     * @param mixed $input
+     * @param string             $path
+     * @param mixed              $input
      * @param ValidatorInterface $validator
+     *
      * @return ErrorInterface[]
      */
     public function validate(string $path, $input, ValidatorInterface $validator = null): array
@@ -54,7 +55,7 @@ final class CountConstraint implements ConstraintInterface
                     $path,
                     'constraint.count.outofrange',
                     ['count' => $count, 'min' => $this->min, 'max' => $this->max]
-                )
+                ),
             ];
         }
 

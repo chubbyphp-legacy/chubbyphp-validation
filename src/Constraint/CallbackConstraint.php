@@ -22,9 +22,10 @@ final class CallbackConstraint implements ConstraintInterface
     }
 
     /**
-     * @param string $path
-     * @param mixed $input
+     * @param string                  $path
+     * @param mixed                   $input
      * @param ValidatorInterface|null $validator
+     *
      * @return array
      */
     public function validate(string $path, $input, ValidatorInterface $validator = null): array

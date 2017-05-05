@@ -54,8 +54,9 @@ final class LazyObjectMappingTest extends \PHPUnit_Framework_TestCase
 
     /**
      * @param string $class
-     * @param array $constraints
-     * @param array $propertyMappings
+     * @param array  $constraints
+     * @param array  $propertyMappings
+     *
      * @return ObjectMappingInterface
      */
     private function getObjectMapping(
@@ -77,9 +78,10 @@ final class LazyObjectMappingTest extends \PHPUnit_Framework_TestCase
         return $mapping;
     }
 
-        /**
+    /**
      * @param string $name
-     * @param array $constraints
+     * @param array  $constraints
+     *
      * @return PropertyMappingInterface
      */
     private function getPropertyMapping(string $name, array $constraints): PropertyMappingInterface

@@ -27,12 +27,12 @@ final class ValidatorTest extends \PHPUnit_Framework_TestCase
             Model::class => $this->getObjectMapping(
                 Model::class,
                 [
-                    $this->getConstraint([])
+                    $this->getConstraint([]),
                 ],
                 [
-                    $this->getPropertyMapping('name', [$this->getConstraint([])])
+                    $this->getPropertyMapping('name', [$this->getConstraint([])]),
                 ]
-            )
+            ),
         ]);
 
         $logger = $this->getLogger();
@@ -51,14 +51,14 @@ final class ValidatorTest extends \PHPUnit_Framework_TestCase
                 'message' => 'validation: path {path}',
                 'context' => [
                     'path' => 'name',
-                ]
+                ],
             ],
             [
                 'level' => LogLevel::INFO,
                 'message' => 'validation: path {path}',
                 'context' => [
                     'path' => '',
-                ]
+                ],
             ],
         ], $logger->__logs);
     }
@@ -70,20 +70,20 @@ final class ValidatorTest extends \PHPUnit_Framework_TestCase
                 Model::class,
                 [
                     $this->getConstraint([
-                        new Error('name', 'constraint.unique.notunique')
-                    ])
+                        new Error('name', 'constraint.unique.notunique'),
+                    ]),
                 ],
                 [
                     $this->getPropertyMapping('name', [
                         $this->getConstraint([
-                            new Error('name', 'constraint.notnull.null')
+                            new Error('name', 'constraint.notnull.null'),
                         ]),
                         $this->getConstraint([
-                            new Error('name', 'constraint.notblank.blank')
-                        ])
-                    ])
+                            new Error('name', 'constraint.notblank.blank'),
+                        ]),
+                    ]),
                 ]
-            )
+            ),
         ]);
 
         $logger = $this->getLogger();
@@ -106,14 +106,14 @@ final class ValidatorTest extends \PHPUnit_Framework_TestCase
                 'message' => 'validation: path {path}',
                 'context' => [
                     'path' => 'name',
-                ]
+                ],
             ],
             [
                 'level' => LogLevel::INFO,
                 'message' => 'validation: path {path}',
                 'context' => [
                     'path' => '',
-                ]
+                ],
             ],
             [
                 'level' => LogLevel::NOTICE,
@@ -122,7 +122,7 @@ final class ValidatorTest extends \PHPUnit_Framework_TestCase
                     'path' => 'name',
                     'key' => 'constraint.notnull.null',
                     'arguments' => [],
-                ]
+                ],
             ],
             [
                 'level' => LogLevel::NOTICE,
@@ -131,7 +131,7 @@ final class ValidatorTest extends \PHPUnit_Framework_TestCase
                     'path' => 'name',
                     'key' => 'constraint.notblank.blank',
                     'arguments' => [],
-                ]
+                ],
             ],
             [
                 'level' => LogLevel::NOTICE,
@@ -140,16 +140,18 @@ final class ValidatorTest extends \PHPUnit_Framework_TestCase
                     'path' => 'name',
                     'key' => 'constraint.unique.notunique',
                     'arguments' => [],
-                ]
+                ],
             ],
         ], $logger->__logs);
     }
 
     /**
      * @param ObjectMappingInterface[] $mappings
+     *
      * @return ObjectMappingRegistryInterface
      */
-    private function getObjectMappingRegistry(array $mappings): ObjectMappingRegistryInterface {
+    private function getObjectMappingRegistry(array $mappings): ObjectMappingRegistryInterface
+    {
         /** @var ObjectMappingRegistryInterface|\PHPUnit_Framework_MockObject_MockObject $registry */
         $registry = $this
             ->getMockBuilder(ObjectMappingRegistryInterface::class)
@@ -172,8 +174,9 @@ final class ValidatorTest extends \PHPUnit_Framework_TestCase
 
     /**
      * @param string $class
-     * @param array $constraints
-     * @param array $propertyMappings
+     * @param array  $constraints
+     * @param array  $propertyMappings
+     *
      * @return ObjectMappingInterface
      */
     private function getObjectMapping(
@@ -197,7 +200,8 @@ final class ValidatorTest extends \PHPUnit_Framework_TestCase
 
     /**
      * @param string $name
-     * @param array $constraints
+     * @param array  $constraints
+     *
      * @return PropertyMappingInterface
      */
     private function getPropertyMapping(string $name, array $constraints): PropertyMappingInterface
@@ -217,6 +221,7 @@ final class ValidatorTest extends \PHPUnit_Framework_TestCase
 
     /**
      * @param ErrorInterface[] $errors
+     *
      * @return ConstraintInterface
      */
     private function getConstraint(array $errors): ConstraintInterface
@@ -229,7 +234,7 @@ final class ValidatorTest extends \PHPUnit_Framework_TestCase
         ;
 
         $constraint->expects(self::any())->method('validate')->willReturnCallback(
-            function(string $path, $input, ValidatorInterface $validator = null) use ($errors) {
+            function (string $path, $input, ValidatorInterface $validator = null) use ($errors) {
                 return $errors;
             }
         );
@@ -237,7 +242,7 @@ final class ValidatorTest extends \PHPUnit_Framework_TestCase
         return $constraint;
     }
 
-        /**
+    /**
      * @return LoggerInterface
      */
     private function getLogger(): LoggerInterface

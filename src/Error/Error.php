@@ -24,7 +24,7 @@ final class Error implements ErrorInterface
     /**
      * @param string $path
      * @param string $key
-     * @param array $arguments
+     * @param array  $arguments
      */
     public function __construct($path, $key, array $arguments = [])
     {

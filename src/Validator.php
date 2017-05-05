@@ -35,6 +35,7 @@ final class Validator implements ValidatorInterface
     /**
      * @param object $object
      * @param string $path
+     *
      * @return string[]
      */
     public function validateObject($object, string $path = ''): array
@@ -57,6 +58,7 @@ final class Validator implements ValidatorInterface
      * @param ObjectMappingInterface $objectMapping
      * @param $object
      * @param string $path
+     *
      * @return ErrorInterface[]
      */
     private function propertyConstraints(ObjectMappingInterface $objectMapping, $object, string $path)
@@ -65,7 +67,7 @@ final class Validator implements ValidatorInterface
         foreach ($objectMapping->getPropertyMappings() as $propertyMapping) {
             $property = $propertyMapping->getName();
 
-            $subPath = '' !== $path ? $path . '.' . $property : $property;
+            $subPath = '' !== $path ? $path.'.'.$property : $property;
 
             $this->logger->info('validation: path {path}', ['path' => $subPath]);
 
@@ -86,6 +88,7 @@ final class Validator implements ValidatorInterface
      * @param ObjectMappingInterface $objectMapping
      * @param $object
      * @param string $path
+     *
      * @return ErrorInterface[]
      */
     private function objectConstraints(ObjectMappingInterface $objectMapping, $object, string $path): array

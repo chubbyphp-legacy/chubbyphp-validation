@@ -25,7 +25,7 @@ final class CallbackConstraintTest extends \PHPUnit_Framework_TestCase
         $constraint = new CallbackConstraint($this->getCallback());
 
         self::assertEquals([
-            new Error('callback', 'constrain.callback', ['input' => 'value'])
+            new Error('callback', 'constrain.callback', ['input' => 'value']),
         ], $constraint->validate('callback', 'value'));
     }
 
@@ -35,12 +35,12 @@ final class CallbackConstraintTest extends \PHPUnit_Framework_TestCase
     private function getCallback(): callable
     {
         return function (string $path, $input, ValidatorInterface $validator = null) {
-            if (null === $input){
+            if (null === $input) {
                 return [];
             }
 
             return [
-                new Error($path, 'constrain.callback', ['input' => $input])
+                new Error($path, 'constrain.callback', ['input' => $input]),
             ];
         };
     }

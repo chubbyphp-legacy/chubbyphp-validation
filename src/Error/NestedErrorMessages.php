@@ -57,7 +57,7 @@ final class NestedErrorMessages implements ErrorMessagesInterface
     }
 
     /**
-     * @param array $node
+     * @param array          $node
      * @param ErrorInterface $error
      */
     private function assignErrorMessage(array &$node, ErrorInterface $error)
@@ -77,6 +77,7 @@ final class NestedErrorMessages implements ErrorMessagesInterface
 
     /**
      * @param string $path
+     *
      * @return array
      */
     private function parsePath(string $path): array
