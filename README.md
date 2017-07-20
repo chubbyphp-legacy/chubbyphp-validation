@@ -127,14 +127,15 @@ class ModelMapping implements ObjectMappingInterface
 
 * [CallbackConstraint][20]
 * [ChoiceConstraint][21]
-* [CoordinateConstraint][22]
-* [CountConstraint][23]
-* [DateConstraint][24]
-* [EmailConstraint][25]
-* [NotBlankConstraint][26]
-* [NotNullConstraint][27]
-* [NumericConstraint][28]
-* [NumericRangeConstraint][29]
+* [CoordinateArrayConstraint][22]
+* [CoordinateConstraint][23]
+* [CountConstraint][24]
+* [DateConstraint][25]
+* [EmailConstraint][26]
+* [NotBlankConstraint][27]
+* [NotNullConstraint][28]
+* [NumericConstraint][29]
+* [NumericRangeConstraint][30]
 
 ### Error
 
@@ -167,11 +168,12 @@ Dominik Zogg 2017
 
 [20]: doc/Constraint/CallbackConstraint.md
 [21]: doc/Constraint/ChoiceConstraint.md
-[22]: doc/Constraint/CoordinateConstraint.md
-[23]: doc/Constraint/CountConstraint.md
-[24]: doc/Constraint/DateConstraint.md
-[25]: doc/Constraint/EmailConstraint.md
-[26]: doc/Constraint/NotBlankConstraint.md
-[27]: doc/Constraint/NotNullConstraint.md
-[28]: doc/Constraint/NumericConstraint.md
-[29]: doc/Constraint/NumericRangeConstraint.md
+[22]: doc/Constraint/CoordinateArrayConstraint.md
+[23]: doc/Constraint/CoordinateConstraint.md
+[24]: doc/Constraint/CountConstraint.md
+[25]: doc/Constraint/DateConstraint.md
+[26]: doc/Constraint/EmailConstraint.md
+[27]: doc/Constraint/NotBlankConstraint.md
+[28]: doc/Constraint/NotNullConstraint.md
+[29]: doc/Constraint/NumericConstraint.md
+[30]: doc/Constraint/NumericRangeConstraint.md
