@@ -35,8 +35,8 @@ final class CoordinateConstraint implements ConstraintInterface
             return [new Error($path, 'constraint.coordinate.invalidformat', ['input' => $input])];
         }
 
-        $lat = $matches[1];
-        $lon = $matches[3];
+        $lat = (float) $matches[1];
+        $lon = (float) $matches[3];
 
         if ($lat < -90 || $lat > 90 || $lon < -180 || $lon > 180) {
             return [new Error($path, 'constraint.coordinate.invalidvalue', ['input' => $input])];
