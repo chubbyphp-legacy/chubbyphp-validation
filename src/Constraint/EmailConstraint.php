@@ -10,6 +10,8 @@ use Chubbyphp\Validation\ValidatorInterface;
 
 final class EmailConstraint implements ConstraintInterface
 {
+    const PATTERN = '/^(.+)\@(\S+\.\S+)$/';
+
     /**
      * @param string             $path
      * @param mixed              $input
@@ -27,7 +29,7 @@ final class EmailConstraint implements ConstraintInterface
             return [new Error($path, 'constraint.email.invalidtype', ['type' => gettype($input)])];
         }
 
-        if (!preg_match('/^.+\@\S+\.\S+$/', $input)) {
+        if (!preg_match(self::PATTERN, $input)) {
             return [new Error($path, 'constraint.email.invalidformat', ['input' => $input])];
         }
 
