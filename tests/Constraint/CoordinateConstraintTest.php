@@ -28,6 +28,15 @@ final class CoordinateConstraintTest extends \PHPUnit_Framework_TestCase
         self::assertEquals([$error], $constraint->validate('coordinate', []));
     }
 
+    public function testInvalidFormat()
+    {
+        $constraint = new CoordinateConstraint();
+
+        $error = new Error('coordinate', 'constraint.coordinate.invalidformat', ['input' => 'coordinate']);
+
+        self::assertEquals([$error], $constraint->validate('coordinate', 'coordinate'));
+    }
+
     /**
      * @dataProvider getCoordinates
      *
@@ -66,7 +75,7 @@ final class CoordinateConstraintTest extends \PHPUnit_Framework_TestCase
         preg_match(CoordinateConstraint::PATTERN, $coordinate, $matches);
 
         self::assertSame($latitude, $matches[1]);
-        self::assertSame($longitude, $matches[5]);
+        self::assertSame($longitude, $matches[3]);
     }
 
     /**
@@ -78,7 +87,7 @@ final class CoordinateConstraintTest extends \PHPUnit_Framework_TestCase
     {
         $constraint = new CoordinateConstraint();
 
-        $error = new Error('coordinate', 'constraint.coordinate.invalidformat', ['input' => $coordinate]);
+        $error = new Error('coordinate', 'constraint.coordinate.invalidvalue', ['input' => $coordinate]);
 
         self::assertEquals([$error], $constraint->validate('coordinate', $coordinate));
     }

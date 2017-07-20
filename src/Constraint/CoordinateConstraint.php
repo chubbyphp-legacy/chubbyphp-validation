@@ -10,7 +10,7 @@ use Chubbyphp\Validation\ValidatorInterface;
 
 final class CoordinateConstraint implements ConstraintInterface
 {
-    const PATTERN = '/^([-+]?([1-8]?\d(\.\d+)?|90(\.0+)?)),\s*([-+]?(180(\.0+)?|((1[0-7]\d)|([1-9]?\d))(\.\d+)?))$/';
+    const PATTERN = '/^([-+]?\d+(\.\d+)?)\s*,\s*([-+]?\d+(\.\d+)?)$/';
 
     /**
      * @param string                  $path
@@ -29,8 +29,17 @@ final class CoordinateConstraint implements ConstraintInterface
             return [new Error($path, 'constraint.coordinate.invalidtype', ['type' => gettype($input)])];
         }
 
-        if (!preg_match(self::PATTERN, $input)) {
+        $matches = [];
+
+        if (!preg_match(self::PATTERN, $input, $matches)) {
             return [new Error($path, 'constraint.coordinate.invalidformat', ['input' => $input])];
+        }
+
+        $lat = $matches[1];
+        $lon = $matches[3];
+
+        if ($lat < -90 || $lat > 90 || $lon < -180 || $lon > 180) {
+            return [new Error($path, 'constraint.coordinate.invalidvalue', ['input' => $input])];
         }
 
         return [];
