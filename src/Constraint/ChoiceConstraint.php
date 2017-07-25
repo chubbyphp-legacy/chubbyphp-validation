@@ -49,7 +49,7 @@ final class ChoiceConstraint implements ConstraintInterface
     {
         if (!in_array($type, $this->supportedTypes, true)) {
             throw new \InvalidArgumentException(
-                sprintf('Type "%s" is invalid, supported types: %s', $type, self::implodeChoices($this->supportedTypes))
+                sprintf('Type "%s" is invalid, supported types: %s', $type, self::implode($this->supportedTypes))
             );
         }
 
@@ -73,7 +73,7 @@ final class ChoiceConstraint implements ConstraintInterface
      *
      * @return string
      */
-    private static function implodeChoices(array $choices): string
+    private static function implode(array $choices): string
     {
         $implodedChoices = '';
         foreach ($choices as $choice) {
@@ -111,7 +111,7 @@ final class ChoiceConstraint implements ConstraintInterface
                 new Error(
                     $path,
                     'constraint.choice.invalidtype',
-                    ['type' => $inputType, 'supportedTypes' => self::implodeChoices($this->supportedTypes)]
+                    ['type' => $inputType, 'supportedTypes' => self::implode($this->supportedTypes)]
                 ),
             ];
         }
@@ -126,7 +126,7 @@ final class ChoiceConstraint implements ConstraintInterface
                         new Error(
                             $path,
                             'constraint.choice.invalidvalue',
-                            ['input' => $input, 'choices' => self::implodeChoices($stringChoices)]
+                            ['input' => self::implode([$input]), 'choices' => self::implode($stringChoices)]
                         ),
                     ];
                 }
@@ -139,7 +139,7 @@ final class ChoiceConstraint implements ConstraintInterface
                     new Error(
                         $path,
                         'constraint.choice.invalidvalue',
-                        ['input' => $input, 'choices' => self::implodeChoices($this->choices)]
+                        ['input' => self::implode([$input]), 'choices' => self::implode($this->choices)]
                     ),
                 ];
             }
