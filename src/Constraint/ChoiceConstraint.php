@@ -49,7 +49,7 @@ final class ChoiceConstraint implements ConstraintInterface
     {
         if (!in_array($type, $this->supportedTypes, true)) {
             throw new \InvalidArgumentException(
-                sprintf('Type "%s" is invalid, supported types: %s', $type, self::implode($this->supportedTypes))
+                sprintf('Type %s is invalid, supported types: %s', $type, self::implode($this->supportedTypes))
             );
         }
 
@@ -59,7 +59,7 @@ final class ChoiceConstraint implements ConstraintInterface
             $choiceType = gettype($choice);
             if ($choiceType !== $this->type) {
                 throw new \InvalidArgumentException(
-                    sprintf('Choice %s got type "%s", but type "%s" required', $i, $choiceType, $this->type)
+                    sprintf('Choice %s got type %s, but type %s required', $i, $choiceType, $this->type)
                 );
             }
             $this->choices[] = $choice;
@@ -75,20 +75,7 @@ final class ChoiceConstraint implements ConstraintInterface
      */
     private static function implode(array $choices): string
     {
-        $implodedChoices = '';
-        foreach ($choices as $choice) {
-            if (is_string($choice)) {
-                $implodedChoices .= '"'.$choice.'"';
-            } else {
-                $implodedChoices .= $choice;
-            }
-
-            $implodedChoices .= ', ';
-        }
-
-        $implodedChoices = substr($implodedChoices, 0, -2);
-
-        return $implodedChoices;
+        return implode(', ', $choices);
     }
 
     /**
@@ -126,7 +113,7 @@ final class ChoiceConstraint implements ConstraintInterface
                         new Error(
                             $path,
                             'constraint.choice.invalidvalue',
-                            ['input' => self::implode([$input]), 'choices' => self::implode($stringChoices)]
+                            ['input' => $input, 'choices' => self::implode($stringChoices)]
                         ),
                     ];
                 }
@@ -139,7 +126,7 @@ final class ChoiceConstraint implements ConstraintInterface
                     new Error(
                         $path,
                         'constraint.choice.invalidvalue',
-                        ['input' => self::implode([$input]), 'choices' => self::implode($this->choices)]
+                        ['input' => $input, 'choices' => self::implode($this->choices)]
                     ),
                 ];
             }

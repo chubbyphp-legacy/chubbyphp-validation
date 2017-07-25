@@ -15,7 +15,7 @@ final class ChoiceConstraintTest extends \PHPUnit_Framework_TestCase
     public function testWithInvalidConstructInvalidType()
     {
         self::expectException(\InvalidArgumentException::class);
-        self::expectExceptionMessage('Type "array" is invalid, supported types: "boolean", "double", "integer", "string"');
+        self::expectExceptionMessage('Type array is invalid, supported types: boolean, double, integer, string');
 
         new ChoiceConstraint('array', []);
     }
@@ -23,7 +23,7 @@ final class ChoiceConstraintTest extends \PHPUnit_Framework_TestCase
     public function testWithInvalidConstructInvalidChoices()
     {
         self::expectException(\InvalidArgumentException::class);
-        self::expectExceptionMessage('Choice 0 got type "boolean", but type "string" required');
+        self::expectExceptionMessage('Choice 0 got type boolean, but type string required');
 
         new ChoiceConstraint(ChoiceConstraint::TYPE_STRING, [true, false]);
     }
@@ -42,7 +42,7 @@ final class ChoiceConstraintTest extends \PHPUnit_Framework_TestCase
         $error = new Error(
             'choice',
             'constraint.choice.invalidtype',
-            ['type' => 'array', 'supportedTypes' => '"boolean", "double", "integer", "string"']
+            ['type' => 'array', 'supportedTypes' => 'boolean, double, integer, string']
         );
 
         self::assertEquals([$error], $constraint->validate('choice', []));
@@ -89,7 +89,7 @@ final class ChoiceConstraintTest extends \PHPUnit_Framework_TestCase
         $error = new Error(
             'choice',
             'constraint.choice.invalidvalue',
-            ['input' => $this->implode([$choice]), 'choices' => $this->implode($choices)]
+            ['input' => $choice, 'choices' => $this->implode($choices)]
         );
 
         self::assertEquals([$error], $constraint->validate('choice', $choice));
@@ -123,7 +123,7 @@ final class ChoiceConstraintTest extends \PHPUnit_Framework_TestCase
         $error = new Error(
             'choice',
             'constraint.choice.invalidvalue',
-            ['input' => $this->implode(['2']), 'choices' => $this->implode(['1', ''])]
+            ['input' => '2', 'choices' => $this->implode(['1', ''])]
         );
 
         self::assertEquals([$error], $constraint->validate('choice', '2'));
@@ -145,7 +145,7 @@ final class ChoiceConstraintTest extends \PHPUnit_Framework_TestCase
         $error = new Error(
             'choice',
             'constraint.choice.invalidvalue',
-            ['input' => $this->implode(['4.0']), 'choices' => $this->implode(['1.0', '2.0', '3.0'])]
+            ['input' => '4.0', 'choices' => $this->implode(['1.0', '2.0', '3.0'])]
         );
 
         self::assertEquals([$error], $constraint->validate('choice', '4.0'));
@@ -167,7 +167,7 @@ final class ChoiceConstraintTest extends \PHPUnit_Framework_TestCase
         $error = new Error(
             'choice',
             'constraint.choice.invalidvalue',
-            ['input' => $this->implode(['4']), 'choices' => $this->implode(['1', '2', '3'])]
+            ['input' => '4', 'choices' => $this->implode(['1', '2', '3'])]
         );
 
         self::assertEquals([$error], $constraint->validate('choice', '4'));
@@ -180,19 +180,6 @@ final class ChoiceConstraintTest extends \PHPUnit_Framework_TestCase
      */
     private function implode(array $choices): string
     {
-        $implodedChoices = '';
-        foreach ($choices as $choice) {
-            if (is_string($choice)) {
-                $implodedChoices .= '"'.$choice.'"';
-            } else {
-                $implodedChoices .= $choice;
-            }
-
-            $implodedChoices .= ', ';
-        }
-
-        $implodedChoices = substr($implodedChoices, 0, -2);
-
-        return $implodedChoices;
+        return implode(', ', $choices);
     }
 }
