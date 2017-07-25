@@ -32,7 +32,7 @@ final class CoordinateArrayConstraintTest extends \PHPUnit_Framework_TestCase
     {
         $constraint = new CoordinateArrayConstraint();
 
-        $error = new Error('coordinatearray', 'constraint.coordinatearray.invalidformat', ['input' => []]);
+        $error = new Error('coordinatearray', 'constraint.coordinatearray.invalidformat', ['input' => '[]']);
 
         self::assertEquals([$error], $constraint->validate('coordinatearray', []));
     }
@@ -71,7 +71,7 @@ final class CoordinateArrayConstraintTest extends \PHPUnit_Framework_TestCase
     {
         $constraint = new CoordinateArrayConstraint();
 
-        $error = new Error('coordinatearray', 'constraint.coordinatearray.invalidvalue', ['input' => $coordinate]);
+        $error = new Error('coordinatearray', 'constraint.coordinatearray.invalidvalue', ['input' => json_encode($coordinate)]);
 
         self::assertEquals([$error], $constraint->validate('coordinatearray', $coordinate));
     }

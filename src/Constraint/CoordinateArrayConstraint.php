@@ -28,14 +28,14 @@ final class CoordinateArrayConstraint implements ConstraintInterface
         }
 
         if (!isset($input['lat']) || !isset($input['lon'])) {
-            return [new Error($path, 'constraint.coordinatearray.invalidformat', ['input' => $input])];
+            return [new Error($path, 'constraint.coordinatearray.invalidformat', ['input' => json_encode($input)])];
         }
 
         $lat = $input['lat'];
         $lon = $input['lon'];
 
         if ($lat < -90 || $lat > 90 || $lon < -180 || $lon > 180) {
-            return [new Error($path, 'constraint.coordinatearray.invalidvalue', ['input' => $input])];
+            return [new Error($path, 'constraint.coordinatearray.invalidvalue', ['input' => json_encode($input)])];
         }
 
         return [];
