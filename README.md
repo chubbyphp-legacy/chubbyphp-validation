@@ -25,7 +25,7 @@ A simple validation.
 Through [Composer](http://getcomposer.org) as [chubbyphp/chubbyphp-validation][1].
 
 ```sh
-composer require chubbyphp/chubbyphp-validation "~2.0@alpha"
+composer require chubbyphp/chubbyphp-validation "~2.1@beta"
 ```
 
 ## Usage
@@ -136,6 +136,7 @@ class ModelMapping implements ObjectMappingInterface
 * [NotNullConstraint][28]
 * [NumericConstraint][29]
 * [NumericRangeConstraint][30]
+* [TraversableConstraint][31]
 
 ### Error
 
@@ -177,3 +178,4 @@ Dominik Zogg 2017
 [28]: doc/Constraint/NotNullConstraint.md
 [29]: doc/Constraint/NumericConstraint.md
 [30]: doc/Constraint/NumericRangeConstraint.md
+[31]: doc/Constraint/TraversableConstraint.md

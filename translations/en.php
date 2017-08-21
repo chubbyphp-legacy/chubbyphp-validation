@@ -19,5 +19,6 @@ return [
     'constraint.notnull.null' => 'This value can\'t be null',
     'constraint.numeric.invalidtype' => 'The type {{type}} is not supported, scalars values are supported',
     'constraint.numeric.notnumeric' => 'The input value {{input}} is not numeric',
-    'constraint.numericrange.outofrange' => 'The input value {{input}} is out of range {{min}}-{{max}}'
+    'constraint.numericrange.outofrange' => 'The input value {{input}} is out of range {{min}}-{{max}}',
+    'constraint.traversable.outofrange' => 'The count {{count}} is out of range {{min}}-{{max}}',
 ];

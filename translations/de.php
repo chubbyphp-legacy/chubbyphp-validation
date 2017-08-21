@@ -19,5 +19,6 @@ return [
     'constraint.notnull.null' => 'Dieser Wert darf nicht null sein',
     'constraint.numeric.invalidtype' => 'Der Typ {{type}} wird nicht unterstützt, scalars Werte werden unterstützt',
     'constraint.numeric.notnumeric' => 'Der angegebene Wert {{input}} ist nicht numerisch',
-    'constraint.numericrange.outofrange' => 'Der angegebene Wert {{input}} ist ausserhalb der Reichweite {{min}}-{{max}}'
+    'constraint.numericrange.outofrange' => 'Der angegebene Wert {{input}} ist ausserhalb der Reichweite {{min}}-{{max}}',
+    'constraint.traversable.outofrange' => 'Die Anzahl {{count}} ist ausserhalb der Reichweite {{min}}-{{max}}',
 ];
