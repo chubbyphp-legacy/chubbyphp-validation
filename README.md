@@ -25,7 +25,7 @@ A simple validation.
 Through [Composer](http://getcomposer.org) as [chubbyphp/chubbyphp-validation][1].
 
 ```sh
-composer require chubbyphp/chubbyphp-validation "~2.1@beta"
+composer require chubbyphp/chubbyphp-validation "~2.1"
 ```
 
 ## Usage
