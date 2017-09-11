@@ -35,7 +35,7 @@ final class EmailConstraintTest extends \PHPUnit_Framework_TestCase
         self::assertEquals([], $constraint->validate('email', 'firstname.lastname@domain.tld'));
     }
 
-    public function testGetLangitudeAndLongitude()
+    public function testPattern()
     {
         $matches = [];
         preg_match(EmailConstraint::PATTERN, 'firstname.lastname@domain.tld', $matches);
