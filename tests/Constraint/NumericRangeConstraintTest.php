@@ -6,11 +6,12 @@ namespace Chubbyphp\Tests\Validation\Constraint;
 
 use Chubbyphp\Validation\Constraint\NumericRangeConstraint;
 use Chubbyphp\Validation\Error\Error;
+use PHPUnit\Framework\TestCase;
 
 /**
  * @covers \Chubbyphp\Validation\Constraint\NumericRangeConstraint
  */
-final class NumericRangeConstraintTest extends \PHPUnit_Framework_TestCase
+final class NumericRangeConstraintTest extends TestCase
 {
     public function testWithoutNumeric()
     {

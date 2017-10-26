@@ -6,11 +6,12 @@ namespace Chubbyphp\Tests\Validation\Constraint;
 
 use Chubbyphp\Validation\Constraint\DateConstraint;
 use Chubbyphp\Validation\Error\Error;
+use PHPUnit\Framework\TestCase;
 
 /**
  * @covers \Chubbyphp\Validation\Constraint\DateConstraint
  */
-final class DateConstraintTest extends \PHPUnit_Framework_TestCase
+final class DateConstraintTest extends TestCase
 {
     public function testWithNullValue()
     {

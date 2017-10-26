@@ -7,11 +7,12 @@ namespace Chubbyphp\Tests\Validation\Constraint;
 use Chubbyphp\Validation\Constraint\CallbackConstraint;
 use Chubbyphp\Validation\Error\Error;
 use Chubbyphp\Validation\ValidatorInterface;
+use PHPUnit\Framework\TestCase;
 
 /**
  * @covers \Chubbyphp\Validation\Constraint\CallbackConstraint
  */
-final class CallbackConstraintTest extends \PHPUnit_Framework_TestCase
+final class CallbackConstraintTest extends TestCase
 {
     public function testWithNullValue()
     {

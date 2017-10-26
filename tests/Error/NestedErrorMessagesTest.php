@@ -6,11 +6,12 @@ namespace Chubbyphp\Tests\Validation\Error;
 
 use Chubbyphp\Validation\Error\ErrorInterface;
 use Chubbyphp\Validation\Error\NestedErrorMessages;
+use PHPUnit\Framework\TestCase;
 
 /**
  * @covers \Chubbyphp\Validation\Error\NestedErrorMessages
  */
-final class NestedErrorMessagesTest extends \PHPUnit_Framework_TestCase
+final class NestedErrorMessagesTest extends TestCase
 {
     public function testWithoutMessages()
     {

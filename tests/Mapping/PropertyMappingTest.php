@@ -6,11 +6,12 @@ namespace Chubbyphp\Tests\Validation\Mapping;
 
 use Chubbyphp\Validation\Constraint\ConstraintInterface;
 use Chubbyphp\Validation\Mapping\PropertyMapping;
+use PHPUnit\Framework\TestCase;
 
 /**
  * @covers \Chubbyphp\Validation\Mapping\PropertyMapping
  */
-final class PropertyMappingTest extends \PHPUnit_Framework_TestCase
+final class PropertyMappingTest extends TestCase
 {
     public function test()
     {

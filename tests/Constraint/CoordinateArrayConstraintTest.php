@@ -6,11 +6,12 @@ namespace Chubbyphp\Tests\Validation\Constraint;
 
 use Chubbyphp\Validation\Constraint\CoordinateArrayConstraint;
 use Chubbyphp\Validation\Error\Error;
+use PHPUnit\Framework\TestCase;
 
 /**
  * @covers \Chubbyphp\Validation\Constraint\CoordinateArrayConstraint
  */
-final class CoordinateArrayConstraintTest extends \PHPUnit_Framework_TestCase
+final class CoordinateArrayConstraintTest extends TestCase
 {
     public function testWithNullValue()
     {

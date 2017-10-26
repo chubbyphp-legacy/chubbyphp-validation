@@ -5,11 +5,12 @@ declare(strict_types=1);
 namespace Chubbyphp\Tests\Validation\Error;
 
 use Chubbyphp\Validation\Error\Error;
+use PHPUnit\Framework\TestCase;
 
 /**
  * @covers \Chubbyphp\Validation\Error\Error
  */
-final class ErrorTest extends \PHPUnit_Framework_TestCase
+final class ErrorTest extends TestCase
 {
     public function testWithoutArguments()
     {

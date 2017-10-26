@@ -9,11 +9,12 @@ use Chubbyphp\Validation\Constraint\TraversableConstraint;
 use Chubbyphp\Validation\Error\Error;
 use Chubbyphp\Validation\Error\ErrorInterface;
 use Chubbyphp\Validation\ValidatorInterface;
+use PHPUnit\Framework\TestCase;
 
 /**
  * @covers \Chubbyphp\Validation\Constraint\TraversableConstraint
  */
-final class TraversableConstraintTest extends \PHPUnit_Framework_TestCase
+final class TraversableConstraintTest extends TestCase
 {
     public function testWithNullValue()
     {

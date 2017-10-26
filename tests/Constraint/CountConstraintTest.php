@@ -6,11 +6,12 @@ namespace Chubbyphp\Tests\Validation\Constraint;
 
 use Chubbyphp\Validation\Constraint\CountConstraint;
 use Chubbyphp\Validation\Error\Error;
+use PHPUnit\Framework\TestCase;
 
 /**
  * @covers \Chubbyphp\Validation\Constraint\CountConstraint
  */
-final class CountConstraintTest extends \PHPUnit_Framework_TestCase
+final class CountConstraintTest extends TestCase
 {
     public function testWithNullValue()
     {

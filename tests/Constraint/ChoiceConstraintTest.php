@@ -6,11 +6,12 @@ namespace Chubbyphp\Tests\Validation\Constraint;
 
 use Chubbyphp\Validation\Constraint\ChoiceConstraint;
 use Chubbyphp\Validation\Error\Error;
+use PHPUnit\Framework\TestCase;
 
 /**
  * @covers \Chubbyphp\Validation\Constraint\ChoiceConstraint
  */
-final class ChoiceConstraintTest extends \PHPUnit_Framework_TestCase
+final class ChoiceConstraintTest extends TestCase
 {
     public function testWithInvalidConstructInvalidType()
     {

@@ -6,11 +6,12 @@ namespace Chubbyphp\Tests\Validation\Registry;
 
 use Chubbyphp\Validation\Mapping\ObjectMappingInterface;
 use Chubbyphp\Validation\Registry\ObjectMappingRegistry;
+use PHPUnit\Framework\TestCase;
 
 /**
  * @covers \Chubbyphp\Validation\Registry\ObjectMappingRegistry
  */
-final class ObjectMappingRegistryTest extends \PHPUnit_Framework_TestCase
+final class ObjectMappingRegistryTest extends TestCase
 {
     public function testWithKnownObjectMappings()
     {

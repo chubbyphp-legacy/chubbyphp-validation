@@ -9,11 +9,12 @@ use Chubbyphp\Validation\Constraint\ConstraintInterface;
 use Chubbyphp\Validation\Mapping\LazyObjectMapping;
 use Chubbyphp\Validation\Mapping\ObjectMappingInterface;
 use Interop\Container\ContainerInterface;
+use PHPUnit\Framework\TestCase;
 
 /**
  * @covers \Chubbyphp\Validation\Mapping\LazyObjectMapping
  */
-final class LazyObjectMappingTest extends \PHPUnit_Framework_TestCase
+final class LazyObjectMappingTest extends TestCase
 {
     public function testInvoke()
     {

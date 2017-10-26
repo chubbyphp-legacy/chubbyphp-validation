@@ -13,13 +13,14 @@ use Chubbyphp\Validation\Mapping\PropertyMappingInterface;
 use Chubbyphp\Validation\Registry\ObjectMappingRegistryInterface;
 use Chubbyphp\Validation\Validator;
 use Chubbyphp\Validation\ValidatorInterface;
+use PHPUnit\Framework\TestCase;
 use Psr\Log\LoggerInterface;
 use Psr\Log\LogLevel;
 
 /**
  * @covers \Chubbyphp\Validation\Validator
  */
-final class ValidatorTest extends \PHPUnit_Framework_TestCase
+final class ValidatorTest extends TestCase
 {
     public function testWithoutErrors()
     {

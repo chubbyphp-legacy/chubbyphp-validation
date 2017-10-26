@@ -6,11 +6,12 @@ namespace Chubbyphp\Tests\Validation\Constraint;
 
 use Chubbyphp\Validation\Constraint\NotBlankConstraint;
 use Chubbyphp\Validation\Error\Error;
+use PHPUnit\Framework\TestCase;
 
 /**
  * @covers \Chubbyphp\Validation\Constraint\NotBlankConstraint
  */
-final class NotBlankConstraintTest extends \PHPUnit_Framework_TestCase
+final class NotBlankConstraintTest extends TestCase
 {
     public function testWithNullValue()
     {
