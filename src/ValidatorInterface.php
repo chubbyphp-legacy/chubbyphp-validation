@@ -8,9 +8,14 @@ interface ValidatorInterface
 {
     /**
      * @param object $object
-     * @param string $path
+     * @param ValidatorContextInterface $context
+     * @param string                       $path
      *
-     * @return string[]
+     * @return object
      */
-    public function validateObject($object, string $path = ''): array;
+    public function validate(
+        $object,
+        ValidatorContextInterface $context = null,
+        string $path = ''
+    );
 }
