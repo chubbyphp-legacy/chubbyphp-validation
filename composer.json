@@ -21,12 +21,12 @@
         "pimple/pimple": "~3.0"
     },
     "provide": {
-        "chubbyphp/chubbyphp-validation-doctrine": "self.version",
-        "chubbyphp/chubbyphp-validation-model": "self.version"
+        "chubbyphp/chubbyphp-validation-doctrine": "1.0",
+        "chubbyphp/chubbyphp-validation-model": "1.1"
     },
     "replace": {
-        "chubbyphp/chubbyphp-validation-doctrine": "self.version",
-        "chubbyphp/chubbyphp-validation-model": "self.version"
+        "chubbyphp/chubbyphp-validation-doctrine": "1.0",
+        "chubbyphp/chubbyphp-validation-model": "1.1"
     },
     "suggest": {
         "container-interop/container-interop": "Needed to use the LazyObjectMapping",
