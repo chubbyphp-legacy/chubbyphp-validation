@@ -17,7 +17,9 @@ A simple validation.
 
 ## Suggest
 
+ * chubbyphp/chubbyphp-model: ~3.0
  * container-interop/container-interop: ~1.0
+ * doctrine/common: ~2.2
  * pimple/pimple: ~3.0
 
 ## Installation
@@ -25,7 +27,7 @@ A simple validation.
 Through [Composer](http://getcomposer.org) as [chubbyphp/chubbyphp-validation][1].
 
 ```sh
-composer require chubbyphp/chubbyphp-validation "~2.1"
+composer require chubbyphp/chubbyphp-validation "~2.2"
 ```
 
 ## Usage
@@ -138,6 +140,18 @@ class ModelMapping implements ObjectMappingInterface
 * [NumericRangeConstraint][30]
 * [TraversableConstraint][31]
 
+#### Doctrine
+
+* [ModelCollectionConstraint][32]
+* [ModelReferenceConstraint][33]
+* [UniqueModelConstraint][34]
+
+#### Model
+
+* [ModelCollectionConstraint][35]
+* [ModelReferenceConstraint][36]
+* [UniqueModelConstraint][37]
+
 ### Error
 
 * [Error][4]
@@ -179,3 +193,11 @@ Dominik Zogg 2017
 [29]: doc/Constraint/NumericConstraint.md
 [30]: doc/Constraint/NumericRangeConstraint.md
 [31]: doc/Constraint/TraversableConstraint.md
+
+[32]: doc/Doctrine/Constraint/ModelCollectionConstraint.md
+[33]: doc/Doctrine/Constraint/ModelReferenceConstraint.md
+[34]: doc/Doctrine/Constraint/UniqueModelConstraint.md
+
+[35]: doc/Model/Constraint/ModelCollectionConstraint.md
+[36]: doc/Model/Constraint/ModelReferenceConstraint.md
+[37]: doc/Model/Constraint/UniqueModelConstraint.md

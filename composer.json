@@ -15,19 +15,33 @@
     },
     "require-dev": {
         "phpunit/phpunit": "~6.0",
+        "chubbyphp/chubbyphp-model": "~3.0",
         "container-interop/container-interop": "~1.0",
+        "doctrine/common": "~2.2",
         "pimple/pimple": "~3.0"
+    },
+    "provide": {
+        "chubbyphp/chubbyphp-validation-doctrine": "self.version",
+        "chubbyphp/chubbyphp-validation-model": "self.version"
+    },
+    "replace": {
+        "chubbyphp/chubbyphp-validation-doctrine": "self.version",
+        "chubbyphp/chubbyphp-validation-model": "self.version"
     },
     "suggest": {
         "container-interop/container-interop": "Needed to use the LazyObjectMapping",
         "pimple/pimple": "Needed to use the ValidationProvider"
     },
     "autoload": {
-        "psr-4": { "Chubbyphp\\Validation\\": "src/" }
+        "psr-4": {
+            "Chubbyphp\\ValidationDoctrine\\": "src/Doctrine",
+            "Chubbyphp\\ValidationModel\\": "src/Model",
+            "Chubbyphp\\Validation\\": "src/"
+        }
     },
     "extra": {
         "branch-alias": {
-            "dev-master": "2.1-dev"
+            "dev-master": "2.2-dev"
         }
     }
 }
