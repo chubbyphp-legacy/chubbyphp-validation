@@ -4,7 +4,8 @@ declare(strict_types=1);
 
 namespace Chubbyphp\Validation\Mapping;
 
-use Chubbyphp\Validation\Validator\FieldValidatorInterface;
+use Chubbyphp\Validation\Accessor\AccessorInterface;
+use Chubbyphp\Validation\Constraint\ConstraintInterface;
 
 final class ValidationFieldMapping implements ValidationFieldMappingInterface
 {
@@ -14,25 +15,32 @@ final class ValidationFieldMapping implements ValidationFieldMappingInterface
     private $name;
 
     /**
+     * @var ConstraintInterface[]
+     */
+    private $constraints;
+
+    /**
      * @var array
      */
     private $groups;
 
     /**
-     * @var FieldValidatorInterface
+     * @var AccessorInterface
      */
-    private $fieldValidator;
+    private $accessor;
 
     /**
-     * @param string                     $name
-     * @param array                      $groups
-     * @param FieldValidatorInterface $fieldValidator
+     * @param string                $name
+     * @param ConstraintInterface[] $constraints
+     * @param array                 $groups
+     * @param AccessorInterface     $accessor
      */
-    public function __construct($name, array $groups = [], FieldValidatorInterface $fieldValidator)
+    public function __construct(string $name, array $constraints, array $groups, AccessorInterface $accessor)
     {
         $this->name = $name;
+        $this->constraints = $constraints;
         $this->groups = $groups;
-        $this->fieldValidator = $fieldValidator;
+        $this->accessor = $accessor;
     }
 
     /**
@@ -44,6 +52,14 @@ final class ValidationFieldMapping implements ValidationFieldMappingInterface
     }
 
     /**
+     * @return ConstraintInterface[]
+     */
+    public function getConstraints(): array
+    {
+        return $this->constraints;
+    }
+
+    /**
      * @return array
      */
     public function getGroups(): array
@@ -52,10 +68,10 @@ final class ValidationFieldMapping implements ValidationFieldMappingInterface
     }
 
     /**
-     * @return FieldValidatorInterface
+     * @return AccessorInterface
      */
-    public function getFieldValidator(): FieldValidatorInterface
+    public function getAccessor(): AccessorInterface
     {
-        return $this->fieldValidator;
+        return $this->accessor;
     }
 }

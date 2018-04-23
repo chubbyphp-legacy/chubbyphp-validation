@@ -4,7 +4,8 @@ declare(strict_types=1);
 
 namespace Chubbyphp\Validation\Mapping;
 
-use Chubbyphp\Validation\Validator\FieldValidatorInterface;
+use Chubbyphp\Validation\Accessor\AccessorInterface;
+use Chubbyphp\Validation\Constraint\ConstraintInterface;
 
 interface ValidationFieldMappingInterface
 {
@@ -14,12 +15,17 @@ interface ValidationFieldMappingInterface
     public function getName(): string;
 
     /**
+     * @return ConstraintInterface[]
+     */
+    public function getConstraints(): array;
+
+    /**
      * @return array
      */
     public function getGroups(): array;
 
     /**
-     * @return FieldValidatorInterface
+     * @return AccessorInterface
      */
-    public function getFieldValidator(): FieldValidatorInterface;
+    public function getAccessor(): AccessorInterface;
 }

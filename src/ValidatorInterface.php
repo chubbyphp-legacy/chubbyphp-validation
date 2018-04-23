@@ -4,6 +4,8 @@ declare(strict_types=1);
 
 namespace Chubbyphp\Validation;
 
+use Chubbyphp\Validation\Validator\ValidatorContextInterface;
+
 interface ValidatorInterface
 {
     /**

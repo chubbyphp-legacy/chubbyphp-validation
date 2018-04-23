@@ -4,16 +4,18 @@ declare(strict_types=1);
 
 namespace Chubbyphp\Validation\Mapping;
 
-use Chubbyphp\Validation\Validator\FieldValidatorInterface;
+use Chubbyphp\Validation\Accessor\AccessorInterface;
+use Chubbyphp\Validation\Constraint\ConstraintInterface;
 
 interface ValidationFieldMappingBuilderInterface
 {
     /**
      * @param string $name
+     * @param ConstraintInterface[]
      *
      * @return self
      */
-    public static function create(string $name): self;
+    public static function create(string $name, array $constraints): self;
 
     /**
      * @param array $groups
@@ -23,11 +25,11 @@ interface ValidationFieldMappingBuilderInterface
     public function setGroups(array $groups): self;
 
     /**
-     * @param FieldValidatorInterface $fieldValidator
+     * @param AccessorInterface $accessor
      *
      * @return self
      */
-    public function setFieldValidator(FieldValidatorInterface $fieldValidator): self;
+    public function setAccessor(AccessorInterface $accessor): self;
 
     /**
      * @return ValidationFieldMappingInterface
