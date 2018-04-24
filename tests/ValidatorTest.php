@@ -63,6 +63,12 @@ class ValidatorTest extends TestCase
                     return get_class($this->object);
                 }
 
+                /**
+                 * @param string      $path
+                 * @param string|null $type
+                 *
+                 * @return ValidationFieldMappingInterface[]
+                 */
                 public function getValidationFieldMappings(string $path, string $type = null): array
                 {
                     return [
