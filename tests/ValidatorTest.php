@@ -6,6 +6,7 @@ namespace Chubbyphp\Tests\Validation;
 
 use Chubbyphp\Validation\Constraint\NotNullConstraint;
 use Chubbyphp\Validation\Mapping\ValidationFieldMappingBuilder;
+use Chubbyphp\Validation\Mapping\ValidationFieldMappingInterface;
 use Chubbyphp\Validation\Mapping\ValidationObjectMappingInterface;
 use Chubbyphp\Validation\Validator;
 use PHPUnit\Framework\TestCase;
