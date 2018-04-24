@@ -26,7 +26,7 @@ final class Validator implements ValidatorInterface
 
     /**
      * @param ValidatorObjectMappingRegistryInterface $validatorObjectMappingRegistry
-     * @param LoggerInterface $logger
+     * @param LoggerInterface                         $logger
      */
     public function __construct(
         ValidatorObjectMappingRegistryInterface $validatorObjectMappingRegistry,
@@ -37,9 +37,9 @@ final class Validator implements ValidatorInterface
     }
 
     /**
-     * @param object $object
+     * @param object                    $object
      * @param ValidatorContextInterface $context
-     * @param string                       $path
+     * @param string                    $path
      *
      * @return ErrorInterface[]
      */

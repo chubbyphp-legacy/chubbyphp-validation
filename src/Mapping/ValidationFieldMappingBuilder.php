@@ -32,11 +32,12 @@ final class ValidationFieldMappingBuilder implements ValidationFieldMappingBuild
     /**
      * @param string $name
      * @param array  $constraints
+     *
      * @return ValidationFieldMappingBuilderInterface
      */
     public static function create(string $name, array $constraints): ValidationFieldMappingBuilderInterface
     {
-        $self = new self;
+        $self = new self();
         $self->name = $name;
         $self->constraints = [];
         foreach ($constraints as $constraint) {
@@ -56,6 +57,7 @@ final class ValidationFieldMappingBuilder implements ValidationFieldMappingBuild
 
     /**
      * @param array $groups
+     *
      * @return ValidationFieldMappingBuilderInterface
      */
     public function setGroups(array $groups): ValidationFieldMappingBuilderInterface
@@ -67,6 +69,7 @@ final class ValidationFieldMappingBuilder implements ValidationFieldMappingBuild
 
     /**
      * @param AccessorInterface $accessor
+     *
      * @return ValidationFieldMappingBuilderInterface
      */
     public function setAccessor(AccessorInterface $accessor): ValidationFieldMappingBuilderInterface

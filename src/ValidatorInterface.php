@@ -10,9 +10,9 @@ use Chubbyphp\Validation\Validator\ValidatorContextInterface;
 interface ValidatorInterface
 {
     /**
-     * @param object $object
+     * @param object                    $object
      * @param ValidatorContextInterface $context
-     * @param string                       $path
+     * @param string                    $path
      *
      * @return ErrorInterface[]
      */

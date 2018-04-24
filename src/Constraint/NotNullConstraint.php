@@ -12,10 +12,11 @@ use Chubbyphp\Validation\ValidatorInterface;
 final class NotNullConstraint implements ConstraintInterface
 {
     /**
-     * @param string $path
-     * @param mixed $value
+     * @param string                    $path
+     * @param mixed                     $value
      * @param ValidatorContextInterface $context
-     * @param ValidatorInterface|null $validator
+     * @param ValidatorInterface|null   $validator
+     *
      * @return array|ErrorInterface[]
      */
     public function validate(
