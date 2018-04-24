@@ -42,8 +42,6 @@ class ValidatorTest extends TestCase
             }
         };
 
-        $object->setName('Name');
-
         $validatorObjectMappingRegistry = new Validator\ValidatorObjectMappingRegistry([
             new class($object) implements ValidationObjectMappingInterface {
                 private $object;
@@ -73,7 +71,7 @@ class ValidatorTest extends TestCase
                 public function getValidationFieldMappings(string $path, string $type = null): array
                 {
                     return [
-                        ValidationFieldMappingBuilder::create('name', [new NotNullConstraint()]),
+                        ValidationFieldMappingBuilder::create('name', [new NotNullConstraint()])->getMapping(),
                     ];
                 }
             },
@@ -82,5 +80,7 @@ class ValidatorTest extends TestCase
         $validator = new Validator($validatorObjectMappingRegistry);
 
         $errors = $validator->validate($object);
+
+        var_dump($errors);
     }
 }

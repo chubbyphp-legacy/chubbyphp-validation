@@ -5,6 +5,7 @@ declare(strict_types=1);
 namespace Chubbyphp\Validation\Mapping;
 
 use Chubbyphp\Validation\Accessor\AccessorInterface;
+use Chubbyphp\Validation\Accessor\PropertyAccessor;
 use Chubbyphp\Validation\Constraint\ConstraintInterface;
 
 final class ValidationFieldMappingBuilder implements ValidationFieldMappingBuilderInterface
@@ -87,8 +88,8 @@ final class ValidationFieldMappingBuilder implements ValidationFieldMappingBuild
         return new ValidationFieldMapping(
             $this->name,
             $this->constraints,
-            $this->groups,
-            $this->accessor
+            $this->groups ?? [],
+            $this->accessor ?? new PropertyAccessor($this->name)
         );
     }
 }

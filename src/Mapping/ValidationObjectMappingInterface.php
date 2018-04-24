@@ -12,10 +12,9 @@ interface ValidationObjectMappingInterface
     public function getClass(): string;
 
     /**
-     * @param string      $path
-     * @param string|null $type
+     * @param string $path
      *
      * @return ValidationFieldMappingInterface[]
      */
-    public function getValidationFieldMappings(string $path, string $type = null): array;
+    public function getValidationFieldMappings(string $path): array;
 }

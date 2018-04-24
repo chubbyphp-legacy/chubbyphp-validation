@@ -44,13 +44,12 @@ final class LazyValidationObjectMapping implements ValidationObjectMappingInterf
     }
 
     /**
-     * @param string      $path
-     * @param string|null $type
+     * @param string $path
      *
      * @return ValidationFieldMappingInterface[]
      */
-    public function getValidationFieldMappings(string $path, string $type = null): array
+    public function getValidationFieldMappings(string $path): array
     {
-        return $this->container->get($this->serviceId)->getValidationFieldMappings($path, $type);
+        return $this->container->get($this->serviceId)->getValidationFieldMappings($path);
     }
 }
