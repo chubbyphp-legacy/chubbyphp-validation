@@ -1,0 +1,80 @@
+<?php
+
+declare(strict_types=1);
+
+namespace Chubbyphp\Tests\Validation;
+
+use Chubbyphp\Validation\Constraint\NotNullConstraint;
+use Chubbyphp\Validation\Mapping\ValidationFieldMappingBuilder;
+use Chubbyphp\Validation\Mapping\ValidationObjectMappingInterface;
+use Chubbyphp\Validation\Validator;
+use PHPUnit\Framework\TestCase;
+
+class ValidatorTest extends TestCase
+{
+    public function testValidator()
+    {
+        $object = new class() {
+
+            /**
+             * @var string
+             */
+            private $name;
+
+            /**
+             * @return string
+             */
+            public function getName(): string
+            {
+                return $this->name;
+            }
+
+            /**
+             * @param string $name
+             * @return self
+             */
+            public function setName(string $name): self
+            {
+                $this->name = $name;
+
+                return $this;
+            }
+        };
+
+        $object->setName('Name');
+        
+        $validatorObjectMappingRegistry = new Validator\ValidatorObjectMappingRegistry([
+            new class($object) implements ValidationObjectMappingInterface {
+            
+                private $object;
+
+                /**
+                 * @param object $object
+                 */
+                public function __construct($object)
+                {
+                    $this->object = $object;
+                }
+
+                /**
+                 * @return string
+                 */
+                public function getClass(): string
+                {
+                    return get_class($this->object);
+                }
+
+                public function getValidationFieldMappings(string $path, string $type = null): array
+                {
+                    return [
+                        ValidationFieldMappingBuilder::create('name', [new NotNullConstraint()])
+                    ];
+                }
+            }
+        ]);
+        
+        $validator = new Validator($validatorObjectMappingRegistry);
+        
+        $errors = $validator->validate($object);
+    }
+}

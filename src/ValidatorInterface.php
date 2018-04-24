@@ -4,6 +4,7 @@ declare(strict_types=1);
 
 namespace Chubbyphp\Validation;
 
+use Chubbyphp\Validation\Error\ErrorInterface;
 use Chubbyphp\Validation\Validator\ValidatorContextInterface;
 
 interface ValidatorInterface
@@ -13,11 +14,7 @@ interface ValidatorInterface
      * @param ValidatorContextInterface $context
      * @param string                       $path
      *
-     * @return object
+     * @return ErrorInterface[]
      */
-    public function validate(
-        $object,
-        ValidatorContextInterface $context = null,
-        string $path = ''
-    );
+    public function validate($object, ValidatorContextInterface $context = null, string $path = '');
 }
