@@ -138,7 +138,7 @@ final class ExecutionContext implements ExecutionContextInterface
 
     public function getPropertyPath($subPath = '')
     {
-        throw new \RuntimeException(sprintf('Method "%s" is not implemented', __METHOD__));
+        return $this->path;
     }
 
     /**
