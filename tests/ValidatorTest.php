@@ -5,7 +5,7 @@ declare(strict_types=1);
 namespace Chubbyphp\Tests\Validation;
 
 use Chubbyphp\Validation\Constraint\NotNullConstraint;
-use Chubbyphp\Validation\Constraint\SymfonyConstraintAdapter;
+use Chubbyphp\Validation\Constraint\Symfony\ConstraintAdapter;
 use Chubbyphp\Validation\Mapping\ValidationFieldMappingBuilder;
 use Chubbyphp\Validation\Mapping\ValidationFieldMappingInterface;
 use Chubbyphp\Validation\Mapping\ValidationObjectMappingInterface;
@@ -76,7 +76,7 @@ class ValidatorTest extends TestCase
                     return [
                         ValidationFieldMappingBuilder::create('name', [
                             new NotNullConstraint(),
-                            new SymfonyConstraintAdapter(new NotNull(), new NotNullValidator()),
+                            new ConstraintAdapter(new NotNull(), new NotNullValidator()),
                         ])->getMapping(),
                     ];
                 }

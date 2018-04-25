@@ -2,15 +2,15 @@
 
 declare(strict_types=1);
 
-namespace Chubbyphp\Validation\Constraint;
+namespace Chubbyphp\Validation\Constraint\Symfony;
 
-use Chubbyphp\Validation\Constraint\Symfony\ExecutionContext;
+use Chubbyphp\Validation\Constraint\ConstraintInterface;
 use Chubbyphp\Validation\Validator\ValidatorContextInterface;
 use Chubbyphp\Validation\ValidatorInterface;
 use Symfony\Component\Validator\Constraint;
 use Symfony\Component\Validator\ConstraintValidator;
 
-final class SymfonyConstraintAdapter implements ConstraintInterface
+final class ConstraintAdapter implements ConstraintInterface
 {
     /**
      * @var Constraint
