@@ -129,6 +129,7 @@ final class ExecutionContext implements ExecutionContextInterface
     /**
      * @param string $cacheKey
      * @param string $groupHash
+     *
      * @return bool
      */
     public function isGroupValidated($cacheKey, $groupHash)
@@ -148,6 +149,7 @@ final class ExecutionContext implements ExecutionContextInterface
     /**
      * @param string $cacheKey
      * @param string $constraintHash
+     *
      * @return bool|void
      */
     public function isConstraintValidated($cacheKey, $constraintHash)
@@ -165,6 +167,7 @@ final class ExecutionContext implements ExecutionContextInterface
 
     /**
      * @param string $cacheKey
+     *
      * @return bool
      */
     public function isObjectInitialized($cacheKey): bool
@@ -234,11 +237,12 @@ final class ExecutionContext implements ExecutionContextInterface
 
     /**
      * @param string $subPath
+     *
      * @return string
      */
     public function getPropertyPath($subPath = ''): string
     {
-        return $this->path . $subPath;
+        return $this->path.$subPath;
     }
 
     /**

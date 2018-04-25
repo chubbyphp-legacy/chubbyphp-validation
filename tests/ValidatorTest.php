@@ -68,6 +68,7 @@ class ValidatorTest extends TestCase
 
             /**
              * @param string $bic
+             *
              * @return self
              */
             public function setBic(string $bic): self
@@ -87,6 +88,7 @@ class ValidatorTest extends TestCase
 
             /**
              * @param string $callback
+             *
              * @return self
              */
             public function setCallback(string $callback): self

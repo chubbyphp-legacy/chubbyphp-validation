@@ -83,4 +83,3 @@ final class ConstraintViolation implements ConstraintViolationInterface
         return $this->error->getArguments()['_code'] ?? null;
     }
 }
-
