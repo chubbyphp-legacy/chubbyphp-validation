@@ -58,12 +58,14 @@ final class ConstraintViolationBuilder implements ConstraintViolationBuilderInte
      * @param ExecutionContext $executionContext
      * @param string           $message
      * @param array            $parameters
+     * @param string           $path
      */
-    public function __construct(ExecutionContext $executionContext, string $message, array $parameters)
+    public function __construct(ExecutionContext $executionContext, string $message, array $parameters, string $path)
     {
         $this->executionContext = $executionContext;
         $this->message = $message;
         $this->parameters = $parameters;
+        $this->path = $path;
     }
 
     /**

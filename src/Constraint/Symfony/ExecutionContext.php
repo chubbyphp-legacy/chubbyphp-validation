@@ -13,9 +13,22 @@ use Symfony\Component\Validator\Violation\ConstraintViolationBuilderInterface;
 final class ExecutionContext implements ExecutionContextInterface
 {
     /**
+     * @var string
+     */
+    private $path;
+
+    /**
      * @var ErrorInterface[]
      */
     private $errors;
+
+    /**
+     * @param string $path
+     */
+    public function __construct(string $path)
+    {
+        $this->path = $path;
+    }
 
     public function addViolation($message, array $params = [])
     {
@@ -30,7 +43,7 @@ final class ExecutionContext implements ExecutionContextInterface
      */
     public function buildViolation($message, array $parameters = []): ConstraintViolationBuilderInterface
     {
-        return new ConstraintViolationBuilder($this, $message, $parameters);
+        return new ConstraintViolationBuilder($this, $message, $parameters, $this->path);
     }
 
     public function getValidator()
