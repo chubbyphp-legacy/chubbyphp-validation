@@ -38,7 +38,7 @@ final class ExecutionContext implements ExecutionContextInterface
     /**
      * @var ErrorInterface[]
      */
-    private $errors;
+    private $errors = [];
 
     /**
      * @param Constraint $constraint
