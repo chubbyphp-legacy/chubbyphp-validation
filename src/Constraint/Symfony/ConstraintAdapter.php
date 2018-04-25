@@ -49,7 +49,7 @@ final class ConstraintAdapter implements ConstraintInterface
         ValidatorContextInterface $context,
         ValidatorInterface $validator = null
     ) {
-        $executionContext = new ExecutionContext($path);
+        $executionContext = new ExecutionContext($this->symfonyConstraint, $path, $object, $value);
 
         $this->symfonyValidator->initialize($executionContext);
         $this->symfonyValidator->validate($value, $this->symfonyConstraint);
