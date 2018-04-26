@@ -10,6 +10,7 @@ use Chubbyphp\Validation\Validator\ValidatorContextInterface;
 use Chubbyphp\Validation\ValidatorInterface;
 use Symfony\Component\Validator\Constraint;
 use Symfony\Component\Validator\ConstraintValidator;
+use Symfony\Component\Validator\ConstraintValidatorInterface;
 
 final class ConstraintAdapter implements ConstraintInterface
 {
@@ -24,10 +25,10 @@ final class ConstraintAdapter implements ConstraintInterface
     private $symfonyValidator;
 
     /**
-     * @param Constraint          $symfonyConstraint
-     * @param ConstraintValidator $symfonyValidator
+     * @param Constraint                   $symfonyConstraint
+     * @param ConstraintValidatorInterface $symfonyValidator
      */
-    public function __construct(Constraint $symfonyConstraint, ConstraintValidator $symfonyValidator)
+    public function __construct(Constraint $symfonyConstraint, ConstraintValidatorInterface $symfonyValidator)
     {
         $this->symfonyConstraint = $symfonyConstraint;
         $this->symfonyValidator = $symfonyValidator;

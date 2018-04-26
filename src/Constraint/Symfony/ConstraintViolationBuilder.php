@@ -4,15 +4,16 @@ declare(strict_types=1);
 
 namespace Chubbyphp\Validation\Constraint\Symfony;
 
-use Chubbyphp\Validation\Error\Error;
+use Symfony\Component\Validator\ConstraintViolation;
+use Symfony\Component\Validator\ConstraintViolationListInterface;
 use Symfony\Component\Validator\Violation\ConstraintViolationBuilderInterface;
 
 final class ConstraintViolationBuilder implements ConstraintViolationBuilderInterface
 {
     /**
-     * @var ExecutionContext
+     * @var ConstraintViolationListInterface
      */
-    private $executionContext;
+    private $violations;
 
     /**
      * @var string
@@ -55,14 +56,15 @@ final class ConstraintViolationBuilder implements ConstraintViolationBuilderInte
     private $cause;
 
     /**
-     * @param ExecutionContext $executionContext
-     * @param string           $message
-     * @param array            $parameters
-     * @param string           $path
+     * @param ConstraintViolationListInterface $violations
+     * @param string                           $message
+     * @param array                            $parameters
+     * @param string                           $path
      */
-    public function __construct(ExecutionContext $executionContext, string $message, array $parameters, string $path)
+    public function __construct(ConstraintViolationListInterface $violations, string $message, array $parameters, string $path)
     {
-        $this->executionContext = $executionContext;
+        $this->violations = $violations;
+
         $this->message = $message;
         $this->parameters = $parameters;
         $this->path = $path;
@@ -167,19 +169,17 @@ final class ConstraintViolationBuilder implements ConstraintViolationBuilderInte
 
     public function addViolation()
     {
-        $this->executionContext->addError(
-            new Error(
-                $this->path,
-                $this->message,
-                [
-                    '_parameters' => $this->parameters,
-                    '_translationDomain' => $this->translationDomain,
-                    '_invalidValue' => $this->invalidValue,
-                    '_plural' => $this->plural,
-                    '_code' => $this->code,
-                    '_cause' => $this->cause,
-                ]
-            )
-        );
+        $this->violations->add(new ConstraintViolation(
+            $this->message,
+            $this->message,
+            $this->parameters,
+            null,
+            $this->path,
+            $this->invalidValue,
+            $this->plural,
+            $this->code,
+            null,
+            $this->cause
+        ));
     }
 }
