@@ -258,7 +258,7 @@ final class ExecutionContext implements ExecutionContextInterface
                     'plural' => $violation->getPlural(),
                     'invalidValue' => $violation->getInvalidValue(),
                     'code' => $violation->getCode(),
-                    '_ause' => $violation->getCause(),
+                    'cause' => $violation->getCause(),
                 ]
             );
         }
