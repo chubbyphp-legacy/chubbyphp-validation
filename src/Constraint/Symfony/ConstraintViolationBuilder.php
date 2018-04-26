@@ -18,6 +18,11 @@ final class ConstraintViolationBuilder implements ConstraintViolationBuilderInte
     /**
      * @var string
      */
+    private $path;
+
+    /**
+     * @var string
+     */
     private $message;
 
     /**
@@ -29,11 +34,6 @@ final class ConstraintViolationBuilder implements ConstraintViolationBuilderInte
      * @var string
      */
     private $translationDomain;
-
-    /**
-     * @var string
-     */
-    private $path;
 
     /**
      * @var mixed
@@ -61,8 +61,12 @@ final class ConstraintViolationBuilder implements ConstraintViolationBuilderInte
      * @param array                            $parameters
      * @param string                           $path
      */
-    public function __construct(ConstraintViolationListInterface $violations, string $message, array $parameters, string $path)
-    {
+    public function __construct(
+        ConstraintViolationListInterface $violations,
+        string $message,
+        array $parameters,
+        string $path
+    ) {
         $this->violations = $violations;
 
         $this->message = $message;

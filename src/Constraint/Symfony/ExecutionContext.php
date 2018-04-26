@@ -254,10 +254,11 @@ final class ExecutionContext implements ExecutionContextInterface
                 $violation->getPropertyPath(),
                 $violation->getMessage(),
                 [
-                    '_parameters' => $violation->getParameters(),
-                    '_plural' => $violation->getPlural(),
-                    '_invalidValue' => $violation->getInvalidValue(),
-                    '_code' => $violation->getCode(),
+                    'parameters' => $violation->getParameters(),
+                    'plural' => $violation->getPlural(),
+                    'invalidValue' => $violation->getInvalidValue(),
+                    'code' => $violation->getCode(),
+                    '_ause' => $violation->getCause(),
                 ]
             );
         }
