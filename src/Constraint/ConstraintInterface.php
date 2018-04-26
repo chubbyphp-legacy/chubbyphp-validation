@@ -13,7 +13,6 @@ interface ConstraintInterface
 {
     /**
      * @param string                    $path
-     * @param object                    $object,
      * @param mixed                     $value
      * @param ValidatorContextInterface $context
      * @param ValidatorInterface|null   $validator
@@ -24,7 +23,6 @@ interface ConstraintInterface
      */
     public function validate(
         string $path,
-        $object,
         $value,
         ValidatorContextInterface $context,
         ValidatorInterface $validator = null

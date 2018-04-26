@@ -108,7 +108,7 @@ final class Validator implements ValidatorInterface
 
         $errors = [];
         foreach ($fieldMapping->getConstraints() as $constraint) {
-            foreach ($constraint->validate($subPath, $object, $value, $context, $this) as $error) {
+            foreach ($constraint->validate($subPath, $value, $context, $this) as $error) {
                 $errors[] = $error;
             }
         }

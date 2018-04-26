@@ -13,7 +13,6 @@ final class NotNullConstraint implements ConstraintInterface
 {
     /**
      * @param string                    $path
-     * @param object                    $object,
      * @param mixed                     $value
      * @param ValidatorContextInterface $context
      * @param ValidatorInterface|null   $validator
@@ -22,7 +21,6 @@ final class NotNullConstraint implements ConstraintInterface
      */
     public function validate(
         string $path,
-        $object,
         $value,
         ValidatorContextInterface $context,
         ValidatorInterface $validator = null

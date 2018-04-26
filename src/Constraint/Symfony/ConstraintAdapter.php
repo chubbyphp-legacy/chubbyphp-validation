@@ -36,7 +36,6 @@ final class ConstraintAdapter implements ConstraintInterface
 
     /**
      * @param string                    $path
-     * @param object                    $object,
      * @param mixed                     $value
      * @param ValidatorContextInterface $context
      * @param ValidatorInterface|null   $validator
@@ -45,12 +44,11 @@ final class ConstraintAdapter implements ConstraintInterface
      */
     public function validate(
         string $path,
-        $object,
         $value,
         ValidatorContextInterface $context,
         ValidatorInterface $validator = null
     ) {
-        $executionContext = new ExecutionContext($this->symfonyConstraint, $path, $object, $value);
+        $executionContext = new ExecutionContext($this->symfonyConstraint, $path, $value);
 
         $this->symfonyValidator->initialize($executionContext);
         $this->symfonyValidator->validate($value, $this->symfonyConstraint);

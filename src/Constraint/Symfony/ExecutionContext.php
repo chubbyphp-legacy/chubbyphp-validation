@@ -32,11 +32,6 @@ final class ExecutionContext implements ExecutionContextInterface
     private $path;
 
     /**
-     * @var object
-     */
-    private $object;
-
-    /**
      * @var mixed
      */
     private $value;
@@ -44,16 +39,14 @@ final class ExecutionContext implements ExecutionContextInterface
     /**
      * @param Constraint $constraint
      * @param string     $path
-     * @param object     $object
      * @param mixed      $value
      */
-    public function __construct(Constraint $constraint, string $path, $object, $value)
+    public function __construct(Constraint $constraint, string $path, $value)
     {
         $this->violations = new ConstraintViolationList();
 
         $this->constraint = $constraint;
         $this->path = $path;
-        $this->object = $object;
         $this->value = $value;
     }
 
@@ -90,7 +83,7 @@ final class ExecutionContext implements ExecutionContextInterface
      */
     public function getObject()
     {
-        return $this->object;
+        return null;
     }
 
     /**
@@ -216,11 +209,11 @@ final class ExecutionContext implements ExecutionContextInterface
     }
 
     /**
-     * @return string
+     * @return string|null
      */
-    public function getClassName(): string
+    public function getClassName()
     {
-        return get_class($this->object);
+        return null;
     }
 
     /**
