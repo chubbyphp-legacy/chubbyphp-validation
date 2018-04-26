@@ -133,7 +133,7 @@ class ValidatorTest extends TestCase
                 {
                     $callback = new Callback();
                     $callback->payload = ['key' => 'value'];
-                    $callback->callback = function ($object, ExecutionContextInterface $context, $payload) {
+                    $callback->callback = function ($object, ExecutionContextInterface $context, $payload = null) {
                         if ('callback' === $object) {
                             $context->addViolation('callback', $payload);
                         }
