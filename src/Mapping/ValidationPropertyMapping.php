@@ -7,7 +7,7 @@ namespace Chubbyphp\Validation\Mapping;
 use Chubbyphp\Validation\Accessor\AccessorInterface;
 use Chubbyphp\Validation\Constraint\ConstraintInterface;
 
-final class ValidationFieldMapping implements ValidationFieldMappingInterface
+final class ValidationPropertyMapping implements ValidationPropertyMappingInterface
 {
     /**
      * @var string

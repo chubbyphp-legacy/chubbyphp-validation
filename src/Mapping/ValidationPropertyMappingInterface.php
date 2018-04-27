@@ -7,7 +7,7 @@ namespace Chubbyphp\Validation\Mapping;
 use Chubbyphp\Validation\Accessor\AccessorInterface;
 use Chubbyphp\Validation\Constraint\ConstraintInterface;
 
-interface ValidationFieldMappingInterface
+interface ValidationPropertyMappingInterface extends ValidationGroupsInterface
 {
     /**
      * @return string
@@ -18,11 +18,6 @@ interface ValidationFieldMappingInterface
      * @return ConstraintInterface[]
      */
     public function getConstraints(): array;
-
-    /**
-     * @return array
-     */
-    public function getGroups(): array;
 
     /**
      * @return AccessorInterface

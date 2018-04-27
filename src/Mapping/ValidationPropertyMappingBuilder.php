@@ -8,7 +8,7 @@ use Chubbyphp\Validation\Accessor\AccessorInterface;
 use Chubbyphp\Validation\Accessor\PropertyAccessor;
 use Chubbyphp\Validation\Constraint\ConstraintInterface;
 
-final class ValidationFieldMappingBuilder implements ValidationFieldMappingBuilderInterface
+final class ValidationPropertyMappingBuilder implements ValidationPropertyMappingBuilderInterface
 {
     /**
      * @var string
@@ -34,9 +34,9 @@ final class ValidationFieldMappingBuilder implements ValidationFieldMappingBuild
      * @param string $name
      * @param array  $constraints
      *
-     * @return ValidationFieldMappingBuilderInterface
+     * @return ValidationPropertyMappingBuilderInterface
      */
-    public static function create(string $name, array $constraints): ValidationFieldMappingBuilderInterface
+    public static function create(string $name, array $constraints): ValidationPropertyMappingBuilderInterface
     {
         $self = new self();
         $self->name = $name;
@@ -59,9 +59,9 @@ final class ValidationFieldMappingBuilder implements ValidationFieldMappingBuild
     /**
      * @param array $groups
      *
-     * @return ValidationFieldMappingBuilderInterface
+     * @return ValidationPropertyMappingBuilderInterface
      */
-    public function setGroups(array $groups): ValidationFieldMappingBuilderInterface
+    public function setGroups(array $groups): ValidationPropertyMappingBuilderInterface
     {
         $this->groups = $groups;
 
@@ -71,9 +71,9 @@ final class ValidationFieldMappingBuilder implements ValidationFieldMappingBuild
     /**
      * @param AccessorInterface $accessor
      *
-     * @return ValidationFieldMappingBuilderInterface
+     * @return ValidationPropertyMappingBuilderInterface
      */
-    public function setAccessor(AccessorInterface $accessor): ValidationFieldMappingBuilderInterface
+    public function setAccessor(AccessorInterface $accessor): ValidationPropertyMappingBuilderInterface
     {
         $this->accessor = $accessor;
 
@@ -81,11 +81,11 @@ final class ValidationFieldMappingBuilder implements ValidationFieldMappingBuild
     }
 
     /**
-     * @return ValidationFieldMappingInterface
+     * @return ValidationPropertyMappingInterface
      */
-    public function getMapping(): ValidationFieldMappingInterface
+    public function getMapping(): ValidationPropertyMappingInterface
     {
-        return new ValidationFieldMapping(
+        return new ValidationPropertyMapping(
             $this->name,
             $this->constraints,
             $this->groups ?? [],

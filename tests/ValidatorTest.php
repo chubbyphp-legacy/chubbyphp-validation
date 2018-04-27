@@ -5,8 +5,10 @@ declare(strict_types=1);
 namespace Chubbyphp\Tests\Validation;
 
 use Chubbyphp\Validation\Constraint\Symfony\ConstraintAdapter;
-use Chubbyphp\Validation\Mapping\ValidationFieldMappingBuilder;
-use Chubbyphp\Validation\Mapping\ValidationFieldMappingInterface;
+use Chubbyphp\Validation\Mapping\ValidationClassMappingBuilder;
+use Chubbyphp\Validation\Mapping\ValidationClassMappingInterface;
+use Chubbyphp\Validation\Mapping\ValidationPropertyMappingBuilder;
+use Chubbyphp\Validation\Mapping\ValidationPropertyMappingInterface;
 use Chubbyphp\Validation\Mapping\ValidationObjectMappingInterface;
 use Chubbyphp\Validation\Validator;
 use PHPUnit\Framework\TestCase;
@@ -124,12 +126,21 @@ class ValidatorTest extends TestCase
                 }
 
                 /**
+                 * @param string $path
+                 * @return ValidationClassMappingInterface
+                 */
+                public function getValidationClassMapping(string $path): ValidationClassMappingInterface
+                {
+                    return ValidationClassMappingBuilder::create([])->getMapping();
+                }
+
+                /**
                  * @param string      $path
                  * @param string|null $type
                  *
-                 * @return ValidationFieldMappingInterface[]
+                 * @return ValidationPropertyMappingInterface[]
                  */
-                public function getValidationFieldMappings(string $path, string $type = null): array
+                public function getValidationPropertyMappings(string $path, string $type = null): array
                 {
                     $callback = new Callback();
                     $callback->payload = ['key' => 'value'];
@@ -140,13 +151,13 @@ class ValidatorTest extends TestCase
                     };
 
                     return [
-                        ValidationFieldMappingBuilder::create('name', [
+                        ValidationPropertyMappingBuilder::create('name', [
                             new ConstraintAdapter(new NotBlank(), new NotBlankValidator()),
                         ])->getMapping(),
-                        ValidationFieldMappingBuilder::create('bic', [
+                        ValidationPropertyMappingBuilder::create('bic', [
                             new ConstraintAdapter(new Bic(), new BicValidator()),
                         ])->getMapping(),
-                        ValidationFieldMappingBuilder::create('callback', [
+                        ValidationPropertyMappingBuilder::create('callback', [
                             new ConstraintAdapter($callback, new CallbackValidator()),
                         ])->getMapping(),
                     ];

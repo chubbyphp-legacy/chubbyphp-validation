@@ -14,7 +14,14 @@ interface ValidationObjectMappingInterface
     /**
      * @param string $path
      *
-     * @return ValidationFieldMappingInterface[]
+     * @return ValidationClassMappingInterface|null
      */
-    public function getValidationFieldMappings(string $path): array;
+    public function getValidationClassMapping(string $path);
+
+    /**
+     * @param string $path
+     *
+     * @return ValidationPropertyMappingInterface[]
+     */
+    public function getValidationPropertyMappings(string $path): array;
 }

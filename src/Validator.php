@@ -5,7 +5,9 @@ declare(strict_types=1);
 namespace Chubbyphp\Validation;
 
 use Chubbyphp\Validation\Error\ErrorInterface;
-use Chubbyphp\Validation\Mapping\ValidationFieldMappingInterface;
+use Chubbyphp\Validation\Mapping\ValidationClassMappingInterface;
+use Chubbyphp\Validation\Mapping\ValidationGroupsInterface;
+use Chubbyphp\Validation\Mapping\ValidationPropertyMappingInterface;
 use Chubbyphp\Validation\Mapping\ValidationObjectMappingInterface;
 use Chubbyphp\Validation\Validator\ValidatorContextBuilder;
 use Chubbyphp\Validation\Validator\ValidatorContextInterface;
@@ -53,7 +55,11 @@ final class Validator implements ValidatorInterface
         $objectMapping = $this->getObjectMapping($class);
 
         $errors = [];
-        foreach ($objectMapping->getValidationFieldMappings($path) as $fieldMapping) {
+        foreach ($this->validateClass($context, $objectMapping->getValidationClassMapping($path), $path, $object) as $fieldError) {
+            $errors[] = $fieldError;
+        }
+
+        foreach ($objectMapping->getValidationPropertyMappings($path) as $fieldMapping) {
             foreach ($this->validateField($context, $fieldMapping, $path, $object) as $fieldError) {
                 $errors[] = $fieldError;
             }
@@ -81,16 +87,50 @@ final class Validator implements ValidatorInterface
     }
 
     /**
-     * @param ValidatorContextInterface       $context
-     * @param ValidationFieldMappingInterface $fieldMapping
-     * @param string                          $path
+     * @param ValidatorContextInterface            $context
+     * @param ValidationClassMappingInterface|null $classMapping
+     * @param string                               $path
+     * @param                                      $object
+     *
+     * @return ErrorInterface[]
+     */
+    private function validateClass(
+        ValidatorContextInterface $context,
+        ValidationClassMappingInterface $classMapping = null,
+        string $path,
+        $object
+    ) {
+        if (null === $classMapping) {
+            return [];
+        }
+
+        if (!$this->isWithinGroup($context, $classMapping)) {
+            return [];
+        }
+
+        $this->logger->info('deserialize: path {path}', ['path' => $path]);
+
+        $errors = [];
+        foreach ($classMapping->getConstraints() as $constraint) {
+            foreach ($constraint->validate($path, $object, $context, $this) as $error) {
+                $errors[] = $error;
+            }
+        }
+
+        return $errors;
+    }
+
+    /**
+     * @param ValidatorContextInterface          $context
+     * @param ValidationPropertyMappingInterface $fieldMapping
+     * @param string                             $path
      * @param $object
      *
      * @return ErrorInterface[]
      */
     private function validateField(
         ValidatorContextInterface $context,
-        ValidationFieldMappingInterface $fieldMapping,
+        ValidationPropertyMappingInterface $fieldMapping,
         string $path,
         $object
     ): array {
@@ -117,20 +157,20 @@ final class Validator implements ValidatorInterface
     }
 
     /**
-     * @param ValidatorContextInterface       $context
-     * @param ValidationFieldMappingInterface $fieldMapping
+     * @param ValidatorContextInterface $context
+     * @param ValidationGroupsInterface $mapping
      *
      * @return bool
      */
     private function isWithinGroup(
         ValidatorContextInterface $context,
-        ValidationFieldMappingInterface $fieldMapping
+        ValidationGroupsInterface $mapping
     ): bool {
         if ([] === $groups = $context->getGroups()) {
             return true;
         }
 
-        foreach ($fieldMapping->getGroups() as $group) {
+        foreach ($mapping->getGroups() as $group) {
             if (in_array($group, $groups, true)) {
                 return true;
             }

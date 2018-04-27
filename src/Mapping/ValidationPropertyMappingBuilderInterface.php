@@ -7,7 +7,7 @@ namespace Chubbyphp\Validation\Mapping;
 use Chubbyphp\Validation\Accessor\AccessorInterface;
 use Chubbyphp\Validation\Constraint\ConstraintInterface;
 
-interface ValidationFieldMappingBuilderInterface
+interface ValidationPropertyMappingBuilderInterface
 {
     /**
      * @param string $name
@@ -32,7 +32,7 @@ interface ValidationFieldMappingBuilderInterface
     public function setAccessor(AccessorInterface $accessor): self;
 
     /**
-     * @return ValidationFieldMappingInterface
+     * @return ValidationPropertyMappingInterface
      */
-    public function getMapping(): ValidationFieldMappingInterface;
+    public function getMapping(): ValidationPropertyMappingInterface;
 }
