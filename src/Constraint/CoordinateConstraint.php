@@ -32,7 +32,11 @@ final class CoordinateConstraint implements ConstraintInterface
         }
 
         if (!is_string($value)) {
-            return [new Error($path, 'constraint.coordinate.invalidtype', ['type' => gettype($value)])];
+            return [new Error(
+                $path,
+                'constraint.coordinate.invalidtype',
+                ['type' => is_object($value) ? get_class($value) : gettype($value)]
+            )];
         }
 
         $matches = [];

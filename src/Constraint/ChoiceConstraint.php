@@ -97,7 +97,7 @@ final class ChoiceConstraint implements ConstraintInterface
             return [];
         }
 
-        $valueType = gettype($value);
+        $valueType = is_object($value) ? get_class($value) : gettype($value);
 
         if (!in_array($valueType, $this->supportedTypes, true)) {
             return [

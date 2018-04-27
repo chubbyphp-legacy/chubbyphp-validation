@@ -32,7 +32,11 @@ final class EmailConstraint implements ConstraintInterface
         }
 
         if (!is_string($value)) {
-            return [new Error($path, 'constraint.email.invalidtype', ['type' => gettype($value)])];
+            return [new Error(
+                $path,
+                'constraint.email.invalidtype',
+                ['type' => is_object($value) ? get_class($value) : gettype($value)]
+            )];
         }
 
         if (!preg_match(self::PATTERN, $value)) {

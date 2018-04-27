@@ -127,6 +127,7 @@ class ValidatorTest extends TestCase
 
                 /**
                  * @param string $path
+                 *
                  * @return ValidationClassMappingInterface
                  */
                 public function getValidationClassMapping(string $path): ValidationClassMappingInterface

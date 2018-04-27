@@ -34,12 +34,18 @@ final class DateConstraint implements ConstraintInterface
         }
 
         if (!is_string($value)) {
-            return [new Error($path, 'constraint.date.invalidtype', ['type' => gettype($value)])];
+            return [new Error(
+                $path,
+                'constraint.date.invalidtype',
+                ['type' => is_object($value) ? get_class($value) : gettype($value)]
+            )];
         }
 
         try {
             new \DateTime($value);
         } catch (\Exception $exception) {
+            error_clear_last();
+
             return [new Error($path, 'constraint.date.invalidvalue', ['value' => $value])];
         }
 

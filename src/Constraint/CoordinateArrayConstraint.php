@@ -30,7 +30,11 @@ final class CoordinateArrayConstraint implements ConstraintInterface
         }
 
         if (!is_array($value)) {
-            return [new Error($path, 'constraint.coordinatearray.invalidtype', ['type' => gettype($value)])];
+            return [new Error(
+                $path,
+                'constraint.coordinatearray.invalidtype',
+                ['type' => is_object($value) ? get_class($value) : gettype($value)]
+            )];
         }
 
         if (!isset($value['lat']) || !isset($value['lon'])) {

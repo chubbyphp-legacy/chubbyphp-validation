@@ -30,7 +30,11 @@ final class NumericConstraint implements ConstraintInterface
         }
 
         if (!is_scalar($value)) {
-            return [new Error($path, 'constraint.numeric.invalidtype', ['type' => gettype($value)])];
+            return [new Error(
+                $path,
+                'constraint.numeric.invalidtype',
+                ['type' => is_object($value) ? get_class($value) : gettype($value)]
+            )];
         }
 
         if (!is_numeric($value)) {

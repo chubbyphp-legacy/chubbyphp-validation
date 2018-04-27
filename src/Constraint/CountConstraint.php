@@ -50,7 +50,11 @@ final class CountConstraint implements ConstraintInterface
         }
 
         if (!is_array($value) && !$value instanceof \Countable) {
-            return [new Error($path, 'constraint.count.invalidtype', ['type' => gettype($value)])];
+            return [new Error(
+                $path,
+                'constraint.count.invalidtype',
+                ['type' => is_object($value) ? get_class($value) : gettype($value)]
+            )];
         }
 
         $count = count($value);
