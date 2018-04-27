@@ -4,6 +4,8 @@ declare(strict_types=1);
 
 namespace Chubbyphp\Tests\Validation;
 
+use Chubbyphp\Validation\Constraint\AllConstraint;
+use Chubbyphp\Validation\Constraint\DateTimeConstraint;
 use Chubbyphp\Validation\Constraint\Symfony\ConstraintAdapter;
 use Chubbyphp\Validation\Mapping\ValidationClassMappingBuilder;
 use Chubbyphp\Validation\Mapping\ValidationClassMappingInterface;
@@ -18,6 +20,8 @@ use Symfony\Component\Validator\Constraints\Callback;
 use Symfony\Component\Validator\Constraints\CallbackValidator;
 use Symfony\Component\Validator\Constraints\NotBlank;
 use Symfony\Component\Validator\Constraints\NotBlankValidator;
+use Symfony\Component\Validator\Constraints\NotNull;
+use Symfony\Component\Validator\Constraints\NotNullValidator;
 use Symfony\Component\Validator\Context\ExecutionContextInterface;
 
 class ValidatorTest extends TestCase
@@ -39,6 +43,11 @@ class ValidatorTest extends TestCase
              * @var string
              */
             private $callback;
+
+            /**
+             * @var \ArrayIterator
+             */
+            private $all;
 
             /**
              * @return string
@@ -99,11 +108,32 @@ class ValidatorTest extends TestCase
 
                 return $this;
             }
+
+            /**
+             * @return \ArrayIterator
+             */
+            public function getAll(): \ArrayIterator
+            {
+                return $this->all;
+            }
+
+            /**
+             * @param \ArrayIterator $all
+             *
+             * @return self
+             */
+            public function setAll(\ArrayIterator $all): self
+            {
+                $this->all = $all;
+
+                return $this;
+            }
         };
 
         $object->setName('');
         $object->setBic('invalid-bic');
         $object->setCallback('callback');
+        $object->setAll(new \ArrayIterator(['31.01.2018', '29.02.2018']));
 
         $validatorObjectMappingRegistry = new Validator\ValidatorObjectMappingRegistry([
             new class($object) implements ValidationObjectMappingInterface {
@@ -160,6 +190,12 @@ class ValidatorTest extends TestCase
                         ])->getMapping(),
                         ValidationPropertyMappingBuilder::create('callback', [
                             new ConstraintAdapter($callback, new CallbackValidator()),
+                        ])->getMapping(),
+                        ValidationPropertyMappingBuilder::create('all', [
+                            new AllConstraint([
+                                new ConstraintAdapter(new NotNull(), new NotNullValidator()),
+                                new DateTimeConstraint('d.m.Y'),
+                            ]),
                         ])->getMapping(),
                     ];
                 }
