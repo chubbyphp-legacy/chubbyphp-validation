@@ -20,7 +20,7 @@ final class AllConstraint implements ConstraintInterface
     /**
      * @param ConstraintInterface[] $constraints
      */
-    public function __construct(array $constraints)
+    public function __construct(array $constraints = [])
     {
         $this->constraints = $constraints;
     }
@@ -45,16 +45,16 @@ final class AllConstraint implements ConstraintInterface
             return [];
         }
 
-        if (null === $validator) {
-            throw ValidatorLogicException::createMissingValidator($path);
-        }
-
         if (!is_array($value) && !$value instanceof \Traversable) {
             return [new Error(
-                $path,
+                $path.'[_all]',
                 'constraint.all.invalidtype',
                 ['type' => is_object($value) ? get_class($value) : gettype($value)]
             )];
+        }
+
+        if (null === $validator) {
+            throw ValidatorLogicException::createMissingValidator($path);
         }
 
         $errors = [];
