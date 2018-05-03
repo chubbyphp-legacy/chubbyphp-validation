@@ -21,9 +21,6 @@ class LazyValidationObjectMappingTest extends TestCase
         $denormalizationClassMapping = $this->getValidationClassMapping();
         $denormalizationPropertyMappings = [$this->getValidationPropertyMapping()];
 
-        $factory = function () {
-        };
-
         $container = $this->getContainer([
             'service' => $this->getValidationObjectMapping(
                 $denormalizationClassMapping,
@@ -34,6 +31,7 @@ class LazyValidationObjectMappingTest extends TestCase
         $objectMapping = new LazyValidationObjectMapping($container, 'service', \stdClass::class);
 
         self::assertEquals(\stdClass::class, $objectMapping->getClass());
+        self::assertSame($denormalizationClassMapping, $objectMapping->getValidationClassMapping('path'));
         self::assertSame($denormalizationPropertyMappings, $objectMapping->getValidationPropertyMappings('path'));
     }
 
