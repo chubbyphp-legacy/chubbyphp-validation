@@ -173,8 +173,6 @@ class ValidatorTest extends TestCase
                  */
                 public function getValidationPropertyMappings(string $path, string $type = null): array
                 {
-
-
                     return [
                         ValidationPropertyMappingBuilder::create('name', [
                             new ConstraintAdapter(new NotBlank(), new NotBlankValidator()),
