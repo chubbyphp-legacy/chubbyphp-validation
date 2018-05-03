@@ -4,6 +4,7 @@ declare(strict_types=1);
 
 namespace Chubbyphp\Validation;
 
+use Chubbyphp\Validation\Constraint\ConstraintInterface;
 use Chubbyphp\Validation\Error\ErrorInterface;
 use Chubbyphp\Validation\Mapping\ValidationClassMappingInterface;
 use Chubbyphp\Validation\Mapping\ValidationGroupsInterface;
@@ -62,6 +63,27 @@ final class Validator implements ValidatorInterface
         foreach ($objectMapping->getValidationPropertyMappings($path) as $fieldMapping) {
             foreach ($this->validateField($context, $fieldMapping, $path, $object) as $fieldError) {
                 $errors[] = $fieldError;
+            }
+        }
+
+        return $errors;
+    }
+
+    /**
+     * @param mixed                     $value
+     * @param ConstraintInterface[]     $constraints
+     * @param ValidatorContextInterface $context
+     *
+     * @return @return ErrorInterface[]
+     */
+    public function validateByConstraints($value, array $constraints, ValidatorContextInterface $context = null)
+    {
+        $context = $context ?? ValidatorContextBuilder::create()->getContext();
+
+        $errors = [];
+        foreach ($constraints as $constraint) {
+            foreach ($constraint->validate('', $value, $context, $this) as $error) {
+                $errors[] = $error;
             }
         }
 
