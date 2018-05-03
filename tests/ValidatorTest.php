@@ -188,7 +188,7 @@ class ValidatorTest extends TestCase
                                         if ('callback' === $object) {
                                             $context->addViolation('callback', $payload);
                                         }
-                                    }
+                                    },
                                 ]),
                                 new CallbackValidator()
                             ),
