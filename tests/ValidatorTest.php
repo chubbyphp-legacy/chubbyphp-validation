@@ -173,13 +173,7 @@ class ValidatorTest extends TestCase
                  */
                 public function getValidationPropertyMappings(string $path, string $type = null): array
                 {
-                    $callback = new Callback();
-                    $callback->payload = ['key' => 'value'];
-                    $callback->callback = function ($object, ExecutionContextInterface $context, $payload = []) {
-                        if ('callback' === $object) {
-                            $context->addViolation('callback', $payload);
-                        }
-                    };
+
 
                     return [
                         ValidationPropertyMappingBuilder::create('name', [
@@ -189,7 +183,17 @@ class ValidatorTest extends TestCase
                             new ConstraintAdapter(new Bic(), new BicValidator()),
                         ])->getMapping(),
                         ValidationPropertyMappingBuilder::create('callback', [
-                            new ConstraintAdapter($callback, new CallbackValidator()),
+                            new ConstraintAdapter(
+                                new Callback([
+                                    'payload' => ['key' => 'value'],
+                                    'callback' => function ($object, ExecutionContextInterface $context, $payload = []) {
+                                        if ('callback' === $object) {
+                                            $context->addViolation('callback', $payload);
+                                        }
+                                    }
+                                ]),
+                                new CallbackValidator()
+                            ),
                         ])->getMapping(),
                         ValidationPropertyMappingBuilder::create('all', [
                             new AllConstraint([
