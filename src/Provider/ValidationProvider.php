@@ -17,7 +17,10 @@ final class ValidationProvider implements ServiceProviderInterface
     public function register(Container $container)
     {
         $container['validator'] = function () use ($container) {
-            return new Validator();
+            return new Validator(
+                $container['validator.objectmappingregistry'],
+                $container['logger'] ?? null
+            );
         };
 
         $container['validator.objectmappingregistry'] = function () use ($container) {

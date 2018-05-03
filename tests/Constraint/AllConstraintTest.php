@@ -9,7 +9,6 @@ use Chubbyphp\Validation\Constraint\AllConstraint;
 use Chubbyphp\Validation\Error\Error;
 use Chubbyphp\Validation\Validator\ValidatorContextInterface;
 use Chubbyphp\Validation\ValidatorInterface;
-use Chubbyphp\Validation\ValidatorLogicException;
 use PHPUnit\Framework\MockObject\MockObject;
 use PHPUnit\Framework\TestCase;
 
@@ -32,18 +31,6 @@ final class AllConstraintTest extends TestCase
         self::assertEquals([
             new Error('traversable[_all]', 'constraint.all.invalidtype', ['type' => 'string']),
         ], $constraint->validate('traversable', 'string', $this->getContext()));
-    }
-
-    public function testWithWithoutValidator()
-    {
-        self::expectException(ValidatorLogicException::class);
-        self::expectExceptionMessage(
-            'There is no validator at path: "traversable"'
-        );
-
-        $constraint = new AllConstraint();
-
-        self::assertEquals([], $constraint->validate('traversable', ['string'], $this->getContext()));
     }
 
     public function testWithoutConstraint()

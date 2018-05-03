@@ -53,10 +53,6 @@ final class AllConstraint implements ConstraintInterface
             )];
         }
 
-        if (null === $validator) {
-            throw ValidatorLogicException::createMissingValidator($path);
-        }
-
         $errors = [];
         foreach ($value as $i => $subValue) {
             foreach ($this->constraints as $constraint) {
