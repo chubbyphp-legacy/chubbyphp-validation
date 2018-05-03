@@ -85,7 +85,7 @@ final class NumericRangeConstraintTest extends TestCase
 
         self::assertEquals([$error], $constraint->validate('range', 3, $this->getContext()));
     }
-    
+
     /**
      * @return ValidatorContextInterface
      */

@@ -91,7 +91,7 @@ final class CoordinateArrayConstraintTest extends TestCase
             ['coordinate' => ['lat' => '91', 'lon' => '181']],
         ];
     }
-    
+
     /**
      * @return ValidatorContextInterface
      */

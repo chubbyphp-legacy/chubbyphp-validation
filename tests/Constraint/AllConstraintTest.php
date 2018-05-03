@@ -7,7 +7,6 @@ namespace Chubbyphp\Tests\Validation\Constraint;
 use Chubbyphp\Validation\Constraint\ConstraintInterface;
 use Chubbyphp\Validation\Constraint\AllConstraint;
 use Chubbyphp\Validation\Error\Error;
-use Chubbyphp\Validation\Error\ErrorInterface;
 use Chubbyphp\Validation\Validator\ValidatorContextInterface;
 use Chubbyphp\Validation\ValidatorInterface;
 use Chubbyphp\Validation\ValidatorLogicException;

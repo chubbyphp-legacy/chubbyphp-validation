@@ -25,8 +25,8 @@ final class ChoiceConstraintTest extends TestCase
     /**
      * @dataProvider choicesProvider
      *
-     * @param array  $choices
-     * @param mixed  $choice
+     * @param array $choices
+     * @param mixed $choice
      */
     public function testWithChoice(array $choices, $choice)
     {
@@ -51,8 +51,8 @@ final class ChoiceConstraintTest extends TestCase
     /**
      * @dataProvider invalidChoicesProvider
      *
-     * @param array  $choices
-     * @param mixed  $choice
+     * @param array $choices
+     * @param mixed $choice
      */
     public function testWithInvalidChoice(array $choices, $choice)
     {

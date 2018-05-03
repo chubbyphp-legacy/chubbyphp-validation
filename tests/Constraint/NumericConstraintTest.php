@@ -60,7 +60,7 @@ final class NumericConstraintTest extends TestCase
 
         self::assertEquals([$error], $constraint->validate('numeric', 'test', $this->getContext()));
     }
-    
+
     /**
      * @return ValidatorContextInterface
      */

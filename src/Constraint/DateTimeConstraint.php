@@ -58,36 +58,25 @@ final class DateTimeConstraint implements ConstraintInterface
 
         $dateTimeErrors = \DateTime::getLastErrors();
 
-        $errors = [];
+        if (0 === $dateTimeErrors['warning_count'] && 0 === $dateTimeErrors['error_count']) {
+            return [];
+        }
 
-        if (0 < $dateTimeErrors['error_count']) {
+        $errors = [];
+        foreach ($dateTimeErrors['warnings'] as $code => $message) {
             $errors[] = new Error(
                 $path,
-                'constraint.date.format',
-                ['format' => $this->format, 'value' => $value]
+                'constraint.date.warning',
+                ['code' => $code, 'message' => $message, 'format' => $this->format, 'value' => $value]
             );
         }
 
-        foreach ($dateTimeErrors['warnings'] as $warning) {
-            if ('The parsed date was invalid' === $warning) {
-                $errors[] = new Error(
-                    $path,
-                    'constraint.date.invaliddate',
-                    ['value' => $value]
-                );
-            } elseif ('The parsed time was invalid' === $warning) {
-                $errors[] = new Error(
-                    $path,
-                    'constraint.date.invalidtime',
-                    ['value' => $value]
-                );
-            } else {
-                $errors[] = new Error(
-                    $path,
-                    'constraint.date.invalidunknown',
-                    ['value' => $value]
-                );
-            }
+        foreach ($dateTimeErrors['errors'] as $code => $message) {
+            $errors[] = new Error(
+                $path,
+                'constraint.date.error',
+                ['code' => $code, 'message' => $message, 'format' => $this->format, 'value' => $value]
+            );
         }
 
         return $errors;
