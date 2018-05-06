@@ -50,10 +50,11 @@ final class ErrorMessages implements ErrorMessagesInterface
             $translate = $this->translate;
             $this->errorMessages = [];
             foreach ($this->errors as $error) {
-                if (!isset($this->errorMessages[$error->getPath()])) {
-                    $this->errorMessages[$error->getPath()] = [];
+                $path = $error->getPath();
+                if (!isset($this->errorMessages[$path])) {
+                    $this->errorMessages[$path] = [];
                 }
-                $this->errorMessages[$error->getPath()][] = $translate($error->getKey(), $error->getArguments());
+                $this->errorMessages[$path][] = $translate($error->getKey(), $error->getArguments());
             }
         }
 
