@@ -22,16 +22,16 @@ final class ConstraintAdapter implements ConstraintInterface
     /**
      * @var ConstraintValidator
      */
-    private $symfonyValidator;
+    private $symfonyConstraintValidator;
 
     /**
      * @param Constraint                   $symfonyConstraint
-     * @param ConstraintValidatorInterface $symfonyValidator
+     * @param ConstraintValidatorInterface $symfonyConstraintValidator
      */
-    public function __construct(Constraint $symfonyConstraint, ConstraintValidatorInterface $symfonyValidator)
+    public function __construct(Constraint $symfonyConstraint, ConstraintValidatorInterface $symfonyConstraintValidator)
     {
         $this->symfonyConstraint = $symfonyConstraint;
-        $this->symfonyValidator = $symfonyValidator;
+        $this->symfonyConstraintValidator = $symfonyConstraintValidator;
     }
 
     /**
@@ -48,10 +48,10 @@ final class ConstraintAdapter implements ConstraintInterface
         ValidatorContextInterface $context,
         ValidatorInterface $validator = null
     ) {
-        $executionContext = new ExecutionContext($this->symfonyConstraint, $path, $value);
+        $executionContext = new ExecutionContext($path, $value, $context);
 
-        $this->symfonyValidator->initialize($executionContext);
-        $this->symfonyValidator->validate($value, $this->symfonyConstraint);
+        $this->symfonyConstraintValidator->initialize($executionContext);
+        $this->symfonyConstraintValidator->validate($value, $this->symfonyConstraint);
 
         return $executionContext->getErrors();
     }

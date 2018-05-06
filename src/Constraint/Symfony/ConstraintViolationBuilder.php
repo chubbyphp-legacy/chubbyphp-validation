@@ -31,11 +31,6 @@ final class ConstraintViolationBuilder implements ConstraintViolationBuilderInte
     private $parameters;
 
     /**
-     * @var string
-     */
-    private $translationDomain;
-
-    /**
      * @var mixed
      */
     private $invalidValue;
@@ -118,8 +113,6 @@ final class ConstraintViolationBuilder implements ConstraintViolationBuilderInte
      */
     public function setTranslationDomain($translationDomain): self
     {
-        $this->translationDomain = $translationDomain;
-
         return $this;
     }
 

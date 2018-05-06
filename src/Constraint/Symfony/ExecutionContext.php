@@ -6,6 +6,7 @@ namespace Chubbyphp\Validation\Constraint\Symfony;
 
 use Chubbyphp\Validation\Error\Error;
 use Chubbyphp\Validation\Error\ErrorInterface;
+use Chubbyphp\Validation\Validator\ValidatorContextInterface;
 use Symfony\Component\Validator\Constraint;
 use Symfony\Component\Validator\ConstraintViolationList;
 use Symfony\Component\Validator\ConstraintViolationListInterface;
@@ -22,11 +23,6 @@ final class ExecutionContext implements ExecutionContextInterface
     private $violations;
 
     /**
-     * @var Constraint
-     */
-    private $constraint;
-
-    /**
      * @var string
      */
     private $path;
@@ -37,17 +33,22 @@ final class ExecutionContext implements ExecutionContextInterface
     private $value;
 
     /**
-     * @param Constraint $constraint
-     * @param string     $path
-     * @param mixed      $value
+     * @var ValidatorContextInterface
      */
-    public function __construct(Constraint $constraint, string $path, $value)
+    private $context;
+
+    /**
+     * @param string $path
+     * @param mixed  $value
+     * @param ValidatorContextInterface $context
+     */
+    public function __construct(string $path, $value, ValidatorContextInterface $context)
     {
         $this->violations = new ConstraintViolationList();
 
-        $this->constraint = $constraint;
         $this->path = $path;
         $this->value = $value;
+        $this->context = $context;
     }
 
     /**
@@ -75,7 +76,7 @@ final class ExecutionContext implements ExecutionContextInterface
      */
     public function getValidator()
     {
-        throw new \RuntimeException(sprintf('Method "%s" is not implemented', __METHOD__));
+        throw new NotImplementedException(sprintf('Method "%s" is not implemented', __METHOD__));
     }
 
     /**
@@ -94,7 +95,7 @@ final class ExecutionContext implements ExecutionContextInterface
      */
     public function setNode($value, $object, MetadataInterface $metadata = null, $propertyPath)
     {
-        throw new \RuntimeException(sprintf('Method "%s" is not implemented', __METHOD__));
+        throw new NotImplementedException(sprintf('Method "%s" is not implemented', __METHOD__));
     }
 
     /**
@@ -102,7 +103,7 @@ final class ExecutionContext implements ExecutionContextInterface
      */
     public function setGroup($group)
     {
-        throw new \RuntimeException(sprintf('Method "%s" is not implemented', __METHOD__));
+        throw new NotImplementedException(sprintf('Method "%s" is not implemented', __METHOD__));
     }
 
     /**
@@ -110,7 +111,7 @@ final class ExecutionContext implements ExecutionContextInterface
      */
     public function setConstraint(Constraint $constraint)
     {
-        throw new \RuntimeException(sprintf('Method "%s" is not implemented', __METHOD__));
+        throw new NotImplementedException(sprintf('Method "%s" is not implemented', __METHOD__));
     }
 
     /**
@@ -119,7 +120,7 @@ final class ExecutionContext implements ExecutionContextInterface
      */
     public function markGroupAsValidated($cacheKey, $groupHash)
     {
-        throw new \RuntimeException(sprintf('Method "%s" is not implemented', __METHOD__));
+        throw new NotImplementedException(sprintf('Method "%s" is not implemented', __METHOD__));
     }
 
     /**
@@ -130,7 +131,7 @@ final class ExecutionContext implements ExecutionContextInterface
      */
     public function isGroupValidated($cacheKey, $groupHash)
     {
-        throw new \RuntimeException(sprintf('Method "%s" is not implemented', __METHOD__));
+        throw new NotImplementedException(sprintf('Method "%s" is not implemented', __METHOD__));
     }
 
     /**
@@ -139,7 +140,7 @@ final class ExecutionContext implements ExecutionContextInterface
      */
     public function markConstraintAsValidated($cacheKey, $constraintHash)
     {
-        throw new \RuntimeException(sprintf('Method "%s" is not implemented', __METHOD__));
+        throw new NotImplementedException(sprintf('Method "%s" is not implemented', __METHOD__));
     }
 
     /**
@@ -150,7 +151,7 @@ final class ExecutionContext implements ExecutionContextInterface
      */
     public function isConstraintValidated($cacheKey, $constraintHash)
     {
-        throw new \RuntimeException(sprintf('Method "%s" is not implemented', __METHOD__));
+        throw new NotImplementedException(sprintf('Method "%s" is not implemented', __METHOD__));
     }
 
     /**
@@ -158,7 +159,7 @@ final class ExecutionContext implements ExecutionContextInterface
      */
     public function markObjectAsInitialized($cacheKey)
     {
-        throw new \RuntimeException(sprintf('Method "%s" is not implemented', __METHOD__));
+        throw new NotImplementedException(sprintf('Method "%s" is not implemented', __METHOD__));
     }
 
     /**
@@ -168,7 +169,7 @@ final class ExecutionContext implements ExecutionContextInterface
      */
     public function isObjectInitialized($cacheKey): bool
     {
-        throw new \RuntimeException(sprintf('Method "%s" is not implemented', __METHOD__));
+        throw new NotImplementedException(sprintf('Method "%s" is not implemented', __METHOD__));
     }
 
     /**
@@ -181,7 +182,7 @@ final class ExecutionContext implements ExecutionContextInterface
 
     public function getRoot()
     {
-        throw new \RuntimeException(sprintf('Method "%s" is not implemented', __METHOD__));
+        throw new NotImplementedException(sprintf('Method "%s" is not implemented', __METHOD__));
     }
 
     /**
@@ -197,7 +198,7 @@ final class ExecutionContext implements ExecutionContextInterface
      */
     public function getMetadata()
     {
-        return null;
+        throw new NotImplementedException(sprintf('Method "%s" is not implemented', __METHOD__));
     }
 
     /**
@@ -205,7 +206,11 @@ final class ExecutionContext implements ExecutionContextInterface
      */
     public function getGroup(): string
     {
-        return 'Default';
+        if ([] === $groups = $this->context->getGroups()) {
+            return 'Default';
+        }
+
+        return array_shift($groups);
     }
 
     /**
@@ -233,6 +238,10 @@ final class ExecutionContext implements ExecutionContextInterface
      */
     public function getPropertyPath($subPath = ''): string
     {
+        if ('' !== $subPath) {
+            $subPath = '.'.$subPath;
+        }
+
         return $this->path.$subPath;
     }
 
