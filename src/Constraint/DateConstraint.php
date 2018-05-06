@@ -50,10 +50,6 @@ final class DateConstraint implements ConstraintInterface
 
             $dateTimeErrors = \DateTime::getLastErrors();
 
-            if (0 === $dateTimeErrors['error_count']) {
-                return [];
-            }
-
             $messages = [];
             foreach ($dateTimeErrors['errors'] as $position => $message) {
                 if (!isset($messages[$message])) {
