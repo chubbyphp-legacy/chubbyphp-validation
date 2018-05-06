@@ -9,6 +9,7 @@ use Chubbyphp\Validation\ValidatorLogicException;
 use Chubbyphp\Validation\Mapping\ValidationObjectMappingInterface;
 use Chubbyphp\Tests\Validation\Resources\Model\AbstractManyModel;
 use Doctrine\Common\Persistence\Proxy;
+use PHPUnit\Framework\MockObject\MockObject;
 use PHPUnit\Framework\TestCase;
 
 /**
@@ -57,7 +58,7 @@ class ValidatorObjectMappingRegistryTest extends TestCase
      */
     private function getValidationObjectMapping(): ValidationObjectMappingInterface
     {
-        /** @var ValidationObjectMappingInterface|\PHPUnit_Framework_MockObject_MockObject $objectMapping */
+        /** @var ValidationObjectMappingInterface|MockObject $objectMapping */
         $objectMapping = $this->getMockBuilder(ValidationObjectMappingInterface::class)
             ->setMethods([])
             ->getMockForAbstractClass();
@@ -78,7 +79,7 @@ class ValidatorObjectMappingRegistryTest extends TestCase
      */
     private function getValidationProxyObjectMapping(): ValidationObjectMappingInterface
     {
-        /** @var ValidationObjectMappingInterface|\PHPUnit_Framework_MockObject_MockObject $objectMapping */
+        /** @var ValidationObjectMappingInterface|MockObject $objectMapping */
         $objectMapping = $this->getMockBuilder(ValidationObjectMappingInterface::class)
             ->setMethods([])
             ->getMockForAbstractClass();

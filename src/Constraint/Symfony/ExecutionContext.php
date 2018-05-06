@@ -38,8 +38,8 @@ final class ExecutionContext implements ExecutionContextInterface
     private $context;
 
     /**
-     * @param string $path
-     * @param mixed  $value
+     * @param string                    $path
+     * @param mixed                     $value
      * @param ValidatorContextInterface $context
      */
     public function __construct(string $path, $value, ValidatorContextInterface $context)

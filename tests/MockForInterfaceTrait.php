@@ -11,6 +11,7 @@ trait MockForInterfaceTrait
     /**
      * @param string $interface
      * @param array  $methods
+     *
      * @return MockObject
      */
     private function getMockForInterface(string $interface, array $methods = []): MockObject

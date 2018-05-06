@@ -27,19 +27,19 @@ final class ConstraintAdapterTest extends TestCase
         /** @var ConstraintValidatorInterface|MockObject $constraintValidator */
         $constraintValidator = $this->getMockForInterface(ConstraintValidatorInterface::class, [
             'initialize' => [
-                []
+                [],
             ],
             'validate' => [
                 [
-                    'arguments' => ['test', $constraint]
-                ]
-            ]
+                    'arguments' => ['test', $constraint],
+                ],
+            ],
         ]);
 
         $constraintAdapter = new ConstraintAdapter($constraint, $constraintValidator);
 
         /** @var ValidatorContextInterface|MockObject $context */
-        $context = $this->getMockBuilder(ValidatorContextInterface::class)->getMockForAbstractClass();
+        $context = $this->getMockForInterface(ValidatorContextInterface::class);
 
         self::assertSame([], $constraintAdapter->validate('path[0].property', 'test', $context));
     }

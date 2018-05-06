@@ -4,8 +4,10 @@ declare(strict_types=1);
 
 namespace Chubbyphp\Tests\Validator\Mapping;
 
+use Chubbyphp\Tests\Validation\MockForInterfaceTrait;
 use Chubbyphp\Validation\Constraint\ConstraintInterface;
 use Chubbyphp\Validation\Mapping\ValidationClassMappingBuilder;
+use PHPUnit\Framework\MockObject\MockObject;
 use PHPUnit\Framework\TestCase;
 
 /**
@@ -13,6 +15,8 @@ use PHPUnit\Framework\TestCase;
  */
 class ValidationClassMappingBuilderTest extends TestCase
 {
+    use MockForInterfaceTrait;
+
     public function testGetDefaultMapping()
     {
         $propertyMapping = ValidationClassMappingBuilder::create([])->getMapping();
@@ -38,8 +42,8 @@ class ValidationClassMappingBuilderTest extends TestCase
      */
     private function getConstraint(): ConstraintInterface
     {
-        /** @var ConstraintInterface|\PHPUnit_Framework_MockObject_MockObject $constraint */
-        $constraint = $this->getMockBuilder(ConstraintInterface::class)->getMockForAbstractClass();
+        /** @var ConstraintInterface|MockObject $constraint */
+        $constraint = $this->getMockForInterface(ConstraintInterface::class);
 
         return $constraint;
     }

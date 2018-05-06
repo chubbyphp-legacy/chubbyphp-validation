@@ -4,6 +4,7 @@ declare(strict_types=1);
 
 namespace Chubbyphp\Tests\Validation\Constraint;
 
+use Chubbyphp\Tests\Validation\MockForInterfaceTrait;
 use Chubbyphp\Validation\Constraint\CoordinateArrayConstraint;
 use Chubbyphp\Validation\Error\Error;
 use Chubbyphp\Validation\Validator\ValidatorContextInterface;
@@ -15,6 +16,8 @@ use PHPUnit\Framework\TestCase;
  */
 final class CoordinateArrayConstraintTest extends TestCase
 {
+    use MockForInterfaceTrait;
+
     public function testWithNullValue()
     {
         $constraint = new CoordinateArrayConstraint();
@@ -98,7 +101,7 @@ final class CoordinateArrayConstraintTest extends TestCase
     private function getContext(): ValidatorContextInterface
     {
         /** @var ValidatorContextInterface|MockObject $context */
-        $context = $this->getMockBuilder(ValidatorContextInterface::class)->getMockForAbstractClass();
+        $context = $this->getMockForInterface(ValidatorContextInterface::class);
 
         return $context;
     }

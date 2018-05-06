@@ -4,9 +4,11 @@ declare(strict_types=1);
 
 namespace Chubbyphp\Tests\Validator\Mapping;
 
+use Chubbyphp\Tests\Validation\MockForInterfaceTrait;
 use Chubbyphp\Validation\Accessor\AccessorInterface;
 use Chubbyphp\Validation\Constraint\ConstraintInterface;
 use Chubbyphp\Validation\Mapping\ValidationPropertyMappingBuilder;
+use PHPUnit\Framework\MockObject\MockObject;
 use PHPUnit\Framework\TestCase;
 
 /**
@@ -14,6 +16,8 @@ use PHPUnit\Framework\TestCase;
  */
 class ValidationPropertyMappingBuilderTest extends TestCase
 {
+    use MockForInterfaceTrait;
+
     public function testGetDefaultMapping()
     {
         $propertyMapping = ValidationPropertyMappingBuilder::create('name', [])->getMapping();
@@ -46,8 +50,8 @@ class ValidationPropertyMappingBuilderTest extends TestCase
      */
     private function getConstraint(): ConstraintInterface
     {
-        /** @var ConstraintInterface|\PHPUnit_Framework_MockObject_MockObject $constraint */
-        $constraint = $this->getMockBuilder(ConstraintInterface::class)->getMockForAbstractClass();
+        /** @var ConstraintInterface|MockObject $constraint */
+        $constraint = $this->getMockForInterface(ConstraintInterface::class);
 
         return $constraint;
     }
@@ -57,8 +61,8 @@ class ValidationPropertyMappingBuilderTest extends TestCase
      */
     private function getAccessor(): AccessorInterface
     {
-        /** @var AccessorInterface|\PHPUnit_Framework_MockObject_MockObject $accessor */
-        $accessor = $this->getMockBuilder(AccessorInterface::class)->getMockForAbstractClass();
+        /** @var AccessorInterface|MockObject $accessor */
+        $accessor = $this->getMockForInterface(AccessorInterface::class);
 
         return $accessor;
     }

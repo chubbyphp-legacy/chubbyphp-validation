@@ -199,9 +199,9 @@ final class ExecutionContextTest extends TestCase
         $context = new ExecutionContext('path[0].property', 'value', $this->getContext([
             'getGroups' => [
                 [
-                    'return' => []
-                ]
-            ]
+                    'return' => [],
+                ],
+            ],
         ]));
 
         self::assertSame('Default', $context->getGroup());
@@ -209,9 +209,9 @@ final class ExecutionContextTest extends TestCase
         $context = new ExecutionContext('path[0].property', 'value', $this->getContext([
             'getGroups' => [
                 [
-                    'return' => ['group1', 'group2']
-                ]
-            ]
+                    'return' => ['group1', 'group2'],
+                ],
+            ],
         ]));
 
         self::assertSame('group1', $context->getGroup());
@@ -267,6 +267,7 @@ final class ExecutionContextTest extends TestCase
 
     /**
      * @param array $methods
+     *
      * @return ValidatorContextInterface
      */
     private function getContext(array $methods = []): ValidatorContextInterface

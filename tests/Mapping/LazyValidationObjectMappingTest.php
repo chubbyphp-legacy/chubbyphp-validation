@@ -4,10 +4,12 @@ declare(strict_types=1);
 
 namespace Chubbyphp\Tests\Validation\Mapping;
 
+use Chubbyphp\Tests\Validation\MockForInterfaceTrait;
 use Chubbyphp\Validation\Mapping\ValidationClassMappingInterface;
 use Chubbyphp\Validation\Mapping\ValidationObjectMappingInterface;
 use Chubbyphp\Validation\Mapping\LazyValidationObjectMapping;
 use Chubbyphp\Validation\Mapping\ValidationPropertyMappingInterface;
+use PHPUnit\Framework\MockObject\MockObject;
 use PHPUnit\Framework\TestCase;
 use Psr\Container\ContainerInterface;
 
@@ -16,6 +18,8 @@ use Psr\Container\ContainerInterface;
  */
 class LazyValidationObjectMappingTest extends TestCase
 {
+    use MockForInterfaceTrait;
+
     public function testInvoke()
     {
         $denormalizationClassMapping = $this->getValidationClassMapping();
@@ -42,7 +46,7 @@ class LazyValidationObjectMappingTest extends TestCase
      */
     private function getContainer(array $services): ContainerInterface
     {
-        /** @var ContainerInterface|\PHPUnit_Framework_MockObject_MockObject $container */
+        /** @var ContainerInterface|MockObject $container */
         $container = $this->getMockBuilder(ContainerInterface::class)->setMethods(['get'])->getMockForAbstractClass();
 
         $container
@@ -66,39 +70,32 @@ class LazyValidationObjectMappingTest extends TestCase
         ValidationClassMappingInterface $denormalizationClassMapping = null,
         array $denormalizationPropertyMappings
     ): ValidationObjectMappingInterface {
-        /** @var ValidationObjectMappingInterface|\PHPUnit_Framework_MockObject_MockObject $mapping */
-        $mapping = $this
-            ->getMockBuilder(ValidationObjectMappingInterface::class)
-            ->setMethods(['getValidationClassMapping', 'getValidationPropertyMappings'])
-            ->getMockForAbstractClass()
-        ;
-
-        $mapping->expects(self::any())
-            ->method('getValidationClassMapping')
-            ->with(self::equalTo('path'))
-            ->willReturn($denormalizationClassMapping);
-
-        $mapping->expects(self::any())
-            ->method('getValidationPropertyMappings')
-            ->with(self::equalTo('path'))
-            ->willReturn($denormalizationPropertyMappings);
+        /** @var ValidationObjectMappingInterface|MockObject $mapping */
+        $mapping = $this->getMockForInterface(ValidationObjectMappingInterface::class, [
+            'getValidationClassMapping' => [
+                ['arguments' => ['path'], 'return' => $denormalizationClassMapping],
+            ],
+            'getValidationPropertyMappings' => [
+                ['arguments' => ['path'], 'return' => $denormalizationPropertyMappings],
+            ],
+        ]);
 
         return $mapping;
     }
 
     /**
-     * @return ValidationClassMappingInterface|\PHPUnit_Framework_MockObject_MockObject
+     * @return ValidationClassMappingInterface|MockObject
      */
     private function getValidationClassMapping(): ValidationClassMappingInterface
     {
-        return $this->getMockBuilder(ValidationClassMappingInterface::class)->getMockForAbstractClass();
+        return $this->getMockForInterface(ValidationClassMappingInterface::class);
     }
 
     /**
-     * @return ValidationPropertyMappingInterface|\PHPUnit_Framework_MockObject_MockObject
+     * @return ValidationPropertyMappingInterface|MockObject
      */
     private function getValidationPropertyMapping(): ValidationPropertyMappingInterface
     {
-        return $this->getMockBuilder(ValidationPropertyMappingInterface::class)->getMockForAbstractClass();
+        return $this->getMockForInterface(ValidationPropertyMappingInterface::class);
     }
 }

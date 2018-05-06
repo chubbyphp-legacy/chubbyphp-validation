@@ -4,6 +4,7 @@ declare(strict_types=1);
 
 namespace Chubbyphp\Tests\Validation\Constraint;
 
+use Chubbyphp\Tests\Validation\MockForInterfaceTrait;
 use Chubbyphp\Validation\Constraint\ConstraintInterface;
 use Chubbyphp\Validation\Constraint\AllConstraint;
 use Chubbyphp\Validation\Error\Error;
@@ -17,6 +18,8 @@ use PHPUnit\Framework\TestCase;
  */
 final class AllConstraintTest extends TestCase
 {
+    use MockForInterfaceTrait;
+
     public function testWithNullValue()
     {
         $constraint = new AllConstraint();
@@ -61,12 +64,8 @@ final class AllConstraintTest extends TestCase
      */
     private function getValidator(): ValidatorInterface
     {
-        /** @var ValidatorInterface|\PHPUnit_Framework_MockObject_MockObject $validator */
-        $validator = $this
-            ->getMockBuilder(ValidatorInterface::class)
-            ->setMethods([])
-            ->getMockForAbstractClass()
-        ;
+        /** @var ValidatorInterface|MockObject $validator */
+        $validator = $this->getMockForInterface(ValidatorInterface::class);
 
         return $validator;
     }
@@ -78,7 +77,7 @@ final class AllConstraintTest extends TestCase
      */
     private function getConstraint(bool $error = false): ConstraintInterface
     {
-        /** @var ConstraintInterface|\PHPUnit_Framework_MockObject_MockObject $constraint */
+        /** @var ConstraintInterface|MockObject $constraint */
         $constraint = $this
             ->getMockBuilder(ConstraintInterface::class)
             ->setMethods([])
@@ -109,7 +108,7 @@ final class AllConstraintTest extends TestCase
     private function getContext(): ValidatorContextInterface
     {
         /** @var ValidatorContextInterface|MockObject $context */
-        $context = $this->getMockBuilder(ValidatorContextInterface::class)->getMockForAbstractClass();
+        $context = $this->getMockForInterface(ValidatorContextInterface::class);
 
         return $context;
     }

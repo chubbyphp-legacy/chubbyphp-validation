@@ -4,8 +4,10 @@ declare(strict_types=1);
 
 namespace Chubbyphp\Tests\Validation\Error;
 
+use Chubbyphp\Tests\Validation\MockForInterfaceTrait;
 use Chubbyphp\Validation\Error\ErrorInterface;
 use Chubbyphp\Validation\Error\ErrorMessages;
+use PHPUnit\Framework\MockObject\MockObject;
 use PHPUnit\Framework\TestCase;
 
 /**
@@ -13,6 +15,8 @@ use PHPUnit\Framework\TestCase;
  */
 final class ErrorMessagesTest extends TestCase
 {
+    use MockForInterfaceTrait;
+
     public function testWithoutMessages()
     {
         $errorMessages = new ErrorMessages([], function (string $key, array $arguments) { return $key; });
@@ -59,12 +63,12 @@ final class ErrorMessagesTest extends TestCase
      */
     private function getError(string $path, string $key, array $arguments = []): ErrorInterface
     {
-        /** @var ErrorInterface|\PHPUnit_Framework_MockObject_MockObject $error */
-        $error = $this->getMockBuilder(ErrorInterface::class)->getMockForAbstractClass();
-
-        $error->expects(self::any())->method('getPath')->willReturn($path);
-        $error->expects(self::any())->method('getKey')->willReturn($key);
-        $error->expects(self::any())->method('getArguments')->willReturn($arguments);
+        /** @var ErrorInterface|MockObject $error */
+        $error = $this->getMockForInterface(ErrorInterface::class, [
+            'getPath' => [['return' => $path]],
+            'getKey' => [['return' => $key]],
+            'getArguments' => [['return' => $arguments]],
+        ]);
 
         return $error;
     }
