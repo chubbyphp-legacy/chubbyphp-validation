@@ -6,17 +6,17 @@ namespace Chubbyphp\Tests\Validation\Mapping;
 
 use Chubbyphp\Tests\Validation\MockForInterfaceTrait;
 use Chubbyphp\Validation\Mapping\ValidationClassMappingInterface;
-use Chubbyphp\Validation\Mapping\ValidationObjectMappingInterface;
-use Chubbyphp\Validation\Mapping\LazyValidationObjectMapping;
+use Chubbyphp\Validation\Mapping\ValidationMappingProviderInterface;
+use Chubbyphp\Validation\Mapping\LazyValidationMappingProvider;
 use Chubbyphp\Validation\Mapping\ValidationPropertyMappingInterface;
 use PHPUnit\Framework\MockObject\MockObject;
 use PHPUnit\Framework\TestCase;
 use Psr\Container\ContainerInterface;
 
 /**
- * @covers \Chubbyphp\Validation\Mapping\LazyValidationObjectMapping
+ * @covers \Chubbyphp\Validation\Mapping\LazyValidationMappingProvider
  */
-class LazyValidationObjectMappingTest extends TestCase
+class LazyValidationMappingProviderTest extends TestCase
 {
     use MockForInterfaceTrait;
 
@@ -32,7 +32,7 @@ class LazyValidationObjectMappingTest extends TestCase
             ),
         ]);
 
-        $objectMapping = new LazyValidationObjectMapping($container, 'service', \stdClass::class);
+        $objectMapping = new LazyValidationMappingProvider($container, 'service', \stdClass::class);
 
         self::assertEquals(\stdClass::class, $objectMapping->getClass());
         self::assertSame($denormalizationClassMapping, $objectMapping->getValidationClassMapping('path'));
@@ -64,14 +64,14 @@ class LazyValidationObjectMappingTest extends TestCase
      * @param ValidationClassMappingInterface|null $denormalizationClassMapping
      * @param ValidationPropertyMappingInterface[] $denormalizationPropertyMappings
      *
-     * @return ValidationObjectMappingInterface
+     * @return ValidationMappingProviderInterface
      */
     private function getValidationObjectMapping(
         ValidationClassMappingInterface $denormalizationClassMapping = null,
         array $denormalizationPropertyMappings
-    ): ValidationObjectMappingInterface {
-        /** @var ValidationObjectMappingInterface|MockObject $mapping */
-        $mapping = $this->getMockForInterface(ValidationObjectMappingInterface::class, [
+    ): ValidationMappingProviderInterface {
+        /** @var ValidationMappingProviderInterface|MockObject $mapping */
+        $mapping = $this->getMockForInterface(ValidationMappingProviderInterface::class, [
             'getValidationClassMapping' => [
                 ['arguments' => ['path'], 'return' => $denormalizationClassMapping],
             ],

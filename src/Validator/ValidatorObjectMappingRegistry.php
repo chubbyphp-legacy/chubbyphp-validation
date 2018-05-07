@@ -5,12 +5,12 @@ declare(strict_types=1);
 namespace Chubbyphp\Validation\Validator;
 
 use Chubbyphp\Validation\ValidatorLogicException;
-use Chubbyphp\Validation\Mapping\ValidationObjectMappingInterface;
+use Chubbyphp\Validation\Mapping\ValidationMappingProviderInterface;
 
 final class ValidatorObjectMappingRegistry implements ValidatorObjectMappingRegistryInterface
 {
     /**
-     * @var ValidationObjectMappingInterface[]
+     * @var ValidationMappingProviderInterface[]
      */
     private $objectMappings;
 
@@ -26,9 +26,9 @@ final class ValidatorObjectMappingRegistry implements ValidatorObjectMappingRegi
     }
 
     /**
-     * @param ValidationObjectMappingInterface $objectMapping
+     * @param ValidationMappingProviderInterface $objectMapping
      */
-    private function addObjectMapping(ValidationObjectMappingInterface $objectMapping)
+    private function addObjectMapping(ValidationMappingProviderInterface $objectMapping)
     {
         $this->objectMappings[$objectMapping->getClass()] = $objectMapping;
     }
@@ -36,11 +36,11 @@ final class ValidatorObjectMappingRegistry implements ValidatorObjectMappingRegi
     /**
      * @param string $class
      *
-     * @return ValidationObjectMappingInterface
+     * @return ValidationMappingProviderInterface
      *
      * @throws ValidatorLogicException
      */
-    public function getObjectMapping(string $class): ValidationObjectMappingInterface
+    public function getObjectMapping(string $class): ValidationMappingProviderInterface
     {
         $reflectionClass = new \ReflectionClass($class);
 

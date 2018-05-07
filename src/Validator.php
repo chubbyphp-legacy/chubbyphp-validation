@@ -9,7 +9,7 @@ use Chubbyphp\Validation\Error\ErrorInterface;
 use Chubbyphp\Validation\Mapping\ValidationClassMappingInterface;
 use Chubbyphp\Validation\Mapping\ValidationGroupsInterface;
 use Chubbyphp\Validation\Mapping\ValidationPropertyMappingInterface;
-use Chubbyphp\Validation\Mapping\ValidationObjectMappingInterface;
+use Chubbyphp\Validation\Mapping\ValidationMappingProviderInterface;
 use Chubbyphp\Validation\Validator\ValidatorContextBuilder;
 use Chubbyphp\Validation\Validator\ValidatorContextInterface;
 use Chubbyphp\Validation\Validator\ValidatorObjectMappingRegistryInterface;
@@ -93,11 +93,11 @@ final class Validator implements ValidatorInterface
     /**
      * @param string $class
      *
-     * @return ValidationObjectMappingInterface
+     * @return ValidationMappingProviderInterface
      *
      * @throws ValidatorLogicException
      */
-    private function getObjectMapping(string $class): ValidationObjectMappingInterface
+    private function getObjectMapping(string $class): ValidationMappingProviderInterface
     {
         try {
             return $this->validatorObjectMappingRegistry->getObjectMapping($class);

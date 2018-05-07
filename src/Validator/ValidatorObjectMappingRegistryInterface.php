@@ -4,7 +4,7 @@ declare(strict_types=1);
 
 namespace Chubbyphp\Validation\Validator;
 
-use Chubbyphp\Validation\Mapping\ValidationObjectMappingInterface;
+use Chubbyphp\Validation\Mapping\ValidationMappingProviderInterface;
 use Chubbyphp\Validation\ValidatorLogicException;
 
 interface ValidatorObjectMappingRegistryInterface
@@ -12,9 +12,9 @@ interface ValidatorObjectMappingRegistryInterface
     /**
      * @param string $class
      *
-     * @return ValidationObjectMappingInterface
+     * @return ValidationMappingProviderInterface
      *
      * @throws ValidatorLogicException
      */
-    public function getObjectMapping(string $class): ValidationObjectMappingInterface;
+    public function getObjectMapping(string $class): ValidationMappingProviderInterface;
 }

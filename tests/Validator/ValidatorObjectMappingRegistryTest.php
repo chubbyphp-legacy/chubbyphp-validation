@@ -6,8 +6,7 @@ namespace Chubbyphp\Tests\Validation\Validator;
 
 use Chubbyphp\Validation\Validator\ValidatorObjectMappingRegistry;
 use Chubbyphp\Validation\ValidatorLogicException;
-use Chubbyphp\Validation\Mapping\ValidationObjectMappingInterface;
-use Chubbyphp\Tests\Validation\Resources\Model\AbstractManyModel;
+use Chubbyphp\Validation\Mapping\ValidationMappingProviderInterface;
 use Doctrine\Common\Persistence\Proxy;
 use PHPUnit\Framework\MockObject\MockObject;
 use PHPUnit\Framework\TestCase;
@@ -27,7 +26,7 @@ class ValidatorObjectMappingRegistryTest extends TestCase
 
         $mapping = $registry->getObjectMapping(get_class($object));
 
-        self::assertInstanceOf(ValidationObjectMappingInterface::class, $mapping);
+        self::assertInstanceOf(ValidationMappingProviderInterface::class, $mapping);
     }
 
     public function testGetMissingObjectMapping()
@@ -50,16 +49,16 @@ class ValidatorObjectMappingRegistryTest extends TestCase
 
         $mapping = $registry->getObjectMapping(get_class($object));
 
-        self::assertInstanceOf(ValidationObjectMappingInterface::class, $mapping);
+        self::assertInstanceOf(ValidationMappingProviderInterface::class, $mapping);
     }
 
     /**
-     * @return ValidationObjectMappingInterface
+     * @return ValidationMappingProviderInterface
      */
-    private function getValidationObjectMapping(): ValidationObjectMappingInterface
+    private function getValidationObjectMapping(): ValidationMappingProviderInterface
     {
-        /** @var ValidationObjectMappingInterface|MockObject $objectMapping */
-        $objectMapping = $this->getMockBuilder(ValidationObjectMappingInterface::class)
+        /** @var ValidationMappingProviderInterface|MockObject $objectMapping */
+        $objectMapping = $this->getMockBuilder(ValidationMappingProviderInterface::class)
             ->setMethods([])
             ->getMockForAbstractClass();
 
@@ -75,12 +74,12 @@ class ValidatorObjectMappingRegistryTest extends TestCase
     }
 
     /**
-     * @return ValidationObjectMappingInterface
+     * @return ValidationMappingProviderInterface
      */
-    private function getValidationProxyObjectMapping(): ValidationObjectMappingInterface
+    private function getValidationProxyObjectMapping(): ValidationMappingProviderInterface
     {
-        /** @var ValidationObjectMappingInterface|MockObject $objectMapping */
-        $objectMapping = $this->getMockBuilder(ValidationObjectMappingInterface::class)
+        /** @var ValidationMappingProviderInterface|MockObject $objectMapping */
+        $objectMapping = $this->getMockBuilder(ValidationMappingProviderInterface::class)
             ->setMethods([])
             ->getMockForAbstractClass();
 
@@ -152,5 +151,33 @@ class ValidatorObjectMappingRegistryTest extends TestCase
             {
             }
         };
+    }
+}
+
+abstract class AbstractManyModel
+{
+    /**
+     * @var string
+     */
+    protected $name;
+
+    /**
+     * @return string
+     */
+    public function getName(): string
+    {
+        return $this->name;
+    }
+
+    /**
+     * @param string $name
+     *
+     * @return self
+     */
+    public function setName(string $name): self
+    {
+        $this->name = $name;
+
+        return $this;
     }
 }

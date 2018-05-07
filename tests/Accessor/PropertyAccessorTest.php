@@ -6,7 +6,6 @@ namespace Chubbyphp\Tests\Validation\Accessor;
 
 use Chubbyphp\Validation\Accessor\PropertyAccessor;
 use Chubbyphp\Validation\ValidatorLogicException;
-use Chubbyphp\Tests\Validation\Resources\Model\AbstractManyModel;
 use Doctrine\Common\Persistence\Proxy;
 use PHPUnit\Framework\TestCase;
 
@@ -54,11 +53,10 @@ class PropertyAccessorTest extends TestCase
             }
         };
 
-        $accessor = new PropertyAccessor('address');
+        $accessor = new PropertyAccessor('name');
+        $accessor->setValue($object, 'Name');
 
-        $accessor->setValue($object, 'Address');
-
-        self::assertSame('Address', $accessor->getValue($object));
+        self::assertSame('Name', $object->getName());
     }
 
     public function testMissingSet()
@@ -112,11 +110,10 @@ class PropertyAccessorTest extends TestCase
             }
         };
 
-        $object->setAddress('Address');
+        $accessor = new PropertyAccessor('name');
+        $accessor->setValue($object, 'Name');
 
-        $accessor = new PropertyAccessor('address');
-
-        self::assertSame('Address', $accessor->getValue($object));
+        self::assertSame('Name', $object->getName());
     }
 
     public function testMissingGet()
@@ -128,5 +125,33 @@ class PropertyAccessorTest extends TestCase
 
         $accessor = new PropertyAccessor('name');
         $accessor->getValue($object);
+    }
+}
+
+abstract class AbstractManyModel
+{
+    /**
+     * @var string
+     */
+    protected $name;
+
+    /**
+     * @return string
+     */
+    public function getName(): string
+    {
+        return $this->name;
+    }
+
+    /**
+     * @param string $name
+     *
+     * @return self
+     */
+    public function setName(string $name): self
+    {
+        $this->name = $name;
+
+        return $this;
     }
 }

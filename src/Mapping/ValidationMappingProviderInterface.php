@@ -4,7 +4,7 @@ declare(strict_types=1);
 
 namespace Chubbyphp\Validation\Mapping;
 
-interface ValidationObjectMappingInterface
+interface ValidationMappingProviderInterface
 {
     /**
      * @return string

@@ -6,7 +6,7 @@ namespace Chubbyphp\Validation\Mapping;
 
 use Psr\Container\ContainerInterface;
 
-final class LazyValidationObjectMapping implements ValidationObjectMappingInterface
+final class LazyValidationMappingProvider implements ValidationMappingProviderInterface
 {
     /**
      * @var ContainerInterface

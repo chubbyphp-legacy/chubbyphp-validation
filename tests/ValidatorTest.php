@@ -11,7 +11,7 @@ use Chubbyphp\Validation\Mapping\ValidationClassMappingBuilder;
 use Chubbyphp\Validation\Mapping\ValidationClassMappingInterface;
 use Chubbyphp\Validation\Mapping\ValidationPropertyMappingBuilder;
 use Chubbyphp\Validation\Mapping\ValidationPropertyMappingInterface;
-use Chubbyphp\Validation\Mapping\ValidationObjectMappingInterface;
+use Chubbyphp\Validation\Mapping\ValidationMappingProviderInterface;
 use Chubbyphp\Validation\Validator;
 use PHPUnit\Framework\TestCase;
 use Symfony\Component\Validator\Constraints\Bic;
@@ -136,7 +136,7 @@ class ValidatorTest extends TestCase
         $object->setAll(new \ArrayIterator(['31.01.2018', '29.02.2018']));
 
         $validatorObjectMappingRegistry = new Validator\ValidatorObjectMappingRegistry([
-            new class($object) implements ValidationObjectMappingInterface {
+            new class($object) implements ValidationMappingProviderInterface {
                 private $object;
 
                 /**
