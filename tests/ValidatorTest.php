@@ -7,6 +7,7 @@ namespace Chubbyphp\Tests\Validation;
 use Chubbyphp\Validation\Constraint\AllConstraint;
 use Chubbyphp\Validation\Constraint\DateConstraint;
 use Chubbyphp\Validation\Constraint\Symfony\ConstraintAdapter;
+use Chubbyphp\Validation\Error\Error;
 use Chubbyphp\Validation\Mapping\ValidationClassMappingBuilder;
 use Chubbyphp\Validation\Mapping\ValidationClassMappingInterface;
 use Chubbyphp\Validation\Mapping\ValidationPropertyMappingBuilder;
@@ -174,31 +175,39 @@ class ValidatorTest extends TestCase
                 public function getValidationPropertyMappings(string $path, string $type = null): array
                 {
                     return [
-                        ValidationPropertyMappingBuilder::create('name', [
-                            new ConstraintAdapter(new NotBlank(), new NotBlankValidator()),
-                        ])->getMapping(),
-                        ValidationPropertyMappingBuilder::create('bic', [
-                            new ConstraintAdapter(new Bic(), new BicValidator()),
-                        ])->getMapping(),
-                        ValidationPropertyMappingBuilder::create('callback', [
-                            new ConstraintAdapter(
-                                new Callback([
-                                    'payload' => ['key' => 'value'],
-                                    'callback' => function ($object, ExecutionContextInterface $context, $payload = []) {
-                                        if ('callback' === $object) {
-                                            $context->addViolation('callback', $payload);
-                                        }
-                                    },
+                        ValidationPropertyMappingBuilder::create('name',
+                            [
+                                new ConstraintAdapter(new NotBlank(), new NotBlankValidator()),
+                            ])->getMapping(),
+                        ValidationPropertyMappingBuilder::create('bic',
+                            [
+                                new ConstraintAdapter(new Bic(), new BicValidator()),
+                            ])->getMapping(),
+                        ValidationPropertyMappingBuilder::create('callback',
+                            [
+                                new ConstraintAdapter(
+                                    new Callback([
+                                        'payload' => ['key' => 'value'],
+                                        'callback' => function (
+                                            $object,
+                                            ExecutionContextInterface $context,
+                                            $payload = []
+                                        ) {
+                                            if ('callback' === $object) {
+                                                $context->addViolation('callback', $payload);
+                                            }
+                                        },
+                                    ]),
+                                    new CallbackValidator()
+                                ),
+                            ])->getMapping(),
+                        ValidationPropertyMappingBuilder::create('all',
+                            [
+                                new AllConstraint([
+                                    new ConstraintAdapter(new NotNull(), new NotNullValidator()),
+                                    new DateConstraint(),
                                 ]),
-                                new CallbackValidator()
-                            ),
-                        ])->getMapping(),
-                        ValidationPropertyMappingBuilder::create('all', [
-                            new AllConstraint([
-                                new ConstraintAdapter(new NotNull(), new NotNullValidator()),
-                                new DateConstraint(),
-                            ]),
-                        ])->getMapping(),
+                            ])->getMapping(),
                     ];
                 }
             },
@@ -208,6 +217,34 @@ class ValidatorTest extends TestCase
 
         $errors = $validator->validate($object);
 
-        var_dump($errors);
+        self::assertEquals([
+            new Error('name', 'This value should not be blank.', [
+                'parameters' => [
+                    '{{ value }}' => '""',
+                ],
+                'plural' => null,
+                'invalidValue' => null,
+                'code' => 'c1051bb4-d103-4f74-8988-acbcafc7fdc3',
+                'cause' => null,
+            ]),
+            new Error('bic', 'This is not a valid Business Identifier Code (BIC).', [
+                'parameters' => [
+                    '{{ value }}' => '"invalid-bic"',
+                ],
+                'plural' => null,
+                'invalidValue' => null,
+                'code' => 'f424c529-7add-4417-8f2d-4b656e4833e2',
+                'cause' => null,
+            ]),
+            new Error('callback', 'callback', [
+                'parameters' => [
+                    'key' => 'value',
+                ],
+                'plural' => null,
+                'invalidValue' => null,
+                'code' => null,
+                'cause' => null,
+            ]),
+        ], $errors);
     }
 }
