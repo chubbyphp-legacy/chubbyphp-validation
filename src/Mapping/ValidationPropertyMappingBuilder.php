@@ -16,9 +16,14 @@ final class ValidationPropertyMappingBuilder implements ValidationPropertyMappin
     private $name;
 
     /**
+     * @var string|null
+     */
+    private $forceType;
+
+    /**
      * @var ConstraintInterface[]
      */
-    private $constraints;
+    private $constraints = [];
 
     /**
      * @var array
@@ -36,24 +41,36 @@ final class ValidationPropertyMappingBuilder implements ValidationPropertyMappin
      *
      * @return ValidationPropertyMappingBuilderInterface
      */
-    public static function create(string $name, array $constraints): ValidationPropertyMappingBuilderInterface
+    public static function create(string $name): ValidationPropertyMappingBuilderInterface
     {
         $self = new self();
         $self->name = $name;
-        $self->constraints = [];
-        foreach ($constraints as $constraint) {
-            $self->addConstraint($constraint);
-        }
 
         return $self;
     }
 
     /**
-     * @param ConstraintInterface $constraint
+     * @param string|null $forceType
+     *
+     * @return ValidationPropertyMappingBuilderInterface
      */
-    private function addConstraint(ConstraintInterface $constraint)
+    public function setForceType(string $forceType = null): ValidationPropertyMappingBuilderInterface
+    {
+        $this->forceType = $forceType;
+
+        return $this;
+    }
+
+    /**
+     * @param ConstraintInterface $constraint
+     *
+     *                                       @return ValidationPropertyMappingBuilderInterface
+     */
+    public function addConstraint(ConstraintInterface $constraint): ValidationPropertyMappingBuilderInterface
     {
         $this->constraints[] = $constraint;
+
+        return $this;
     }
 
     /**
@@ -87,6 +104,7 @@ final class ValidationPropertyMappingBuilder implements ValidationPropertyMappin
     {
         return new ValidationPropertyMapping(
             $this->name,
+            $this->forceType,
             $this->constraints,
             $this->groups ?? [],
             $this->accessor ?? new PropertyAccessor($this->name)

@@ -20,10 +20,11 @@ class ValidationPropertyMappingBuilderTest extends TestCase
 
     public function testGetDefaultMapping()
     {
-        $propertyMapping = ValidationPropertyMappingBuilder::create('name', [])->getMapping();
+        $propertyMapping = ValidationPropertyMappingBuilder::create('name')->getMapping();
 
-        self::assertSame([], $propertyMapping->getConstraints());
         self::assertSame('name', $propertyMapping->getName());
+        self::assertNull($propertyMapping->getForceType());
+        self::assertSame([], $propertyMapping->getConstraints());
         self::assertSame([], $propertyMapping->getGroups());
         self::assertInstanceOf(AccessorInterface::class, $propertyMapping->getAccessor());
     }
@@ -34,12 +35,15 @@ class ValidationPropertyMappingBuilderTest extends TestCase
 
         $accessor = $this->getAccessor();
 
-        $propertyMapping = ValidationPropertyMappingBuilder::create('name', [$constraint])
+        $propertyMapping = ValidationPropertyMappingBuilder::create('name')
+            ->setForceType('integer')
+            ->addConstraint($constraint)
             ->setGroups(['group1'])
             ->setAccessor($accessor)
             ->getMapping();
 
         self::assertSame('name', $propertyMapping->getName());
+        self::assertSame('integer', $propertyMapping->getForceType());
         self::assertSame([$constraint], $propertyMapping->getConstraints());
         self::assertSame(['group1'], $propertyMapping->getGroups());
         self::assertSame($accessor, $propertyMapping->getAccessor());

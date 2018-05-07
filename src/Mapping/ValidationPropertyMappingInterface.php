@@ -20,6 +20,11 @@ interface ValidationPropertyMappingInterface extends ValidationGroupsInterface
     public function getConstraints(): array;
 
     /**
+     * @return string|null
+     */
+    public function getForceType();
+
+    /**
      * @return AccessorInterface
      */
     public function getAccessor(): AccessorInterface;

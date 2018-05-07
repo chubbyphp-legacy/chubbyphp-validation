@@ -11,11 +11,24 @@ interface ValidationPropertyMappingBuilderInterface
 {
     /**
      * @param string $name
-     * @param ConstraintInterface[]
      *
      * @return self
      */
-    public static function create(string $name, array $constraints): self;
+    public static function create(string $name): self;
+
+    /**
+     * @param string $forceType
+     *
+     * @return self
+     */
+    public function setForceType(string $forceType = null): self;
+
+    /**
+     * @param ConstraintInterface $constraint
+     *
+     * @return ValidationPropertyMappingBuilderInterface
+     */
+    public function addConstraint(ConstraintInterface $constraint): self;
 
     /**
      * @param array $groups

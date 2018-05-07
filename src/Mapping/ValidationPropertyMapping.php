@@ -15,6 +15,11 @@ final class ValidationPropertyMapping implements ValidationPropertyMappingInterf
     private $name;
 
     /**
+     * @var string|null
+     */
+    private $forceType;
+
+    /**
      * @var ConstraintInterface[]
      */
     private $constraints;
@@ -31,13 +36,20 @@ final class ValidationPropertyMapping implements ValidationPropertyMappingInterf
 
     /**
      * @param string                $name
+     * @param string|null           $forceType
      * @param ConstraintInterface[] $constraints
      * @param array                 $groups
      * @param AccessorInterface     $accessor
      */
-    public function __construct(string $name, array $constraints, array $groups, AccessorInterface $accessor)
+    public function __construct(
+        string $name,
+        string $forceType = null,
+        array $constraints,
+        array $groups,
+        AccessorInterface $accessor)
     {
         $this->name = $name;
+        $this->forceType = $forceType;
         $this->constraints = $constraints;
         $this->groups = $groups;
         $this->accessor = $accessor;
@@ -49,6 +61,14 @@ final class ValidationPropertyMapping implements ValidationPropertyMappingInterf
     public function getName(): string
     {
         return $this->name;
+    }
+
+    /**
+     * @return null|string
+     */
+    public function getForceType()
+    {
+        return $this->forceType;
     }
 
     /**
