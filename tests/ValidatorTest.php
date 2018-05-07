@@ -106,7 +106,7 @@ class ValidatorTest extends TestCase
 
         $object->setName('');
         $object->setCallback('callback');
-        $object->setAll(new \ArrayIterator(['31.01.2018', '29.02.2018']));
+        $object->setAll(new \ArrayIterator(['31.01.2018', '01.13.2018']));
 
         $validatorObjectMappingRegistry = new Validator\ValidatorObjectMappingRegistry([
             new class($object) implements ValidationMappingProviderInterface {
@@ -193,6 +193,11 @@ class ValidatorTest extends TestCase
                 'invalidValue' => null,
                 'code' => null,
                 'cause' => null,
+            ]),
+            new Error('all[1]', 'constraint.date.error', [
+                'message' => 'Unexpected character',
+                'positions' => [8, 9],
+                'value' => '01.13.2018'
             ]),
         ], $errors);
     }
