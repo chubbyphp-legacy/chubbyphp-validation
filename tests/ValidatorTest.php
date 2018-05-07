@@ -31,7 +31,7 @@ class ValidatorTest extends TestCase
             /**
              * @var string
              */
-            private $name;
+            private $notBlank;
 
             /**
              * @var string
@@ -46,19 +46,19 @@ class ValidatorTest extends TestCase
             /**
              * @return string
              */
-            public function getName(): string
+            public function getNotBlank(): string
             {
-                return $this->name;
+                return $this->notBlank;
             }
 
             /**
-             * @param string $name
+             * @param string $notBlank
              *
              * @return self
              */
-            public function setName(string $name): self
+            public function setNotBlank(string $notBlank): self
             {
-                $this->name = $name;
+                $this->notBlank = $notBlank;
 
                 return $this;
             }
@@ -104,7 +104,7 @@ class ValidatorTest extends TestCase
             }
         };
 
-        $object->setName('');
+        $object->setNotBlank('');
         $object->setCallback('callback');
         $object->setAll(new \ArrayIterator(['31.01.2018', '01.13.2018']));
 
@@ -147,27 +147,30 @@ class ValidatorTest extends TestCase
                 public function getValidationPropertyMappings(string $path, string $type = null): array
                 {
                     return [
-                        ValidationPropertyMappingBuilder::create('name', [
-                            new ConstraintAdapter(new NotBlank(), new NotBlankValidator()),
-                        ])->getMapping(),
-                        ValidationPropertyMappingBuilder::create('callback', [
-                            new ConstraintAdapter(
-                                new Callback([
-                                    'callback' => function ($object, ExecutionContextInterface $context) {
-                                        if ('callback' === $object) {
-                                            $context->addViolation('callback');
-                                        }
-                                    },
-                                ]),
-                                new CallbackValidator()
-                            ),
-                        ])->getMapping(),
-                        ValidationPropertyMappingBuilder::create('all', [
-                            new AllConstraint([
-                                new ConstraintAdapter(new NotNull(), new NotNullValidator()),
-                                new DateConstraint(),
-                            ]),
-                        ])->getMapping(),
+                        ValidationPropertyMappingBuilder::create('notBlank')
+                            ->addConstraint(new ConstraintAdapter(new NotBlank(), new NotBlankValidator()))
+                            ->getMapping(),
+                        ValidationPropertyMappingBuilder::create('callback')
+                            ->addConstraint(
+                                new ConstraintAdapter(
+                                    new Callback([
+                                        'callback' => function ($object, ExecutionContextInterface $context) {
+                                            if ('callback' === $object) {
+                                                $context->addViolation('callback');
+                                            }
+                                        },
+                                    ]),
+                                    new CallbackValidator()
+                                )
+                            )->getMapping(),
+                        ValidationPropertyMappingBuilder::create('all')
+                            ->addConstraint(
+                                new AllConstraint([
+                                    new ConstraintAdapter(new NotNull(), new NotNullValidator()),
+                                    new DateConstraint(),
+                                ])
+                            )
+                            ->getMapping(),
                     ];
                 }
             },
@@ -178,7 +181,7 @@ class ValidatorTest extends TestCase
         $errors = $validator->validate($object);
 
         self::assertEquals([
-            new Error('name', 'This value should not be blank.', [
+            new Error('notBlank', 'This value should not be blank.', [
                 'parameters' => [
                     '{{ value }}' => '""',
                 ],
@@ -197,7 +200,7 @@ class ValidatorTest extends TestCase
             new Error('all[1]', 'constraint.date.error', [
                 'message' => 'Unexpected character',
                 'positions' => [8, 9],
-                'value' => '01.13.2018'
+                'value' => '01.13.2018',
             ]),
         ], $errors);
     }

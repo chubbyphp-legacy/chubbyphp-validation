@@ -168,6 +168,14 @@ final class Validator implements ValidatorInterface
 
         $value = $fieldMapping->getAccessor()->getValue($object);
 
+        if (null !== $forceType = $fieldMapping->getForceType()) {
+            if ($forceType !== gettype($value)) {
+                if (!settype($value, $forceType)) {
+                    // todo:
+                }
+            }
+        }
+
         $errors = [];
         foreach ($fieldMapping->getConstraints() as $constraint) {
             foreach ($constraint->validate($subPath, $value, $context, $this) as $error) {
