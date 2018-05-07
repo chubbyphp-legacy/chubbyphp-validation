@@ -29,6 +29,13 @@ interface ValidationPropertyMappingInterface extends ValidationGroupsInterface
     const FORCETYPE_FLOAT = 'float';
     const FORCETYPE_STRING = 'string';
 
+    const FORCETYPES = [
+        self::FORCETYPE_BOOL,
+        self::FORCETYPE_INT,
+        self::FORCETYPE_FLOAT,
+        self::FORCETYPE_STRING,
+    ];
+
     /**
      * @return AccessorInterface
      */

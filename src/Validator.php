@@ -174,15 +174,20 @@ final class Validator implements ValidatorInterface
         if (null !== $forceType = $fieldMapping->getForceType()) {
             $type = gettype($value);
 
-            if (null !== $value && $forceType !== $type) {
-                if (settype($value, $forceType)) {
-                    $fieldMapping->getAccessor()->setValue($object, $value);
-                } else {
-                    $errors[] = new Error($subPath, 'forceType', [
-                        'value' => $value,
-                        'type' => $type,
-                        'forceType' => $forceType,
-                    ]);
+            if (is_scalar($value) && $forceType !== $type) {
+                if (in_array($forceType, ValidationPropertyMappingInterface::FORCETYPES, true)) {
+                    $forcedValue = $value;
+                    settype($forcedValue, $forceType);
+                    if ((string) $value === (string) $forcedValue) {
+                        $fieldMapping->getAccessor()->setValue($object, $forcedValue);
+                    } else {
+                        $errors[] = new Error($subPath, 'forceType', [
+                            'value' => $value,
+                            'forceValue' => $forcedValue,
+                            'type' => $type,
+                            'forceType' => $forceType,
+                        ]);
+                    }
                 }
             }
         }
