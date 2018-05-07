@@ -169,9 +169,11 @@ final class Validator implements ValidatorInterface
         $value = $fieldMapping->getAccessor()->getValue($object);
 
         if (null !== $forceType = $fieldMapping->getForceType()) {
-            if ($forceType !== gettype($value)) {
-                if (!settype($value, $forceType)) {
-                    // todo:
+            if (null !== $value && $forceType !== gettype($value)) {
+                if (settype($value, $forceType)) {
+                    $fieldMapping->getAccessor()->setValue($object, $value);
+                } else {
+                    // todo
                 }
             }
         }

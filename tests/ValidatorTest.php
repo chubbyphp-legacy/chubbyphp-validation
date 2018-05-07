@@ -6,6 +6,8 @@ namespace Chubbyphp\Tests\Validation;
 
 use Chubbyphp\Validation\Constraint\AllConstraint;
 use Chubbyphp\Validation\Constraint\DateConstraint;
+use Chubbyphp\Validation\Constraint\NumericConstraint;
+use Chubbyphp\Validation\Constraint\NumericRangeConstraint;
 use Chubbyphp\Validation\Constraint\Symfony\ConstraintAdapter;
 use Chubbyphp\Validation\Error\Error;
 use Chubbyphp\Validation\Mapping\ValidationClassMappingBuilder;
@@ -34,6 +36,11 @@ class ValidatorTest extends TestCase
             private $notBlank;
 
             /**
+             * @var integer
+             */
+            private $numeric;
+
+            /**
              * @var string
              */
             private $callback;
@@ -59,6 +66,25 @@ class ValidatorTest extends TestCase
             public function setNotBlank(string $notBlank): self
             {
                 $this->notBlank = $notBlank;
+
+                return $this;
+            }
+
+            /**
+             * @return int
+             */
+            public function getNumeric(): int
+            {
+                return $this->numeric;
+            }
+
+            /**
+             * @param int|string $numeric
+             * @return self
+             */
+            public function setNumeric($numeric): self
+            {
+                $this->numeric = $numeric;
 
                 return $this;
             }
@@ -105,6 +131,7 @@ class ValidatorTest extends TestCase
         };
 
         $object->setNotBlank('');
+        $object->setNumeric('5');
         $object->setCallback('callback');
         $object->setAll(new \ArrayIterator(['31.01.2018', '01.13.2018']));
 
@@ -150,6 +177,10 @@ class ValidatorTest extends TestCase
                         ValidationPropertyMappingBuilder::create('notBlank')
                             ->addConstraint(new ConstraintAdapter(new NotBlank(), new NotBlankValidator()))
                             ->getMapping(),
+                        ValidationPropertyMappingBuilder::create('numeric')
+                            ->setForceType('integer')
+                            ->addConstraint(new NumericRangeConstraint(6))
+                            ->getMapping(),
                         ValidationPropertyMappingBuilder::create('callback')
                             ->addConstraint(
                                 new ConstraintAdapter(
@@ -180,6 +211,8 @@ class ValidatorTest extends TestCase
 
         $errors = $validator->validate($object);
 
+        $object->getNumeric();
+
         self::assertEquals([
             new Error('notBlank', 'This value should not be blank.', [
                 'parameters' => [
@@ -189,6 +222,11 @@ class ValidatorTest extends TestCase
                 'invalidValue' => null,
                 'code' => 'c1051bb4-d103-4f74-8988-acbcafc7fdc3',
                 'cause' => null,
+            ]),
+            new Error('numeric', 'constraint.numericrange.outofrange', [
+                'value' => 5,
+                'min' => 6,
+                'max' => null
             ]),
             new Error('callback', 'callback', [
                 'parameters' => [],
