@@ -6,7 +6,6 @@ namespace Chubbyphp\Tests\Validation;
 
 use Chubbyphp\Validation\Constraint\AllConstraint;
 use Chubbyphp\Validation\Constraint\DateConstraint;
-use Chubbyphp\Validation\Constraint\NumericConstraint;
 use Chubbyphp\Validation\Constraint\NumericRangeConstraint;
 use Chubbyphp\Validation\Constraint\Symfony\ConstraintAdapter;
 use Chubbyphp\Validation\Error\Error;
@@ -36,7 +35,7 @@ class ValidatorTest extends TestCase
             private $notBlank;
 
             /**
-             * @var integer
+             * @var int
              */
             private $numeric;
 
@@ -80,6 +79,7 @@ class ValidatorTest extends TestCase
 
             /**
              * @param int|string $numeric
+             *
              * @return self
              */
             public function setNumeric($numeric): self
@@ -178,7 +178,7 @@ class ValidatorTest extends TestCase
                             ->addConstraint(new ConstraintAdapter(new NotBlank(), new NotBlankValidator()))
                             ->getMapping(),
                         ValidationPropertyMappingBuilder::create('numeric')
-                            ->setForceType('integer')
+                            ->setForceType(ValidationPropertyMappingInterface::FORCETYPE_INT)
                             ->addConstraint(new NumericRangeConstraint(6))
                             ->getMapping(),
                         ValidationPropertyMappingBuilder::create('callback')
@@ -226,7 +226,7 @@ class ValidatorTest extends TestCase
             new Error('numeric', 'constraint.numericrange.outofrange', [
                 'value' => 5,
                 'min' => 6,
-                'max' => null
+                'max' => null,
             ]),
             new Error('callback', 'callback', [
                 'parameters' => [],

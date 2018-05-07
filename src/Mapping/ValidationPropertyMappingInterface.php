@@ -24,6 +24,11 @@ interface ValidationPropertyMappingInterface extends ValidationGroupsInterface
      */
     public function getForceType();
 
+    const FORCETYPE_BOOL = 'boolean';
+    const FORCETYPE_INT = 'integer';
+    const FORCETYPE_FLOAT = 'float';
+    const FORCETYPE_STRING = 'string';
+
     /**
      * @return AccessorInterface
      */
