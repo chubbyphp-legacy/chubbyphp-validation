@@ -20,8 +20,8 @@ interface ValidatorInterface
     public function validate($object, ValidatorContextInterface $context = null, string $path = '');
 
     /**
-     * @param mixed                 $value
-     * @param ConstraintInterface[] $constraints
+     * @param mixed                     $value
+     * @param ConstraintInterface[]     $constraints
      * @param ValidatorContextInterface $context
      *
      * @return @return ErrorInterface[]

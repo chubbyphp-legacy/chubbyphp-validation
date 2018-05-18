@@ -10,25 +10,12 @@ use Chubbyphp\Validation\Constraint\ConstraintInterface;
 interface ValidationPropertyMappingBuilderInterface
 {
     /**
-     * @param string $name
+     * @param string                $name
+     * @param ConstraintInterface[] $constraints)
      *
      * @return self
      */
-    public static function create(string $name): self;
-
-    /**
-     * @param string $forceType
-     *
-     * @return self
-     */
-    public function setForceType(string $forceType = null): self;
-
-    /**
-     * @param ConstraintInterface $constraint
-     *
-     * @return ValidationPropertyMappingBuilderInterface
-     */
-    public function addConstraint(ConstraintInterface $constraint): self;
+    public static function create(string $name, array $constraints): self;
 
     /**
      * @param array $groups

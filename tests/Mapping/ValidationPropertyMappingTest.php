@@ -23,19 +23,9 @@ class ValidationPropertyMappingTest extends TestCase
         $constraint = $this->getConstraint();
         $accessor = $this->getAccessor();
 
-        $propertyMapping = new ValidationPropertyMapping('name', 'integer', [$constraint], ['group1'], $accessor);
+        $propertyMapping = new ValidationPropertyMapping('name', [$constraint], ['group1'], $accessor);
 
         self::assertSame('name', $propertyMapping->getName());
-    }
-
-    public function testGetForceType()
-    {
-        $constraint = $this->getConstraint();
-        $accessor = $this->getAccessor();
-
-        $propertyMapping = new ValidationPropertyMapping('name', 'integer', [$constraint], ['group1'], $accessor);
-
-        self::assertSame('integer', $propertyMapping->getForceType());
     }
 
     public function testGetConstraints()
@@ -43,7 +33,7 @@ class ValidationPropertyMappingTest extends TestCase
         $constraint = $this->getConstraint();
         $accessor = $this->getAccessor();
 
-        $propertyMapping = new ValidationPropertyMapping('name', 'integer', [$constraint], ['group1'], $accessor);
+        $propertyMapping = new ValidationPropertyMapping('name', [$constraint], ['group1'], $accessor);
 
         self::assertSame([$constraint], $propertyMapping->getConstraints());
     }
@@ -53,7 +43,7 @@ class ValidationPropertyMappingTest extends TestCase
         $constraint = $this->getConstraint();
         $accessor = $this->getAccessor();
 
-        $propertyMapping = new ValidationPropertyMapping('name', 'integer', [$constraint], ['group1'], $accessor);
+        $propertyMapping = new ValidationPropertyMapping('name', [$constraint], ['group1'], $accessor);
 
         self::assertSame(['group1'], $propertyMapping->getGroups());
     }
@@ -63,7 +53,7 @@ class ValidationPropertyMappingTest extends TestCase
         $constraint = $this->getConstraint();
         $accessor = $this->getAccessor();
 
-        $propertyMapping = new ValidationPropertyMapping('name', 'integer', [$constraint], ['group1'], $accessor);
+        $propertyMapping = new ValidationPropertyMapping('name', [$constraint], ['group1'], $accessor);
 
         self::assertSame($accessor, $propertyMapping->getAccessor());
     }

@@ -131,7 +131,7 @@ class ValidatorTest extends TestCase
         };
 
         $object->setNotBlank('');
-        $object->setNumeric('5');
+        $object->setNumeric(5);
         $object->setCallback('callback');
         $object->setAll(new \ArrayIterator(['31.01.2018', '01.13.2018']));
 
@@ -174,34 +174,29 @@ class ValidatorTest extends TestCase
                 public function getValidationPropertyMappings(string $path, string $type = null): array
                 {
                     return [
-                        ValidationPropertyMappingBuilder::create('notBlank')
-                            ->addConstraint(new ConstraintAdapter(new NotBlank(), new NotBlankValidator()))
+                        ValidationPropertyMappingBuilder::create('notBlank', [
+                            new ConstraintAdapter(new NotBlank(), new NotBlankValidator()),
+                        ])->getMapping(),
+                        ValidationPropertyMappingBuilder::create('numeric', [new NumericRangeConstraint(6)])
                             ->getMapping(),
-                        ValidationPropertyMappingBuilder::create('numeric')
-                            ->setForceType(ValidationPropertyMappingInterface::FORCETYPE_INT)
-                            ->addConstraint(new NumericRangeConstraint(6))
-                            ->getMapping(),
-                        ValidationPropertyMappingBuilder::create('callback')
-                            ->addConstraint(
-                                new ConstraintAdapter(
-                                    new Callback([
-                                        'callback' => function ($object, ExecutionContextInterface $context) {
-                                            if ('callback' === $object) {
-                                                $context->addViolation('callback');
-                                            }
-                                        },
-                                    ]),
-                                    new CallbackValidator()
-                                )
-                            )->getMapping(),
-                        ValidationPropertyMappingBuilder::create('all')
-                            ->addConstraint(
-                                new AllConstraint([
-                                    new ConstraintAdapter(new NotNull(), new NotNullValidator()),
-                                    new DateConstraint(),
-                                ])
-                            )
-                            ->getMapping(),
+                        ValidationPropertyMappingBuilder::create('callback', [
+                            new ConstraintAdapter(
+                                new Callback([
+                                    'callback' => function ($object, ExecutionContextInterface $context) {
+                                        if ('callback' === $object) {
+                                            $context->addViolation('callback');
+                                        }
+                                    },
+                                ]),
+                                new CallbackValidator()
+                            ),
+                        ])->getMapping(),
+                        ValidationPropertyMappingBuilder::create('all', [
+                            new AllConstraint([
+                                new ConstraintAdapter(new NotNull(), new NotNullValidator()),
+                                new DateConstraint(),
+                            ]),
+                        ])->getMapping(),
                     ];
                 }
             },

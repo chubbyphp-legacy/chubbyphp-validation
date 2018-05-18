@@ -5,7 +5,6 @@ declare(strict_types=1);
 namespace Chubbyphp\Validation;
 
 use Chubbyphp\Validation\Constraint\ConstraintInterface;
-use Chubbyphp\Validation\Error\Error;
 use Chubbyphp\Validation\Error\ErrorInterface;
 use Chubbyphp\Validation\Mapping\ValidationClassMappingInterface;
 use Chubbyphp\Validation\Mapping\ValidationGroupsInterface;
@@ -170,28 +169,6 @@ final class Validator implements ValidatorInterface
         $value = $fieldMapping->getAccessor()->getValue($object);
 
         $errors = [];
-
-        if (null !== $forceType = $fieldMapping->getForceType()) {
-            $type = gettype($value);
-
-            if (is_scalar($value) && $forceType !== $type) {
-                if (in_array($forceType, ValidationPropertyMappingInterface::FORCETYPES, true)) {
-                    $forcedValue = $value;
-                    settype($forcedValue, $forceType);
-                    if ((string) $value === (string) $forcedValue) {
-                        $fieldMapping->getAccessor()->setValue($object, $forcedValue);
-                    } else {
-                        $errors[] = new Error($subPath, 'forceType', [
-                            'value' => $value,
-                            'forceValue' => $forcedValue,
-                            'type' => $type,
-                            'forceType' => $forceType,
-                        ]);
-                    }
-                }
-            }
-        }
-
         foreach ($fieldMapping->getConstraints() as $constraint) {
             foreach ($constraint->validate($subPath, $value, $context, $this) as $error) {
                 $errors[] = $error;
