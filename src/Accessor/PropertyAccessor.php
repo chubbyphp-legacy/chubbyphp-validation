@@ -24,17 +24,6 @@ final class PropertyAccessor implements AccessorInterface
 
     /**
      * @param object $object
-     * @param mixed  $value
-     */
-    public function setValue($object, $value)
-    {
-        $reflectionProperty = $this->getReflectionProperty($this->getClass($object));
-        $reflectionProperty->setAccessible(true);
-        $reflectionProperty->setValue($object, $value);
-    }
-
-    /**
-     * @param object $object
      *
      * @return mixed
      */

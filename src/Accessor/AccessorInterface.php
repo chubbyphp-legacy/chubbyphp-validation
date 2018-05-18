@@ -10,14 +10,6 @@ interface AccessorInterface
 {
     /**
      * @param object $object
-     * @param mixed  $value
-     *
-     * @throws ValidatorLogicException
-     */
-    public function setValue($object, $value);
-
-    /**
-     * @param object $object
      *
      * @return mixed
      *

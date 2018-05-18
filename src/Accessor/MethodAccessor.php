@@ -23,22 +23,6 @@ final class MethodAccessor implements AccessorInterface
 
     /**
      * @param object $object
-     * @param mixed  $value
-     *
-     * @throws ValidatorLogicException
-     */
-    public function setValue($object, $value)
-    {
-        $set = 'set'.ucfirst($this->property);
-        if (!method_exists($object, $set)) {
-            throw ValidatorLogicException::createMissingMethod(get_class($object), [$set]);
-        }
-
-        return $object->$set($value);
-    }
-
-    /**
-     * @param object $object
      *
      * @return mixed
      *

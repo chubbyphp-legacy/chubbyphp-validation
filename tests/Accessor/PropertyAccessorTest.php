@@ -14,78 +14,9 @@ use PHPUnit\Framework\TestCase;
  */
 class PropertyAccessorTest extends TestCase
 {
-    public function testSetValue()
-    {
-        $object = new class() {
-            /**
-             * @var string
-             */
-            private $name;
-
-            /**
-             * @return string
-             */
-            public function getName(): string
-            {
-                return $this->name;
-            }
-        };
-
-        $accessor = new PropertyAccessor('name');
-        $accessor->setValue($object, 'Name');
-
-        self::assertSame('Name', $object->getName());
-    }
-
-    public function testSetValueCanAccessPrivatePropertyThroughDoctrineProxyClass()
-    {
-        $object = new class() extends AbstractManyModel implements Proxy {
-            public function __load()
-            {
-            }
-
-            /**
-             * @return bool
-             */
-            public function __isInitialized()
-            {
-                return false;
-            }
-        };
-
-        $accessor = new PropertyAccessor('name');
-        $accessor->setValue($object, 'Name');
-
-        self::assertSame('Name', $object->getName());
-    }
-
-    public function testMissingSet()
-    {
-        self::expectException(ValidatorLogicException::class);
-
-        $object = new class() {
-        };
-
-        $accessor = new PropertyAccessor('name');
-        $accessor->setValue($object, 'Name');
-    }
-
     public function testGetValue()
     {
-        $object = new class() {
-            /**
-             * @var string
-             */
-            private $name;
-
-            /**
-             * @param string $name
-             */
-            public function setName(string $name)
-            {
-                $this->name = $name;
-            }
-        };
+        $object = new Model();
 
         $object->setName('Name');
 
@@ -96,7 +27,7 @@ class PropertyAccessorTest extends TestCase
 
     public function testGetValueCanAccessPrivatePropertyThroughDoctrineProxyClass()
     {
-        $object = new class() extends AbstractManyModel implements Proxy {
+        $object = new class() extends Model implements Proxy {
             public function __load()
             {
             }
@@ -110,10 +41,11 @@ class PropertyAccessorTest extends TestCase
             }
         };
 
-        $accessor = new PropertyAccessor('name');
-        $accessor->setValue($object, 'Name');
+        $object->setName('Name');
 
-        self::assertSame('Name', $object->getName());
+        $accessor = new PropertyAccessor('name');
+
+        self::assertSame('Name', $accessor->getValue($object));
     }
 
     public function testMissingGet()
@@ -128,30 +60,15 @@ class PropertyAccessorTest extends TestCase
     }
 }
 
-abstract class AbstractManyModel
+class Model
 {
     /**
      * @var string
      */
     protected $name;
 
-    /**
-     * @return string
-     */
-    public function getName(): string
-    {
-        return $this->name;
-    }
-
-    /**
-     * @param string $name
-     *
-     * @return self
-     */
-    public function setName(string $name): self
+    public function setName(string $name)
     {
         $this->name = $name;
-
-        return $this;
     }
 }
