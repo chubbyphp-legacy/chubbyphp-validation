@@ -27,17 +27,19 @@ final class CoordinateConstraint implements ConstraintInterface
         ValidatorContextInterface $context,
         ValidatorInterface $validator = null
     ) {
-        if (null === $value) {
+        if (null === $value || '' === $value) {
             return [];
         }
 
-        if (!is_string($value)) {
+        if (!is_scalar($value) && !(is_object($value) && method_exists($value, '__toString'))) {
             return [new Error(
                 $path,
                 'constraint.coordinate.invalidtype',
                 ['type' => is_object($value) ? get_class($value) : gettype($value)]
             )];
         }
+
+        $value = (string) $value;
 
         $matches = [];
 

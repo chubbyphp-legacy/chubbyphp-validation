@@ -27,17 +27,19 @@ final class EmailConstraint implements ConstraintInterface
         ValidatorContextInterface $context,
         ValidatorInterface $validator = null
     ) {
-        if (null === $value) {
+        if (null === $value || '' === $value) {
             return [];
         }
 
-        if (!is_string($value)) {
+        if (!is_scalar($value) && !(is_object($value) && method_exists($value, '__toString'))) {
             return [new Error(
                 $path,
                 'constraint.email.invalidtype',
                 ['type' => is_object($value) ? get_class($value) : gettype($value)]
             )];
         }
+
+        $value = (string) $value;
 
         if (!preg_match(self::PATTERN, $value)) {
             return [new Error($path, 'constraint.email.invalidformat', ['value' => $value])];

@@ -25,17 +25,19 @@ final class NumericConstraint implements ConstraintInterface
         ValidatorContextInterface $context,
         ValidatorInterface $validator = null
     ) {
-        if (null === $value) {
+        if (null === $value || '' === $value) {
             return [];
         }
 
-        if (!is_scalar($value)) {
+        if (!is_scalar($value) && !(is_object($value) && method_exists($value, '__toString'))) {
             return [new Error(
                 $path,
                 'constraint.numeric.invalidtype',
                 ['type' => is_object($value) ? get_class($value) : gettype($value)]
             )];
         }
+
+        $value = (string) $value;
 
         if (!is_numeric($value)) {
             return [new Error($path, 'constraint.numeric.notnumeric', ['value' => $value])];
