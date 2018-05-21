@@ -87,7 +87,7 @@ final class DateTimeConstraint implements ConstraintInterface
     private function validateDateTime(string $path, \DateTimeInterface $value): array
     {
         $expectedValue = \DateTime::createFromFormat($this->format, $value->format($this->format), $value->getTimezone());
-        if ($expectedValue != $value) {
+        if ($expectedValue->format('c') !== $value->format('c')) {
             return [
                 new Error(
                     $path,

@@ -43,14 +43,14 @@ final class DateTimeConstraintTest extends TestCase
 
     public function testWithDateString()
     {
-        $constraint = new DateTimeConstraint();
+        $constraint = new DateTimeConstraint('Y-m-d');
 
         self::assertEquals([], $constraint->validate('date', '2017-01-01', $this->getContext()));
     }
 
     public function testWithInvalidDateString()
     {
-        $constraint = new DateTimeConstraint();
+        $constraint = new DateTimeConstraint('Y-m-d');
 
         $error = new Error(
             'date',
@@ -89,8 +89,6 @@ final class DateTimeConstraintTest extends TestCase
         );
 
         self::assertEquals([$error], $constraint->validate('date', '2017-13-01 07:00:00', $this->getContext()));
-
-        self::assertNull(error_get_last());
     }
 
     public function testWithInvalidDateTimeFormat()
@@ -108,8 +106,6 @@ final class DateTimeConstraintTest extends TestCase
         );
 
         self::assertEquals([$error], $constraint->validate('date', '2017-12-01 07:00:00:00', $this->getContext()));
-
-        self::assertNull(error_get_last());
     }
 
     /**
