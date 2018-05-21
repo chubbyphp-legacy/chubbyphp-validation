@@ -17,6 +17,7 @@ use Chubbyphp\Validation\Mapping\ValidationPropertyMappingInterface;
 use Chubbyphp\Validation\Mapping\ValidationMappingProviderInterface;
 use Chubbyphp\Validation\Validator;
 use PHPUnit\Framework\TestCase;
+use Psr\Log\AbstractLogger;
 use Symfony\Component\Validator\Constraints\Callback;
 use Symfony\Component\Validator\Constraints\CallbackValidator;
 use Symfony\Component\Validator\Constraints\NotBlank;
@@ -175,36 +176,59 @@ class ValidatorTest extends TestCase
                 public function getValidationPropertyMappings(string $path, string $type = null): array
                 {
                     return [
-                        ValidationPropertyMappingBuilder::create('notBlank', [
-                            new ConstraintAdapter(new NotBlank(), new NotBlankValidator()),
-                        ])->getMapping(),
+                        ValidationPropertyMappingBuilder::create('notBlank',
+                            [
+                                new ConstraintAdapter(new NotBlank(), new NotBlankValidator()),
+                            ])->getMapping(),
                         ValidationPropertyMappingBuilder::create('numeric', [new NumericRangeConstraint(6)])
                             ->getMapping(),
-                        ValidationPropertyMappingBuilder::create('callback', [
-                            new ConstraintAdapter(
-                                new Callback([
-                                    'callback' => function ($object, ExecutionContextInterface $context) {
-                                        if ('callback' === $object) {
-                                            $context->addViolation('callback');
-                                        }
-                                    },
+                        ValidationPropertyMappingBuilder::create('callback',
+                            [
+                                new ConstraintAdapter(
+                                    new Callback([
+                                        'callback' => function ($object, ExecutionContextInterface $context) {
+                                            if ('callback' === $object) {
+                                                $context->addViolation('callback');
+                                            }
+                                        },
+                                    ]),
+                                    new CallbackValidator()
+                                ),
+                            ])->getMapping(),
+                        ValidationPropertyMappingBuilder::create('all',
+                            [
+                                new AllConstraint([
+                                    new ConstraintAdapter(new NotNull(), new NotNullValidator()),
+                                    new NotBlankConstraint(),
+                                    new DateTimeConstraint('d.m.Y'),
                                 ]),
-                                new CallbackValidator()
-                            ),
-                        ])->getMapping(),
-                        ValidationPropertyMappingBuilder::create('all', [
-                            new AllConstraint([
-                                new ConstraintAdapter(new NotNull(), new NotNullValidator()),
-                                new NotBlankConstraint(),
-                                new DateTimeConstraint('d.m.Y'),
-                            ]),
-                        ])->getMapping(),
+                            ])->getMapping(),
                     ];
                 }
             },
         ]);
 
-        $validator = new Validator($validatorObjectMappingRegistry);
+        $logger = new class() extends AbstractLogger {
+            /**
+             * @var array
+             */
+            private $logs;
+
+            public function log($level, $message, array $context = [])
+            {
+                $this->logs[] = ['level' => $level, 'message' => $message, 'context' => $context];
+            }
+
+            /**
+             * @return array
+             */
+            public function getLogs(): array
+            {
+                return $this->logs;
+            }
+        };
+
+        $validator = new Validator($validatorObjectMappingRegistry, $logger);
 
         $errors = $validator->validate($object);
 
@@ -237,6 +261,149 @@ class ValidatorTest extends TestCase
                 'format' => 'd.m.Y',
                 'value' => '01.13.2018',
             ]),
-        ], $errors);
+        ],
+            $errors);
+
+        self::assertEquals([
+            [
+                'level' => 'info',
+                'message' => 'deserialize: path {path}',
+                'context' => [
+                    'path' => '',
+                ],
+            ],
+            [
+                'level' => 'info',
+                'message' => 'deserialize: path {path}',
+                'context' => [
+                    'path' => 'notBlank',
+                ],
+            ],
+            [
+                'level' => 'debug',
+                'message' => 'deserialize: path {path}, constraint {constraint}',
+                'context' => [
+                    'path' => 'notBlank',
+                    'constraint' => 'Chubbyphp\\Validation\\Constraint\\Symfony\\ConstraintAdapter',
+                ],
+            ],
+            [
+                'level' => 'notice',
+                'message' => 'deserialize: path {path}, constraint {constraint}, error {error}',
+                'context' => [
+                    'path' => 'notBlank',
+                    'constraint' => 'Chubbyphp\\Validation\\Constraint\\Symfony\\ConstraintAdapter',
+                    'error' => [
+                        'key' => 'This value should not be blank.',
+                        'arguments' => [
+                            'parameters' => [
+                                '{{ value }}' => '""',
+                            ],
+                            'plural' => null,
+                            'invalidValue' => null,
+                            'code' => 'c1051bb4-d103-4f74-8988-acbcafc7fdc3',
+                            'cause' => null,
+                        ],
+                    ],
+                ],
+            ],
+            [
+                'level' => 'info',
+                'message' => 'deserialize: path {path}',
+                'context' => [
+                    'path' => 'numeric',
+                ],
+            ],
+            [
+                'level' => 'debug',
+                'message' => 'deserialize: path {path}, constraint {constraint}',
+                'context' => [
+                    'path' => 'numeric',
+                    'constraint' => 'Chubbyphp\\Validation\\Constraint\\NumericRangeConstraint',
+                ],
+            ],
+            [
+                'level' => 'notice',
+                'message' => 'deserialize: path {path}, constraint {constraint}, error {error}',
+                'context' => [
+                    'path' => 'numeric',
+                    'constraint' => 'Chubbyphp\\Validation\\Constraint\\NumericRangeConstraint',
+                    'error' => [
+                        'key' => 'constraint.numericrange.outofrange',
+                        'arguments' => [
+                            'value' => 5,
+                            'min' => 6,
+                            'max' => null,
+                        ],
+                    ],
+                ],
+            ],
+            [
+                'level' => 'info',
+                'message' => 'deserialize: path {path}',
+                'context' => [
+                    'path' => 'callback',
+                ],
+            ],
+            [
+                'level' => 'debug',
+                'message' => 'deserialize: path {path}, constraint {constraint}',
+                'context' => [
+                    'path' => 'callback',
+                    'constraint' => 'Chubbyphp\\Validation\\Constraint\\Symfony\\ConstraintAdapter',
+                ],
+            ],
+            [
+                'level' => 'notice',
+                'message' => 'deserialize: path {path}, constraint {constraint}, error {error}',
+                'context' => [
+                    'path' => 'callback',
+                    'constraint' => 'Chubbyphp\\Validation\\Constraint\\Symfony\\ConstraintAdapter',
+                    'error' => [
+                        'key' => 'callback',
+                        'arguments' => [
+                            'parameters' => [
+                            ],
+                            'plural' => null,
+                            'invalidValue' => null,
+                            'code' => null,
+                            'cause' => null,
+                        ],
+                    ],
+                ],
+            ],
+            [
+                'level' => 'info',
+                'message' => 'deserialize: path {path}',
+                'context' => [
+                    'path' => 'all',
+                ],
+            ],
+            [
+                'level' => 'debug',
+                'message' => 'deserialize: path {path}, constraint {constraint}',
+                'context' => [
+                    'path' => 'all',
+                    'constraint' => 'Chubbyphp\\Validation\\Constraint\\AllConstraint',
+                ],
+            ],
+            [
+                'level' => 'notice',
+                'message' => 'deserialize: path {path}, constraint {constraint}, error {error}',
+                'context' => [
+                    'path' => 'all',
+                    'constraint' => 'Chubbyphp\\Validation\\Constraint\\AllConstraint',
+                    'error' => [
+                        'key' => 'constraint.date.warning',
+                        'arguments' => [
+                            'message' => 'The parsed date was invalid',
+                            'format' => 'd.m.Y',
+                            'value' => '01.13.2018',
+                        ],
+                    ],
+                ],
+            ],
+        ],
+            $logger->getLogs());
     }
 }

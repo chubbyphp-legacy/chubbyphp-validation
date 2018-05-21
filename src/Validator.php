@@ -134,7 +134,21 @@ final class Validator implements ValidatorInterface
 
         $errors = [];
         foreach ($classMapping->getConstraints() as $constraint) {
+            $this->logger->debug('deserialize: path {path}, constraint {constraint}', [
+                'path' => $path,
+                'constraint' => get_class($constraint),
+            ]);
+
             foreach ($constraint->validate($path, $object, $context, $this) as $error) {
+                $this->logger->notice('deserialize: path {path}, constraint {constraint}, error {error}', [
+                    'path' => $path,
+                    'constraint' => get_class($constraint),
+                    'error' => [
+                        'key' => $error->getKey(),
+                        'arguments' => $error->getArguments(),
+                    ],
+                ]);
+
                 $errors[] = $error;
             }
         }
@@ -170,7 +184,21 @@ final class Validator implements ValidatorInterface
 
         $errors = [];
         foreach ($fieldMapping->getConstraints() as $constraint) {
+            $this->logger->debug('deserialize: path {path}, constraint {constraint}', [
+                'path' => $subPath,
+                'constraint' => get_class($constraint),
+            ]);
+
             foreach ($constraint->validate($subPath, $value, $context, $this) as $error) {
+                $this->logger->notice('deserialize: path {path}, constraint {constraint}, error {error}', [
+                    'path' => $subPath,
+                    'constraint' => get_class($constraint),
+                    'error' => [
+                        'key' => $error->getKey(),
+                        'arguments' => $error->getArguments(),
+                    ],
+                ]);
+
                 $errors[] = $error;
             }
         }
