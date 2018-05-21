@@ -56,7 +56,7 @@ final class DateTimeConstraint implements ConstraintInterface
 
         $value = trim((string) $value);
 
-        \DateTime::createFromFormat($this->format, $value);
+        \DateTime::createFromFormat('!'.$this->format, $value);
 
         $dateTimeErrors = \DateTime::getLastErrors();
 
@@ -86,7 +86,7 @@ final class DateTimeConstraint implements ConstraintInterface
      */
     private function validateDateTime(string $path, \DateTimeInterface $value): array
     {
-        $expectedValue = \DateTime::createFromFormat($this->format, $value->format($this->format), $value->getTimezone());
+        $expectedValue = \DateTime::createFromFormat('!'.$this->format, $value->format($this->format), $value->getTimezone());
         if ($expectedValue->format('c') !== $value->format('c')) {
             return [
                 new Error(
@@ -120,21 +120,12 @@ final class DateTimeConstraint implements ConstraintInterface
             return [];
         }
 
-        $messages = [];
-        foreach ($dateTimeErrors as $position => $message) {
-            if (!isset($messages[$message])) {
-                $messages[$message] = [];
-            }
-
-            $messages[$message][] = $position;
-        }
-
         $errors = [];
-        foreach ($messages as $message => $positions) {
+        foreach ($dateTimeErrors as $message) {
             $errors[] = new Error(
                 $path,
                 sprintf('constraint.date.%s', $errorType),
-                ['message' => $message, 'positions' => $positions, 'value' => $value]
+                ['message' => $message, 'value' => $value]
             );
         }
 

@@ -25,6 +25,13 @@ final class NumericConstraintTest extends TestCase
         self::assertEquals([], $constraint->validate('numeric', null, $this->getContext()));
     }
 
+    public function testWithBlankValue()
+    {
+        $constraint = new NumericConstraint();
+
+        self::assertEquals([], $constraint->validate('numeric', '', $this->getContext()));
+    }
+
     public function testWithInteger()
     {
         $constraint = new NumericConstraint();

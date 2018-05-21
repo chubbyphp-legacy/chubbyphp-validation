@@ -25,6 +25,13 @@ final class EmailConstraintTest extends TestCase
         self::assertEquals([], $constraint->validate('email', null, $this->getContext()));
     }
 
+    public function testWithBlankValue()
+    {
+        $constraint = new EmailConstraint();
+
+        self::assertEquals([], $constraint->validate('email', '', $this->getContext()));
+    }
+
     public function testInvalidType()
     {
         $constraint = new EmailConstraint();

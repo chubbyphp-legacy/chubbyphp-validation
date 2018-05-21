@@ -25,6 +25,13 @@ final class CoordinateConstraintTest extends TestCase
         self::assertEquals([], $constraint->validate('coordinate', null, $this->getContext()));
     }
 
+    public function testWithBlankValue()
+    {
+        $constraint = new CoordinateConstraint();
+
+        self::assertEquals([], $constraint->validate('coordinate', '', $this->getContext()));
+    }
+
     public function testInvalidType()
     {
         $constraint = new CoordinateConstraint();

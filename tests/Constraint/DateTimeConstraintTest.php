@@ -25,11 +25,50 @@ final class DateTimeConstraintTest extends TestCase
         self::assertEquals([], $constraint->validate('date', null, $this->getContext()));
     }
 
+    public function testWithBlankValue()
+    {
+        $constraint = new DateTimeConstraint();
+
+        self::assertEquals([], $constraint->validate('date', '', $this->getContext()));
+    }
+
+    public function testWithDate()
+    {
+        $constraint = new DateTimeConstraint('Y-m-d');
+
+        $date = new \DateTime('2018-05-21');
+        $date->setTime(0, 0, 0);
+
+        self::assertEquals([], $constraint->validate('date', $date, $this->getContext()));
+    }
+
+    public function testWithDateTimeExpectedDate()
+    {
+        $constraint = new DateTimeConstraint('Y-m-d');
+
+        $date = new \DateTime('2018-05-21');
+        $date->setTime(2, 0, 0);
+
+        $error = new Error(
+            'date',
+            'constraint.date.format',
+            [
+                'value' => '2018-05-21T02:00:00+02:00',
+                'expectedValue' => '2018-05-21T00:00:00+02:00',
+            ]
+        );
+
+        self::assertEquals([$error], $constraint->validate('date', $date, $this->getContext()));
+    }
+
     public function testWithDateTime()
     {
         $constraint = new DateTimeConstraint();
 
-        self::assertEquals([], $constraint->validate('date', new \DateTime(), $this->getContext()));
+        $date = new \DateTime('2018-05-21');
+        $date->setTime(2, 0, 0);
+
+        self::assertEquals([], $constraint->validate('date', $date, $this->getContext()));
     }
 
     public function testInvalidType()
@@ -54,17 +93,14 @@ final class DateTimeConstraintTest extends TestCase
 
         $error = new Error(
             'date',
-            'constraint.date.error',
+            'constraint.date.warning',
             [
-                'message' => 'Unexpected character',
-                'positions' => [6],
+                'message' => 'The parsed date was invalid',
                 'value' => '2017-13-01',
             ]
         );
 
         self::assertEquals([$error], $constraint->validate('date', '2017-13-01', $this->getContext()));
-
-        self::assertNull(error_get_last());
     }
 
     public function testWithDateTimeString()
@@ -80,10 +116,9 @@ final class DateTimeConstraintTest extends TestCase
 
         $error = new Error(
             'date',
-            'constraint.date.error',
+            'constraint.date.warning',
             [
-                'message' => 'Unexpected character',
-                'positions' => [6],
+                'message' => 'The parsed date was invalid',
                 'value' => '2017-13-01 07:00:00',
             ]
         );
@@ -99,8 +134,7 @@ final class DateTimeConstraintTest extends TestCase
             'date',
             'constraint.date.error',
             [
-                'message' => 'Unexpected character',
-                'positions' => [19, 20, 21],
+                'message' => 'Trailing data',
                 'value' => '2017-12-01 07:00:00:00',
             ]
         );

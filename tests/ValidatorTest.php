@@ -6,6 +6,7 @@ namespace Chubbyphp\Tests\Validation;
 
 use Chubbyphp\Validation\Constraint\AllConstraint;
 use Chubbyphp\Validation\Constraint\DateTimeConstraint;
+use Chubbyphp\Validation\Constraint\NotBlankConstraint;
 use Chubbyphp\Validation\Constraint\NumericRangeConstraint;
 use Chubbyphp\Validation\Constraint\Symfony\ConstraintAdapter;
 use Chubbyphp\Validation\Error\Error;
@@ -194,7 +195,8 @@ class ValidatorTest extends TestCase
                         ValidationPropertyMappingBuilder::create('all', [
                             new AllConstraint([
                                 new ConstraintAdapter(new NotNull(), new NotNullValidator()),
-                                new DateTimeConstraint(),
+                                new NotBlankConstraint(),
+                                new DateTimeConstraint('d.m.Y'),
                             ]),
                         ])->getMapping(),
                     ];
@@ -230,9 +232,8 @@ class ValidatorTest extends TestCase
                 'code' => null,
                 'cause' => null,
             ]),
-            new Error('all[1]', 'constraint.date.error', [
-                'message' => 'Unexpected character',
-                'positions' => [8, 9],
+            new Error('all[1]', 'constraint.date.warning', [
+                'message' => 'The parsed date was invalid',
                 'value' => '01.13.2018',
             ]),
         ], $errors);
