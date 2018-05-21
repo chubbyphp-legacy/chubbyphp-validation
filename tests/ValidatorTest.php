@@ -234,6 +234,7 @@ class ValidatorTest extends TestCase
             ]),
             new Error('all[1]', 'constraint.date.warning', [
                 'message' => 'The parsed date was invalid',
+                'format' => 'd.m.Y',
                 'value' => '01.13.2018',
             ]),
         ], $errors);

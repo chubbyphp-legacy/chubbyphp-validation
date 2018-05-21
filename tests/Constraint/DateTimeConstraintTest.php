@@ -53,8 +53,8 @@ final class DateTimeConstraintTest extends TestCase
             'date',
             'constraint.date.format',
             [
+                'format' => 'Y-m-d',
                 'value' => '2018-05-21T02:00:00+02:00',
-                'expectedValue' => '2018-05-21T00:00:00+02:00',
             ]
         );
 
@@ -96,6 +96,7 @@ final class DateTimeConstraintTest extends TestCase
             'constraint.date.warning',
             [
                 'message' => 'The parsed date was invalid',
+                'format' => 'Y-m-d',
                 'value' => '2017-13-01',
             ]
         );
@@ -119,6 +120,7 @@ final class DateTimeConstraintTest extends TestCase
             'constraint.date.warning',
             [
                 'message' => 'The parsed date was invalid',
+                'format' => 'Y-m-d H:i:s',
                 'value' => '2017-13-01 07:00:00',
             ]
         );
@@ -135,6 +137,7 @@ final class DateTimeConstraintTest extends TestCase
             'constraint.date.error',
             [
                 'message' => 'Trailing data',
+                'format' => 'Y-m-d H:i:s',
                 'value' => '2017-12-01 07:00:00:00',
             ]
         );

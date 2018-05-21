@@ -92,7 +92,7 @@ final class DateTimeConstraint implements ConstraintInterface
                 new Error(
                     $path,
                     'constraint.date.format',
-                    ['value' => $value->format('c'), 'expectedValue' => $expectedValue->format('c')]
+                    ['format' => $this->format, 'value' => $value->format('c')]
                 ),
             ];
         }
@@ -125,7 +125,7 @@ final class DateTimeConstraint implements ConstraintInterface
             $errors[] = new Error(
                 $path,
                 sprintf('constraint.date.%s', $errorType),
-                ['message' => $message, 'value' => $value]
+                ['message' => $message, 'format' => $this->format, 'value' => $value]
             );
         }
 
