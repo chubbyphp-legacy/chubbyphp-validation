@@ -26,7 +26,10 @@ use Symfony\Component\Validator\Constraints\NotNull;
 use Symfony\Component\Validator\Constraints\NotNullValidator;
 use Symfony\Component\Validator\Context\ExecutionContextInterface;
 
-class ValidatorTest extends TestCase
+/**
+ * @coversNothing
+ */
+class ValidatorIntegrationTest extends TestCase
 {
     public function testValidator()
     {
