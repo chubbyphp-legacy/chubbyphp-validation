@@ -23,6 +23,6 @@ $errors = $constraint->validate('path.to.property', [], $context);
 // [new Error('path.to.property', 'constraint.choice.invalidtype', ['type' => 'array'])];
 
 $errors = $constraint->validate('path.to.property', 'choice', $context);
-// [new Error('path.to.property', 'constraint.choice.invalidformat', ['input' => 'choice', 'choices' => ['active', 'inactive'])];
+// [new Error('path.to.property', 'constraint.choice.invalidformat', ['value' => 'choice', 'choices' => ['active', 'inactive'])];
 
 ```
