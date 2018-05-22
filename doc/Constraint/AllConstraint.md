@@ -31,12 +31,12 @@ echo $errors[0]['path'];
 // [0]
 
 echo $errors[0]['key'];
-// constraint.notnull.null'
+// constraint.notnull.null
 
 echo $errors[1]['path'];
 // [1]
 
 echo $errors[1]['key'];
-// constraint.notblank.blank'
+// constraint.notblank.blank
 
 ```
