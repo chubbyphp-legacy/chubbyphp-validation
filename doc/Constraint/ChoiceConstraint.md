@@ -6,29 +6,23 @@
 use Chubbyphp\Validation\Constraint\ChoiceConstraint;
 use Chubbyphp\Validation\Validator\ValidatorContextInterface;
 
-$constraint = new ChoiceConstraint(['s', 'm', 'l', 'xl']);
+$constraint = new ChoiceConstraint(['active', 'inactive']);
 
 /** @var ValidatorContextInterface $context */
 $context = ...;
 
-$errors = $constraint->validate('', null, $context);
+// Use NotNullConstraint to prevent null
+$errors = $constraint->validate('path.to.property', null, $context);
+// [];
 
-echo count($errors);
-// 0
+$errors = $constraint->validate('path.to.property', 'active', $context);
+$errors = $constraint->validate('path.to.property', 'inactive', $context);
+// [];
 
-$errors = $constraint->validate('', 'm', $context);
+$errors = $constraint->validate('path.to.property', [], $context);
+// [new Error('path.to.property', 'constraint.choice.invalidtype', ['type' => 'array'])];
 
-echo count($errors);
-// 0
+$errors = $constraint->validate('path.to.property', 'choice', $context);
+// [new Error('path.to.property', 'constraint.choice.invalidformat', ['input' => 'choice', 'choices' => ['active', 'inactive'])];
 
-$errors = $constraint->validate('', 'xxl', $context);
-
-echo count($errors);
-// 1
-
-echo $errors[0]['path'];
-//
-
-echo $errors[0]['key'];
-// constraint.choice.invalidvalue
 ```

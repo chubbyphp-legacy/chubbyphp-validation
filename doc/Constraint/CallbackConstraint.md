@@ -15,30 +15,22 @@ $constraint = new CallbackConstraint(
         ValidatorContextInterface $context,
         ValidatorInterface $validator = null
     ) {
-        if ($value !== 'test') {
-            return new Error($path, 'key', []); 
+        if (null === $value){
+            return [];
         }
-        
-        return [];
+
+        return [
+            new Error($path, 'constraint.callback', ['value' => $value])
+        ];
     }
 );
 
 /** @var ValidatorContextInterface $context */
 $context = ...;
 
-$errors = $constraint->validate('', 'test', $context);
+$errors = $constraint->validate('path.to.property', null, $context);
+// [];
 
-echo count($errors);
-// 0
-
-$errors = $constraint->validate('', 'nottest', $context);
-
-echo count($errors);
-// 1
-
-echo $errors[0]['path'];
-//
-
-echo $errors[0]['key'];
-// key
+$errors = $constraint->validate('path.to.property', 'value', $context);
+// [new Error('path.to.property', 'constraint.callback', ['value' => 'value'])];
 ```

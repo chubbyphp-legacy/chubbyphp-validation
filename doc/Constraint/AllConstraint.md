@@ -22,21 +22,10 @@ $values = [
 /** @var ValidatorContextInterface $context */
 $context = ...;
 
-$errors = $constraint->validate('', $values, $context);
+$errors = $constraint->validate('path.to.property', $values, $context);
 
-echo count($errors);
-// 2
-
-echo $errors[0]['path'];
-// [0]
-
-echo $errors[0]['key'];
-// constraint.notnull.null
-
-echo $errors[1]['path'];
-// [1]
-
-echo $errors[1]['key'];
-// constraint.notblank.blank
-
+// [
+//     new Error('path.to.property[0]', 'constraint.notnull.null'),
+//     new Error('path.to.property[0]', 'constraint.notblank.blank')
+// ];
 ```
