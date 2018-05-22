@@ -15,8 +15,12 @@ $context = ...;
 $errors = $constraint->validate('path.to.property', null, $context);
 // [];
 
-// Use NumericConstraint to prevent not numeric
+// Use NotBlankConstraint to prevent ''
 $errors = $constraint->validate('path.to.property', '', $context);
+// [];
+
+// Use NumericConstraint to prevent not numeric
+$errors = $constraint->validate('path.to.property', 'test', $context);
 // [];
 
 $errors = $constraint->validate('path.to.property', 0, $context);

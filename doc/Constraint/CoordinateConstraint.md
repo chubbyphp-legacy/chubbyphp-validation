@@ -15,6 +15,10 @@ $context = ...;
 $errors = $constraint->validate('path.to.property', null, $context);
 // [];
 
+// Use NotBlankConstraint to prevent ''
+$errors = $constraint->validate('path.to.property', '', $context);
+// [];
+
 $errors = $constraint->validate('path.to.property', '90.0, 180.0', $context);
 $errors = $constraint->validate('path.to.property', '-90.0, -180.0', $context);
 // [];
