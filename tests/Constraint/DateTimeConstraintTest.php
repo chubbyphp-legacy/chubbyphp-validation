@@ -51,7 +51,7 @@ final class DateTimeConstraintTest extends TestCase
 
         $error = new Error(
             'date',
-            'constraint.date.format',
+            'constraint.datetime.format',
             [
                 'format' => 'Y-m-d',
                 'value' => '2018-05-21T02:00:00+02:00',
@@ -75,7 +75,7 @@ final class DateTimeConstraintTest extends TestCase
     {
         $constraint = new DateTimeConstraint();
 
-        $error = new Error('date', 'constraint.date.invalidtype', ['type' => 'array']);
+        $error = new Error('date', 'constraint.datetime.invalidtype', ['type' => 'array']);
 
         self::assertEquals([$error], $constraint->validate('date', [], $this->getContext()));
     }
@@ -93,7 +93,7 @@ final class DateTimeConstraintTest extends TestCase
 
         $error = new Error(
             'date',
-            'constraint.date.warning',
+            'constraint.datetime.warning',
             [
                 'message' => 'The parsed date was invalid',
                 'format' => 'Y-m-d',
@@ -117,7 +117,7 @@ final class DateTimeConstraintTest extends TestCase
 
         $error = new Error(
             'date',
-            'constraint.date.warning',
+            'constraint.datetime.warning',
             [
                 'message' => 'The parsed date was invalid',
                 'format' => 'Y-m-d H:i:s',
@@ -134,7 +134,7 @@ final class DateTimeConstraintTest extends TestCase
 
         $error = new Error(
             'date',
-            'constraint.date.error',
+            'constraint.datetime.error',
             [
                 'message' => 'Trailing data',
                 'format' => 'Y-m-d H:i:s',

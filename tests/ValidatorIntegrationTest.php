@@ -259,7 +259,7 @@ class ValidatorIntegrationTest extends TestCase
                 'code' => null,
                 'cause' => null,
             ]),
-            new Error('all[1]', 'constraint.date.warning', [
+            new Error('all[1]', 'constraint.datetime.warning', [
                 'message' => 'The parsed date was invalid',
                 'format' => 'd.m.Y',
                 'value' => '01.13.2018',
@@ -396,7 +396,7 @@ class ValidatorIntegrationTest extends TestCase
                     'path' => 'all',
                     'constraint' => 'Chubbyphp\\Validation\\Constraint\\AllConstraint',
                     'error' => [
-                        'key' => 'constraint.date.warning',
+                        'key' => 'constraint.datetime.warning',
                         'arguments' => [
                             'message' => 'The parsed date was invalid',
                             'format' => 'd.m.Y',

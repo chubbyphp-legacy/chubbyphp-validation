@@ -49,7 +49,7 @@ final class DateTimeConstraint implements ConstraintInterface
         if (!is_scalar($value) && !(is_object($value) && method_exists($value, '__toString'))) {
             return [new Error(
                 $path,
-                'constraint.date.invalidtype',
+                'constraint.datetime.invalidtype',
                 ['type' => is_object($value) ? get_class($value) : gettype($value)]
             )];
         }
@@ -91,7 +91,7 @@ final class DateTimeConstraint implements ConstraintInterface
             return [
                 new Error(
                     $path,
-                    'constraint.date.format',
+                    'constraint.datetime.format',
                     ['format' => $this->format, 'value' => $value->format('c')]
                 ),
             ];
@@ -124,7 +124,7 @@ final class DateTimeConstraint implements ConstraintInterface
         foreach ($dateTimeErrors as $message) {
             $errors[] = new Error(
                 $path,
-                sprintf('constraint.date.%s', $errorType),
+                sprintf('constraint.datetime.%s', $errorType),
                 ['message' => $message, 'format' => $this->format, 'value' => $value]
             );
         }
