@@ -15,6 +15,7 @@ A simple validation.
 ## Requirements
 
  * php: ~7.0
+ * psr/log: ~1.0
 
 ## Suggest
 
@@ -32,3 +33,4 @@ Dominik Zogg 2017
 
 
 [1]: https://packagist.org/packages/chubbyphp/chubbyphp-validation
+cls
