@@ -264,8 +264,7 @@ class ValidatorIntegrationTest extends TestCase
                 'format' => 'd.m.Y',
                 'value' => '01.13.2018',
             ]),
-        ],
-            $errors);
+        ], $errors);
 
         self::assertEquals([
             [
@@ -406,7 +405,6 @@ class ValidatorIntegrationTest extends TestCase
                     ],
                 ],
             ],
-        ],
-            $logger->getLogs());
+        ], $logger->getLogs());
     }
 }
