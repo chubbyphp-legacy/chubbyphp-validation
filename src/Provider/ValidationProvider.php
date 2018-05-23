@@ -4,7 +4,7 @@ declare(strict_types=1);
 
 namespace Chubbyphp\Validation\Provider;
 
-use Chubbyphp\Validation\Validator\ValidatorObjectMappingRegistry;
+use Chubbyphp\Validation\Mapping\ValidationMappingProviderRegistry;
 use Chubbyphp\Validation\Validator;
 use Pimple\Container;
 use Pimple\ServiceProviderInterface;
@@ -18,16 +18,16 @@ final class ValidationProvider implements ServiceProviderInterface
     {
         $container['validator'] = function () use ($container) {
             return new Validator(
-                $container['validator.objectmappingregistry'],
+                $container['validator.mappingproviderregistry'],
                 $container['logger'] ?? null
             );
         };
 
-        $container['validator.objectmappingregistry'] = function () use ($container) {
-            return new ValidatorObjectMappingRegistry($container['validator.objectmappings']);
+        $container['validator.mappingproviderregistry'] = function () use ($container) {
+            return new ValidationMappingProviderRegistry($container['validator.mappings']);
         };
 
-        $container['validator.objectmappings'] = function () {
+        $container['validator.mappings'] = function () {
             return [];
         };
     }

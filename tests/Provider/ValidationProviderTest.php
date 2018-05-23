@@ -2,8 +2,8 @@
 
 namespace Chubbyphp\Tests\Validation\Provider;
 
+use Chubbyphp\Validation\Mapping\ValidationMappingProviderRegistry;
 use Chubbyphp\Validation\Provider\ValidationProvider;
-use Chubbyphp\Validation\Validator\ValidatorObjectMappingRegistry;
 use Chubbyphp\Validation\Validator;
 use PHPUnit\Framework\TestCase;
 use Pimple\Container;
@@ -18,12 +18,12 @@ final class ValidationProviderTest extends TestCase
         $container = new Container();
         $container->register(new ValidationProvider());
 
-        self::assertTrue(isset($container['validator.objectmappings']));
-        self::assertTrue(isset($container['validator.objectmappingregistry']));
+        self::assertTrue(isset($container['validator.mappings']));
+        self::assertTrue(isset($container['validator.mappingproviderregistry']));
         self::assertTrue(isset($container['validator']));
 
-        self::assertSame([], $container['validator.objectmappings']);
-        self::assertInstanceOf(ValidatorObjectMappingRegistry::class, $container['validator.objectmappingregistry']);
+        self::assertSame([], $container['validator.mappings']);
+        self::assertInstanceOf(ValidationMappingProviderRegistry::class, $container['validator.mappingproviderregistry']);
         self::assertInstanceOf(Validator::class, $container['validator']);
     }
 }

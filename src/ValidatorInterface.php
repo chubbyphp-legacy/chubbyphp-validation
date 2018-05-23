@@ -4,7 +4,6 @@ declare(strict_types=1);
 
 namespace Chubbyphp\Validation;
 
-use Chubbyphp\Validation\Constraint\ConstraintInterface;
 use Chubbyphp\Validation\Error\ErrorInterface;
 use Chubbyphp\Validation\Validator\ValidatorContextInterface;
 

@@ -2,9 +2,9 @@
 
 declare(strict_types=1);
 
-namespace Chubbyphp\Tests\Validation\Validator;
+namespace Chubbyphp\Tests\Validation\Mapping;
 
-use Chubbyphp\Validation\Validator\ValidatorObjectMappingRegistry;
+use Chubbyphp\Validation\Mapping\ValidationMappingProviderRegistry;
 use Chubbyphp\Validation\ValidatorLogicException;
 use Chubbyphp\Validation\Mapping\ValidationMappingProviderInterface;
 use Doctrine\Common\Persistence\Proxy;
@@ -12,19 +12,19 @@ use PHPUnit\Framework\MockObject\MockObject;
 use PHPUnit\Framework\TestCase;
 
 /**
- * @covers \Chubbyphp\Validation\Validator\ValidatorObjectMappingRegistry
+ * @covers \Chubbyphp\Validation\Mapping\ValidationMappingProviderRegistry
  */
-class ValidatorObjectMappingRegistryTest extends TestCase
+class ValidationMappingProviderRegistryTest extends TestCase
 {
     public function testGetObjectMapping()
     {
         $object = $this->getObject();
 
-        $registry = new ValidatorObjectMappingRegistry([
+        $registry = new ValidationMappingProviderRegistry([
             $this->getValidationObjectMapping(),
         ]);
 
-        $mapping = $registry->getObjectMapping(get_class($object));
+        $mapping = $registry->provideMapping(get_class($object));
 
         self::assertInstanceOf(ValidationMappingProviderInterface::class, $mapping);
     }
@@ -34,20 +34,20 @@ class ValidatorObjectMappingRegistryTest extends TestCase
         self::expectException(ValidatorLogicException::class);
         self::expectExceptionMessage('There is no mapping for class: "stdClass"');
 
-        $registry = new ValidatorObjectMappingRegistry([]);
+        $registry = new ValidationMappingProviderRegistry([]);
 
-        $registry->getObjectMapping(get_class(new \stdClass()));
+        $registry->provideMapping(get_class(new \stdClass()));
     }
 
     public function testGetObjectMappingFromDoctrineProxy()
     {
         $object = $this->getProxyObject();
 
-        $registry = new ValidatorObjectMappingRegistry([
+        $registry = new ValidationMappingProviderRegistry([
             $this->getValidationProxyObjectMapping(),
         ]);
 
-        $mapping = $registry->getObjectMapping(get_class($object));
+        $mapping = $registry->provideMapping(get_class($object));
 
         self::assertInstanceOf(ValidationMappingProviderInterface::class, $mapping);
     }

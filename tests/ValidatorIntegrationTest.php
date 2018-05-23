@@ -15,6 +15,7 @@ use Chubbyphp\Validation\Mapping\ValidationClassMappingInterface;
 use Chubbyphp\Validation\Mapping\ValidationPropertyMappingBuilder;
 use Chubbyphp\Validation\Mapping\ValidationPropertyMappingInterface;
 use Chubbyphp\Validation\Mapping\ValidationMappingProviderInterface;
+use Chubbyphp\Validation\Mapping\ValidationMappingProviderRegistry;
 use Chubbyphp\Validation\Validator;
 use PHPUnit\Framework\TestCase;
 use Psr\Log\AbstractLogger;
@@ -140,7 +141,7 @@ class ValidatorIntegrationTest extends TestCase
         $object->setCallback('callback');
         $object->setAll(new \ArrayIterator(['31.01.2018', '01.13.2018']));
 
-        $validatorObjectMappingRegistry = new Validator\ValidatorObjectMappingRegistry([
+        $validatorObjectMappingRegistry = new ValidationMappingProviderRegistry([
             new class($object) implements ValidationMappingProviderInterface {
                 private $object;
 

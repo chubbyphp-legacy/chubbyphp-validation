@@ -19,18 +19,67 @@ A simple validation.
 
 ## Suggest
 
+ * psr/container: ~1.0
+ * pimple/pimple: ~3.0
+
 ## Installation
 
 Through [Composer](http://getcomposer.org) as [chubbyphp/chubbyphp-validation][1].
 
 ```sh
-composer require chubbyphp/chubbyphp-validation "~3.0"
+composer require chubbyphp/chubbyphp-validation "~2.1"
+```
+
+## Usage
+
+### Accessor
+
+ * [MethodAccessor][2]
+ * [PropertyAccessor][3]
+ 
+### Constraint
+
+### Error
+ 
+### Mapping
+
+### Provider
+
+### Validator
+
+```php
+<?php
+
+use Chubbyphp\Validation\Mapping\ValidationMappingProviderRegistry;
+use Chubbyphp\Validation\Validator\ValidatorContextInterface;
+use Chubbyphp\Validation\Validator;
+
+$logger = ...;
+
+$validator = new Validator(
+    new ValidationMappingProviderRegistry([
+        new ModelMapping()
+    ]),
+    $logger
+);
+
+$model = new Model;
+
+/** @var ValidatorContextInterface $context */
+$context = ...;
+
+$model = $validator->validate(
+    $model,
+    $context
+);
 ```
 
 ## Copyright
 
-Dominik Zogg 2017
+Dominik Zogg 2018
 
 
 [1]: https://packagist.org/packages/chubbyphp/chubbyphp-validation
-cls
+
+[2]: doc/Accessor/MethodAccessor.md
+[3]: doc/Accessor/PropertyAccessor.md

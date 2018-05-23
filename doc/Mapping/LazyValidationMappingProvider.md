@@ -10,11 +10,11 @@ $container = ...;
 $mappingProvider = new LazyValidationMappingProvider(
     $container,
     'myproject.denormalizer.mapping.model',
-    'class'
+    Model::class
 );
 
 $mappingProvider->getClass();
-// 'class'
+// \Namespace\To\Model
 
 $mappingProvider->getValidationClassMapping('');
 // ValidationClassMappingInterface[]
