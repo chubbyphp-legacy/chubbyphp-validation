@@ -11,9 +11,22 @@ $constraint = new NotNullConstraint();
 /** @var ValidatorContextInterface $context */
 $context = ...;
 
-$errors = $constraint->validate('path.to.property', '', $context);
+$errors = $constraint->validate(
+    'path.to.property',
+    '',
+    $context
+);
 // [];
 
-$errors = $constraint->validate('path.to.property', null, $context);
-// [new Error('path.to.property', 'constraint.notnull.null')];
+$errors = $constraint->validate(
+    'path.to.property',
+    null,
+    $context
+);
+// [
+//     new Error(
+//         'path.to.property',
+//         'constraint.notnull.null'
+//     )
+// ];
 ```

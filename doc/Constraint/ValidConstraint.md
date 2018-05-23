@@ -23,6 +23,16 @@ $model = new class()
     private $name;
 };
 
-$errors = $constraint->validate('path.to.property', [$model], $context, $validator);
-// [new Error('path.to.property[0]['name]', 'constraint.notnull.null')];
+$errors = $constraint->validate(
+    'path.to.property',
+    [$model],
+    $context,
+    $validator
+);
+// [
+//     new Error(
+//         "path.to.property[0]['name']",
+//         'constraint.notnull.null'
+//     )
+// ];
 ```

@@ -20,7 +20,11 @@ $constraint = new CallbackConstraint(
         }
 
         return [
-            new Error($path, 'constraint.callback', ['value' => $value])
+            new Error(
+                $path,
+                'constraint.callback',
+                ['value' => $value]
+            )
         ];
     }
 );
@@ -28,9 +32,23 @@ $constraint = new CallbackConstraint(
 /** @var ValidatorContextInterface $context */
 $context = ...;
 
-$errors = $constraint->validate('path.to.property', null, $context);
+$errors = $constraint->validate(
+    'path.to.property',
+    null,
+    $context
+);
 // [];
 
-$errors = $constraint->validate('path.to.property', 'value', $context);
-// [new Error('path.to.property', 'constraint.callback', ['value' => 'value'])];
+$errors = $constraint->validate(
+    'path.to.property',
+    'value',
+    $context
+);
+// [
+//     new Error(
+//         'path.to.property',
+//         'constraint.callback',
+//         ['value' => 'value']
+//     )
+// ];
 ```
