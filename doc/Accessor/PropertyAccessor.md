@@ -11,6 +11,6 @@ $object->name = 'php';
 
 $accessor = new PropertyAccessor('name');
 
-echo $accessor->getValue($object);
+$accessor->getValue($object);
 // 'php'
 ```

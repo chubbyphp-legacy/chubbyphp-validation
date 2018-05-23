@@ -7,10 +7,11 @@ use Chubbyphp\Validation\Accessor\PropertyAccessor;
 use Chubbyphp\Validation\Constraint\NotNullConstraint;
 use Chubbyphp\Validation\Mapping\ValidationPropertyMappingBuilder;
 
-$fieldMapping = ValidationPropertyMappingBuilder::create(
-    'name',
-    [new NotNullConstraint()]
-)
+$fieldMapping = ValidationPropertyMappingBuilder
+    ::create(
+        'name',
+        [new NotNullConstraint()]
+    )
     ->setGroups(['group1'])
     ->setAccessor(new PropertyAccessor('name'))
     ->getMapping();

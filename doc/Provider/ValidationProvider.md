@@ -15,7 +15,7 @@ $object = ...;
 /** @var ValidatorContextInterface $context */
 $context = ...;
 
-$container['validator']
+$errors = $container['validator']
     ->validate(
         $object,
         $context,

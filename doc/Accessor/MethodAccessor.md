@@ -11,6 +11,6 @@ $object->setName('php');
 
 $accessor = new MethodAccessor('name');
 
-echo $accessor->getValue($object);
+$accessor->getValue($object);
 // 'php'
 ```

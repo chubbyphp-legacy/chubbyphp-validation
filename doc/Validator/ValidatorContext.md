@@ -9,6 +9,6 @@ $request = ...;
 
 $context = new ValidatorContext(['group1']);
 
-print_r($context->getGroups());
+$groups = $context->getGroups();
 // ['group1']
 ```

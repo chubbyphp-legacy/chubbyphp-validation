@@ -11,6 +11,6 @@ $context = ValidatorContextBuilder::create()
     ->setGroups(['group1'])
     ->getContext();
 
-print_r($context->getGroups());
+$groups = $context->getGroups();
 // ['group1']
 ```
