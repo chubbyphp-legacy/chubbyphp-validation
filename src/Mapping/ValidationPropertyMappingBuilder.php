@@ -30,6 +30,10 @@ final class ValidationPropertyMappingBuilder implements ValidationPropertyMappin
      */
     private $accessor;
 
+    private function __construct()
+    {
+    }
+
     /**
      * @param string $name
      * @param array  $constraints
