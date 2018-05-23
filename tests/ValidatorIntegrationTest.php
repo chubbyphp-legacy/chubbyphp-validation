@@ -5,7 +5,7 @@ declare(strict_types=1);
 namespace Chubbyphp\Tests\Validation;
 
 use Chubbyphp\Validation\Constraint\AllConstraint;
-use Chubbyphp\Validation\Constraint\DateConstraint;
+use Chubbyphp\Validation\Constraint\DateTimeConstraint;
 use Chubbyphp\Validation\Constraint\NotBlankConstraint;
 use Chubbyphp\Validation\Constraint\NumericRangeConstraint;
 use Chubbyphp\Validation\Constraint\Symfony\ConstraintAdapter;
@@ -203,7 +203,7 @@ class ValidatorIntegrationTest extends TestCase
                                 new AllConstraint([
                                     new ConstraintAdapter(new NotNull(), new NotNullValidator()),
                                     new NotBlankConstraint(),
-                                    new DateConstraint('d.m.Y'),
+                                    new DateTimeConstraint('d.m.Y'),
                                 ]),
                             ])->getMapping(),
                     ];

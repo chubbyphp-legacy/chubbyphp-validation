@@ -9,7 +9,7 @@ use Chubbyphp\Validation\Error\ErrorInterface;
 use Chubbyphp\Validation\Validator\ValidatorContextInterface;
 use Chubbyphp\Validation\ValidatorInterface;
 
-final class DateConstraint implements ConstraintInterface
+final class DateTimeConstraint implements ConstraintInterface
 {
     /**
      * @var string

@@ -5,36 +5,36 @@ declare(strict_types=1);
 namespace Chubbyphp\Tests\Validation\Constraint;
 
 use Chubbyphp\Tests\Validation\MockForInterfaceTrait;
-use Chubbyphp\Validation\Constraint\DateConstraint;
+use Chubbyphp\Validation\Constraint\DateTimeConstraint;
 use Chubbyphp\Validation\Error\Error;
 use Chubbyphp\Validation\Validator\ValidatorContextInterface;
 use PHPUnit\Framework\MockObject\MockObject;
 use PHPUnit\Framework\TestCase;
 
 /**
- * @covers \Chubbyphp\Validation\Constraint\DateConstraint
+ * @covers \Chubbyphp\Validation\Constraint\DateTimeConstraint
  */
-final class DateConstraintTest extends TestCase
+final class DateTimeConstraintTest extends TestCase
 {
     use MockForInterfaceTrait;
 
     public function testWithNullValue()
     {
-        $constraint = new DateConstraint();
+        $constraint = new DateTimeConstraint();
 
         self::assertEquals([], $constraint->validate('date', null, $this->getContext()));
     }
 
     public function testWithBlankValue()
     {
-        $constraint = new DateConstraint();
+        $constraint = new DateTimeConstraint();
 
         self::assertEquals([], $constraint->validate('date', '', $this->getContext()));
     }
 
     public function testWithDate()
     {
-        $constraint = new DateConstraint('Y-m-d');
+        $constraint = new DateTimeConstraint('Y-m-d');
 
         $date = new \DateTime('2018-05-21');
         $date->setTime(0, 0, 0);
@@ -44,7 +44,7 @@ final class DateConstraintTest extends TestCase
 
     public function testWithDateTimeExpectedDate()
     {
-        $constraint = new DateConstraint('Y-m-d');
+        $constraint = new DateTimeConstraint('Y-m-d');
 
         $date = new \DateTime('2018-05-21');
         $date->setTime(2, 0, 0);
@@ -63,7 +63,7 @@ final class DateConstraintTest extends TestCase
 
     public function testWithDateTime()
     {
-        $constraint = new DateConstraint();
+        $constraint = new DateTimeConstraint();
 
         $date = new \DateTime('2018-05-21');
         $date->setTime(2, 0, 0);
@@ -73,7 +73,7 @@ final class DateConstraintTest extends TestCase
 
     public function testInvalidType()
     {
-        $constraint = new DateConstraint();
+        $constraint = new DateTimeConstraint();
 
         $error = new Error('date', 'constraint.date.invalidtype', ['type' => 'array']);
 
@@ -82,14 +82,14 @@ final class DateConstraintTest extends TestCase
 
     public function testWithDateString()
     {
-        $constraint = new DateConstraint('Y-m-d');
+        $constraint = new DateTimeConstraint('Y-m-d');
 
         self::assertEquals([], $constraint->validate('date', '2017-01-01', $this->getContext()));
     }
 
     public function testWithInvalidDateString()
     {
-        $constraint = new DateConstraint('Y-m-d');
+        $constraint = new DateTimeConstraint('Y-m-d');
 
         $error = new Error(
             'date',
@@ -106,14 +106,14 @@ final class DateConstraintTest extends TestCase
 
     public function testWithDateTimeString()
     {
-        $constraint = new DateConstraint();
+        $constraint = new DateTimeConstraint();
 
         self::assertEquals([], $constraint->validate('date', '2017-01-01 07:00:00', $this->getContext()));
     }
 
     public function testWithInvalidDateTimeString()
     {
-        $constraint = new DateConstraint();
+        $constraint = new DateTimeConstraint();
 
         $error = new Error(
             'date',
@@ -130,7 +130,7 @@ final class DateConstraintTest extends TestCase
 
     public function testWithInvalidDateTimeFormat()
     {
-        $constraint = new DateConstraint();
+        $constraint = new DateTimeConstraint();
 
         $error = new Error(
             'date',
