@@ -70,27 +70,6 @@ final class Validator implements ValidatorInterface
     }
 
     /**
-     * @param mixed                     $value
-     * @param ConstraintInterface[]     $constraints
-     * @param ValidatorContextInterface $context
-     *
-     * @return @return ErrorInterface[]
-     */
-    public function validateByConstraints($value, array $constraints, ValidatorContextInterface $context = null)
-    {
-        $context = $context ?? ValidatorContextBuilder::create()->getContext();
-
-        $errors = [];
-        foreach ($constraints as $constraint) {
-            foreach ($constraint->validate('', $value, $context, $this) as $error) {
-                $errors[] = $error;
-            }
-        }
-
-        return $errors;
-    }
-
-    /**
      * @param string $class
      *
      * @return ValidationMappingProviderInterface

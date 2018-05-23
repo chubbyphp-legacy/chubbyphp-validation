@@ -18,13 +18,4 @@ interface ValidatorInterface
      * @return ErrorInterface[]
      */
     public function validate($object, ValidatorContextInterface $context = null, string $path = '');
-
-    /**
-     * @param mixed                     $value
-     * @param ConstraintInterface[]     $constraints
-     * @param ValidatorContextInterface $context
-     *
-     * @return @return ErrorInterface[]
-     */
-    public function validateByConstraints($value, array $constraints, ValidatorContextInterface $context = null);
 }
