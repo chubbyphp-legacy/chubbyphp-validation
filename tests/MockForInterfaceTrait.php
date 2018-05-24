@@ -36,7 +36,7 @@ trait MockForInterfaceTrait
                         throw $call['exception'];
                     }
 
-                    if (isset($call['return'])) {
+                    if (array_key_exists('return', $call)) {
                         return $call['return'];
                     }
 
