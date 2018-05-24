@@ -55,13 +55,18 @@ final class Validator implements ValidatorInterface
         $objectMapping = $this->getObjectMapping($class);
 
         $errors = [];
-        foreach ($this->validateClass($context, $objectMapping->getValidationClassMapping($path), $path, $object) as $fieldError) {
-            $errors[] = $fieldError;
+        foreach ($this->validateClass(
+            $context,
+            $objectMapping->getValidationClassMapping($path),
+            $path,
+            $object
+        ) as $classError) {
+            $errors[] = $classError;
         }
 
-        foreach ($objectMapping->getValidationPropertyMappings($path) as $fieldMapping) {
-            foreach ($this->validateField($context, $fieldMapping, $path, $object) as $fieldError) {
-                $errors[] = $fieldError;
+        foreach ($objectMapping->getValidationPropertyMappings($path) as $propertyMapping) {
+            foreach ($this->validateProperty($context, $propertyMapping, $path, $object) as $propertyError) {
+                $errors[] = $propertyError;
             }
         }
 
@@ -136,32 +141,32 @@ final class Validator implements ValidatorInterface
 
     /**
      * @param ValidatorContextInterface          $context
-     * @param ValidationPropertyMappingInterface $fieldMapping
+     * @param ValidationPropertyMappingInterface $propertyMapping
      * @param string                             $path
      * @param $object
      *
      * @return ErrorInterface[]
      */
-    private function validateField(
+    private function validateProperty(
         ValidatorContextInterface $context,
-        ValidationPropertyMappingInterface $fieldMapping,
+        ValidationPropertyMappingInterface $propertyMapping,
         string $path,
         $object
     ): array {
-        if (!$this->isWithinGroup($context, $fieldMapping)) {
+        if (!$this->isWithinGroup($context, $propertyMapping)) {
             return [];
         }
 
-        $name = $fieldMapping->getName();
+        $name = $propertyMapping->getName();
 
         $subPath = $this->getSubPathByName($path, $name);
 
         $this->logger->info('deserialize: path {path}', ['path' => $subPath]);
 
-        $value = $fieldMapping->getAccessor()->getValue($object);
+        $value = $propertyMapping->getAccessor()->getValue($object);
 
         $errors = [];
-        foreach ($fieldMapping->getConstraints() as $constraint) {
+        foreach ($propertyMapping->getConstraints() as $constraint) {
             $this->logger->debug('deserialize: path {path}, constraint {constraint}', [
                 'path' => $subPath,
                 'constraint' => get_class($constraint),
