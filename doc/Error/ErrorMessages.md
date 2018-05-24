@@ -20,5 +20,9 @@ $errorMessages = new ErrorMessages(
 );
 
 $errorMessages->getMessages();
-// ['path.to.property' => ['constraint.constraint.invalidtype']]
+// [
+//     'path.to.property' => [
+//         'constraint.constraint.invalidtype'
+//      ]
+// ]
 ```
