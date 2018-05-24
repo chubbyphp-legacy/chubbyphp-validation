@@ -75,7 +75,7 @@ class ValidatorTest extends TestCase
             ConstraintInterface::class,
             [
                 'validate' => [
-                    ['return' => [$classError]],
+                    Call::create()->setReturn([$classError]),
                 ],
             ]
         );
@@ -84,7 +84,7 @@ class ValidatorTest extends TestCase
             ValidationClassMappingInterface::class,
             [
                 'getConstraints' => [
-                    ['arguments' => [], 'return' => [$classConstraint]],
+                    Call::create()->setArguments([])->setReturn([$classConstraint]),
                 ],
                 'getGroups' => [],
             ]
