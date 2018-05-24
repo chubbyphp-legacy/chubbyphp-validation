@@ -18,6 +18,10 @@ final class ValidationClassMappingBuilder implements ValidationClassMappingBuild
      */
     private $groups;
 
+    private function __construct()
+    {
+    }
+
     /**
      * @param string $name
      * @param array  $constraints
