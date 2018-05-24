@@ -11,6 +11,7 @@ use Chubbyphp\Validation\Mapping\ValidationMappingProviderInterface;
 use Chubbyphp\Validation\Mapping\ValidationMappingProviderRegistryInterface;
 use Chubbyphp\Validation\Mapping\ValidationPropertyMappingInterface;
 use Chubbyphp\Validation\Validator;
+use Chubbyphp\Validation\ValidatorLogicException;
 use PHPUnit\Framework\TestCase;
 use Psr\Log\LoggerInterface;
 
@@ -18,18 +19,54 @@ class ValidatorTest extends TestCase
 {
     use MockForInterfaceTrait;
 
+    public function testValidateMissingMapping()
+    {
+        $model = $this->getModel();
+        $class = get_class($model);
+
+        $exceptionMessage = sprintf('There is no mapping for class: "%s"', $class);
+
+        self::expectException(ValidatorLogicException::class);
+        self::expectExceptionMessage($exceptionMessage);
+
+        /** @var ValidationMappingProviderRegistryInterface $validationMappingProviderRegistry */
+        $validationMappingProviderRegistry = $this->getMockForInterface(
+            ValidationMappingProviderRegistryInterface::class,
+            [
+                'provideMapping' => [
+                    Call::create()
+                        ->setArguments([$class])
+                        ->setException(ValidatorLogicException::createMissingMapping($class)),
+                ],
+            ]
+        );
+
+        $logger = $this->getMockForInterface(
+            LoggerInterface::class,
+            [
+                'error' => [
+                    Call::create()->setArguments(['validate: {exception}', ['exception' => $exceptionMessage]]),
+                ],
+            ]
+        );
+
+        $validator = new Validator($validationMappingProviderRegistry, $logger);
+        $validator->validate($model);
+    }
+
     public function testValidateWithoutContext()
     {
         $model = $this->getModel();
+        $class = get_class($model);
 
         $classError = $this->getMockForInterface(
             ErrorInterface::class,
             [
                 'getKey' => [
-                    ['return' => 'key'],
+                    Call::create()->setReturn('key'),
                 ],
                 'getArguments' => [
-                    ['return' => ['key' => 'value']],
+                    Call::create()->setReturn(['key' => 'value']),
                 ],
             ]
         );
@@ -57,10 +94,10 @@ class ValidatorTest extends TestCase
             ErrorInterface::class,
             [
                 'getKey' => [
-                    ['return' => 'key'],
+                    Call::create()->setReturn('key'),
                 ],
                 'getArguments' => [
-                    ['return' => ['key' => 'value']],
+                    Call::create()->setReturn(['key' => 'value']),
                 ],
             ]
         );
@@ -104,7 +141,7 @@ class ValidatorTest extends TestCase
             ValidationMappingProviderRegistryInterface::class,
             [
                 'provideMapping' => [
-                    ['arguments' => [get_class($model)], 'return' => $mapping],
+                    ['arguments' => [$class], 'return' => $mapping],
                 ],
             ]
         );

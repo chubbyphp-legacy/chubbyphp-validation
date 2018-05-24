@@ -25,22 +25,37 @@ trait MockForInterfaceTrait
                 ->willReturnCallback(function () use (&$calls) {
                     $call = array_shift($calls);
 
-                    if (isset($call['arguments'])) {
+                    if (!$call instanceof Call) {
+                        $callObject = Call::create();
+                        if (isset($call['arguments'])) {
+                            $callObject->setArguments($call['arguments']);
+                        }
+
+                        if (isset($call['exception'])) {
+                            $callObject->setException($call['exception']);
+                        }
+
+                        if (array_key_exists('return', $call)) {
+                            $callObject->setReturn($call['return']);
+                        }
+
+                        $call = $callObject;
+                    }
+
+                    if ($call->hasArguments()) {
                         $arguments = func_get_args();
-                        foreach ($call['arguments'] as $i => $argument) {
+                        foreach ($call->getArguments() as $i => $argument) {
                             self::assertSame($argument, $arguments[$i]);
                         }
                     }
 
-                    if (isset($call['exception'])) {
-                        throw $call['exception'];
+                    if ($call->hasException()) {
+                        throw $call->getException();
                     }
 
-                    if (array_key_exists('return', $call)) {
-                        return $call['return'];
+                    if ($call->hasReturn()) {
+                        return $call->getReturn();
                     }
-
-                    return null;
                 });
         };
 
@@ -49,5 +64,133 @@ trait MockForInterfaceTrait
         }
 
         return $mock;
+    }
+}
+
+class Call
+{
+    /**
+     * @var bool
+     */
+    private $hasArguments = false;
+
+    /**
+     * @var array
+     */
+    private $arguments;
+
+    /**
+     * @var bool
+     */
+    private $hasException = false;
+
+    /**
+     * @var \Exception|null
+     */
+    private $exception;
+
+    /**
+     * @var bool
+     */
+    private $hasReturn = false;
+
+    /**
+     * @var mixed
+     */
+    private $return;
+
+    /**
+     * @return self
+     */
+    public static function create(): self
+    {
+        return new self();
+    }
+
+    /**
+     * @param array $arguments
+     *
+     * @return self
+     */
+    public function setArguments(array $arguments): self
+    {
+        $this->hasArguments = true;
+        $this->arguments = $arguments;
+
+        return $this;
+    }
+
+    /**
+     * @param \Exception|null $exception
+     *
+     * @return self
+     */
+    public function setException(\Exception $exception): self
+    {
+        $this->hasException = true;
+        $this->exception = $exception;
+
+        return $this;
+    }
+
+    /**
+     * @param mixed $return
+     *
+     * @return self
+     */
+    public function setReturn($return)
+    {
+        $this->hasReturn = true;
+        $this->return = $return;
+
+        return $this;
+    }
+
+    /**
+     * @return bool
+     */
+    public function hasArguments(): bool
+    {
+        return $this->hasArguments;
+    }
+
+    /**
+     * @return bool
+     */
+    public function hasException(): bool
+    {
+        return $this->hasException;
+    }
+
+    /**
+     * @return bool
+     */
+    public function hasReturn(): bool
+    {
+        return $this->hasReturn;
+    }
+
+    /**
+     * @return array
+     */
+    public function getArguments(): array
+    {
+        return $this->arguments;
+    }
+
+    /**
+     * @return \Exception|null
+     */
+    public function getException()
+    {
+        return $this->exception;
+    }
+
+    /**
+     * @return mixed
+     */
+    public function getReturn()
+    {
+        return $this->return;
     }
 }
