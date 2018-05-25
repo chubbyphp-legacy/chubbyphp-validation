@@ -19,7 +19,7 @@ class ValidatorTest extends TestCase
 {
     use MockForInterfaceTrait;
 
-    public function testValidateMissingMapping()
+    public function testValidateMissingMappingExpectValidatorLogicException()
     {
         $model = $this->getModel();
         $class = get_class($model);
@@ -55,7 +55,7 @@ class ValidatorTest extends TestCase
         $validator->validate($model);
     }
 
-    public function testValidateWithoutContext()
+    public function testValidateWithClassMappingAndWithPropertyMappingWithoutContext()
     {
         $model = $this->getModel();
         $class = get_class($model);
@@ -199,6 +199,42 @@ class ValidatorTest extends TestCase
 
         self::assertEquals($classError, $errors[0]);
         self::assertEquals($propertyError, $errors[1]);
+    }
+
+    public function testValidateWithoutClassMappingAndWithoutPropertyMappingWithoutContext()
+    {
+        $model = $this->getModel();
+        $class = get_class($model);
+
+        /** @var ValidationMappingProviderInterface $mapping */
+        $mapping = $this->getMockForInterface(
+            ValidationMappingProviderInterface::class,
+            [
+                'getValidationClassMapping' => [
+                    Call::create()->setArguments([''])->setReturn(null),
+                ],
+                'getValidationPropertyMappings' => [
+                    Call::create()->setArguments([''])->setReturn([]),
+                ],
+            ]
+        );
+
+        /** @var ValidationMappingProviderRegistryInterface $validationMappingProviderRegistry */
+        $validationMappingProviderRegistry = $this->getMockForInterface(
+            ValidationMappingProviderRegistryInterface::class,
+            [
+                'provideMapping' => [
+                    Call::create()->setArguments([$class])->setReturn($mapping),
+                ],
+            ]
+        );
+
+        /** @var LoggerInterface $logger */
+        $logger = $this->getMockForInterface(LoggerInterface::class, []);
+
+        $validator = new Validator($validationMappingProviderRegistry, $logger);
+
+        self::assertCount(0, $validator->validate($model));
     }
 
     private function getModel()
