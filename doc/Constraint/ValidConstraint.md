@@ -4,7 +4,7 @@
 <?php
 
 use Chubbyphp\Validation\Constraint\ValidConstraint;
-use Chubbyphp\Validation\Validator\ValidatorContextInterface;
+use Chubbyphp\Validation\ValidatorContextInterface;
 use Chubbyphp\Validation\ValidatorInterface;
 
 $constraint = new ValidConstraint();

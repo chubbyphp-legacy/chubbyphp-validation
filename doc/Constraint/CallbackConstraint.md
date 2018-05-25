@@ -5,7 +5,7 @@
 
 use Chubbyphp\Validation\Constraint\CallbackConstraint;
 use Chubbyphp\Validation\Error\Error;
-use Chubbyphp\Validation\Validator\ValidatorContextInterface;
+use Chubbyphp\Validation\ValidatorContextInterface;
 use Chubbyphp\Validation\ValidatorInterface;
 
 $constraint = new CallbackConstraint(

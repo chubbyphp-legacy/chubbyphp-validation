@@ -7,7 +7,7 @@ namespace Chubbyphp\Tests\Validation\Constraint;
 use Chubbyphp\Tests\Validation\MockForInterfaceTrait;
 use Chubbyphp\Validation\Constraint\ValidConstraint;
 use Chubbyphp\Validation\Error\Error;
-use Chubbyphp\Validation\Validator\ValidatorContextInterface;
+use Chubbyphp\Validation\ValidatorContextInterface;
 use Chubbyphp\Validation\ValidatorInterface;
 use Chubbyphp\Validation\ValidatorLogicException;
 use Doctrine\Common\Collections\ArrayCollection;

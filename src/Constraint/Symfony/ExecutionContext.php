@@ -6,7 +6,7 @@ namespace Chubbyphp\Validation\Constraint\Symfony;
 
 use Chubbyphp\Validation\Error\Error;
 use Chubbyphp\Validation\Error\ErrorInterface;
-use Chubbyphp\Validation\Validator\ValidatorContextInterface;
+use Chubbyphp\Validation\ValidatorContextInterface;
 use Symfony\Component\Validator\Constraint;
 use Symfony\Component\Validator\ConstraintViolationList;
 use Symfony\Component\Validator\ConstraintViolationListInterface;

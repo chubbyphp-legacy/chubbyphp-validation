@@ -10,7 +10,7 @@ use Chubbyphp\Validation\Mapping\ValidationClassMappingInterface;
 use Chubbyphp\Validation\Mapping\ValidationMappingProviderInterface;
 use Chubbyphp\Validation\Mapping\ValidationMappingProviderRegistryInterface;
 use Chubbyphp\Validation\Mapping\ValidationPropertyMappingInterface;
-use Chubbyphp\Validation\Validator\ValidatorContextInterface;
+use Chubbyphp\Validation\ValidatorContextInterface;
 use Chubbyphp\Validation\Validator;
 use Chubbyphp\Validation\ValidatorLogicException;
 use PHPUnit\Framework\TestCase;

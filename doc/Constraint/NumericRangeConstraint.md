@@ -4,7 +4,7 @@
 <?php
 
 use Chubbyphp\Validation\Constraint\NumericRangeConstraint;
-use Chubbyphp\Validation\Validator\ValidatorContextInterface;
+use Chubbyphp\Validation\ValidatorContextInterface;
 
 $constraint = new NumericRangeConstraint(1, 2);
 

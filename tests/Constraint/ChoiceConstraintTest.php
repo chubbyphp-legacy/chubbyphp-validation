@@ -7,7 +7,7 @@ namespace Chubbyphp\Tests\Validation\Constraint;
 use Chubbyphp\Tests\Validation\MockForInterfaceTrait;
 use Chubbyphp\Validation\Constraint\ChoiceConstraint;
 use Chubbyphp\Validation\Error\Error;
-use Chubbyphp\Validation\Validator\ValidatorContextInterface;
+use Chubbyphp\Validation\ValidatorContextInterface;
 use PHPUnit\Framework\MockObject\MockObject;
 use PHPUnit\Framework\TestCase;
 

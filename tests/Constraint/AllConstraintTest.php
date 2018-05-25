@@ -8,7 +8,7 @@ use Chubbyphp\Tests\Validation\MockForInterfaceTrait;
 use Chubbyphp\Validation\Constraint\ConstraintInterface;
 use Chubbyphp\Validation\Constraint\AllConstraint;
 use Chubbyphp\Validation\Error\Error;
-use Chubbyphp\Validation\Validator\ValidatorContextInterface;
+use Chubbyphp\Validation\ValidatorContextInterface;
 use Chubbyphp\Validation\ValidatorInterface;
 use PHPUnit\Framework\MockObject\MockObject;
 use PHPUnit\Framework\TestCase;

@@ -11,8 +11,6 @@ use Chubbyphp\Validation\Mapping\ValidationGroupsInterface;
 use Chubbyphp\Validation\Mapping\ValidationPropertyMappingInterface;
 use Chubbyphp\Validation\Mapping\ValidationMappingProviderInterface;
 use Chubbyphp\Validation\Mapping\ValidationMappingProviderRegistryInterface;
-use Chubbyphp\Validation\Validator\ValidatorContextBuilder;
-use Chubbyphp\Validation\Validator\ValidatorContextInterface;
 use Psr\Log\LoggerInterface;
 use Psr\Log\NullLogger;
 

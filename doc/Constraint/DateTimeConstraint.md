@@ -4,7 +4,7 @@
 <?php
 
 use Chubbyphp\Validation\Constraint\DateTimeConstraint;
-use Chubbyphp\Validation\Validator\ValidatorContextInterface;
+use Chubbyphp\Validation\ValidatorContextInterface;
 
 /** @var ValidatorContextInterface $context */
 $context = ...;

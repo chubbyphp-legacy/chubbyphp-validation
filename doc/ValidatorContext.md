@@ -3,7 +3,7 @@
 ```php
 <?php
 
-use Chubbyphp\Validation\Validator\ValidatorContext;
+use Chubbyphp\Validation\ValidatorContext;
 
 $request = ...;
 

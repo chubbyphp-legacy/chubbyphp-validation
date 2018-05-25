@@ -6,7 +6,7 @@
 use Chubbyphp\Validation\Constraint\AllConstraint;
 use Chubbyphp\Validation\Constraint\NotNullConstraint;
 use Chubbyphp\Validation\Constraint\NotBlankConstraint;
-use Chubbyphp\Validation\Validator\ValidatorContextInterface;
+use Chubbyphp\Validation\ValidatorContextInterface;
 
 $constraint = new AllConstraint([
     new NotNullConstraint(),

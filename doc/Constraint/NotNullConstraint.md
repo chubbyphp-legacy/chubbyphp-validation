@@ -4,7 +4,7 @@
 <?php
 
 use Chubbyphp\Validation\Constraint\NotNullConstraint;
-use Chubbyphp\Validation\Validator\ValidatorContextInterface;
+use Chubbyphp\Validation\ValidatorContextInterface;
 
 $constraint = new NotNullConstraint();
 

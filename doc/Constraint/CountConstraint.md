@@ -4,7 +4,7 @@
 <?php
 
 use Chubbyphp\Validation\Constraint\CountConstraint;
-use Chubbyphp\Validation\Validator\ValidatorContextInterface;
+use Chubbyphp\Validation\ValidatorContextInterface;
 
 $constraint = new CountConstraint(1, 2);
 

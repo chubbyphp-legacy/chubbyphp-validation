@@ -4,7 +4,7 @@
 <?php
 
 use Chubbyphp\Validation\Constraint\ChoiceConstraint;
-use Chubbyphp\Validation\Validator\ValidatorContextInterface;
+use Chubbyphp\Validation\ValidatorContextInterface;
 
 $constraint = new ChoiceConstraint(['active', 'inactive']);
 

@@ -6,7 +6,7 @@ namespace Chubbyphp\Tests\Validation\Constraint;
 
 use Chubbyphp\Tests\Validation\MockForInterfaceTrait;
 use Chubbyphp\Validation\Constraint\Symfony\ConstraintAdapter;
-use Chubbyphp\Validation\Validator\ValidatorContextInterface;
+use Chubbyphp\Validation\ValidatorContextInterface;
 use PHPUnit\Framework\MockObject\MockObject;
 use PHPUnit\Framework\TestCase;
 use Symfony\Component\Validator\Constraint;

@@ -6,7 +6,7 @@ namespace Chubbyphp\Validation\Constraint;
 
 use Chubbyphp\Validation\Error\Error;
 use Chubbyphp\Validation\Error\ErrorInterface;
-use Chubbyphp\Validation\Validator\ValidatorContextInterface;
+use Chubbyphp\Validation\ValidatorContextInterface;
 use Chubbyphp\Validation\ValidatorInterface;
 
 final class NumericRangeConstraint implements ConstraintInterface

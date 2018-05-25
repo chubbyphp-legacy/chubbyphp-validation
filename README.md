@@ -81,7 +81,7 @@ composer require chubbyphp/chubbyphp-validation "~3.0"
 <?php
 
 use Chubbyphp\Validation\Mapping\ValidationMappingProviderRegistry;
-use Chubbyphp\Validation\Validator\ValidatorContextInterface;
+use Chubbyphp\Validation\ValidatorContextInterface;
 use Chubbyphp\Validation\Validator;
 
 $logger = ...;
@@ -141,5 +141,5 @@ Dominik Zogg 2018
 
 [13]: doc/Provider/ValidationProvider.md
 
-[14]: doc/Validator/ValidatorContext.md
-[15]: doc/Validator/ValidatorContextBuilder.md
+[14]: doc/ValidatorContext.md
+[15]: doc/ValidatorContextBuilder.md

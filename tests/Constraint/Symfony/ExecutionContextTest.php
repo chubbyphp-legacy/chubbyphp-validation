@@ -8,7 +8,7 @@ use Chubbyphp\Tests\Validation\MockForInterfaceTrait;
 use Chubbyphp\Validation\Constraint\Symfony\ExecutionContext;
 use Chubbyphp\Validation\Constraint\Symfony\NotImplementedException;
 use Chubbyphp\Validation\Error\ErrorInterface;
-use Chubbyphp\Validation\Validator\ValidatorContextInterface;
+use Chubbyphp\Validation\ValidatorContextInterface;
 use PHPUnit\Framework\MockObject\MockObject;
 use PHPUnit\Framework\TestCase;
 use Symfony\Component\Validator\Constraint;

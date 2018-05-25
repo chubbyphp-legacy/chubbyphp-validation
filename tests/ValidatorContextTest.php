@@ -2,13 +2,13 @@
 
 declare(strict_types=1);
 
-namespace Chubbyphp\Tests\Validation\Validator;
+namespace Chubbyphp\Tests\Validation;
 
-use Chubbyphp\Validation\Validator\ValidatorContext;
+use Chubbyphp\Validation\ValidatorContext;
 use PHPUnit\Framework\TestCase;
 
 /**
- * @covers \Chubbyphp\Validation\Validator\ValidatorContext
+ * @covers \Chubbyphp\Validation\ValidatorContext
  */
 class ValidatorContextTest extends TestCase
 {

@@ -2,7 +2,7 @@
 
 declare(strict_types=1);
 
-namespace Chubbyphp\Validation\Validator;
+namespace Chubbyphp\Validation;
 
 interface ValidatorContextBuilderInterface
 {
