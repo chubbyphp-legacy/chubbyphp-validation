@@ -52,6 +52,10 @@ composer require chubbyphp/chubbyphp-validation "~3.0"
  * [NumericConstraint][112]
  * [NumericRangeConstraint][112]
  * [ValidConstraint][113]
+ 
+#### Adapters 
+ 
+ * [ConstraintAdapter (Symfony)][114]
 
 ### Error
 
@@ -127,6 +131,8 @@ Dominik Zogg 2018
 [112]: doc/Constraint/NumericConstraint.md
 [112]: doc/Constraint/NumericRangeConstraint.md
 [113]: doc/Constraint/ValidConstraint.md
+
+[114]: doc/Constraint/Symfony/ConstraintAdapter.md
 
 [4]: doc/Error/Error.md
 [5]: doc/Error/ErrorMessages.md
