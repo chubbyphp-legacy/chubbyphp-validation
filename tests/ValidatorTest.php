@@ -41,6 +41,7 @@ class ValidatorTest extends TestCase
             ]
         );
 
+        /** @var LoggerInterface $logger */
         $logger = $this->getMockForInterface(
             LoggerInterface::class,
             [
@@ -59,6 +60,7 @@ class ValidatorTest extends TestCase
         $model = $this->getModel();
         $class = get_class($model);
 
+        /** @var ErrorInterface $classError */
         $classError = $this->getMockForInterface(
             ErrorInterface::class,
             [
@@ -71,6 +73,7 @@ class ValidatorTest extends TestCase
             ]
         );
 
+        /** @var ConstraintInterface $classConstraint */
         $classConstraint = $this->getMockForInterface(
             ConstraintInterface::class,
             [
@@ -80,16 +83,17 @@ class ValidatorTest extends TestCase
             ]
         );
 
+        /** @var ValidationClassMappingInterface $classMapping */
         $classMapping = $this->getMockForInterface(
             ValidationClassMappingInterface::class,
             [
                 'getConstraints' => [
                     Call::create()->setArguments([])->setReturn([$classConstraint]),
                 ],
-                'getGroups' => [],
             ]
         );
 
+        /** @var ErrorInterface $propertyError */
         $propertyError = $this->getMockForInterface(
             ErrorInterface::class,
             [
@@ -102,36 +106,38 @@ class ValidatorTest extends TestCase
             ]
         );
 
+        /** @var ConstraintInterface $propertyConstraint */
         $propertyConstraint = $this->getMockForInterface(
             ConstraintInterface::class,
             [
                 'validate' => [
-                    ['return' => [$propertyError]],
+                    Call::create()->setReturn([$propertyError]),
                 ],
             ]
         );
 
+        /** @var ValidationPropertyMappingInterface $propertyMapping */
         $propertyMapping = $this->getMockForInterface(
             ValidationPropertyMappingInterface::class,
             [
                 'getName' => [
-                    ['arguments' => [], 'return' => 'name'],
+                    Call::create()->setReturn('name'),
                 ],
                 'getConstraints' => [
-                    ['arguments' => [], 'return' => [$propertyConstraint]],
+                    Call::create()->setReturn([$propertyConstraint]),
                 ],
-                'getGroups' => [],
             ]
         );
 
+        /** @var ValidationMappingProviderInterface $mapping */
         $mapping = $this->getMockForInterface(
             ValidationMappingProviderInterface::class,
             [
                 'getValidationClassMapping' => [
-                    ['arguments' => [''], 'return' => $classMapping],
+                    Call::create()->setArguments([''])->setReturn($classMapping),
                 ],
                 'getValidationPropertyMappings' => [
-                    ['arguments' => [''], 'return' => [$propertyMapping]],
+                    Call::create()->setArguments([''])->setReturn([$propertyMapping]),
                 ],
             ]
         );
@@ -141,51 +147,46 @@ class ValidatorTest extends TestCase
             ValidationMappingProviderRegistryInterface::class,
             [
                 'provideMapping' => [
-                    ['arguments' => [$class], 'return' => $mapping],
+                    Call::create()->setArguments([$class])->setReturn($mapping),
                 ],
             ]
         );
 
+        /** @var LoggerInterface $logger */
         $logger = $this->getMockForInterface(
             LoggerInterface::class,
             [
                 'info' => [
-                    ['arguments' => [
-                        'deserialize: path {path}',
-                        ['path' => ''],
-                    ]],
-                    ['arguments' => [
-                        'deserialize: path {path}',
-                        ['path' => 'name'],
-                    ]],
+                    Call::create()->setArguments(['deserialize: path {path}', ['path' => '']]),
+                    Call::create()->setArguments(['deserialize: path {path}', ['path' => 'name']]),
                 ],
                 'debug' => [
-                    ['arguments' => [
+                    Call::create()->setArguments([
                         'deserialize: path {path}, constraint {constraint}',
                         ['path' => '', 'constraint' => get_class($classConstraint)],
-                    ]],
-                    ['arguments' => [
+                    ]),
+                    Call::create()->setArguments([
                         'deserialize: path {path}, constraint {constraint}',
                         ['path' => 'name', 'constraint' => get_class($propertyConstraint)],
-                    ]],
+                    ]),
                 ],
                 'notice' => [
-                    ['arguments' => [
+                    Call::create()->setArguments([
                         'deserialize: path {path}, constraint {constraint}, error {error}',
                         [
                             'path' => '',
                             'constraint' => get_class($classConstraint),
                             'error' => ['key' => 'key', 'arguments' => ['key' => 'value']],
                         ],
-                    ]],
-                    ['arguments' => [
+                    ]),
+                    Call::create()->setArguments([
                         'deserialize: path {path}, constraint {constraint}, error {error}',
                         [
                             'path' => 'name',
                             'constraint' => get_class($propertyConstraint),
                             'error' => ['key' => 'key', 'arguments' => ['key' => 'value']],
                         ],
-                    ]],
+                    ]),
                 ],
             ]
         );
