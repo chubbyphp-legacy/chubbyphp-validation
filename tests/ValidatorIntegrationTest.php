@@ -180,33 +180,31 @@ class ValidatorIntegrationTest extends TestCase
                 public function getValidationPropertyMappings(string $path, string $type = null): array
                 {
                     return [
-                        ValidationPropertyMappingBuilder::create('notBlank',
-                            [
-                                new ConstraintAdapter(new NotBlank(), new NotBlankValidator()),
-                            ])->getMapping(),
-                        ValidationPropertyMappingBuilder::create('numeric', [new NumericRangeConstraint(6)])
-                            ->getMapping(),
-                        ValidationPropertyMappingBuilder::create('callback',
-                            [
-                                new ConstraintAdapter(
-                                    new Callback([
-                                        'callback' => function ($object, ExecutionContextInterface $context) {
-                                            if ('callback' === $object) {
-                                                $context->addViolation('callback');
-                                            }
-                                        },
-                                    ]),
-                                    new CallbackValidator()
-                                ),
-                            ])->getMapping(),
-                        ValidationPropertyMappingBuilder::create('all',
-                            [
-                                new AllConstraint([
-                                    new ConstraintAdapter(new NotNull(), new NotNullValidator()),
-                                    new NotBlankConstraint(),
-                                    new DateTimeConstraint('d.m.Y'),
+                        ValidationPropertyMappingBuilder::create('notBlank', [
+                            new ConstraintAdapter(new NotBlank(), new NotBlankValidator()),
+                        ])->getMapping(),
+                        ValidationPropertyMappingBuilder::create('numeric', [
+                            new NumericRangeConstraint(6)
+                        ])->getMapping(),
+                        ValidationPropertyMappingBuilder::create('callback', [
+                            new ConstraintAdapter(
+                                new Callback([
+                                    'callback' => function ($object, ExecutionContextInterface $context) {
+                                        if ('callback' === $object) {
+                                            $context->addViolation('callback');
+                                        }
+                                    },
                                 ]),
-                            ])->getMapping(),
+                                new CallbackValidator()
+                            ),
+                        ])->getMapping(),
+                        ValidationPropertyMappingBuilder::create('all', [
+                            new AllConstraint([
+                                new ConstraintAdapter(new NotNull(), new NotNullValidator()),
+                                new NotBlankConstraint(),
+                                new DateTimeConstraint('d.m.Y'),
+                            ]),
+                        ])->getMapping(),
                     ];
                 }
             },
