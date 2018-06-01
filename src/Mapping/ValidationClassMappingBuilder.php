@@ -23,7 +23,7 @@ final class ValidationClassMappingBuilder implements ValidationClassMappingBuild
     }
 
     /**
-     * @param array  $constraints
+     * @param array $constraints
      *
      * @return ValidationClassMappingBuilderInterface
      */

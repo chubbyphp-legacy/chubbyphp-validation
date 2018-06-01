@@ -9,9 +9,9 @@ use Chubbyphp\Validation\Error\ErrorInterface;
 interface ValidatorInterface
 {
     /**
-     * @param object                    $object
-     * @param ValidatorContextInterface $context
-     * @param string                    $path
+     * @param object                         $object
+     * @param ValidatorContextInterface|null $context
+     * @param string                         $path
      *
      * @return ErrorInterface[]
      */

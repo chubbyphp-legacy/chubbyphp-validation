@@ -9,7 +9,7 @@ use Chubbyphp\Validation\Constraint\ConstraintInterface;
 interface ValidationClassMappingBuilderInterface
 {
     /**
-     * @param ConstraintInterface[]
+     * @param ConstraintInterface[] $constraints
      *
      * @return self
      */

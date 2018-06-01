@@ -184,7 +184,7 @@ class ValidatorIntegrationTest extends TestCase
                             new ConstraintAdapter(new NotBlank(), new NotBlankValidator()),
                         ])->getMapping(),
                         ValidationPropertyMappingBuilder::create('numeric', [
-                            new NumericRangeConstraint(6)
+                            new NumericRangeConstraint(6),
                         ])->getMapping(),
                         ValidationPropertyMappingBuilder::create('callback', [
                             new ConstraintAdapter(
