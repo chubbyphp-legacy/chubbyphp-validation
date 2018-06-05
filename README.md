@@ -71,6 +71,79 @@ composer require chubbyphp/chubbyphp-validation "~3.0"
  * [ValidationMappingProviderRegistry][10]
  * [ValidationPropertyMapping][11]
  * [ValidationPropertyMappingBuilder][12]
+ 
+#### ValidationMappingProvider
+
+```php
+<?php
+
+namespace MyProject\Model;
+
+final class Model
+{
+    /**
+     * @var \DateTime[]
+     */
+    private $dates;
+}
+```
+ 
+```php
+<?php
+
+namespace MyProject\Mapping\Validation;
+
+use Chubbyphp\Validation\Constraint\AllConstraint;
+use Chubbyphp\Validation\Constraint\DateTimeConstraint;
+use Chubbyphp\Validation\Constraint\NotBlankConstraint;
+use Chubbyphp\Validation\Constraint\NotNullConstraint;
+use Chubbyphp\Validation\Mapping\ValidationClassMappingBuilder;
+use Chubbyphp\Validation\Mapping\ValidationClassMappingInterface;
+use Chubbyphp\Validation\Mapping\ValidationMappingProviderInterface;
+use Chubbyphp\Validation\Mapping\ValidationPropertyMappingBuilder;
+use Chubbyphp\Validation\Mapping\ValidationPropertyMappingInterface;
+use MyProject\Model\Model;
+
+final class ModelValidationMappingProvider implements ValidationMappingProviderInterface
+{
+    /**
+     * @return string
+     */
+    public function getClass(): string
+    {
+        return Model::class;
+    }
+
+    /**
+     * @param string $path
+     *
+     * @return ValidationClassMappingInterface
+     */
+    public function getValidationClassMapping(string $path): ValidationClassMappingInterface
+    {
+        return ValidationClassMappingBuilder::create([])->getMapping();
+    }
+
+    /**
+     * @param string      $path
+     * @param string|null $type
+     *
+     * @return ValidationPropertyMappingInterface[]
+     */
+    public function getValidationPropertyMappings(string $path, string $type = null): array
+    {
+        return [
+            ValidationPropertyMappingBuilder::create('all', [
+                new AllConstraint([
+                    new NotNullConstraint(),
+                    new NotBlankConstraint(),
+                    new DateTimeConstraint('d.m.Y'),
+                ]),
+            ])->getMapping(),
+        ];
+    }
+} 
+```
 
 ### Provider
 
@@ -84,15 +157,19 @@ composer require chubbyphp/chubbyphp-validation "~3.0"
 ```php
 <?php
 
+namespace MyProject;
+
 use Chubbyphp\Validation\Mapping\ValidationMappingProviderRegistry;
 use Chubbyphp\Validation\ValidatorContextInterface;
 use Chubbyphp\Validation\Validator;
+use MyProject\Mapping\Validation\ModelValidationMappingProvider;
+use MyProject\Model\Model;
 
 $logger = ...;
 
 $validator = new Validator(
     new ValidationMappingProviderRegistry([
-        new ModelMapping()
+        new ModelValidationMappingProvider()
     ]),
     $logger
 );
@@ -102,7 +179,7 @@ $model = new Model;
 /** @var ValidatorContextInterface $context */
 $context = ...;
 
-$model = $validator->validate(
+$errors = $validator->validate(
     $model,
     $context
 );
