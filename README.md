@@ -72,7 +72,7 @@ composer require chubbyphp/chubbyphp-validation "~3.0"
  * [ValidationPropertyMapping][11]
  * [ValidationPropertyMappingBuilder][12]
  
-#### ValidationMappingProvider
+#### ValidationMappingProvider
 
 ```php
 <?php
@@ -133,7 +133,7 @@ final class ModelValidationMappingProvider implements ValidationMappingProviderI
     public function getValidationPropertyMappings(string $path, string $type = null): array
     {
         return [
-            ValidationPropertyMappingBuilder::create('all', [
+            ValidationPropertyMappingBuilder::create('dates', [
                 new AllConstraint([
                     new NotNullConstraint(),
                     new NotBlankConstraint(),
