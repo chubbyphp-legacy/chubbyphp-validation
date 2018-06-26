@@ -42,7 +42,7 @@ final class ErrorMessages implements ErrorMessagesInterface
     }
 
     /**
-     * @return string[]
+     * @return array
      */
     public function getMessages(): array
     {

@@ -94,7 +94,7 @@ final class Validator implements ValidatorInterface
      * @param ValidatorContextInterface            $context
      * @param ValidationClassMappingInterface|null $classMapping
      * @param string                               $path
-     * @param                                      $object
+     * @param object                               $object
      *
      * @return ErrorInterface[]
      */
@@ -132,7 +132,7 @@ final class Validator implements ValidatorInterface
      * @param ValidatorContextInterface          $context
      * @param ValidationPropertyMappingInterface $propertyMapping
      * @param string                             $path
-     * @param $object
+     * @param object                             $object
      *
      * @return ErrorInterface[]
      */
