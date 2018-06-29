@@ -17,7 +17,7 @@ trait MockForInterfaceTrait
     private function getMockForInterface(string $interface, array $methods = []): MockObject
     {
         /** @var MockObject $mock */
-        $mock = $this->getMockBuilder($interface)->getMockForAbstractClass();
+        $mock = $this->getMockBuilder($interface)->setMethods(array_keys($methods))->getMockForAbstractClass();
 
         $methodMock = function ($method, $calls) use ($mock) {
             $mock->expects(self::exactly(count($calls)))
