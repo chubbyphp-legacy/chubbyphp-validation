@@ -51,11 +51,12 @@ composer require chubbyphp/chubbyphp-validation "~3.0"
  * [NotNullConstraint][110]
  * [NumericConstraint][112]
  * [NumericRangeConstraint][112]
- * [ValidConstraint][113]
+ * [TypeConstraint][113]
+ * [ValidConstraint][114]
  
 #### Adapters 
  
- * [ConstraintAdapter (Symfony)][114]
+ * [ConstraintAdapter (Symfony)][115]
 
 ### Error
 
@@ -207,9 +208,10 @@ Dominik Zogg 2018
 [110]: doc/Constraint/NotNullConstraint.md
 [112]: doc/Constraint/NumericConstraint.md
 [112]: doc/Constraint/NumericRangeConstraint.md
-[113]: doc/Constraint/ValidConstraint.md
+[113]: doc/Constraint/TypeConstraint.md
+[114]: doc/Constraint/ValidConstraint.md
 
-[114]: doc/Constraint/Symfony/ConstraintAdapter.md
+[115]: doc/Constraint/Symfony/ConstraintAdapter.md
 
 [4]: doc/Error/Error.md
 [5]: doc/Error/ErrorMessages.md
