@@ -4,7 +4,7 @@ declare(strict_types=1);
 
 namespace Chubbyphp\Tests\Validation\Constraint;
 
-use Chubbyphp\Tests\Validation\MockForInterfaceTrait;
+use Chubbyphp\Mock\MockByCallsTrait;
 use Chubbyphp\Validation\Constraint\ConstraintInterface;
 use Chubbyphp\Validation\Constraint\AllConstraint;
 use Chubbyphp\Validation\Error\Error;
@@ -18,7 +18,7 @@ use PHPUnit\Framework\TestCase;
  */
 final class AllConstraintTest extends TestCase
 {
-    use MockForInterfaceTrait;
+    use MockByCallsTrait;
 
     public function testWithNullValue()
     {
@@ -65,7 +65,7 @@ final class AllConstraintTest extends TestCase
     private function getValidator(): ValidatorInterface
     {
         /** @var ValidatorInterface|MockObject $validator */
-        $validator = $this->getMockForInterface(ValidatorInterface::class);
+        $validator = $this->getMockByCalls(ValidatorInterface::class);
 
         return $validator;
     }
@@ -108,7 +108,7 @@ final class AllConstraintTest extends TestCase
     private function getContext(): ValidatorContextInterface
     {
         /** @var ValidatorContextInterface|MockObject $context */
-        $context = $this->getMockForInterface(ValidatorContextInterface::class);
+        $context = $this->getMockByCalls(ValidatorContextInterface::class);
 
         return $context;
     }

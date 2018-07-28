@@ -4,7 +4,8 @@ declare(strict_types=1);
 
 namespace Chubbyphp\Tests\Validation\Constraint;
 
-use Chubbyphp\Tests\Validation\MockForInterfaceTrait;
+use Chubbyphp\Mock\Call;
+use Chubbyphp\Mock\MockByCallsTrait;
 use Chubbyphp\Validation\Constraint\Symfony\ExecutionContext;
 use Chubbyphp\Validation\Constraint\Symfony\NotImplementedException;
 use Chubbyphp\Validation\Error\ErrorInterface;
@@ -19,7 +20,7 @@ use Symfony\Component\Validator\ConstraintViolation;
  */
 final class ExecutionContextTest extends TestCase
 {
-    use MockForInterfaceTrait;
+    use MockByCallsTrait;
 
     public function testAddViolation()
     {
@@ -109,7 +110,7 @@ final class ExecutionContextTest extends TestCase
         self::expectExceptionMessage('Method "Chubbyphp\Validation\Constraint\Symfony\ExecutionContext::setConstraint" is not implemented');
 
         /** @var Constraint|MockObject $constraint */
-        $constraint = $this->getMockBuilder(Constraint::class)->disableOriginalConstructor()->getMockForAbstractClass();
+        $constraint = $this->getMockByCalls(Constraint::class);
 
         $context = new ExecutionContext('path[0].property', 'value', $this->getContext());
         $context->setConstraint($constraint);
@@ -197,21 +198,13 @@ final class ExecutionContextTest extends TestCase
     public function testGetGroup()
     {
         $context = new ExecutionContext('path[0].property', 'value', $this->getContext([
-            'getGroups' => [
-                [
-                    'return' => [],
-                ],
-            ],
+            Call::create('getGroups')->with()->willReturn([]),
         ]));
 
         self::assertSame('Default', $context->getGroup());
 
         $context = new ExecutionContext('path[0].property', 'value', $this->getContext([
-            'getGroups' => [
-                [
-                    'return' => ['group1', 'group2'],
-                ],
-            ],
+            Call::create('getGroups')->with()->willReturn(['group1', 'group2']),
         ]));
 
         self::assertSame('group1', $context->getGroup());
@@ -273,7 +266,7 @@ final class ExecutionContextTest extends TestCase
     private function getContext(array $methods = []): ValidatorContextInterface
     {
         /** @var ValidatorContextInterface|MockObject $context */
-        $context = $this->getMockForInterface(ValidatorContextInterface::class, $methods);
+        $context = $this->getMockByCalls(ValidatorContextInterface::class, $methods);
 
         return $context;
     }

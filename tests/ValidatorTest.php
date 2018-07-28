@@ -4,21 +4,26 @@ declare(strict_types=1);
 
 namespace Chubbyphp\Tests\Validation;
 
+use Chubbyphp\Mock\Argument\ArgumentInstanceOf;
+use Chubbyphp\Mock\Call;
+use Chubbyphp\Mock\MockByCallsTrait;
+use Chubbyphp\Validation\Accessor\AccessorInterface;
 use Chubbyphp\Validation\Constraint\ConstraintInterface;
 use Chubbyphp\Validation\Error\ErrorInterface;
 use Chubbyphp\Validation\Mapping\ValidationClassMappingInterface;
 use Chubbyphp\Validation\Mapping\ValidationMappingProviderInterface;
 use Chubbyphp\Validation\Mapping\ValidationMappingProviderRegistryInterface;
 use Chubbyphp\Validation\Mapping\ValidationPropertyMappingInterface;
-use Chubbyphp\Validation\ValidatorContextInterface;
 use Chubbyphp\Validation\Validator;
+use Chubbyphp\Validation\ValidatorContextInterface;
+use Chubbyphp\Validation\ValidatorInterface;
 use Chubbyphp\Validation\ValidatorLogicException;
 use PHPUnit\Framework\TestCase;
 use Psr\Log\LoggerInterface;
 
 class ValidatorTest extends TestCase
 {
-    use MockForInterfaceTrait;
+    use MockByCallsTrait;
 
     public function testValidateMissingMappingExpectValidatorLogicException()
     {
@@ -31,26 +36,16 @@ class ValidatorTest extends TestCase
         self::expectExceptionMessage($exceptionMessage);
 
         /** @var ValidationMappingProviderRegistryInterface $validationMappingProviderRegistry */
-        $validationMappingProviderRegistry = $this->getMockForInterface(
-            ValidationMappingProviderRegistryInterface::class,
-            [
-                'provideMapping' => [
-                    Call::create()
-                        ->setArguments([$class])
-                        ->setException(ValidatorLogicException::createMissingMapping($class)),
-                ],
-            ]
-        );
+        $validationMappingProviderRegistry = $this->getMockByCalls(ValidationMappingProviderRegistryInterface::class, [
+            Call::create('provideMapping')
+                ->with($class)
+                ->willThrowException(ValidatorLogicException::createMissingMapping($class)),
+        ]);
 
         /** @var LoggerInterface $logger */
-        $logger = $this->getMockForInterface(
-            LoggerInterface::class,
-            [
-                'error' => [
-                    Call::create()->setArguments(['validate: {exception}', ['exception' => $exceptionMessage]]),
-                ],
-            ]
-        );
+        $logger = $this->getMockByCalls(LoggerInterface::class, [
+            Call::create('error')->with('validate: {exception}', ['exception' => $exceptionMessage]),
+        ]);
 
         $validator = new Validator($validationMappingProviderRegistry, $logger);
         $validator->validate($model);
@@ -62,30 +57,18 @@ class ValidatorTest extends TestCase
         $class = get_class($model);
 
         /** @var ValidationMappingProviderInterface $mapping */
-        $mapping = $this->getMockForInterface(
-            ValidationMappingProviderInterface::class,
-            [
-                'getValidationClassMapping' => [
-                    Call::create()->setArguments([''])->setReturn(null),
-                ],
-                'getValidationPropertyMappings' => [
-                    Call::create()->setArguments([''])->setReturn([]),
-                ],
-            ]
-        );
+        $mapping = $this->getMockByCalls(ValidationMappingProviderInterface::class, [
+            Call::create('getValidationClassMapping')->with('')->willReturn(null),
+            Call::create('getValidationPropertyMappings')->with('')->willReturn([]),
+        ]);
 
         /** @var ValidationMappingProviderRegistryInterface $validationMappingProviderRegistry */
-        $validationMappingProviderRegistry = $this->getMockForInterface(
-            ValidationMappingProviderRegistryInterface::class,
-            [
-                'provideMapping' => [
-                    Call::create()->setArguments([$class])->setReturn($mapping),
-                ],
-            ]
-        );
+        $validationMappingProviderRegistry = $this->getMockByCalls(ValidationMappingProviderRegistryInterface::class, [
+            Call::create('provideMapping')->with($class)->willReturn($mapping),
+        ]);
 
         /** @var LoggerInterface $logger */
-        $logger = $this->getMockForInterface(LoggerInterface::class, []);
+        $logger = $this->getMockByCalls(LoggerInterface::class, []);
 
         $validator = new Validator($validationMappingProviderRegistry, $logger);
 
@@ -98,135 +81,98 @@ class ValidatorTest extends TestCase
         $class = get_class($model);
 
         /** @var ErrorInterface $classError */
-        $classError = $this->getMockForInterface(
-            ErrorInterface::class,
-            [
-                'getKey' => [
-                    Call::create()->setReturn('key'),
-                ],
-                'getArguments' => [
-                    Call::create()->setReturn(['key' => 'value']),
-                ],
-            ]
-        );
+        $classError = $this->getMockByCalls(ErrorInterface::class, [
+            Call::create('getKey')->with()->willReturn('key'),
+            Call::create('getArguments')->with()->willReturn(['key' => 'value']),
+        ]);
 
         /** @var ConstraintInterface $classConstraint */
-        $classConstraint = $this->getMockForInterface(
-            ConstraintInterface::class,
-            [
-                'validate' => [
-                    Call::create()->setReturn([$classError]),
-                ],
-            ]
-        );
+        $classConstraint = $this->getMockByCalls(ConstraintInterface::class, [
+            Call::create('validate')
+                ->with(
+                    '',
+                    $model,
+                    new ArgumentInstanceOf(ValidatorContextInterface::class),
+                    new ArgumentInstanceOf(ValidatorInterface::class)
+                )
+                ->willReturn([$classError]),
+        ]);
 
         /** @var ValidationClassMappingInterface $classMapping */
-        $classMapping = $this->getMockForInterface(
-            ValidationClassMappingInterface::class,
-            [
-                'getConstraints' => [
-                    Call::create()->setReturn([$classConstraint]),
-                ],
-            ]
-        );
+        $classMapping = $this->getMockByCalls(ValidationClassMappingInterface::class, [
+            Call::create('getConstraints')->with()->willReturn([$classConstraint]),
+        ]);
 
         /** @var ErrorInterface $propertyError */
-        $propertyError = $this->getMockForInterface(
-            ErrorInterface::class,
-            [
-                'getKey' => [
-                    Call::create()->setReturn('key'),
-                ],
-                'getArguments' => [
-                    Call::create()->setReturn(['key' => 'value']),
-                ],
-            ]
-        );
+        $propertyError = $this->getMockByCalls(ErrorInterface::class, [
+            Call::create('getKey')->with()->willReturn('key'),
+            Call::create('getArguments')->with()->willReturn(['key' => 'value']),
+        ]);
+
+        /** @var AccessorInterface $propertyAccessor */
+        $propertyAccessor = $this->getMockByCalls(AccessorInterface::class, [
+            Call::create('getValue')->with($model)->willReturn('value'),
+        ]);
 
         /** @var ConstraintInterface $propertyConstraint */
-        $propertyConstraint = $this->getMockForInterface(
-            ConstraintInterface::class,
-            [
-                'validate' => [
-                    Call::create()->setReturn([$propertyError]),
-                ],
-            ]
-        );
+        $propertyConstraint = $this->getMockByCalls(ConstraintInterface::class, [
+            Call::create('validate')
+                ->with(
+                    'name',
+                    'value',
+                    new ArgumentInstanceOf(ValidatorContextInterface::class),
+                    new ArgumentInstanceOf(ValidatorInterface::class)
+                )
+                ->willReturn([$propertyError]),
+        ]);
 
         /** @var ValidationPropertyMappingInterface $propertyMapping */
-        $propertyMapping = $this->getMockForInterface(
-            ValidationPropertyMappingInterface::class,
-            [
-                'getName' => [
-                    Call::create()->setReturn('name'),
-                ],
-                'getConstraints' => [
-                    Call::create()->setReturn([$propertyConstraint]),
-                ],
-            ]
-        );
+        $propertyMapping = $this->getMockByCalls(ValidationPropertyMappingInterface::class, [
+            Call::create('getName')->with()->willReturn('name'),
+            Call::create('getAccessor')->with()->willReturn($propertyAccessor),
+            Call::create('getConstraints')->with()->willReturn([$propertyConstraint]),
+        ]);
 
         /** @var ValidationMappingProviderInterface $mapping */
-        $mapping = $this->getMockForInterface(
-            ValidationMappingProviderInterface::class,
-            [
-                'getValidationClassMapping' => [
-                    Call::create()->setArguments([''])->setReturn($classMapping),
-                ],
-                'getValidationPropertyMappings' => [
-                    Call::create()->setArguments([''])->setReturn([$propertyMapping]),
-                ],
-            ]
-        );
+        $mapping = $this->getMockByCalls(ValidationMappingProviderInterface::class, [
+            Call::create('getValidationClassMapping')->with('')->willReturn($classMapping),
+            Call::create('getValidationPropertyMappings')->with('')->willReturn([$propertyMapping]),
+        ]);
 
         /** @var ValidationMappingProviderRegistryInterface $validationMappingProviderRegistry */
-        $validationMappingProviderRegistry = $this->getMockForInterface(
-            ValidationMappingProviderRegistryInterface::class,
-            [
-                'provideMapping' => [
-                    Call::create()->setArguments([$class])->setReturn($mapping),
-                ],
-            ]
-        );
+        $validationMappingProviderRegistry = $this->getMockByCalls(ValidationMappingProviderRegistryInterface::class, [
+            Call::create('provideMapping')->with($class)->willReturn($mapping),
+        ]);
 
         /** @var LoggerInterface $logger */
-        $logger = $this->getMockForInterface(
-            LoggerInterface::class,
-            [
-                'info' => [
-                    Call::create()->setArguments(['deserialize: path {path}', ['path' => '']]),
-                    Call::create()->setArguments(['deserialize: path {path}', ['path' => 'name']]),
-                ],
-                'debug' => [
-                    Call::create()->setArguments([
-                        'deserialize: path {path}, constraint {constraint}',
-                        ['path' => '', 'constraint' => get_class($classConstraint)],
-                    ]),
-                    Call::create()->setArguments([
-                        'deserialize: path {path}, constraint {constraint}',
-                        ['path' => 'name', 'constraint' => get_class($propertyConstraint)],
-                    ]),
-                ],
-                'notice' => [
-                    Call::create()->setArguments([
-                        'deserialize: path {path}, constraint {constraint}, error {error}',
-                        [
-                            'path' => '',
-                            'constraint' => get_class($classConstraint),
-                            'error' => ['key' => 'key', 'arguments' => ['key' => 'value']],
-                        ],
-                    ]),
-                    Call::create()->setArguments([
-                        'deserialize: path {path}, constraint {constraint}, error {error}',
-                        [
-                            'path' => 'name',
-                            'constraint' => get_class($propertyConstraint),
-                            'error' => ['key' => 'key', 'arguments' => ['key' => 'value']],
-                        ],
-                    ]),
-                ],
-            ]
-        );
+        $logger = $this->getMockByCalls(LoggerInterface::class, [
+            Call::create('info')->with('deserialize: path {path}', ['path' => '']),
+            Call::create('info')->with('deserialize: path {path}', ['path' => 'name']),
+            Call::create('debug')->with(
+                'deserialize: path {path}, constraint {constraint}',
+                ['path' => '', 'constraint' => get_class($classConstraint)]
+            ),
+            Call::create('debug')->with(
+                'deserialize: path {path}, constraint {constraint}',
+                ['path' => 'name', 'constraint' => get_class($propertyConstraint)]
+            ),
+            Call::create('notice')->with(
+                'deserialize: path {path}, constraint {constraint}, error {error}',
+                [
+                    'path' => '',
+                    'constraint' => get_class($classConstraint),
+                    'error' => ['key' => 'key', 'arguments' => ['key' => 'value']],
+                ]
+            ),
+            Call::create('notice')->with(
+                'deserialize: path {path}, constraint {constraint}, error {error}',
+                [
+                    'path' => 'name',
+                    'constraint' => get_class($propertyConstraint),
+                    'error' => ['key' => 'key', 'arguments' => ['key' => 'value']],
+                ]
+            ),
+        ]);
 
         $validator = new Validator($validationMappingProviderRegistry, $logger);
 
@@ -244,60 +190,33 @@ class ValidatorTest extends TestCase
         $class = get_class($model);
 
         /** @var ValidationClassMappingInterface $classMapping */
-        $classMapping = $this->getMockForInterface(
-            ValidationClassMappingInterface::class,
-            [
-                'getGroups' => [
-                    Call::create()->setReturn(['group1']),
-                ],
-            ]
-        );
+        $classMapping = $this->getMockByCalls(ValidationClassMappingInterface::class, [
+             Call::create('getGroups')->with()->willReturn(['group1']),
+        ]);
 
         /** @var ValidationPropertyMappingInterface $propertyMapping */
-        $propertyMapping = $this->getMockForInterface(
-            ValidationPropertyMappingInterface::class,
-            [
-                'getGroups' => [
-                    Call::create()->setReturn(['group1']),
-                ],
-            ]
-        );
+        $propertyMapping = $this->getMockByCalls(ValidationPropertyMappingInterface::class, [
+            Call::create('getGroups')->with()->willReturn(['group1']),
+        ]);
 
         /** @var ValidationMappingProviderInterface $mapping */
-        $mapping = $this->getMockForInterface(
-            ValidationMappingProviderInterface::class,
-            [
-                'getValidationClassMapping' => [
-                    Call::create()->setArguments([''])->setReturn($classMapping),
-                ],
-                'getValidationPropertyMappings' => [
-                    Call::create()->setArguments([''])->setReturn([$propertyMapping]),
-                ],
-            ]
-        );
+        $mapping = $this->getMockByCalls(ValidationMappingProviderInterface::class, [
+            Call::create('getValidationClassMapping')->with('')->willReturn($classMapping),
+            Call::create('getValidationPropertyMappings')->with('')->willReturn([$propertyMapping]),
+        ]);
 
         /** @var ValidationMappingProviderRegistryInterface $validationMappingProviderRegistry */
-        $validationMappingProviderRegistry = $this->getMockForInterface(
-            ValidationMappingProviderRegistryInterface::class,
-            [
-                'provideMapping' => [
-                    Call::create()->setArguments([$class])->setReturn($mapping),
-                ],
-            ]
-        );
+        $validationMappingProviderRegistry = $this->getMockByCalls(ValidationMappingProviderRegistryInterface::class, [
+            Call::create('provideMapping')->with($class)->willReturn($mapping),
+        ]);
 
         /** @var LoggerInterface $logger */
-        $logger = $this->getMockForInterface(LoggerInterface::class);
+        $logger = $this->getMockByCalls(LoggerInterface::class);
 
-        $context = $this->getMockForInterface(
-            ValidatorContextInterface::class,
-            [
-                'getGroups' => [
-                    Call::create()->setReturn(['group2']),
-                    Call::create()->setReturn(['group2']),
-                ],
-            ]
-        );
+        $context = $this->getMockByCalls(ValidatorContextInterface::class, [
+            Call::create('getGroups')->with()->willReturn(['group2']),
+            Call::create('getGroups')->with()->willReturn(['group2']),
+        ]);
 
         $validator = new Validator($validationMappingProviderRegistry, $logger);
 
@@ -310,151 +229,105 @@ class ValidatorTest extends TestCase
         $class = get_class($model);
 
         /** @var ErrorInterface $classError */
-        $classError = $this->getMockForInterface(
-            ErrorInterface::class,
-            [
-                'getKey' => [
-                    Call::create()->setReturn('key'),
-                ],
-                'getArguments' => [
-                    Call::create()->setReturn(['key' => 'value']),
-                ],
-            ]
-        );
+        $classError = $this->getMockByCalls(ErrorInterface::class, [
+            Call::create('getKey')->with()->willReturn('key'),
+            Call::create('getArguments')->with()->willReturn(['key' => 'value']),
+        ]);
 
         /** @var ConstraintInterface $classConstraint */
-        $classConstraint = $this->getMockForInterface(
-            ConstraintInterface::class,
-            [
-                'validate' => [
-                    Call::create()->setReturn([$classError]),
-                ],
-            ]
-        );
+        $classConstraint = $this->getMockByCalls(ConstraintInterface::class, [
+            Call::create('validate')
+                ->with(
+                    '',
+                    $model,
+                    new ArgumentInstanceOf(ValidatorContextInterface::class),
+                    new ArgumentInstanceOf(ValidatorInterface::class)
+                )
+                ->willReturn([$classError]),
+        ]);
 
         /** @var ValidationClassMappingInterface $classMapping */
-        $classMapping = $this->getMockForInterface(
-            ValidationClassMappingInterface::class,
-            [
-                'getConstraints' => [
-                    Call::create()->setReturn([$classConstraint]),
-                ],
-                'getGroups' => [
-                    Call::create()->setReturn(['group1', 'group2']),
-                ],
-            ]
-        );
+        $classMapping = $this->getMockByCalls(ValidationClassMappingInterface::class, [
+            Call::create('getGroups')->with()->willReturn(['group1', 'group2']),
+            Call::create('getConstraints')->with()->willReturn([$classConstraint]),
+        ]);
 
         /** @var ErrorInterface $propertyError */
-        $propertyError = $this->getMockForInterface(
-            ErrorInterface::class,
-            [
-                'getKey' => [
-                    Call::create()->setReturn('key'),
-                ],
-                'getArguments' => [
-                    Call::create()->setReturn(['key' => 'value']),
-                ],
-            ]
-        );
+        $propertyError = $this->getMockByCalls(ErrorInterface::class, [
+            Call::create('getKey')->with()->willReturn('key'),
+            Call::create('getArguments')->with()->willReturn(['key' => 'value']),
+        ]);
+
+        /** @var AccessorInterface $propertyAccessor */
+        $propertyAccessor = $this->getMockByCalls(AccessorInterface::class, [
+            Call::create('getValue')->with($model)->willReturn('value'),
+        ]);
 
         /** @var ConstraintInterface $propertyConstraint */
-        $propertyConstraint = $this->getMockForInterface(
-            ConstraintInterface::class,
-            [
-                'validate' => [
-                    Call::create()->setReturn([$propertyError]),
-                ],
-            ]
-        );
+        $propertyConstraint = $this->getMockByCalls(ConstraintInterface::class, [
+            Call::create('validate')
+                ->with(
+                    'name',
+                    'value',
+                    new ArgumentInstanceOf(ValidatorContextInterface::class),
+                    new ArgumentInstanceOf(ValidatorInterface::class)
+                )
+                ->willReturn([$propertyError]),
+        ]);
 
         /** @var ValidationPropertyMappingInterface $propertyMapping */
-        $propertyMapping = $this->getMockForInterface(
-            ValidationPropertyMappingInterface::class,
-            [
-                'getName' => [
-                    Call::create()->setReturn('name'),
-                ],
-                'getConstraints' => [
-                    Call::create()->setReturn([$propertyConstraint]),
-                ],
-                'getGroups' => [
-                    Call::create()->setReturn(['group1', 'group2']),
-                ],
-            ]
-        );
+        $propertyMapping = $this->getMockByCalls(ValidationPropertyMappingInterface::class, [
+            Call::create('getGroups')->with()->willReturn(['group1', 'group2']),
+            Call::create('getName')->with()->willReturn('name'),
+            Call::create('getAccessor')->with()->willReturn($propertyAccessor),
+            Call::create('getConstraints')->with()->willReturn([$propertyConstraint]),
+        ]);
 
         /** @var ValidationMappingProviderInterface $mapping */
-        $mapping = $this->getMockForInterface(
-            ValidationMappingProviderInterface::class,
-            [
-                'getValidationClassMapping' => [
-                    Call::create()->setArguments([''])->setReturn($classMapping),
-                ],
-                'getValidationPropertyMappings' => [
-                    Call::create()->setArguments([''])->setReturn([$propertyMapping]),
-                ],
-            ]
-        );
+        $mapping = $this->getMockByCalls(ValidationMappingProviderInterface::class, [
+            Call::create('getValidationClassMapping')->with('')->willReturn($classMapping),
+            Call::create('getValidationPropertyMappings')->with('')->willReturn([$propertyMapping]),
+        ]);
 
         /** @var ValidationMappingProviderRegistryInterface $validationMappingProviderRegistry */
-        $validationMappingProviderRegistry = $this->getMockForInterface(
-            ValidationMappingProviderRegistryInterface::class,
-            [
-                'provideMapping' => [
-                    Call::create()->setArguments([$class])->setReturn($mapping),
-                ],
-            ]
-        );
+        $validationMappingProviderRegistry = $this->getMockByCalls(ValidationMappingProviderRegistryInterface::class, [
+            Call::create('provideMapping')->with($class)->willReturn($mapping),
+        ]);
 
         /** @var LoggerInterface $logger */
-        $logger = $this->getMockForInterface(
-            LoggerInterface::class,
-            [
-                'info' => [
-                    Call::create()->setArguments(['deserialize: path {path}', ['path' => '']]),
-                    Call::create()->setArguments(['deserialize: path {path}', ['path' => 'name']]),
-                ],
-                'debug' => [
-                    Call::create()->setArguments([
-                        'deserialize: path {path}, constraint {constraint}',
-                        ['path' => '', 'constraint' => get_class($classConstraint)],
-                    ]),
-                    Call::create()->setArguments([
-                        'deserialize: path {path}, constraint {constraint}',
-                        ['path' => 'name', 'constraint' => get_class($propertyConstraint)],
-                    ]),
-                ],
-                'notice' => [
-                    Call::create()->setArguments([
-                        'deserialize: path {path}, constraint {constraint}, error {error}',
-                        [
-                            'path' => '',
-                            'constraint' => get_class($classConstraint),
-                            'error' => ['key' => 'key', 'arguments' => ['key' => 'value']],
-                        ],
-                    ]),
-                    Call::create()->setArguments([
-                        'deserialize: path {path}, constraint {constraint}, error {error}',
-                        [
-                            'path' => 'name',
-                            'constraint' => get_class($propertyConstraint),
-                            'error' => ['key' => 'key', 'arguments' => ['key' => 'value']],
-                        ],
-                    ]),
-                ],
-            ]
-        );
+        $logger = $this->getMockByCalls(LoggerInterface::class, [
+            Call::create('info')->with('deserialize: path {path}', ['path' => '']),
+            Call::create('info')->with('deserialize: path {path}', ['path' => 'name']),
+            Call::create('debug')->with(
+                'deserialize: path {path}, constraint {constraint}',
+                ['path' => '', 'constraint' => get_class($classConstraint)]
+            ),
+            Call::create('debug')->with(
+                'deserialize: path {path}, constraint {constraint}',
+                ['path' => 'name', 'constraint' => get_class($propertyConstraint)]
+            ),
+            Call::create('notice')->with(
+                'deserialize: path {path}, constraint {constraint}, error {error}',
+                [
+                    'path' => '',
+                    'constraint' => get_class($classConstraint),
+                    'error' => ['key' => 'key', 'arguments' => ['key' => 'value']],
+                ]
+            ),
+            Call::create('notice')->with(
+                'deserialize: path {path}, constraint {constraint}, error {error}',
+                [
+                    'path' => 'name',
+                    'constraint' => get_class($propertyConstraint),
+                    'error' => ['key' => 'key', 'arguments' => ['key' => 'value']],
+                ]
+            ),
+        ]);
 
-        $context = $this->getMockForInterface(
-            ValidatorContextInterface::class,
-            [
-                'getGroups' => [
-                    Call::create()->setReturn(['group2']),
-                    Call::create()->setReturn(['group2']),
-                ],
-            ]
-        );
+        $context = $this->getMockByCalls(ValidatorContextInterface::class, [
+            Call::create('getGroups')->with()->willReturn(['group2']),
+            Call::create('getGroups')->with()->willReturn(['group2']),
+        ]);
 
         $validator = new Validator($validationMappingProviderRegistry, $logger);
 

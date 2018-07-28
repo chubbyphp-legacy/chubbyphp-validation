@@ -4,7 +4,8 @@ declare(strict_types=1);
 
 namespace Chubbyphp\Tests\Validation\Constraint;
 
-use Chubbyphp\Tests\Validation\MockForInterfaceTrait;
+use Chubbyphp\Mock\Call;
+use Chubbyphp\Mock\MockByCallsTrait;
 use Chubbyphp\Validation\Constraint\ValidConstraint;
 use Chubbyphp\Validation\Error\Error;
 use Chubbyphp\Validation\ValidatorContextInterface;
@@ -19,7 +20,7 @@ use PHPUnit\Framework\TestCase;
  */
 final class ValidConstraintTest extends TestCase
 {
-    use MockForInterfaceTrait;
+    use MockByCallsTrait;
 
     public function testWithNullValue()
     {
@@ -53,12 +54,7 @@ final class ValidConstraintTest extends TestCase
         $context = $this->getContext();
 
         $validator = $this->getValidator([
-            'validate' => [
-                [
-                    'arguments' => [$object, $context, 'valid[0]'],
-                    'return' => [],
-                ],
-            ],
+            Call::create('validate')->with($object, $context, 'valid[0]')->willReturn([]),
         ]);
 
         self::assertEquals([], $constraint->validate('valid', [$object], $context, $validator));
@@ -73,12 +69,7 @@ final class ValidConstraintTest extends TestCase
         $context = $this->getContext();
 
         $validator = $this->getValidator([
-            'validate' => [
-                [
-                    'arguments' => [$object, $context, 'valid[0]'],
-                    'return' => [],
-                ],
-            ],
+            Call::create('validate')->with($object, $context, 'valid[0]')->willReturn([]),
         ]);
 
         self::assertEquals([], $constraint->validate('valid', new ArrayCollection([$object]), $context, $validator));
@@ -93,12 +84,7 @@ final class ValidConstraintTest extends TestCase
         $context = $this->getContext();
 
         $validator = $this->getValidator([
-            'validate' => [
-                [
-                    'arguments' => [$object, $context, 'valid'],
-                    'return' => [],
-                ],
-            ],
+            Call::create('validate')->with($object, $context, 'valid')->willReturn([]),
         ]);
 
         self::assertEquals([], $constraint->validate('valid', $object, $context, $validator));
@@ -123,7 +109,7 @@ final class ValidConstraintTest extends TestCase
     private function getContext(): ValidatorContextInterface
     {
         /** @var ValidatorContextInterface|MockObject $context */
-        $context = $this->getMockForInterface(ValidatorContextInterface::class);
+        $context = $this->getMockByCalls(ValidatorContextInterface::class);
 
         return $context;
     }
@@ -136,7 +122,7 @@ final class ValidConstraintTest extends TestCase
     private function getValidator(array $methods = []): ValidatorInterface
     {
         /** @var ValidatorInterface|MockObject $validator */
-        $validator = $this->getMockForInterface(ValidatorInterface::class, $methods);
+        $validator = $this->getMockByCalls(ValidatorInterface::class, $methods);
 
         return $validator;
     }

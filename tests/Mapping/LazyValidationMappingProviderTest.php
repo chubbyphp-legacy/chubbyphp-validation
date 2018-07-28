@@ -4,10 +4,11 @@ declare(strict_types=1);
 
 namespace Chubbyphp\Tests\Validation\Mapping;
 
-use Chubbyphp\Tests\Validation\MockForInterfaceTrait;
+use Chubbyphp\Mock\Call;
+use Chubbyphp\Mock\MockByCallsTrait;
+use Chubbyphp\Validation\Mapping\LazyValidationMappingProvider;
 use Chubbyphp\Validation\Mapping\ValidationClassMappingInterface;
 use Chubbyphp\Validation\Mapping\ValidationMappingProviderInterface;
-use Chubbyphp\Validation\Mapping\LazyValidationMappingProvider;
 use Chubbyphp\Validation\Mapping\ValidationPropertyMappingInterface;
 use PHPUnit\Framework\MockObject\MockObject;
 use PHPUnit\Framework\TestCase;
@@ -18,7 +19,7 @@ use Psr\Container\ContainerInterface;
  */
 class LazyValidationMappingProviderTest extends TestCase
 {
-    use MockForInterfaceTrait;
+    use MockByCallsTrait;
 
     public function testInvoke()
     {
@@ -71,13 +72,9 @@ class LazyValidationMappingProviderTest extends TestCase
         array $denormalizationPropertyMappings
     ): ValidationMappingProviderInterface {
         /** @var ValidationMappingProviderInterface|MockObject $mapping */
-        $mapping = $this->getMockForInterface(ValidationMappingProviderInterface::class, [
-            'getValidationClassMapping' => [
-                ['arguments' => ['path'], 'return' => $denormalizationClassMapping],
-            ],
-            'getValidationPropertyMappings' => [
-                ['arguments' => ['path'], 'return' => $denormalizationPropertyMappings],
-            ],
+        $mapping = $this->getMockByCalls(ValidationMappingProviderInterface::class, [
+            Call::create('getValidationClassMapping')->with('path')->willReturn($denormalizationClassMapping),
+            Call::create('getValidationPropertyMappings')->with('path')->willReturn($denormalizationPropertyMappings),
         ]);
 
         return $mapping;
@@ -88,7 +85,7 @@ class LazyValidationMappingProviderTest extends TestCase
      */
     private function getValidationClassMapping(): ValidationClassMappingInterface
     {
-        return $this->getMockForInterface(ValidationClassMappingInterface::class);
+        return $this->getMockByCalls(ValidationClassMappingInterface::class);
     }
 
     /**
@@ -96,6 +93,6 @@ class LazyValidationMappingProviderTest extends TestCase
      */
     private function getValidationPropertyMapping(): ValidationPropertyMappingInterface
     {
-        return $this->getMockForInterface(ValidationPropertyMappingInterface::class);
+        return $this->getMockByCalls(ValidationPropertyMappingInterface::class);
     }
 }

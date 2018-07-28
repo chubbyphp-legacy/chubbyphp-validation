@@ -4,7 +4,7 @@ declare(strict_types=1);
 
 namespace Chubbyphp\Tests\Validation\Mapping;
 
-use Chubbyphp\Tests\Validation\MockForInterfaceTrait;
+use Chubbyphp\Mock\MockByCallsTrait;
 use Chubbyphp\Validation\Accessor\AccessorInterface;
 use Chubbyphp\Validation\Constraint\ConstraintInterface;
 use Chubbyphp\Validation\Mapping\ValidationPropertyMapping;
@@ -16,7 +16,7 @@ use PHPUnit\Framework\TestCase;
  */
 class ValidationPropertyMappingTest extends TestCase
 {
-    use MockForInterfaceTrait;
+    use MockByCallsTrait;
 
     public function testGetName()
     {
@@ -64,7 +64,7 @@ class ValidationPropertyMappingTest extends TestCase
     private function getConstraint(): ConstraintInterface
     {
         /** @var ConstraintInterface|MockObject $constraint */
-        $constraint = $this->getMockForInterface(ConstraintInterface::class);
+        $constraint = $this->getMockByCalls(ConstraintInterface::class);
 
         return $constraint;
     }
@@ -75,7 +75,7 @@ class ValidationPropertyMappingTest extends TestCase
     private function getAccessor(): AccessorInterface
     {
         /** @var AccessorInterface|MockObject $accessor */
-        $accessor = $this->getMockForInterface(AccessorInterface::class);
+        $accessor = $this->getMockByCalls(AccessorInterface::class);
 
         return $accessor;
     }
