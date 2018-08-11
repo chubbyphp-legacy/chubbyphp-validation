@@ -43,7 +43,7 @@ final class BlankConstraintTest extends TestCase
     {
         $constraint = new BlankConstraint();
 
-        self::assertEquals([], $constraint->validate('blank', new \stdClass, $this->getContext()));
+        self::assertEquals([], $constraint->validate('blank', new \stdClass(), $this->getContext()));
     }
 
     public function testWithNotBlankString()
