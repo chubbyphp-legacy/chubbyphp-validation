@@ -36,26 +36,27 @@ composer require chubbyphp/chubbyphp-validation "~3.1"
 
  * [MethodAccessor][2]
  * [PropertyAccessor][3]
- 
+
 ### Constraint
 
  * [AllConstraint][101]
- * [CallbackConstraint][102]
- * [ChoiceConstraint][103]
- * [CoordinateArrayConstraint][104]
- * [CoordinateConstraint][105]
- * [CountConstraint][106]
- * [DateTimeConstraint][107]
- * [EmailConstraint][108]
- * [NotBlankConstraint][109]
- * [NotNullConstraint][110]
+ * [BlankConstraint][102]
+ * [CallbackConstraint][103]
+ * [ChoiceConstraint][104]
+ * [CoordinateArrayConstraint][105]
+ * [CoordinateConstraint][106]
+ * [CountConstraint][107]
+ * [DateTimeConstraint][108]
+ * [EmailConstraint][109]
+ * [NotBlankConstraint][110]
+ * [NotNullConstraint][111]
  * [NumericConstraint][112]
- * [NumericRangeConstraint][112]
- * [TypeConstraint][113]
- * [ValidConstraint][114]
- 
-#### Adapters 
- 
+ * [NumericRangeConstraint][113]
+ * [TypeConstraint][114]
+ * [ValidConstraint][115]
+
+#### Adapters
+
  * [ConstraintAdapter (Symfony)][115]
 
 ### Error
@@ -63,7 +64,7 @@ composer require chubbyphp/chubbyphp-validation "~3.1"
  * [Error][4]
  * [ErrorMessages][5]
  * [NestedErrorMessages][6]
- 
+
 ### Mapping
 
  * [LazyValidationMappingProvider][7]
@@ -72,7 +73,7 @@ composer require chubbyphp/chubbyphp-validation "~3.1"
  * [ValidationMappingProviderRegistry][10]
  * [ValidationPropertyMapping][11]
  * [ValidationPropertyMappingBuilder][12]
- 
+
 #### ValidationMappingProvider
 
 ```php
@@ -88,7 +89,7 @@ final class Model
     private $dates;
 }
 ```
- 
+
 ```php
 <?php
 
@@ -143,7 +144,7 @@ final class ModelValidationMappingProvider implements ValidationMappingProviderI
             ])->getMapping(),
         ];
     }
-} 
+}
 ```
 
 ### Provider
@@ -197,19 +198,20 @@ Dominik Zogg 2018
 [3]: doc/Accessor/PropertyAccessor.md
 
 [101]: doc/Constraint/AllConstraint.md
-[102]: doc/Constraint/CallbackConstraint.md
-[103]: doc/Constraint/ChoiceConstraint.md
-[104]: doc/Constraint/CoordinateArrayConstraint.md
-[105]: doc/Constraint/CoordinateConstraint.md
-[106]: doc/Constraint/CountConstraint.md
-[107]: doc/Constraint/DateTimeConstraint.md
-[108]: doc/Constraint/EmailConstraint.md
-[109]: doc/Constraint/NotBlankConstraint.md
-[110]: doc/Constraint/NotNullConstraint.md
+[102]: doc/Constraint/BlankConstraint.md
+[103]: doc/Constraint/CallbackConstraint.md
+[104]: doc/Constraint/ChoiceConstraint.md
+[105]: doc/Constraint/CoordinateArrayConstraint.md
+[106]: doc/Constraint/CoordinateConstraint.md
+[107]: doc/Constraint/CountConstraint.md
+[108]: doc/Constraint/DateTimeConstraint.md
+[109]: doc/Constraint/EmailConstraint.md
+[110]: doc/Constraint/NotBlankConstraint.md
+[111]: doc/Constraint/NotNullConstraint.md
 [112]: doc/Constraint/NumericConstraint.md
-[112]: doc/Constraint/NumericRangeConstraint.md
-[113]: doc/Constraint/TypeConstraint.md
-[114]: doc/Constraint/ValidConstraint.md
+[113]: doc/Constraint/NumericRangeConstraint.md
+[114]: doc/Constraint/TypeConstraint.md
+[115]: doc/Constraint/ValidConstraint.md
 
 [115]: doc/Constraint/Symfony/ConstraintAdapter.md
 
