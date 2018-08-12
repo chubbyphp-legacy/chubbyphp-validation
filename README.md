@@ -27,7 +27,7 @@ A simple validation.
 Through [Composer](http://getcomposer.org) as [chubbyphp/chubbyphp-validation][1].
 
 ```sh
-composer require chubbyphp/chubbyphp-validation "~3.1"
+composer require chubbyphp/chubbyphp-validation "~3.2"
 ```
 
 ## Usage
@@ -50,14 +50,15 @@ composer require chubbyphp/chubbyphp-validation "~3.1"
  * [EmailConstraint][109]
  * [NotBlankConstraint][110]
  * [NotNullConstraint][111]
- * [NumericConstraint][112]
- * [NumericRangeConstraint][113]
- * [TypeConstraint][114]
- * [ValidConstraint][115]
+ * [NullConstraint][112]
+ * [NumericConstraint][113]
+ * [NumericRangeConstraint][114]
+ * [TypeConstraint][115]
+ * [ValidConstraint][116]
 
 #### Adapters
 
- * [ConstraintAdapter (Symfony)][115]
+ * [ConstraintAdapter (Symfony)][117]
 
 ### Error
 
@@ -208,12 +209,13 @@ Dominik Zogg 2018
 [109]: doc/Constraint/EmailConstraint.md
 [110]: doc/Constraint/NotBlankConstraint.md
 [111]: doc/Constraint/NotNullConstraint.md
-[112]: doc/Constraint/NumericConstraint.md
-[113]: doc/Constraint/NumericRangeConstraint.md
-[114]: doc/Constraint/TypeConstraint.md
-[115]: doc/Constraint/ValidConstraint.md
+[112]: doc/Constraint/NullConstraint.md
+[113]: doc/Constraint/NumericConstraint.md
+[114]: doc/Constraint/NumericRangeConstraint.md
+[115]: doc/Constraint/TypeConstraint.md
+[116]: doc/Constraint/ValidConstraint.md
 
-[115]: doc/Constraint/Symfony/ConstraintAdapter.md
+[117]: doc/Constraint/Symfony/ConstraintAdapter.md
 
 [4]: doc/Error/Error.md
 [5]: doc/Error/ErrorMessages.md
