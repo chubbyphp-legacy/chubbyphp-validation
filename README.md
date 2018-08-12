@@ -48,17 +48,19 @@ composer require chubbyphp/chubbyphp-validation "~3.2"
  * [CountConstraint][107]
  * [DateTimeConstraint][108]
  * [EmailConstraint][109]
- * [NotBlankConstraint][110]
- * [NotNullConstraint][111]
- * [NullConstraint][112]
- * [NumericConstraint][113]
- * [NumericRangeConstraint][114]
- * [TypeConstraint][115]
- * [ValidConstraint][116]
+ * [FalseConstraint][110]
+ * [NotBlankConstraint][111]
+ * [NotNullConstraint][112]
+ * [NullConstraint][113]
+ * [NumericConstraint][114]
+ * [NumericRangeConstraint][115]
+ * [TrueConstraint][116]
+ * [TypeConstraint][117]
+ * [ValidConstraint][118]
 
 #### Adapters
 
- * [ConstraintAdapter (Symfony)][117]
+ * [ConstraintAdapter (Symfony)][119]
 
 ### Error
 
@@ -207,15 +209,17 @@ Dominik Zogg 2018
 [107]: doc/Constraint/CountConstraint.md
 [108]: doc/Constraint/DateTimeConstraint.md
 [109]: doc/Constraint/EmailConstraint.md
-[110]: doc/Constraint/NotBlankConstraint.md
-[111]: doc/Constraint/NotNullConstraint.md
-[112]: doc/Constraint/NullConstraint.md
-[113]: doc/Constraint/NumericConstraint.md
-[114]: doc/Constraint/NumericRangeConstraint.md
-[115]: doc/Constraint/TypeConstraint.md
-[116]: doc/Constraint/ValidConstraint.md
+[110]: doc/Constraint/FalseConstraint.md
+[111]: doc/Constraint/NotBlankConstraint.md
+[112]: doc/Constraint/NotNullConstraint.md
+[113]: doc/Constraint/NullConstraint.md
+[114]: doc/Constraint/NumericConstraint.md
+[115]: doc/Constraint/NumericRangeConstraint.md
+[116]: doc/Constraint/TrueConstraint.md
+[117]: doc/Constraint/TypeConstraint.md
+[118]: doc/Constraint/ValidConstraint.md
 
-[117]: doc/Constraint/Symfony/ConstraintAdapter.md
+[119]: doc/Constraint/Symfony/ConstraintAdapter.md
 
 [4]: doc/Error/Error.md
 [5]: doc/Error/ErrorMessages.md
