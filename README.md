@@ -70,12 +70,13 @@ composer require chubbyphp/chubbyphp-validation "~3.2"
 
 ### Mapping
 
- * [LazyValidationMappingProvider][7]
- * [ValidationClassMapping][8]
- * [ValidationClassMappingBuilder][9]
- * [ValidationMappingProviderRegistry][10]
- * [ValidationPropertyMapping][11]
- * [ValidationPropertyMappingBuilder][12]
+ * [CallableValidationMappingProvider][7]
+ * [LazyValidationMappingProvider][8]
+ * [ValidationClassMapping][9]
+ * [ValidationClassMappingBuilder][10]
+ * [ValidationMappingProviderRegistry][11]
+ * [ValidationPropertyMapping][12]
+ * [ValidationPropertyMappingBuilder][13]
 
 #### ValidationMappingProvider
 
@@ -152,12 +153,12 @@ final class ModelValidationMappingProvider implements ValidationMappingProviderI
 
 ### Provider
 
- * [ValidationProvider][13]
+ * [ValidationProvider][14]
 
 ### Validator
 
- * [ValidatorContext][14]
- * [ValidatorContextBuilder][15]
+ * [ValidatorContext][15]
+ * [ValidatorContextBuilder][16]
 
 ```php
 <?php
@@ -225,14 +226,15 @@ Dominik Zogg 2018
 [5]: doc/Error/ErrorMessages.md
 [6]: doc/Error/NestedErrorMessages.md
 
-[7]: doc/Mapping/LazyValidationMappingProvider.md
-[8]: doc/Mapping/ValidationClassMapping.md
-[9]: doc/Mapping/ValidationClassMappingBuilder.md
-[10]: doc/Mapping/ValidationMappingProviderRegistry.md
-[11]: doc/Mapping/ValidationPropertyMapping.md
-[12]: doc/Mapping/ValidationPropertyMappingBuilder.md
+[7]: doc/Mapping/CallableValidationMappingProvider.md
+[8]: doc/Mapping/LazyValidationMappingProvider.md
+[9]: doc/Mapping/ValidationClassMapping.md
+[10]: doc/Mapping/ValidationClassMappingBuilder.md
+[11]: doc/Mapping/ValidationMappingProviderRegistry.md
+[12]: doc/Mapping/ValidationPropertyMapping.md
+[13]: doc/Mapping/ValidationPropertyMappingBuilder.md
 
-[13]: doc/Provider/ValidationProvider.md
+[14]: doc/Provider/ValidationProvider.md
 
-[14]: doc/ValidatorContext.md
-[15]: doc/ValidatorContextBuilder.md
+[15]: doc/ValidatorContext.md
+[16]: doc/ValidatorContextBuilder.md

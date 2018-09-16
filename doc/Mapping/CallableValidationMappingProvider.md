@@ -1,17 +1,17 @@
-# LazyValidationMappingProvider
+# CallableValidationMappingProvider
 
 ```php
 <?php
 
-use Chubbyphp\Validation\Mapping\LazyValidationMappingProvider;
+use Chubbyphp\Validation\Mapping\CallableValidationMappingProvider;
+use MyProject\Mapping\ModelMapping;
 use MyProject\Model\Model;
 
-$container = ...;
-
-$mappingProvider = new LazyValidationMappingProvider(
-    $container,
-    'myproject.denormalizer.mapping.model',
-    Model::class
+$mappingProvider = new CallableValidationMappingProvider(
+    Model::class,
+        function () {
+        return new ModelMapping();
+    }
 );
 
 $mappingProvider->getClass();
