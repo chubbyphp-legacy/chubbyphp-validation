@@ -27,7 +27,7 @@ A simple validation.
 Through [Composer](http://getcomposer.org) as [chubbyphp/chubbyphp-validation][1].
 
 ```sh
-composer require chubbyphp/chubbyphp-validation "~3.2"
+composer require chubbyphp/chubbyphp-validation "~3.3"
 ```
 
 ## Usage
@@ -58,9 +58,13 @@ composer require chubbyphp/chubbyphp-validation "~3.2"
  * [TypeConstraint][117]
  * [ValidConstraint][118]
 
-#### Adapters
+#### Doctrine
 
- * [ConstraintAdapter (Symfony)][119]
+ * [UniqueConstraint][119]
+
+#### Symfony
+
+ * [ConstraintAdapter][120]
 
 ### Error
 
@@ -220,7 +224,9 @@ Dominik Zogg 2018
 [117]: doc/Constraint/TypeConstraint.md
 [118]: doc/Constraint/ValidConstraint.md
 
-[119]: doc/Constraint/Symfony/ConstraintAdapter.md
+[119]: doc/Constraint/Doctrine/UniqueConstraint.md
+
+[120]: doc/Constraint/Symfony/ConstraintAdapter.md
 
 [4]: doc/Error/Error.md
 [5]: doc/Error/ErrorMessages.md
