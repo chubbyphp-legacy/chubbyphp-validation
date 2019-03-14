@@ -146,26 +146,26 @@ class ValidatorTest extends TestCase
 
         /** @var LoggerInterface $logger */
         $logger = $this->getMockByCalls(LoggerInterface::class, [
-            Call::create('info')->with('deserialize: path {path}', ['path' => '']),
+            Call::create('info')->with('validate: path {path}', ['path' => '']),
             Call::create('debug')->with(
-                'deserialize: path {path}, constraint {constraint}',
+                'validate: path {path}, constraint {constraint}',
                 ['path' => '', 'constraint' => get_class($classConstraint)]
             ),
             Call::create('notice')->with(
-                'deserialize: path {path}, constraint {constraint}, error {error}',
+                'validate: path {path}, constraint {constraint}, error {error}',
                 [
                     'path' => '',
                     'constraint' => get_class($classConstraint),
                     'error' => ['key' => 'key', 'arguments' => ['key' => 'value']],
                 ]
             ),
-            Call::create('info')->with('deserialize: path {path}', ['path' => 'name']),
+            Call::create('info')->with('validate: path {path}', ['path' => 'name']),
             Call::create('debug')->with(
-                'deserialize: path {path}, constraint {constraint}',
+                'validate: path {path}, constraint {constraint}',
                 ['path' => 'name', 'constraint' => get_class($propertyConstraint)]
             ),
             Call::create('notice')->with(
-                'deserialize: path {path}, constraint {constraint}, error {error}',
+                'validate: path {path}, constraint {constraint}, error {error}',
                 [
                     'path' => 'name',
                     'constraint' => get_class($propertyConstraint),
@@ -296,26 +296,26 @@ class ValidatorTest extends TestCase
 
         /** @var LoggerInterface $logger */
         $logger = $this->getMockByCalls(LoggerInterface::class, [
-            Call::create('info')->with('deserialize: path {path}', ['path' => '']),
+            Call::create('info')->with('validate: path {path}', ['path' => '']),
             Call::create('debug')->with(
-                'deserialize: path {path}, constraint {constraint}',
+                'validate: path {path}, constraint {constraint}',
                 ['path' => '', 'constraint' => get_class($classConstraint)]
             ),
             Call::create('notice')->with(
-                'deserialize: path {path}, constraint {constraint}, error {error}',
+                'validate: path {path}, constraint {constraint}, error {error}',
                 [
                     'path' => '',
                     'constraint' => get_class($classConstraint),
                     'error' => ['key' => 'key', 'arguments' => ['key' => 'value']],
                 ]
             ),
-            Call::create('info')->with('deserialize: path {path}', ['path' => 'name']),
+            Call::create('info')->with('validate: path {path}', ['path' => 'name']),
             Call::create('debug')->with(
-                'deserialize: path {path}, constraint {constraint}',
+                'validate: path {path}, constraint {constraint}',
                 ['path' => 'name', 'constraint' => get_class($propertyConstraint)]
             ),
             Call::create('notice')->with(
-                'deserialize: path {path}, constraint {constraint}, error {error}',
+                'validate: path {path}, constraint {constraint}, error {error}',
                 [
                     'path' => 'name',
                     'constraint' => get_class($propertyConstraint),

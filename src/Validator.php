@@ -207,7 +207,7 @@ final class Validator implements ValidatorInterface
      */
     private function logPath(string $path)
     {
-        $this->logger->info('deserialize: path {path}', ['path' => $path]);
+        $this->logger->info('validate: path {path}', ['path' => $path]);
     }
 
     /**
@@ -216,7 +216,7 @@ final class Validator implements ValidatorInterface
      */
     private function logConstraint(string $path, ConstraintInterface $constraint)
     {
-        $this->logger->debug('deserialize: path {path}, constraint {constraint}', [
+        $this->logger->debug('validate: path {path}, constraint {constraint}', [
             'path' => $path,
             'constraint' => get_class($constraint),
         ]);
@@ -229,7 +229,7 @@ final class Validator implements ValidatorInterface
      */
     private function logError(string $path, ConstraintInterface $constraint, ErrorInterface $error)
     {
-        $this->logger->notice('deserialize: path {path}, constraint {constraint}, error {error}', [
+        $this->logger->notice('validate: path {path}, constraint {constraint}, error {error}', [
             'path' => $path,
             'constraint' => get_class($constraint),
             'error' => [

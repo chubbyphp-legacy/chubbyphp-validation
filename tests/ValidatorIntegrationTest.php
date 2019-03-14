@@ -268,21 +268,21 @@ class ValidatorIntegrationTest extends TestCase
         self::assertEquals([
             [
                 'level' => 'info',
-                'message' => 'deserialize: path {path}',
+                'message' => 'validate: path {path}',
                 'context' => [
                     'path' => '',
                 ],
             ],
             [
                 'level' => 'info',
-                'message' => 'deserialize: path {path}',
+                'message' => 'validate: path {path}',
                 'context' => [
                     'path' => 'notBlank',
                 ],
             ],
             [
                 'level' => 'debug',
-                'message' => 'deserialize: path {path}, constraint {constraint}',
+                'message' => 'validate: path {path}, constraint {constraint}',
                 'context' => [
                     'path' => 'notBlank',
                     'constraint' => 'Chubbyphp\\Validation\\Constraint\\Symfony\\ConstraintAdapter',
@@ -290,7 +290,7 @@ class ValidatorIntegrationTest extends TestCase
             ],
             [
                 'level' => 'notice',
-                'message' => 'deserialize: path {path}, constraint {constraint}, error {error}',
+                'message' => 'validate: path {path}, constraint {constraint}, error {error}',
                 'context' => [
                     'path' => 'notBlank',
                     'constraint' => 'Chubbyphp\\Validation\\Constraint\\Symfony\\ConstraintAdapter',
@@ -310,14 +310,14 @@ class ValidatorIntegrationTest extends TestCase
             ],
             [
                 'level' => 'info',
-                'message' => 'deserialize: path {path}',
+                'message' => 'validate: path {path}',
                 'context' => [
                     'path' => 'numeric',
                 ],
             ],
             [
                 'level' => 'debug',
-                'message' => 'deserialize: path {path}, constraint {constraint}',
+                'message' => 'validate: path {path}, constraint {constraint}',
                 'context' => [
                     'path' => 'numeric',
                     'constraint' => 'Chubbyphp\\Validation\\Constraint\\NumericRangeConstraint',
@@ -325,7 +325,7 @@ class ValidatorIntegrationTest extends TestCase
             ],
             [
                 'level' => 'notice',
-                'message' => 'deserialize: path {path}, constraint {constraint}, error {error}',
+                'message' => 'validate: path {path}, constraint {constraint}, error {error}',
                 'context' => [
                     'path' => 'numeric',
                     'constraint' => 'Chubbyphp\\Validation\\Constraint\\NumericRangeConstraint',
@@ -341,14 +341,14 @@ class ValidatorIntegrationTest extends TestCase
             ],
             [
                 'level' => 'info',
-                'message' => 'deserialize: path {path}',
+                'message' => 'validate: path {path}',
                 'context' => [
                     'path' => 'callback',
                 ],
             ],
             [
                 'level' => 'debug',
-                'message' => 'deserialize: path {path}, constraint {constraint}',
+                'message' => 'validate: path {path}, constraint {constraint}',
                 'context' => [
                     'path' => 'callback',
                     'constraint' => 'Chubbyphp\\Validation\\Constraint\\Symfony\\ConstraintAdapter',
@@ -356,7 +356,7 @@ class ValidatorIntegrationTest extends TestCase
             ],
             [
                 'level' => 'notice',
-                'message' => 'deserialize: path {path}, constraint {constraint}, error {error}',
+                'message' => 'validate: path {path}, constraint {constraint}, error {error}',
                 'context' => [
                     'path' => 'callback',
                     'constraint' => 'Chubbyphp\\Validation\\Constraint\\Symfony\\ConstraintAdapter',
@@ -375,14 +375,14 @@ class ValidatorIntegrationTest extends TestCase
             ],
             [
                 'level' => 'info',
-                'message' => 'deserialize: path {path}',
+                'message' => 'validate: path {path}',
                 'context' => [
                     'path' => 'all',
                 ],
             ],
             [
                 'level' => 'debug',
-                'message' => 'deserialize: path {path}, constraint {constraint}',
+                'message' => 'validate: path {path}, constraint {constraint}',
                 'context' => [
                     'path' => 'all',
                     'constraint' => 'Chubbyphp\\Validation\\Constraint\\AllConstraint',
@@ -390,7 +390,7 @@ class ValidatorIntegrationTest extends TestCase
             ],
             [
                 'level' => 'notice',
-                'message' => 'deserialize: path {path}, constraint {constraint}, error {error}',
+                'message' => 'validate: path {path}, constraint {constraint}, error {error}',
                 'context' => [
                     'path' => 'all',
                     'constraint' => 'Chubbyphp\\Validation\\Constraint\\AllConstraint',
