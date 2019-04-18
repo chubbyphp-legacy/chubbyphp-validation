@@ -1,6 +1,6 @@
 {
     "name": "chubbyphp/chubbyphp-validation",
-    "description": "Chubbyphp Deserialize",
+    "description": "Chubbyphp Validate",
     "keywords": ["chubbyphp", "slim", "validation"],
     "license": "MIT",
     "authors": [
