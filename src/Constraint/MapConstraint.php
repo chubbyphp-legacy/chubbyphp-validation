@@ -10,7 +10,7 @@ use Chubbyphp\Validation\ValidatorContextInterface;
 use Chubbyphp\Validation\ValidatorInterface;
 use Chubbyphp\Validation\ValidatorLogicException;
 
-final class AllConstraint implements ConstraintInterface
+final class MapConstraint implements ConstraintInterface
 {
     /**
      * @var ConstraintInterface[]
@@ -23,17 +23,18 @@ final class AllConstraint implements ConstraintInterface
     public function __construct(array $constraints = [])
     {
         $this->constraints = [];
-        foreach ($constraints as $constraint) {
-            $this->addConstraint($constraint);
+        foreach ($constraints as $name => $constraint) {
+            $this->addConstraint($name, $constraint);
         }
     }
 
     /**
+     * @param string $name
      * @param ConstraintInterface $constraint
      */
-    private function addConstraint(ConstraintInterface $constraint)
+    private function addConstraint(string $name, ConstraintInterface $constraint)
     {
-        $this->constraints[] = $constraint;
+        $this->constraints[$name] = $constraint;
     }
 
     /**
@@ -59,19 +60,31 @@ final class AllConstraint implements ConstraintInterface
         if (!is_array($value) && !$value instanceof \Traversable) {
             return [new Error(
                 $path.'[_all]',
-                'constraint.all.invalidtype',
+                'constraint.map.invalidtype',
                 ['type' => is_object($value) ? get_class($value) : gettype($value)]
             )];
         }
 
         $errors = [];
-        foreach ($value as $i => $subValue) {
-            foreach ($this->constraints as $constraint) {
-                $errors = array_merge(
-                    $errors,
-                    $constraint->validate($path.'['.$i.']', $subValue, $context, $validator)
+        foreach ($value as $field => $subValue) {
+            $subPath = $path.'['.$field.']';
+
+            if (!isset($this->constraints[$field])) {
+                $errors[] = new Error(
+                    $subPath,
+                    'constraint.map.field.notallowed',
+                    ['field' => $field, 'allowedFields' => array_keys($this->constraints)]
                 );
+
+                continue;
             }
+
+            $constraint = $this->constraints[$field];
+
+            $errors = array_merge(
+                $errors,
+                $constraint->validate($subPath, $subValue, $context, $validator)
+            );
         }
 
         return $errors;

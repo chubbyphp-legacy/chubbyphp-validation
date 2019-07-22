@@ -27,7 +27,7 @@ A simple validation.
 Through [Composer](http://getcomposer.org) as [chubbyphp/chubbyphp-validation][1].
 
 ```sh
-composer require chubbyphp/chubbyphp-validation "~3.3"
+composer require chubbyphp/chubbyphp-validation "~3.4"
 ```
 
 ## Usage
@@ -49,22 +49,23 @@ composer require chubbyphp/chubbyphp-validation "~3.3"
  * [DateTimeConstraint][108]
  * [EmailConstraint][109]
  * [FalseConstraint][110]
- * [NotBlankConstraint][111]
- * [NotNullConstraint][112]
- * [NullConstraint][113]
- * [NumericConstraint][114]
- * [NumericRangeConstraint][115]
- * [TrueConstraint][116]
- * [TypeConstraint][117]
- * [ValidConstraint][118]
+ * [MapConstraint][111]
+ * [NotBlankConstraint][112]
+ * [NotNullConstraint][113]
+ * [NullConstraint][114]
+ * [NumericConstraint][115]
+ * [NumericRangeConstraint][116]
+ * [TrueConstraint][117]
+ * [TypeConstraint][118]
+ * [ValidConstraint][119]
 
 #### Doctrine
 
- * [UniqueConstraint][119]
+ * [UniqueConstraint][120]
 
 #### Symfony
 
- * [ConstraintAdapter][120]
+ * [ConstraintAdapter][121]
 
 ### Error
 
@@ -215,18 +216,19 @@ Dominik Zogg 2018
 [108]: doc/Constraint/DateTimeConstraint.md
 [109]: doc/Constraint/EmailConstraint.md
 [110]: doc/Constraint/FalseConstraint.md
-[111]: doc/Constraint/NotBlankConstraint.md
-[112]: doc/Constraint/NotNullConstraint.md
-[113]: doc/Constraint/NullConstraint.md
-[114]: doc/Constraint/NumericConstraint.md
-[115]: doc/Constraint/NumericRangeConstraint.md
-[116]: doc/Constraint/TrueConstraint.md
-[117]: doc/Constraint/TypeConstraint.md
-[118]: doc/Constraint/ValidConstraint.md
+[111]: doc/Constraint/MapConstraint.md
+[112]: doc/Constraint/NotBlankConstraint.md
+[113]: doc/Constraint/NotNullConstraint.md
+[114]: doc/Constraint/NullConstraint.md
+[115]: doc/Constraint/NumericConstraint.md
+[116]: doc/Constraint/NumericRangeConstraint.md
+[117]: doc/Constraint/TrueConstraint.md
+[118]: doc/Constraint/TypeConstraint.md
+[119]: doc/Constraint/ValidConstraint.md
 
-[119]: doc/Constraint/Doctrine/UniqueConstraint.md
+[120]: doc/Constraint/Doctrine/UniqueConstraint.md
 
-[120]: doc/Constraint/Symfony/ConstraintAdapter.md
+[121]: doc/Constraint/Symfony/ConstraintAdapter.md
 
 [4]: doc/Error/Error.md
 [5]: doc/Error/ErrorMessages.md
