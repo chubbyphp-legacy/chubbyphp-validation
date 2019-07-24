@@ -13,28 +13,53 @@ use Chubbyphp\Validation\ValidatorLogicException;
 final class MapConstraint implements ConstraintInterface
 {
     /**
-     * @var ConstraintInterface[]
+     * @var array<string, array<ConstraintInterface>>
      */
-    private $constraints;
+    private $constraintsByFields;
 
     /**
-     * @param ConstraintInterface[] $constraints
+     * @param array<string, array<ConstraintInterface>> $constraintsByFields
      */
-    public function __construct(array $constraints = [])
+    public function __construct(array $constraintsByFields = [])
     {
-        $this->constraints = [];
-        foreach ($constraints as $name => $constraint) {
-            $this->addConstraint($name, $constraint);
+        $this->constraintsByFields = [];
+        foreach ($constraintsByFields as $field => $constraintsByField) {
+            if ($constraintsByField instanceof ConstraintInterface) {
+                @trigger_error(
+                    sprintf(
+                        'Constraints by field "%s" should be an array of "%s"',
+                        $field,
+                        ConstraintInterface::class
+                    ),
+                    E_USER_DEPRECATED
+                );
+
+                $constraintsByField = [$constraintsByField];
+            }
+
+            $this->addConstraintsByField($field, $constraintsByField);
         }
     }
 
     /**
-     * @param string $name
+     * @param string                     $field
+     * @param array<ConstraintInterface> $constraintsByField
+     */
+    private function addConstraintsByField(string $field, array $constraintsByField)
+    {
+        $this->constraintsByFields[$field] = [];
+        foreach ($constraintsByField as $constraintByField) {
+            $this->addConstraintByField($field, $constraintByField);
+        }
+    }
+
+    /**
+     * @param string              $field
      * @param ConstraintInterface $constraint
      */
-    private function addConstraint(string $name, ConstraintInterface $constraint)
+    private function addConstraintByField(string $field, ConstraintInterface $constraint)
     {
-        $this->constraints[$name] = $constraint;
+        $this->constraintsByFields[$field][] = $constraint;
     }
 
     /**
@@ -69,22 +94,22 @@ final class MapConstraint implements ConstraintInterface
         foreach ($value as $field => $subValue) {
             $subPath = $path.'['.$field.']';
 
-            if (!isset($this->constraints[$field])) {
+            if (!isset($this->constraintsByFields[$field])) {
                 $errors[] = new Error(
                     $subPath,
                     'constraint.map.field.notallowed',
-                    ['field' => $field, 'allowedFields' => array_keys($this->constraints)]
+                    ['field' => $field, 'allowedFields' => array_keys($this->constraintsByFields)]
                 );
 
                 continue;
             }
 
-            $constraint = $this->constraints[$field];
-
-            $errors = array_merge(
-                $errors,
-                $constraint->validate($subPath, $subValue, $context, $validator)
-            );
+            foreach ($this->constraintsByFields[$field] as $constraint) {
+                $errors = array_merge(
+                    $errors,
+                    $constraint->validate($subPath, $subValue, $context, $validator)
+                );
+            }
         }
 
         return $errors;

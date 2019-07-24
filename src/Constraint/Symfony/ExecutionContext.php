@@ -80,7 +80,7 @@ final class ExecutionContext implements ExecutionContextInterface
     }
 
     /**
-     * @return null|object
+     * @return object|null
      */
     public function getObject()
     {
@@ -89,7 +89,7 @@ final class ExecutionContext implements ExecutionContextInterface
 
     /**
      * @param mixed                  $value
-     * @param null|object            $object
+     * @param object|null            $object
      * @param MetadataInterface|null $metadata
      * @param string                 $propertyPath
      */
@@ -99,7 +99,7 @@ final class ExecutionContext implements ExecutionContextInterface
     }
 
     /**
-     * @param null|string $group
+     * @param string|null $group
      */
     public function setGroup($group)
     {
@@ -194,7 +194,7 @@ final class ExecutionContext implements ExecutionContextInterface
     }
 
     /**
-     * @return null|MetadataInterface
+     * @return MetadataInterface|null
      */
     public function getMetadata()
     {

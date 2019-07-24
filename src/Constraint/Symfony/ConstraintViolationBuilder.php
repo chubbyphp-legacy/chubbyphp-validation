@@ -141,7 +141,7 @@ final class ConstraintViolationBuilder implements ConstraintViolationBuilderInte
     }
 
     /**
-     * @param null|string $code
+     * @param string|null $code
      *
      * @return ConstraintViolationBuilder
      */
