@@ -15,19 +15,21 @@ use PHPUnit\Framework\TestCase;
 
 /**
  * @covers \Chubbyphp\Validation\Constraint\MapConstraint
+ *
+ * @internal
  */
 final class MapConstraintTest extends TestCase
 {
     use MockByCallsTrait;
 
-    public function testWithNullValue()
+    public function testWithNullValue(): void
     {
         $constraint = new MapConstraint();
 
         self::assertEquals([], $constraint->validate('map', null, $this->getContext()));
     }
 
-    public function testWithInvalidValue()
+    public function testWithInvalidValue(): void
     {
         $constraint = new MapConstraint();
 
@@ -36,7 +38,7 @@ final class MapConstraintTest extends TestCase
         ], $constraint->validate('map', 'string', $this->getContext()));
     }
 
-    public function testWithMissingConstraint()
+    public function testWithMissingConstraint(): void
     {
         $constraint = new MapConstraint(['name' => [$this->getConstraint()]]);
 
@@ -48,7 +50,7 @@ final class MapConstraintTest extends TestCase
         ], $constraint->validate('map', ['name2' => 'example'], $this->getContext(), $this->getValidator()));
     }
 
-    public function testWithConstraint()
+    public function testWithConstraint(): void
     {
         $constraint = new MapConstraint(['name' => [$this->getConstraint()]]);
 
@@ -58,7 +60,7 @@ final class MapConstraintTest extends TestCase
         );
     }
 
-    public function testWithConstraintAndError()
+    public function testWithConstraintAndError(): void
     {
         $constraint = new MapConstraint(['name' => [$this->getConstraint(true)]]);
 
@@ -67,7 +69,7 @@ final class MapConstraintTest extends TestCase
         ], $constraint->validate('map', ['name' => 'example'], $this->getContext(), $this->getValidator()));
     }
 
-    public function testWithConstraintButWithoutArray()
+    public function testWithConstraintButWithoutArray(): void
     {
         error_clear_last();
 
@@ -96,10 +98,8 @@ final class MapConstraintTest extends TestCase
      */
     private function getValidator(): ValidatorInterface
     {
-        /** @var ValidatorInterface|MockObject $validator */
-        $validator = $this->getMockByCalls(ValidatorInterface::class);
-
-        return $validator;
+        /* @var ValidatorInterface|MockObject $validator */
+        return $this->getMockByCalls(ValidatorInterface::class);
     }
 
     /**
@@ -139,9 +139,7 @@ final class MapConstraintTest extends TestCase
      */
     private function getContext(): ValidatorContextInterface
     {
-        /** @var ValidatorContextInterface|MockObject $context */
-        $context = $this->getMockByCalls(ValidatorContextInterface::class);
-
-        return $context;
+        /* @var ValidatorContextInterface|MockObject $context */
+        return $this->getMockByCalls(ValidatorContextInterface::class);
     }
 }

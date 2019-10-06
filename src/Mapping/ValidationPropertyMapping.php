@@ -15,7 +15,7 @@ final class ValidationPropertyMapping implements ValidationPropertyMappingInterf
     private $name;
 
     /**
-     * @var ConstraintInterface[]
+     * @var array<ConstraintInterface>
      */
     private $constraints;
 
@@ -31,7 +31,7 @@ final class ValidationPropertyMapping implements ValidationPropertyMappingInterf
 
     /**
      * @param string                $name
-     * @param ConstraintInterface[] $constraints
+     * @param array<ConstraintInterface> $constraints
      * @param array                 $groups
      * @param AccessorInterface     $accessor
      */
@@ -56,7 +56,7 @@ final class ValidationPropertyMapping implements ValidationPropertyMappingInterf
     }
 
     /**
-     * @return ConstraintInterface[]
+     * @return array<ConstraintInterface>
      */
     public function getConstraints(): array
     {

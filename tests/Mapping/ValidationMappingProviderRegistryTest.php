@@ -4,19 +4,21 @@ declare(strict_types=1);
 
 namespace Chubbyphp\Tests\Validation\Mapping;
 
+use Chubbyphp\Validation\Mapping\ValidationMappingProviderInterface;
 use Chubbyphp\Validation\Mapping\ValidationMappingProviderRegistry;
 use Chubbyphp\Validation\ValidatorLogicException;
-use Chubbyphp\Validation\Mapping\ValidationMappingProviderInterface;
 use Doctrine\Common\Persistence\Proxy;
 use PHPUnit\Framework\MockObject\MockObject;
 use PHPUnit\Framework\TestCase;
 
 /**
  * @covers \Chubbyphp\Validation\Mapping\ValidationMappingProviderRegistry
+ *
+ * @internal
  */
-class ValidationMappingProviderRegistryTest extends TestCase
+final class ValidationMappingProviderRegistryTest extends TestCase
 {
-    public function testGetObjectMapping()
+    public function testGetObjectMapping(): void
     {
         $object = $this->getObject();
 
@@ -29,7 +31,7 @@ class ValidationMappingProviderRegistryTest extends TestCase
         self::assertInstanceOf(ValidationMappingProviderInterface::class, $mapping);
     }
 
-    public function testGetMissingObjectMapping()
+    public function testGetMissingObjectMapping(): void
     {
         self::expectException(ValidatorLogicException::class);
         self::expectExceptionMessage('There is no mapping for class: "stdClass"');
@@ -39,7 +41,7 @@ class ValidationMappingProviderRegistryTest extends TestCase
         $registry->provideMapping(get_class(new \stdClass()));
     }
 
-    public function testGetObjectMappingFromDoctrineProxy()
+    public function testGetObjectMappingFromDoctrineProxy(): void
     {
         $object = $this->getProxyObject();
 
@@ -60,7 +62,8 @@ class ValidationMappingProviderRegistryTest extends TestCase
         /** @var ValidationMappingProviderInterface|MockObject $objectMapping */
         $objectMapping = $this->getMockBuilder(ValidationMappingProviderInterface::class)
             ->setMethods([])
-            ->getMockForAbstractClass();
+            ->getMockForAbstractClass()
+        ;
 
         $object = $this->getObject();
 
@@ -81,7 +84,8 @@ class ValidationMappingProviderRegistryTest extends TestCase
         /** @var ValidationMappingProviderInterface|MockObject $objectMapping */
         $objectMapping = $this->getMockBuilder(ValidationMappingProviderInterface::class)
             ->setMethods([])
-            ->getMockForAbstractClass();
+            ->getMockForAbstractClass()
+        ;
 
         $object = $this->getProxyObject();
 
@@ -138,7 +142,7 @@ class ValidationMappingProviderRegistryTest extends TestCase
              *
              * Acts as a no-op if already initialized.
              */
-            public function __load()
+            public function __load(): void
             {
             }
 

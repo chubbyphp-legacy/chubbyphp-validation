@@ -14,19 +14,21 @@ use PHPUnit\Framework\TestCase;
 
 /**
  * @covers \Chubbyphp\Validation\Mapping\CallableValidationMappingProvider
+ *
+ * @internal
  */
-class CallableValidationMappingProviderTest extends TestCase
+final class CallableValidationMappingProviderTest extends TestCase
 {
     use MockByCallsTrait;
 
-    public function testGetClass()
+    public function testGetClass(): void
     {
-        $mapping = new CallableValidationMappingProvider(\stdClass::class, function () {});
+        $mapping = new CallableValidationMappingProvider(\stdClass::class, function (): void {});
 
         self::assertSame(\stdClass::class, $mapping->getClass());
     }
 
-    public function testGetValidationClassMapping()
+    public function testGetValidationClassMapping(): void
     {
         $classMapping = $this->getMockByCalls(ValidationClassMappingInterface::class);
 
@@ -39,7 +41,7 @@ class CallableValidationMappingProviderTest extends TestCase
         self::assertSame($classMapping, $mapping->getValidationClassMapping('path'));
     }
 
-    public function testGetValidationPropertyMappings()
+    public function testGetValidationPropertyMappings(): void
     {
         $propertyMapping = $this->getMockByCalls(ValidationPropertyMappingInterface::class);
 

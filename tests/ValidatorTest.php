@@ -21,11 +21,15 @@ use Chubbyphp\Validation\ValidatorLogicException;
 use PHPUnit\Framework\TestCase;
 use Psr\Log\LoggerInterface;
 
-class ValidatorTest extends TestCase
+/**
+ * @internal
+ * @coversNothing
+ */
+final class ValidatorTest extends TestCase
 {
     use MockByCallsTrait;
 
-    public function testValidateMissingMappingExpectValidatorLogicException()
+    public function testValidateMissingMappingExpectValidatorLogicException(): void
     {
         $model = $this->getModel();
         $class = get_class($model);
@@ -51,7 +55,7 @@ class ValidatorTest extends TestCase
         $validator->validate($model);
     }
 
-    public function testValidateWithoutClassMappingAndWithoutPropertyMapping()
+    public function testValidateWithoutClassMappingAndWithoutPropertyMapping(): void
     {
         $model = $this->getModel();
         $class = get_class($model);
@@ -75,7 +79,7 @@ class ValidatorTest extends TestCase
         self::assertCount(0, $validator->validate($model));
     }
 
-    public function testValidateWithClassMappingAndWithPropertyMapping()
+    public function testValidateWithClassMappingAndWithPropertyMapping(): void
     {
         $model = $this->getModel();
         $class = get_class($model);
@@ -184,14 +188,14 @@ class ValidatorTest extends TestCase
         self::assertEquals($propertyError, $errors[1]);
     }
 
-    public function testValidateWithClassMappingAndWithPropertyMappingWithoutUsedGroup()
+    public function testValidateWithClassMappingAndWithPropertyMappingWithoutUsedGroup(): void
     {
         $model = $this->getModel();
         $class = get_class($model);
 
         /** @var ValidationClassMappingInterface $classMapping */
         $classMapping = $this->getMockByCalls(ValidationClassMappingInterface::class, [
-             Call::create('getGroups')->with()->willReturn(['group1']),
+            Call::create('getGroups')->with()->willReturn(['group1']),
         ]);
 
         /** @var ValidationPropertyMappingInterface $propertyMapping */
@@ -223,7 +227,7 @@ class ValidatorTest extends TestCase
         self::assertCount(0, $validator->validate($model, $context));
     }
 
-    public function testValidateWithClassMappingAndWithPropertyMappingWithUsedGroup()
+    public function testValidateWithClassMappingAndWithPropertyMappingWithUsedGroup(): void
     {
         $model = $this->getModel();
         $class = get_class($model);

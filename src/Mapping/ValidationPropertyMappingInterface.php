@@ -15,7 +15,7 @@ interface ValidationPropertyMappingInterface extends ValidationGroupsInterface
     public function getName(): string;
 
     /**
-     * @return ConstraintInterface[]
+     * @return array<ConstraintInterface>
      */
     public function getConstraints(): array;
 

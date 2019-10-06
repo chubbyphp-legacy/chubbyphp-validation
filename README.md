@@ -14,20 +14,20 @@ A simple validation.
 
 ## Requirements
 
- * php: ~7.0
- * psr/log: ~1.0
+ * php: ^7.2
+ * psr/log: ^1.0
 
 ## Suggest
 
- * psr/container: ~1.0
- * pimple/pimple: ~3.0
+ * psr/container: ^1.0
+ * pimple/pimple: ^3.2.3
 
 ## Installation
 
 Through [Composer](http://getcomposer.org) as [chubbyphp/chubbyphp-validation][1].
 
 ```sh
-composer require chubbyphp/chubbyphp-validation "~3.4"
+composer require chubbyphp/chubbyphp-validation "^3.5"
 ```
 
 ## Usage
@@ -93,7 +93,7 @@ namespace MyProject\Model;
 final class Model
 {
     /**
-     * @var \DateTime[]
+     * @var array<\DateTime>
      */
     private $dates;
 }

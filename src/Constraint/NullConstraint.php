@@ -17,7 +17,7 @@ final class NullConstraint implements ConstraintInterface
      * @param ValidatorContextInterface $context
      * @param ValidatorInterface|null   $validator
      *
-     * @return ErrorInterface[]
+     * @return array<ErrorInterface>
      */
     public function validate(
         string $path,

@@ -55,7 +55,7 @@ final class ExecutionContext implements ExecutionContextInterface
      * @param string $message
      * @param array  $params
      */
-    public function addViolation($message, array $params = [])
+    public function addViolation($message, array $params = []): void
     {
         (new ConstraintViolationBuilder($this->violations, $message, $params, $this->path))->addViolation();
     }
@@ -93,7 +93,7 @@ final class ExecutionContext implements ExecutionContextInterface
      * @param MetadataInterface|null $metadata
      * @param string                 $propertyPath
      */
-    public function setNode($value, $object, MetadataInterface $metadata = null, $propertyPath)
+    public function setNode($value, $object, MetadataInterface $metadata = null, $propertyPath): void
     {
         throw new NotImplementedException(sprintf('Method "%s" is not implemented', __METHOD__));
     }
@@ -101,7 +101,7 @@ final class ExecutionContext implements ExecutionContextInterface
     /**
      * @param string|null $group
      */
-    public function setGroup($group)
+    public function setGroup($group): void
     {
         throw new NotImplementedException(sprintf('Method "%s" is not implemented', __METHOD__));
     }
@@ -109,7 +109,7 @@ final class ExecutionContext implements ExecutionContextInterface
     /**
      * @param Constraint $constraint
      */
-    public function setConstraint(Constraint $constraint)
+    public function setConstraint(Constraint $constraint): void
     {
         throw new NotImplementedException(sprintf('Method "%s" is not implemented', __METHOD__));
     }
@@ -118,7 +118,7 @@ final class ExecutionContext implements ExecutionContextInterface
      * @param string $cacheKey
      * @param string $groupHash
      */
-    public function markGroupAsValidated($cacheKey, $groupHash)
+    public function markGroupAsValidated($cacheKey, $groupHash): void
     {
         throw new NotImplementedException(sprintf('Method "%s" is not implemented', __METHOD__));
     }
@@ -138,7 +138,7 @@ final class ExecutionContext implements ExecutionContextInterface
      * @param string $cacheKey
      * @param string $constraintHash
      */
-    public function markConstraintAsValidated($cacheKey, $constraintHash)
+    public function markConstraintAsValidated($cacheKey, $constraintHash): void
     {
         throw new NotImplementedException(sprintf('Method "%s" is not implemented', __METHOD__));
     }
@@ -157,7 +157,7 @@ final class ExecutionContext implements ExecutionContextInterface
     /**
      * @param string $cacheKey
      */
-    public function markObjectAsInitialized($cacheKey)
+    public function markObjectAsInitialized($cacheKey): void
     {
         throw new NotImplementedException(sprintf('Method "%s" is not implemented', __METHOD__));
     }
@@ -180,7 +180,7 @@ final class ExecutionContext implements ExecutionContextInterface
         return $this->violations;
     }
 
-    public function getRoot()
+    public function getRoot(): void
     {
         throw new NotImplementedException(sprintf('Method "%s" is not implemented', __METHOD__));
     }
@@ -246,7 +246,7 @@ final class ExecutionContext implements ExecutionContextInterface
     }
 
     /**
-     * @return ErrorInterface[]
+     * @return array<ErrorInterface>
      */
     public function getErrors(): array
     {

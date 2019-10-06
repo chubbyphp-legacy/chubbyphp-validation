@@ -17,12 +17,14 @@ use PHPUnit\Framework\TestCase;
 
 /**
  * @covers \Chubbyphp\Validation\Constraint\Doctrine\UniqueConstraint
+ *
+ * @internal
  */
 final class UniqueConstraintTest extends TestCase
 {
     use MockByCallsTrait;
 
-    public function testWithNullValue()
+    public function testWithNullValue(): void
     {
         /** @var ObjectManager|MockObject $objectManager */
         $objectManager = $this->getMockByCalls(ObjectManager::class);
@@ -32,7 +34,7 @@ final class UniqueConstraintTest extends TestCase
         self::assertEquals([], $constraint->validate('unique', null, $this->getContext()));
     }
 
-    public function testWithNewModel()
+    public function testWithNewModel(): void
     {
         $model = new class() {
             private $id = '81b003cd-3f66-47b9-9526-d6227c122366';
@@ -56,7 +58,7 @@ final class UniqueConstraintTest extends TestCase
         self::assertEquals([], $constraint->validate('unique', $model, $this->getContext()));
     }
 
-    public function testWithSameExistingModel()
+    public function testWithSameExistingModel(): void
     {
         $model = new class() {
             private $id = '81b003cd-3f66-47b9-9526-d6227c122366';
@@ -88,7 +90,7 @@ final class UniqueConstraintTest extends TestCase
         self::assertEquals([], $constraint->validate('unique', $model, $this->getContext()));
     }
 
-    public function testWithSameDifferentModel()
+    public function testWithSameDifferentModel(): void
     {
         $model = new class() {
             private $id = '81b003cd-3f66-47b9-9526-d6227c122366';
@@ -136,9 +138,7 @@ final class UniqueConstraintTest extends TestCase
      */
     private function getContext(): ValidatorContextInterface
     {
-        /** @var ValidatorContextInterface|MockObject $context */
-        $context = $this->getMockByCalls(ValidatorContextInterface::class);
-
-        return $context;
+        /* @var ValidatorContextInterface|MockObject $context */
+        return $this->getMockByCalls(ValidatorContextInterface::class);
     }
 }

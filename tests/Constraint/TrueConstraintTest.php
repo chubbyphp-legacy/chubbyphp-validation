@@ -13,26 +13,28 @@ use PHPUnit\Framework\TestCase;
 
 /**
  * @covers \Chubbyphp\Validation\Constraint\TrueConstraint
+ *
+ * @internal
  */
 final class TrueConstraintTest extends TestCase
 {
     use MockByCallsTrait;
 
-    public function testWithNullValue()
+    public function testWithNullValue(): void
     {
         $constraint = new TrueConstraint();
 
         self::assertEquals([], $constraint->validate('true', null, $this->getContext()));
     }
 
-    public function testWithTrue()
+    public function testWithTrue(): void
     {
         $constraint = new TrueConstraint();
 
         self::assertEquals([], $constraint->validate('true', true, $this->getContext()));
     }
 
-    public function testWithFalse()
+    public function testWithFalse(): void
     {
         $constraint = new TrueConstraint();
 
@@ -41,7 +43,7 @@ final class TrueConstraintTest extends TestCase
         self::assertEquals([$error], $constraint->validate('true', false, $this->getContext()));
     }
 
-    public function testWithInteger()
+    public function testWithInteger(): void
     {
         $constraint = new TrueConstraint();
 
@@ -50,7 +52,7 @@ final class TrueConstraintTest extends TestCase
         self::assertEquals([$error], $constraint->validate('true', 5, $this->getContext()));
     }
 
-    public function testWithFloat()
+    public function testWithFloat(): void
     {
         $constraint = new TrueConstraint();
 
@@ -59,7 +61,7 @@ final class TrueConstraintTest extends TestCase
         self::assertEquals([$error], $constraint->validate('true', 5.5, $this->getContext()));
     }
 
-    public function testWithString()
+    public function testWithString(): void
     {
         $constraint = new TrueConstraint();
 
@@ -68,7 +70,7 @@ final class TrueConstraintTest extends TestCase
         self::assertEquals([$error], $constraint->validate('true', '', $this->getContext()));
     }
 
-    public function testWithArray()
+    public function testWithArray(): void
     {
         $constraint = new TrueConstraint();
 
@@ -77,7 +79,7 @@ final class TrueConstraintTest extends TestCase
         self::assertEquals([$error], $constraint->validate('true', [], $this->getContext()));
     }
 
-    public function testWithStdClass()
+    public function testWithStdClass(): void
     {
         $constraint = new TrueConstraint();
 
@@ -91,9 +93,7 @@ final class TrueConstraintTest extends TestCase
      */
     private function getContext(): ValidatorContextInterface
     {
-        /** @var ValidatorContextInterface|MockObject $context */
-        $context = $this->getMockByCalls(ValidatorContextInterface::class);
-
-        return $context;
+        /* @var ValidatorContextInterface|MockObject $context */
+        return $this->getMockByCalls(ValidatorContextInterface::class);
     }
 }

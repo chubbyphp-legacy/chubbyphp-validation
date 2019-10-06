@@ -13,33 +13,35 @@ use PHPUnit\Framework\TestCase;
 
 /**
  * @covers \Chubbyphp\Validation\Constraint\NumericRangeConstraint
+ *
+ * @internal
  */
 final class NumericRangeConstraintTest extends TestCase
 {
     use MockByCallsTrait;
 
-    public function testWithoutNumeric()
+    public function testWithoutNumeric(): void
     {
         $constraint = new NumericRangeConstraint();
 
         self::assertEquals([], $constraint->validate('range', 'value', $this->getContext()));
     }
 
-    public function testWithoutMinAndMax()
+    public function testWithoutMinAndMax(): void
     {
         $constraint = new NumericRangeConstraint();
 
         self::assertEquals([], $constraint->validate('range', 1, $this->getContext()));
     }
 
-    public function testWithMin()
+    public function testWithMin(): void
     {
         $constraint = new NumericRangeConstraint(1);
 
         self::assertEquals([], $constraint->validate('range', 1, $this->getContext()));
     }
 
-    public function testWithMinButToLessValues()
+    public function testWithMinButToLessValues(): void
     {
         $constraint = new NumericRangeConstraint(2);
 
@@ -48,14 +50,14 @@ final class NumericRangeConstraintTest extends TestCase
         self::assertEquals([$error], $constraint->validate('range', 1, $this->getContext()));
     }
 
-    public function testWithMax()
+    public function testWithMax(): void
     {
         $constraint = new NumericRangeConstraint(null, 1);
 
         self::assertEquals([], $constraint->validate('range', 1, $this->getContext()));
     }
 
-    public function testWithMaxButToManyValues()
+    public function testWithMaxButToManyValues(): void
     {
         $constraint = new NumericRangeConstraint(null, 0);
 
@@ -64,14 +66,14 @@ final class NumericRangeConstraintTest extends TestCase
         self::assertEquals([$error], $constraint->validate('range', 1, $this->getContext()));
     }
 
-    public function testWithMinAndMax()
+    public function testWithMinAndMax(): void
     {
         $constraint = new NumericRangeConstraint(1, 2);
 
         self::assertEquals([], $constraint->validate('range', 1, $this->getContext()));
     }
 
-    public function testWithMinAndMaxToLessValues()
+    public function testWithMinAndMaxToLessValues(): void
     {
         $constraint = new NumericRangeConstraint(1, 2);
 
@@ -80,7 +82,7 @@ final class NumericRangeConstraintTest extends TestCase
         self::assertEquals([$error], $constraint->validate('range', 0, $this->getContext()));
     }
 
-    public function testWithMinAndMaxToManyValues()
+    public function testWithMinAndMaxToManyValues(): void
     {
         $constraint = new NumericRangeConstraint(1, 2);
 
@@ -94,9 +96,7 @@ final class NumericRangeConstraintTest extends TestCase
      */
     private function getContext(): ValidatorContextInterface
     {
-        /** @var ValidatorContextInterface|MockObject $context */
-        $context = $this->getMockByCalls(ValidatorContextInterface::class);
-
-        return $context;
+        /* @var ValidatorContextInterface|MockObject $context */
+        return $this->getMockByCalls(ValidatorContextInterface::class);
     }
 }

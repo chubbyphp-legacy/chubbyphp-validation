@@ -164,7 +164,7 @@ final class ConstraintViolationBuilder implements ConstraintViolationBuilderInte
         return $this;
     }
 
-    public function addViolation()
+    public function addViolation(): void
     {
         $this->violations->add(new ConstraintViolation(
             $this->message,

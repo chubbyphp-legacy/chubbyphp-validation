@@ -11,7 +11,7 @@ interface ValidationPropertyMappingBuilderInterface
 {
     /**
      * @param string                $name
-     * @param ConstraintInterface[] $constraints)
+     * @param array<ConstraintInterface> $constraints)
      *
      * @return self
      */

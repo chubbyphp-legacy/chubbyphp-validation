@@ -8,9 +8,9 @@ use Chubbyphp\Validation\Constraint\ConstraintInterface;
 use Chubbyphp\Validation\Error\ErrorInterface;
 use Chubbyphp\Validation\Mapping\ValidationClassMappingInterface;
 use Chubbyphp\Validation\Mapping\ValidationGroupsInterface;
-use Chubbyphp\Validation\Mapping\ValidationPropertyMappingInterface;
 use Chubbyphp\Validation\Mapping\ValidationMappingProviderInterface;
 use Chubbyphp\Validation\Mapping\ValidationMappingProviderRegistryInterface;
+use Chubbyphp\Validation\Mapping\ValidationPropertyMappingInterface;
 use Psr\Log\LoggerInterface;
 use Psr\Log\NullLogger;
 
@@ -43,13 +43,13 @@ final class Validator implements ValidatorInterface
      * @param ValidatorContextInterface|null $context
      * @param string                         $path
      *
-     * @return ErrorInterface[]
+     * @return array<ErrorInterface>
      */
-    public function validate($object, ValidatorContextInterface $context = null, string $path = '')
+    public function validate(object $object, ValidatorContextInterface $context = null, string $path = '')
     {
         $context = $context ?? ValidatorContextBuilder::create()->getContext();
 
-        $class = is_object($object) ? get_class($object) : $object;
+        $class = get_class($object);
 
         $objectMapping = $this->getObjectMapping($class);
 
@@ -75,9 +75,9 @@ final class Validator implements ValidatorInterface
     /**
      * @param string $class
      *
-     * @return ValidationMappingProviderInterface
-     *
      * @throws ValidatorLogicException
+     *
+     * @return ValidationMappingProviderInterface
      */
     private function getObjectMapping(string $class): ValidationMappingProviderInterface
     {
@@ -96,7 +96,7 @@ final class Validator implements ValidatorInterface
      * @param string                               $path
      * @param object                               $object
      *
-     * @return ErrorInterface[]
+     * @return array<ErrorInterface>
      */
     private function validateClass(
         ValidatorContextInterface $context,
@@ -134,7 +134,7 @@ final class Validator implements ValidatorInterface
      * @param string                             $path
      * @param object                             $object
      *
-     * @return ErrorInterface[]
+     * @return array<ErrorInterface>
      */
     private function validateProperty(
         ValidatorContextInterface $context,
@@ -205,7 +205,7 @@ final class Validator implements ValidatorInterface
     /**
      * @param string $path
      */
-    private function logPath(string $path)
+    private function logPath(string $path): void
     {
         $this->logger->info('validate: path {path}', ['path' => $path]);
     }
@@ -214,7 +214,7 @@ final class Validator implements ValidatorInterface
      * @param string              $path
      * @param ConstraintInterface $constraint
      */
-    private function logConstraint(string $path, ConstraintInterface $constraint)
+    private function logConstraint(string $path, ConstraintInterface $constraint): void
     {
         $this->logger->debug('validate: path {path}, constraint {constraint}', [
             'path' => $path,
@@ -227,7 +227,7 @@ final class Validator implements ValidatorInterface
      * @param ConstraintInterface $constraint
      * @param ErrorInterface      $error
      */
-    private function logError(string $path, ConstraintInterface $constraint, ErrorInterface $error)
+    private function logError(string $path, ConstraintInterface $constraint, ErrorInterface $error): void
     {
         $this->logger->notice('validate: path {path}, constraint {constraint}, error {error}', [
             'path' => $path,

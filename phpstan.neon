@@ -1,0 +1,8 @@
+parameters:
+    level: 7
+    paths:
+        - src
+    ignoreErrors:
+        -
+            message: '/Method .* return string but returns string|null\./'
+            path: %currentWorkingDirectory%/src/Constraint/Symfony/ExecutionContext.php

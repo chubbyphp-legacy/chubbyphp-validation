@@ -13,26 +13,28 @@ use PHPUnit\Framework\TestCase;
 
 /**
  * @covers \Chubbyphp\Validation\Constraint\EmailConstraint
+ *
+ * @internal
  */
 final class EmailConstraintTest extends TestCase
 {
     use MockByCallsTrait;
 
-    public function testWithNullValue()
+    public function testWithNullValue(): void
     {
         $constraint = new EmailConstraint();
 
         self::assertEquals([], $constraint->validate('email', null, $this->getContext()));
     }
 
-    public function testWithBlankValue()
+    public function testWithBlankValue(): void
     {
         $constraint = new EmailConstraint();
 
         self::assertEquals([], $constraint->validate('email', '', $this->getContext()));
     }
 
-    public function testInvalidType()
+    public function testInvalidType(): void
     {
         $constraint = new EmailConstraint();
 
@@ -41,14 +43,14 @@ final class EmailConstraintTest extends TestCase
         self::assertEquals([$error], $constraint->validate('email', [], $this->getContext()));
     }
 
-    public function testWithEmail()
+    public function testWithEmail(): void
     {
         $constraint = new EmailConstraint();
 
         self::assertEquals([], $constraint->validate('email', 'firstname.lastname@domain.tld', $this->getContext()));
     }
 
-    public function testPattern()
+    public function testPattern(): void
     {
         $matches = [];
         preg_match(EmailConstraint::PATTERN, 'firstname.lastname@domain.tld', $matches);
@@ -57,7 +59,7 @@ final class EmailConstraintTest extends TestCase
         self::assertSame('domain.tld', $matches[2]);
     }
 
-    public function testWithInvalidEmail()
+    public function testWithInvalidEmail(): void
     {
         $constraint = new EmailConstraint();
 
@@ -71,9 +73,7 @@ final class EmailConstraintTest extends TestCase
      */
     private function getContext(): ValidatorContextInterface
     {
-        /** @var ValidatorContextInterface|MockObject $context */
-        $context = $this->getMockByCalls(ValidatorContextInterface::class);
-
-        return $context;
+        /* @var ValidatorContextInterface|MockObject $context */
+        return $this->getMockByCalls(ValidatorContextInterface::class);
     }
 }

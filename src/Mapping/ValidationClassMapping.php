@@ -9,7 +9,7 @@ use Chubbyphp\Validation\Constraint\ConstraintInterface;
 final class ValidationClassMapping implements ValidationClassMappingInterface
 {
     /**
-     * @var ConstraintInterface[]
+     * @var array<ConstraintInterface>
      */
     private $constraints;
 
@@ -19,7 +19,7 @@ final class ValidationClassMapping implements ValidationClassMappingInterface
     private $groups;
 
     /**
-     * @param ConstraintInterface[] $constraints
+     * @param array<ConstraintInterface> $constraints
      * @param array                 $groups
      */
     public function __construct(array $constraints, array $groups)
@@ -29,7 +29,7 @@ final class ValidationClassMapping implements ValidationClassMappingInterface
     }
 
     /**
-     * @return ConstraintInterface[]
+     * @return array<ConstraintInterface>
      */
     public function getConstraints(): array
     {

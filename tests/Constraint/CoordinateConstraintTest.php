@@ -13,26 +13,28 @@ use PHPUnit\Framework\TestCase;
 
 /**
  * @covers \Chubbyphp\Validation\Constraint\CoordinateConstraint
+ *
+ * @internal
  */
 final class CoordinateConstraintTest extends TestCase
 {
     use MockByCallsTrait;
 
-    public function testWithNullValue()
+    public function testWithNullValue(): void
     {
         $constraint = new CoordinateConstraint();
 
         self::assertEquals([], $constraint->validate('coordinate', null, $this->getContext()));
     }
 
-    public function testWithBlankValue()
+    public function testWithBlankValue(): void
     {
         $constraint = new CoordinateConstraint();
 
         self::assertEquals([], $constraint->validate('coordinate', '', $this->getContext()));
     }
 
-    public function testInvalidType()
+    public function testInvalidType(): void
     {
         $constraint = new CoordinateConstraint();
 
@@ -41,7 +43,7 @@ final class CoordinateConstraintTest extends TestCase
         self::assertEquals([$error], $constraint->validate('coordinate', [], $this->getContext()));
     }
 
-    public function testInvalidFormat()
+    public function testInvalidFormat(): void
     {
         $constraint = new CoordinateConstraint();
 
@@ -55,7 +57,7 @@ final class CoordinateConstraintTest extends TestCase
      *
      * @param string $coordinate
      */
-    public function testWithCoordinate(string $coordinate)
+    public function testWithCoordinate(string $coordinate): void
     {
         $constraint = new CoordinateConstraint();
 
@@ -82,7 +84,7 @@ final class CoordinateConstraintTest extends TestCase
      * @param string $latitude
      * @param string $longitude
      */
-    public function testGetLangitudeAndLongitude(string $coordinate, string $latitude, string $longitude)
+    public function testGetLangitudeAndLongitude(string $coordinate, string $latitude, string $longitude): void
     {
         $matches = [];
         preg_match(CoordinateConstraint::PATTERN, $coordinate, $matches);
@@ -96,7 +98,7 @@ final class CoordinateConstraintTest extends TestCase
      *
      * @param string $coordinate
      */
-    public function testWithInvalidCoordinate(string $coordinate)
+    public function testWithInvalidCoordinate(string $coordinate): void
     {
         $constraint = new CoordinateConstraint();
 
@@ -123,9 +125,7 @@ final class CoordinateConstraintTest extends TestCase
      */
     private function getContext(): ValidatorContextInterface
     {
-        /** @var ValidatorContextInterface|MockObject $context */
-        $context = $this->getMockByCalls(ValidatorContextInterface::class);
-
-        return $context;
+        /* @var ValidatorContextInterface|MockObject $context */
+        return $this->getMockByCalls(ValidatorContextInterface::class);
     }
 }

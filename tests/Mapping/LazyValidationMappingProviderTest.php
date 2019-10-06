@@ -16,12 +16,14 @@ use Psr\Container\ContainerInterface;
 
 /**
  * @covers \Chubbyphp\Validation\Mapping\LazyValidationMappingProvider
+ *
+ * @internal
  */
-class LazyValidationMappingProviderTest extends TestCase
+final class LazyValidationMappingProviderTest extends TestCase
 {
     use MockByCallsTrait;
 
-    public function testInvoke()
+    public function testInvoke(): void
     {
         $denormalizationClassMapping = $this->getValidationClassMapping();
         $denormalizationPropertyMappings = [$this->getValidationPropertyMapping()];
@@ -71,13 +73,11 @@ class LazyValidationMappingProviderTest extends TestCase
         ValidationClassMappingInterface $denormalizationClassMapping = null,
         array $denormalizationPropertyMappings
     ): ValidationMappingProviderInterface {
-        /** @var ValidationMappingProviderInterface|MockObject $mapping */
-        $mapping = $this->getMockByCalls(ValidationMappingProviderInterface::class, [
+        /* @var ValidationMappingProviderInterface|MockObject $mapping */
+        return $this->getMockByCalls(ValidationMappingProviderInterface::class, [
             Call::create('getValidationClassMapping')->with('path')->willReturn($denormalizationClassMapping),
             Call::create('getValidationPropertyMappings')->with('path')->willReturn($denormalizationPropertyMappings),
         ]);
-
-        return $mapping;
     }
 
     /**

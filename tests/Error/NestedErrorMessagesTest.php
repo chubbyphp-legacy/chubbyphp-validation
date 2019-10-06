@@ -13,19 +13,21 @@ use PHPUnit\Framework\TestCase;
 
 /**
  * @covers \Chubbyphp\Validation\Error\NestedErrorMessages
+ *
+ * @internal
  */
 final class NestedErrorMessagesTest extends TestCase
 {
     use MockByCallsTrait;
 
-    public function testWithoutMessages()
+    public function testWithoutMessages(): void
     {
         $errorMessages = new NestedErrorMessages([], function (string $key, array $arguments) { return $key; });
 
         self::assertEquals([], $errorMessages->getMessages());
     }
 
-    public function testWithMessages()
+    public function testWithMessages(): void
     {
         $errors = [
             $this->getError('collection[_all]', 'constraint.collection.all'),
@@ -70,13 +72,11 @@ final class NestedErrorMessagesTest extends TestCase
      */
     private function getError(string $path, string $key, array $arguments = []): ErrorInterface
     {
-        /** @var ErrorInterface|MockObject $error */
-        $error = $this->getMockByCalls(ErrorInterface::class, [
+        /* @var ErrorInterface|MockObject $error */
+        return $this->getMockByCalls(ErrorInterface::class, [
             Call::create('getPath')->with()->willReturn($path),
             Call::create('getKey')->with()->willReturn($key),
             Call::create('getArguments')->with()->willReturn($arguments),
         ]);
-
-        return $error;
     }
 }

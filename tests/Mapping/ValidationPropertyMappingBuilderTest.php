@@ -13,12 +13,14 @@ use PHPUnit\Framework\TestCase;
 
 /**
  * @covers \Chubbyphp\Validation\Mapping\ValidationPropertyMappingBuilder
+ *
+ * @internal
  */
-class ValidationPropertyMappingBuilderTest extends TestCase
+final class ValidationPropertyMappingBuilderTest extends TestCase
 {
     use MockByCallsTrait;
 
-    public function testGetDefaultMapping()
+    public function testGetDefaultMapping(): void
     {
         $propertyMapping = ValidationPropertyMappingBuilder::create('name', [])->getMapping();
 
@@ -28,7 +30,7 @@ class ValidationPropertyMappingBuilderTest extends TestCase
         self::assertInstanceOf(AccessorInterface::class, $propertyMapping->getAccessor());
     }
 
-    public function testGetMapping()
+    public function testGetMapping(): void
     {
         $constraint = $this->getConstraint();
 
@@ -37,7 +39,8 @@ class ValidationPropertyMappingBuilderTest extends TestCase
         $propertyMapping = ValidationPropertyMappingBuilder::create('name', [$constraint])
             ->setGroups(['group1'])
             ->setAccessor($accessor)
-            ->getMapping();
+            ->getMapping()
+        ;
 
         self::assertSame('name', $propertyMapping->getName());
         self::assertSame([$constraint], $propertyMapping->getConstraints());
@@ -50,10 +53,8 @@ class ValidationPropertyMappingBuilderTest extends TestCase
      */
     private function getConstraint(): ConstraintInterface
     {
-        /** @var ConstraintInterface|MockObject $constraint */
-        $constraint = $this->getMockByCalls(ConstraintInterface::class);
-
-        return $constraint;
+        /* @var ConstraintInterface|MockObject $constraint */
+        return $this->getMockByCalls(ConstraintInterface::class);
     }
 
     /**
@@ -61,9 +62,7 @@ class ValidationPropertyMappingBuilderTest extends TestCase
      */
     private function getAccessor(): AccessorInterface
     {
-        /** @var AccessorInterface|MockObject $accessor */
-        $accessor = $this->getMockByCalls(AccessorInterface::class);
-
-        return $accessor;
+        /* @var AccessorInterface|MockObject $accessor */
+        return $this->getMockByCalls(AccessorInterface::class);
     }
 }

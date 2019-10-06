@@ -13,19 +13,21 @@ use PHPUnit\Framework\TestCase;
 
 /**
  * @covers \Chubbyphp\Validation\Constraint\NullConstraint
+ *
+ * @internal
  */
 final class NullConstraintTest extends TestCase
 {
     use MockByCallsTrait;
 
-    public function testWithNullValue()
+    public function testWithNullValue(): void
     {
         $constraint = new NullConstraint();
 
         self::assertEquals([], $constraint->validate('null', null, $this->getContext()));
     }
 
-    public function testWithBool()
+    public function testWithBool(): void
     {
         $constraint = new NullConstraint();
 
@@ -34,7 +36,7 @@ final class NullConstraintTest extends TestCase
         self::assertEquals([$error], $constraint->validate('null', false, $this->getContext()));
     }
 
-    public function testWithInteger()
+    public function testWithInteger(): void
     {
         $constraint = new NullConstraint();
 
@@ -43,7 +45,7 @@ final class NullConstraintTest extends TestCase
         self::assertEquals([$error], $constraint->validate('null', 5, $this->getContext()));
     }
 
-    public function testWithFloat()
+    public function testWithFloat(): void
     {
         $constraint = new NullConstraint();
 
@@ -52,7 +54,7 @@ final class NullConstraintTest extends TestCase
         self::assertEquals([$error], $constraint->validate('null', 5.5, $this->getContext()));
     }
 
-    public function testWithString()
+    public function testWithString(): void
     {
         $constraint = new NullConstraint();
 
@@ -61,7 +63,7 @@ final class NullConstraintTest extends TestCase
         self::assertEquals([$error], $constraint->validate('null', '', $this->getContext()));
     }
 
-    public function testWithArray()
+    public function testWithArray(): void
     {
         $constraint = new NullConstraint();
 
@@ -70,7 +72,7 @@ final class NullConstraintTest extends TestCase
         self::assertEquals([$error], $constraint->validate('null', [], $this->getContext()));
     }
 
-    public function testWithStdClass()
+    public function testWithStdClass(): void
     {
         $constraint = new NullConstraint();
 
@@ -84,9 +86,7 @@ final class NullConstraintTest extends TestCase
      */
     private function getContext(): ValidatorContextInterface
     {
-        /** @var ValidatorContextInterface|MockObject $context */
-        $context = $this->getMockByCalls(ValidatorContextInterface::class);
-
-        return $context;
+        /* @var ValidatorContextInterface|MockObject $context */
+        return $this->getMockByCalls(ValidatorContextInterface::class);
     }
 }

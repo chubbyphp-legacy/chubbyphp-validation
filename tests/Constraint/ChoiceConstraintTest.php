@@ -13,12 +13,14 @@ use PHPUnit\Framework\TestCase;
 
 /**
  * @covers \Chubbyphp\Validation\Constraint\ChoiceConstraint
+ *
+ * @internal
  */
 final class ChoiceConstraintTest extends TestCase
 {
     use MockByCallsTrait;
 
-    public function testWithNullValue()
+    public function testWithNullValue(): void
     {
         $constraint = new ChoiceConstraint(['active', 'inactive']);
 
@@ -31,7 +33,7 @@ final class ChoiceConstraintTest extends TestCase
      * @param array $choices
      * @param mixed $choice
      */
-    public function testWithChoice(array $choices, $choice)
+    public function testWithChoice(array $choices, $choice): void
     {
         $constraint = new ChoiceConstraint($choices);
 
@@ -57,7 +59,7 @@ final class ChoiceConstraintTest extends TestCase
      * @param array $choices
      * @param mixed $choice
      */
-    public function testWithInvalidChoice(array $choices, $choice)
+    public function testWithInvalidChoice(array $choices, $choice): void
     {
         $constraint = new ChoiceConstraint($choices);
 
@@ -98,9 +100,7 @@ final class ChoiceConstraintTest extends TestCase
      */
     private function getContext(): ValidatorContextInterface
     {
-        /** @var ValidatorContextInterface|MockObject $context */
-        $context = $this->getMockByCalls(ValidatorContextInterface::class);
-
-        return $context;
+        /* @var ValidatorContextInterface|MockObject $context */
+        return $this->getMockByCalls(ValidatorContextInterface::class);
     }
 }

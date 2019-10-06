@@ -13,26 +13,28 @@ use PHPUnit\Framework\TestCase;
 
 /**
  * @covers \Chubbyphp\Validation\Constraint\DateTimeConstraint
+ *
+ * @internal
  */
 final class DateTimeConstraintTest extends TestCase
 {
     use MockByCallsTrait;
 
-    public function testWithNullValue()
+    public function testWithNullValue(): void
     {
         $constraint = new DateTimeConstraint();
 
         self::assertEquals([], $constraint->validate('date', null, $this->getContext()));
     }
 
-    public function testWithBlankValue()
+    public function testWithBlankValue(): void
     {
         $constraint = new DateTimeConstraint();
 
         self::assertEquals([], $constraint->validate('date', '', $this->getContext()));
     }
 
-    public function testWithDate()
+    public function testWithDate(): void
     {
         $constraint = new DateTimeConstraint('Y-m-d');
 
@@ -42,11 +44,11 @@ final class DateTimeConstraintTest extends TestCase
         self::assertEquals([], $constraint->validate('date', $date, $this->getContext()));
     }
 
-    public function testWithDateTimeExpectedDate()
+    public function testWithDateTimeExpectedDate(): void
     {
         $constraint = new DateTimeConstraint('Y-m-d');
 
-        $date = new \DateTime('2018-05-21');
+        $date = new \DateTime('2018-05-21T00:00:00+02:00');
         $date->setTime(2, 0, 0);
 
         $error = new Error(
@@ -61,7 +63,7 @@ final class DateTimeConstraintTest extends TestCase
         self::assertEquals([$error], $constraint->validate('date', $date, $this->getContext()));
     }
 
-    public function testWithDateTime()
+    public function testWithDateTime(): void
     {
         $constraint = new DateTimeConstraint();
 
@@ -71,7 +73,7 @@ final class DateTimeConstraintTest extends TestCase
         self::assertEquals([], $constraint->validate('date', $date, $this->getContext()));
     }
 
-    public function testInvalidType()
+    public function testInvalidType(): void
     {
         $constraint = new DateTimeConstraint();
 
@@ -80,14 +82,14 @@ final class DateTimeConstraintTest extends TestCase
         self::assertEquals([$error], $constraint->validate('date', [], $this->getContext()));
     }
 
-    public function testWithDateString()
+    public function testWithDateString(): void
     {
         $constraint = new DateTimeConstraint('Y-m-d');
 
         self::assertEquals([], $constraint->validate('date', '2017-01-01', $this->getContext()));
     }
 
-    public function testWithInvalidDateString()
+    public function testWithInvalidDateString(): void
     {
         $constraint = new DateTimeConstraint('Y-m-d');
 
@@ -104,14 +106,14 @@ final class DateTimeConstraintTest extends TestCase
         self::assertEquals([$error], $constraint->validate('date', '2017-13-01', $this->getContext()));
     }
 
-    public function testWithDateTimeString()
+    public function testWithDateTimeString(): void
     {
         $constraint = new DateTimeConstraint();
 
         self::assertEquals([], $constraint->validate('date', '2017-01-01 07:00:00', $this->getContext()));
     }
 
-    public function testWithInvalidDateTimeString()
+    public function testWithInvalidDateTimeString(): void
     {
         $constraint = new DateTimeConstraint();
 
@@ -128,7 +130,7 @@ final class DateTimeConstraintTest extends TestCase
         self::assertEquals([$error], $constraint->validate('date', '2017-13-01 07:00:00', $this->getContext()));
     }
 
-    public function testWithInvalidDateTimeFormat()
+    public function testWithInvalidDateTimeFormat(): void
     {
         $constraint = new DateTimeConstraint();
 
@@ -150,9 +152,7 @@ final class DateTimeConstraintTest extends TestCase
      */
     private function getContext(): ValidatorContextInterface
     {
-        /** @var ValidatorContextInterface|MockObject $context */
-        $context = $this->getMockByCalls(ValidatorContextInterface::class);
-
-        return $context;
+        /* @var ValidatorContextInterface|MockObject $context */
+        return $this->getMockByCalls(ValidatorContextInterface::class);
     }
 }

@@ -18,7 +18,7 @@ final class MapConstraint implements ConstraintInterface
     private $constraintsByFields;
 
     /**
-     * @param array<string, array<ConstraintInterface>> $constraintsByFields
+     * @param array<string, ConstraintInterface|array<ConstraintInterface>> $constraintsByFields
      */
     public function __construct(array $constraintsByFields = [])
     {
@@ -42,35 +42,14 @@ final class MapConstraint implements ConstraintInterface
     }
 
     /**
-     * @param string                     $field
-     * @param array<ConstraintInterface> $constraintsByField
-     */
-    private function addConstraintsByField(string $field, array $constraintsByField)
-    {
-        $this->constraintsByFields[$field] = [];
-        foreach ($constraintsByField as $constraintByField) {
-            $this->addConstraintByField($field, $constraintByField);
-        }
-    }
-
-    /**
-     * @param string              $field
-     * @param ConstraintInterface $constraint
-     */
-    private function addConstraintByField(string $field, ConstraintInterface $constraint)
-    {
-        $this->constraintsByFields[$field][] = $constraint;
-    }
-
-    /**
      * @param string                    $path
      * @param mixed                     $value
      * @param ValidatorContextInterface $context
      * @param ValidatorInterface|null   $validator
      *
-     * @return ErrorInterface[]
-     *
      * @throws ValidatorLogicException
+     *
+     * @return array<ErrorInterface>
      */
     public function validate(
         string $path,
@@ -113,5 +92,26 @@ final class MapConstraint implements ConstraintInterface
         }
 
         return $errors;
+    }
+
+    /**
+     * @param string                     $field
+     * @param array<ConstraintInterface> $constraintsByField
+     */
+    private function addConstraintsByField(string $field, array $constraintsByField): void
+    {
+        $this->constraintsByFields[$field] = [];
+        foreach ($constraintsByField as $constraintByField) {
+            $this->addConstraintByField($field, $constraintByField);
+        }
+    }
+
+    /**
+     * @param string              $field
+     * @param ConstraintInterface $constraint
+     */
+    private function addConstraintByField(string $field, ConstraintInterface $constraint): void
+    {
+        $this->constraintsByFields[$field][] = $constraint;
     }
 }

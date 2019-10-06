@@ -17,12 +17,14 @@ use Symfony\Component\Validator\ConstraintViolation;
 
 /**
  * @covers \Chubbyphp\Validation\Constraint\Symfony\ExecutionContext
+ *
+ * @internal
  */
 final class ExecutionContextTest extends TestCase
 {
     use MockByCallsTrait;
 
-    public function testAddViolation()
+    public function testAddViolation(): void
     {
         $context = new ExecutionContext('path[0].property', 'value', $this->getContext());
         $context->addViolation('message', ['key' => 'value']);
@@ -45,7 +47,7 @@ final class ExecutionContextTest extends TestCase
         self::assertNull($violation->getCause());
     }
 
-    public function testBuildViolation()
+    public function testBuildViolation(): void
     {
         $context = new ExecutionContext('path[0].property', 'value', $this->getContext());
 
@@ -70,7 +72,7 @@ final class ExecutionContextTest extends TestCase
         self::assertNull($violation->getCause());
     }
 
-    public function testGetValidator()
+    public function testGetValidator(): void
     {
         self::expectException(NotImplementedException::class);
         self::expectExceptionMessage('Method "Chubbyphp\Validation\Constraint\Symfony\ExecutionContext::getValidator" is not implemented');
@@ -79,14 +81,14 @@ final class ExecutionContextTest extends TestCase
         $context->getValidator();
     }
 
-    public function testGetObject()
+    public function testGetObject(): void
     {
         $context = new ExecutionContext('path[0].property', 'value', $this->getContext());
 
         self::assertNull($context->getObject());
     }
 
-    public function testSetNode()
+    public function testSetNode(): void
     {
         self::expectException(NotImplementedException::class);
         self::expectExceptionMessage('Method "Chubbyphp\Validation\Constraint\Symfony\ExecutionContext::setNode" is not implemented');
@@ -95,7 +97,7 @@ final class ExecutionContextTest extends TestCase
         $context->setNode('value', new \stdClass(), null, 'path[0].property');
     }
 
-    public function testSetGroup()
+    public function testSetGroup(): void
     {
         self::expectException(NotImplementedException::class);
         self::expectExceptionMessage('Method "Chubbyphp\Validation\Constraint\Symfony\ExecutionContext::setGroup" is not implemented');
@@ -104,7 +106,7 @@ final class ExecutionContextTest extends TestCase
         $context->setGroup('group');
     }
 
-    public function testSetConstraint()
+    public function testSetConstraint(): void
     {
         self::expectException(NotImplementedException::class);
         self::expectExceptionMessage('Method "Chubbyphp\Validation\Constraint\Symfony\ExecutionContext::setConstraint" is not implemented');
@@ -116,7 +118,7 @@ final class ExecutionContextTest extends TestCase
         $context->setConstraint($constraint);
     }
 
-    public function testMarkGroupAsValidated()
+    public function testMarkGroupAsValidated(): void
     {
         self::expectException(NotImplementedException::class);
         self::expectExceptionMessage('Method "Chubbyphp\Validation\Constraint\Symfony\ExecutionContext::markGroupAsValidated" is not implemented');
@@ -125,7 +127,7 @@ final class ExecutionContextTest extends TestCase
         $context->markGroupAsValidated('cacheKey', 'groupHasn');
     }
 
-    public function testIsGroupValidated()
+    public function testIsGroupValidated(): void
     {
         self::expectException(NotImplementedException::class);
         self::expectExceptionMessage('Method "Chubbyphp\Validation\Constraint\Symfony\ExecutionContext::isGroupValidated" is not implemented');
@@ -134,7 +136,7 @@ final class ExecutionContextTest extends TestCase
         $context->isGroupValidated('cacheKey', 'groupHasn');
     }
 
-    public function testMarkConstraintAsValidated()
+    public function testMarkConstraintAsValidated(): void
     {
         self::expectException(NotImplementedException::class);
         self::expectExceptionMessage('Method "Chubbyphp\Validation\Constraint\Symfony\ExecutionContext::markConstraintAsValidated" is not implemented');
@@ -143,7 +145,7 @@ final class ExecutionContextTest extends TestCase
         $context->markConstraintAsValidated('cacheKey', 'constraintHash');
     }
 
-    public function testIsConstraintValidated()
+    public function testIsConstraintValidated(): void
     {
         self::expectException(NotImplementedException::class);
         self::expectExceptionMessage('Method "Chubbyphp\Validation\Constraint\Symfony\ExecutionContext::isConstraintValidated" is not implemented');
@@ -152,7 +154,7 @@ final class ExecutionContextTest extends TestCase
         $context->isConstraintValidated('cacheKey', 'constraintHash');
     }
 
-    public function testMarkObjectAsInitialized()
+    public function testMarkObjectAsInitialized(): void
     {
         self::expectException(NotImplementedException::class);
         self::expectExceptionMessage('Method "Chubbyphp\Validation\Constraint\Symfony\ExecutionContext::markObjectAsInitialized" is not implemented');
@@ -161,7 +163,7 @@ final class ExecutionContextTest extends TestCase
         $context->markObjectAsInitialized('cacheKey');
     }
 
-    public function testIsObjectInitialize()
+    public function testIsObjectInitialize(): void
     {
         self::expectException(NotImplementedException::class);
         self::expectExceptionMessage('Method "Chubbyphp\Validation\Constraint\Symfony\ExecutionContext::isObjectInitialized" is not implemented');
@@ -170,7 +172,7 @@ final class ExecutionContextTest extends TestCase
         $context->isObjectInitialized('cacheKey');
     }
 
-    public function testGetRoot()
+    public function testGetRoot(): void
     {
         self::expectException(NotImplementedException::class);
         self::expectExceptionMessage('Method "Chubbyphp\Validation\Constraint\Symfony\ExecutionContext::getRoot" is not implemented');
@@ -179,14 +181,14 @@ final class ExecutionContextTest extends TestCase
         $context->getRoot();
     }
 
-    public function testGetValue()
+    public function testGetValue(): void
     {
         $context = new ExecutionContext('path[0].property', 'value', $this->getContext());
 
         self::assertSame('value', $context->getValue());
     }
 
-    public function testGetMetadata()
+    public function testGetMetadata(): void
     {
         self::expectException(NotImplementedException::class);
         self::expectExceptionMessage('Method "Chubbyphp\Validation\Constraint\Symfony\ExecutionContext::getMetadata" is not implemented');
@@ -195,7 +197,7 @@ final class ExecutionContextTest extends TestCase
         $context->getMetadata();
     }
 
-    public function testGetGroup()
+    public function testGetGroup(): void
     {
         $context = new ExecutionContext('path[0].property', 'value', $this->getContext([
             Call::create('getGroups')->with()->willReturn([]),
@@ -210,28 +212,28 @@ final class ExecutionContextTest extends TestCase
         self::assertSame('group1', $context->getGroup());
     }
 
-    public function testGetClassName()
+    public function testGetClassName(): void
     {
         $context = new ExecutionContext('path[0].property', 'value', $this->getContext());
 
         self::assertNull($context->getClassName());
     }
 
-    public function testGetPropertyName()
+    public function testGetPropertyName(): void
     {
         $context = new ExecutionContext('path[0].property', 'value', $this->getContext());
 
         self::assertSame('property', $context->getPropertyName());
     }
 
-    public function testGetPropertyPath()
+    public function testGetPropertyPath(): void
     {
         $context = new ExecutionContext('path[0].property', 'value', $this->getContext());
 
         self::assertSame('path[0].property.subPath', $context->getPropertyPath('subPath'));
     }
 
-    public function testGetErrors()
+    public function testGetErrors(): void
     {
         $context = new ExecutionContext('path[0].property', 'value', $this->getContext());
         $context->addViolation('message', ['key' => 'value']);
@@ -265,9 +267,7 @@ final class ExecutionContextTest extends TestCase
      */
     private function getContext(array $methods = []): ValidatorContextInterface
     {
-        /** @var ValidatorContextInterface|MockObject $context */
-        $context = $this->getMockByCalls(ValidatorContextInterface::class, $methods);
-
-        return $context;
+        /* @var ValidatorContextInterface|MockObject $context */
+        return $this->getMockByCalls(ValidatorContextInterface::class, $methods);
     }
 }

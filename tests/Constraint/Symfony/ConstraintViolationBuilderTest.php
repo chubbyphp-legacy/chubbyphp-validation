@@ -11,10 +11,12 @@ use Symfony\Component\Validator\ConstraintViolationList;
 
 /**
  * @covers \Chubbyphp\Validation\Constraint\Symfony\ConstraintViolationBuilder
+ *
+ * @internal
  */
 final class ConstraintViolationBuilderTest extends TestCase
 {
-    public function testWithDefaults()
+    public function testWithDefaults(): void
     {
         $violations = new ConstraintViolationList();
 
@@ -39,7 +41,7 @@ final class ConstraintViolationBuilderTest extends TestCase
         self::assertNull($violation->getCause());
     }
 
-    public function testWithAtPath()
+    public function testWithAtPath(): void
     {
         $violations = new ConstraintViolationList();
 
@@ -67,7 +69,7 @@ final class ConstraintViolationBuilderTest extends TestCase
         self::assertNull($violation->getCause());
     }
 
-    public function testWithSetParameter()
+    public function testWithSetParameter(): void
     {
         $violations = new ConstraintViolationList();
 
@@ -96,7 +98,7 @@ final class ConstraintViolationBuilderTest extends TestCase
         self::assertNull($violation->getCause());
     }
 
-    public function testWithSetParameters()
+    public function testWithSetParameters(): void
     {
         $violations = new ConstraintViolationList();
 
@@ -124,7 +126,7 @@ final class ConstraintViolationBuilderTest extends TestCase
         self::assertNull($violation->getCause());
     }
 
-    public function testWithSetTranslationDomain()
+    public function testWithSetTranslationDomain(): void
     {
         $violations = new ConstraintViolationList();
 
@@ -152,7 +154,7 @@ final class ConstraintViolationBuilderTest extends TestCase
         self::assertNull($violation->getCause());
     }
 
-    public function testWithSetInvalidValue()
+    public function testWithSetInvalidValue(): void
     {
         $violations = new ConstraintViolationList();
 
@@ -180,7 +182,7 @@ final class ConstraintViolationBuilderTest extends TestCase
         self::assertNull($violation->getCause());
     }
 
-    public function testWithSetPlural()
+    public function testWithSetPlural(): void
     {
         $violations = new ConstraintViolationList();
 
@@ -208,7 +210,7 @@ final class ConstraintViolationBuilderTest extends TestCase
         self::assertNull($violation->getCause());
     }
 
-    public function testWithSetCode()
+    public function testWithSetCode(): void
     {
         $violations = new ConstraintViolationList();
 
@@ -236,7 +238,7 @@ final class ConstraintViolationBuilderTest extends TestCase
         self::assertNull($violation->getCause());
     }
 
-    public function testWithSetCause()
+    public function testWithSetCause(): void
     {
         $violations = new ConstraintViolationList();
 

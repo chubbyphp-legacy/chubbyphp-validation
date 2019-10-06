@@ -30,7 +30,7 @@ final class DateTimeConstraint implements ConstraintInterface
      * @param ValidatorContextInterface $context
      * @param ValidatorInterface|null   $validator
      *
-     * @return ErrorInterface[]
+     * @return array<ErrorInterface>
      */
     public function validate(
         string $path,
@@ -82,10 +82,11 @@ final class DateTimeConstraint implements ConstraintInterface
      * @param string             $path
      * @param \DateTimeInterface $value
      *
-     * @return ErrorInterface[]
+     * @return array<ErrorInterface>
      */
     private function validateDateTime(string $path, \DateTimeInterface $value): array
     {
+        /** @var \DateTime $expectedValue */
         $expectedValue = \DateTime::createFromFormat(
             '!'.$this->format,
             $value->format($this->format),
@@ -112,7 +113,7 @@ final class DateTimeConstraint implements ConstraintInterface
      * @param int    $dateTimeErrorCount
      * @param array  $dateTimeErrors
      *
-     * @return ErrorInterface[]
+     * @return array<ErrorInterface>
      */
     private function errorsByDateTimeLastErrors(
         string $path,

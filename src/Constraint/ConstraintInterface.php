@@ -17,9 +17,9 @@ interface ConstraintInterface
      * @param ValidatorContextInterface $context
      * @param ValidatorInterface|null   $validator
      *
-     * @return ErrorInterface[]
-     *
      * @throws ValidatorLogicException
+     *
+     * @return array<ErrorInterface>
      */
     public function validate(
         string $path,

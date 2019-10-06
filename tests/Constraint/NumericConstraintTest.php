@@ -13,47 +13,49 @@ use PHPUnit\Framework\TestCase;
 
 /**
  * @covers \Chubbyphp\Validation\Constraint\NumericConstraint
+ *
+ * @internal
  */
 final class NumericConstraintTest extends TestCase
 {
     use MockByCallsTrait;
 
-    public function testWithNullValue()
+    public function testWithNullValue(): void
     {
         $constraint = new NumericConstraint();
 
         self::assertEquals([], $constraint->validate('numeric', null, $this->getContext()));
     }
 
-    public function testWithBlankValue()
+    public function testWithBlankValue(): void
     {
         $constraint = new NumericConstraint();
 
         self::assertEquals([], $constraint->validate('numeric', '', $this->getContext()));
     }
 
-    public function testWithInteger()
+    public function testWithInteger(): void
     {
         $constraint = new NumericConstraint();
 
         self::assertEquals([], $constraint->validate('numeric', 1, $this->getContext()));
     }
 
-    public function testWithFloat()
+    public function testWithFloat(): void
     {
         $constraint = new NumericConstraint();
 
         self::assertEquals([], $constraint->validate('numeric', 1.1, $this->getContext()));
     }
 
-    public function testWithString()
+    public function testWithString(): void
     {
         $constraint = new NumericConstraint();
 
         self::assertEquals([], $constraint->validate('numeric', '1.1', $this->getContext()));
     }
 
-    public function testWithInvalidType()
+    public function testWithInvalidType(): void
     {
         $constraint = new NumericConstraint();
 
@@ -62,7 +64,7 @@ final class NumericConstraintTest extends TestCase
         self::assertEquals([$error], $constraint->validate('numeric', [], $this->getContext()));
     }
 
-    public function testWithoutNumericString()
+    public function testWithoutNumericString(): void
     {
         $constraint = new NumericConstraint();
 
@@ -76,9 +78,7 @@ final class NumericConstraintTest extends TestCase
      */
     private function getContext(): ValidatorContextInterface
     {
-        /** @var ValidatorContextInterface|MockObject $context */
-        $context = $this->getMockByCalls(ValidatorContextInterface::class);
-
-        return $context;
+        /* @var ValidatorContextInterface|MockObject $context */
+        return $this->getMockByCalls(ValidatorContextInterface::class);
     }
 }

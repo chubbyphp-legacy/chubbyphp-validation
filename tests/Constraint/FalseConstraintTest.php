@@ -13,26 +13,28 @@ use PHPUnit\Framework\TestCase;
 
 /**
  * @covers \Chubbyphp\Validation\Constraint\FalseConstraint
+ *
+ * @internal
  */
 final class FalseConstraintTest extends TestCase
 {
     use MockByCallsTrait;
 
-    public function testWithNullValue()
+    public function testWithNullValue(): void
     {
         $constraint = new FalseConstraint();
 
         self::assertEquals([], $constraint->validate('false', null, $this->getContext()));
     }
 
-    public function testWithFalse()
+    public function testWithFalse(): void
     {
         $constraint = new FalseConstraint();
 
         self::assertEquals([], $constraint->validate('false', false, $this->getContext()));
     }
 
-    public function testWithTrue()
+    public function testWithTrue(): void
     {
         $constraint = new FalseConstraint();
 
@@ -41,7 +43,7 @@ final class FalseConstraintTest extends TestCase
         self::assertEquals([$error], $constraint->validate('false', true, $this->getContext()));
     }
 
-    public function testWithInteger()
+    public function testWithInteger(): void
     {
         $constraint = new FalseConstraint();
 
@@ -50,7 +52,7 @@ final class FalseConstraintTest extends TestCase
         self::assertEquals([$error], $constraint->validate('false', 5, $this->getContext()));
     }
 
-    public function testWithFloat()
+    public function testWithFloat(): void
     {
         $constraint = new FalseConstraint();
 
@@ -59,7 +61,7 @@ final class FalseConstraintTest extends TestCase
         self::assertEquals([$error], $constraint->validate('false', 5.5, $this->getContext()));
     }
 
-    public function testWithString()
+    public function testWithString(): void
     {
         $constraint = new FalseConstraint();
 
@@ -68,7 +70,7 @@ final class FalseConstraintTest extends TestCase
         self::assertEquals([$error], $constraint->validate('false', '', $this->getContext()));
     }
 
-    public function testWithArray()
+    public function testWithArray(): void
     {
         $constraint = new FalseConstraint();
 
@@ -77,7 +79,7 @@ final class FalseConstraintTest extends TestCase
         self::assertEquals([$error], $constraint->validate('false', [], $this->getContext()));
     }
 
-    public function testWithStdClass()
+    public function testWithStdClass(): void
     {
         $constraint = new FalseConstraint();
 
@@ -91,9 +93,7 @@ final class FalseConstraintTest extends TestCase
      */
     private function getContext(): ValidatorContextInterface
     {
-        /** @var ValidatorContextInterface|MockObject $context */
-        $context = $this->getMockByCalls(ValidatorContextInterface::class);
-
-        return $context;
+        /* @var ValidatorContextInterface|MockObject $context */
+        return $this->getMockByCalls(ValidatorContextInterface::class);
     }
 }

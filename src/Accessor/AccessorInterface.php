@@ -11,9 +11,9 @@ interface AccessorInterface
     /**
      * @param object $object
      *
-     * @return mixed
-     *
      * @throws ValidatorLogicException
+     *
+     * @return mixed
      */
     public function getValue($object);
 }

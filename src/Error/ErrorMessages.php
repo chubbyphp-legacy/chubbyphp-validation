@@ -7,7 +7,7 @@ namespace Chubbyphp\Validation\Error;
 final class ErrorMessages implements ErrorMessagesInterface
 {
     /**
-     * @var ErrorInterface[]
+     * @var array<ErrorInterface>
      */
     private $errors;
 
@@ -17,12 +17,12 @@ final class ErrorMessages implements ErrorMessagesInterface
     private $translate;
 
     /**
-     * @var string[]
+     * @var array<string, array<string>>
      */
     private $errorMessages;
 
     /**
-     * @param ErrorInterface[] $errors
+     * @param array<ErrorInterface> $errors
      */
     public function __construct(array $errors, callable $translate)
     {
@@ -34,15 +34,7 @@ final class ErrorMessages implements ErrorMessagesInterface
     }
 
     /**
-     * @param ErrorInterface $error
-     */
-    private function addError(ErrorInterface $error)
-    {
-        $this->errors[] = $error;
-    }
-
-    /**
-     * @return array
+     * @return array<string, array<string>>
      */
     public function getMessages(): array
     {
@@ -59,5 +51,13 @@ final class ErrorMessages implements ErrorMessagesInterface
         }
 
         return $this->errorMessages;
+    }
+
+    /**
+     * @param ErrorInterface $error
+     */
+    private function addError(ErrorInterface $error): void
+    {
+        $this->errors[] = $error;
     }
 }

@@ -10,10 +10,12 @@ use PHPUnit\Framework\TestCase;
 
 /**
  * @covers \Chubbyphp\Validation\ValidatorContextBuilder
+ *
+ * @internal
  */
-class ValidatorContextBuilderTest extends TestCase
+final class ValidatorContextBuilderTest extends TestCase
 {
-    public function testCreate()
+    public function testCreate(): void
     {
         $context = ValidatorContextBuilder::create()->getContext();
 
@@ -22,11 +24,12 @@ class ValidatorContextBuilderTest extends TestCase
         self::assertSame([], $context->getGroups());
     }
 
-    public function testCreateWithOverridenSettings()
+    public function testCreateWithOverridenSettings(): void
     {
         $context = ValidatorContextBuilder::create()
             ->setGroups(['group1'])
-            ->getContext();
+            ->getContext()
+        ;
 
         self::assertInstanceOf(ValidatorContextInterface::class, $context);
 

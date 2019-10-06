@@ -1,5 +1,7 @@
 <?php
 
+declare(strict_types=1);
+
 namespace Chubbyphp\Tests\Validation\Provider;
 
 use Chubbyphp\Validation\Mapping\ValidationMappingProviderRegistry;
@@ -10,10 +12,12 @@ use Pimple\Container;
 
 /**
  * @covers \Chubbyphp\Validation\Provider\ValidationProvider
+ *
+ * @internal
  */
 final class ValidationProviderTest extends TestCase
 {
-    public function testRegister()
+    public function testRegister(): void
     {
         $container = new Container();
         $container->register(new ValidationProvider());

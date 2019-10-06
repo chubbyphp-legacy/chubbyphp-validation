@@ -11,9 +11,9 @@ interface ValidationMappingProviderRegistryInterface
     /**
      * @param string $class
      *
-     * @return ValidationMappingProviderInterface
-     *
      * @throws ValidatorLogicException
+     *
+     * @return ValidationMappingProviderInterface
      */
     public function provideMapping(string $class): ValidationMappingProviderInterface;
 }

@@ -13,40 +13,42 @@ use PHPUnit\Framework\TestCase;
 
 /**
  * @covers \Chubbyphp\Validation\Constraint\BlankConstraint
+ *
+ * @internal
  */
 final class BlankConstraintTest extends TestCase
 {
     use MockByCallsTrait;
 
-    public function testWithNullValue()
+    public function testWithNullValue(): void
     {
         $constraint = new BlankConstraint();
 
         self::assertEquals([], $constraint->validate('blank', null, $this->getContext()));
     }
 
-    public function testWithBlankString()
+    public function testWithBlankString(): void
     {
         $constraint = new BlankConstraint();
 
         self::assertEquals([], $constraint->validate('blank', '', $this->getContext()));
     }
 
-    public function testWithBlankArray()
+    public function testWithBlankArray(): void
     {
         $constraint = new BlankConstraint();
 
         self::assertEquals([], $constraint->validate('blank', [], $this->getContext()));
     }
 
-    public function testWithBlankStdClass()
+    public function testWithBlankStdClass(): void
     {
         $constraint = new BlankConstraint();
 
         self::assertEquals([], $constraint->validate('blank', new \stdClass(), $this->getContext()));
     }
 
-    public function testWithNotBlankString()
+    public function testWithNotBlankString(): void
     {
         $constraint = new BlankConstraint();
 
@@ -55,7 +57,7 @@ final class BlankConstraintTest extends TestCase
         self::assertEquals([$error], $constraint->validate('blank', 'value', $this->getContext()));
     }
 
-    public function testWithNotBlankArray()
+    public function testWithNotBlankArray(): void
     {
         $constraint = new BlankConstraint();
 
@@ -64,7 +66,7 @@ final class BlankConstraintTest extends TestCase
         self::assertEquals([$error], $constraint->validate('blank', ['value'], $this->getContext()));
     }
 
-    public function testWithNotBlankStdClass()
+    public function testWithNotBlankStdClass(): void
     {
         $constraint = new BlankConstraint();
 
@@ -81,9 +83,7 @@ final class BlankConstraintTest extends TestCase
      */
     private function getContext(): ValidatorContextInterface
     {
-        /** @var ValidatorContextInterface|MockObject $context */
-        $context = $this->getMockByCalls(ValidatorContextInterface::class);
-
-        return $context;
+        /* @var ValidatorContextInterface|MockObject $context */
+        return $this->getMockByCalls(ValidatorContextInterface::class);
     }
 }

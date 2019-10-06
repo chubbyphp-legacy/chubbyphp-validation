@@ -12,10 +12,10 @@ use Chubbyphp\Validation\Constraint\Symfony\ConstraintAdapter;
 use Chubbyphp\Validation\Error\Error;
 use Chubbyphp\Validation\Mapping\ValidationClassMappingBuilder;
 use Chubbyphp\Validation\Mapping\ValidationClassMappingInterface;
-use Chubbyphp\Validation\Mapping\ValidationPropertyMappingBuilder;
-use Chubbyphp\Validation\Mapping\ValidationPropertyMappingInterface;
 use Chubbyphp\Validation\Mapping\ValidationMappingProviderInterface;
 use Chubbyphp\Validation\Mapping\ValidationMappingProviderRegistry;
+use Chubbyphp\Validation\Mapping\ValidationPropertyMappingBuilder;
+use Chubbyphp\Validation\Mapping\ValidationPropertyMappingInterface;
 use Chubbyphp\Validation\Validator;
 use PHPUnit\Framework\TestCase;
 use Psr\Log\AbstractLogger;
@@ -29,10 +29,12 @@ use Symfony\Component\Validator\Context\ExecutionContextInterface;
 
 /**
  * @coversNothing
+ *
+ * @internal
  */
-class ValidatorIntegrationTest extends TestCase
+final class ValidatorIntegrationTest extends TestCase
 {
-    public function testValidator()
+    public function testValidator(): void
     {
         $object = new class() {
             /**
@@ -189,7 +191,7 @@ class ValidatorIntegrationTest extends TestCase
                         ValidationPropertyMappingBuilder::create('callback', [
                             new ConstraintAdapter(
                                 new Callback([
-                                    'callback' => function ($object, ExecutionContextInterface $context) {
+                                    'callback' => function ($object, ExecutionContextInterface $context): void {
                                         if ('callback' === $object) {
                                             $context->addViolation('callback');
                                         }
@@ -216,7 +218,7 @@ class ValidatorIntegrationTest extends TestCase
              */
             private $logs;
 
-            public function log($level, $message, array $context = [])
+            public function log($level, $message, array $context = []): void
             {
                 $this->logs[] = ['level' => $level, 'message' => $message, 'context' => $context];
             }

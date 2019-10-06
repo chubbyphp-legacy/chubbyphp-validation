@@ -11,10 +11,12 @@ use PHPUnit\Framework\TestCase;
 
 /**
  * @covers \Chubbyphp\Validation\Accessor\PropertyAccessor
+ *
+ * @internal
  */
-class PropertyAccessorTest extends TestCase
+final class PropertyAccessorTest extends TestCase
 {
-    public function testGetValue()
+    public function testGetValue(): void
     {
         $object = new Model();
 
@@ -25,10 +27,10 @@ class PropertyAccessorTest extends TestCase
         self::assertSame('Name', $accessor->getValue($object));
     }
 
-    public function testGetValueCanAccessPrivatePropertyThroughDoctrineProxyClass()
+    public function testGetValueCanAccessPrivatePropertyThroughDoctrineProxyClass(): void
     {
         $object = new class() extends Model implements Proxy {
-            public function __load()
+            public function __load(): void
             {
             }
 
@@ -48,7 +50,7 @@ class PropertyAccessorTest extends TestCase
         self::assertSame('Name', $accessor->getValue($object));
     }
 
-    public function testMissingGet()
+    public function testMissingGet(): void
     {
         self::expectException(ValidatorLogicException::class);
 
@@ -67,7 +69,7 @@ class Model
      */
     protected $name;
 
-    public function setName(string $name)
+    public function setName(string $name): void
     {
         $this->name = $name;
     }

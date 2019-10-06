@@ -17,19 +17,21 @@ use PHPUnit\Framework\TestCase;
 
 /**
  * @covers \Chubbyphp\Validation\Constraint\ValidConstraint
+ *
+ * @internal
  */
 final class ValidConstraintTest extends TestCase
 {
     use MockByCallsTrait;
 
-    public function testWithNullValue()
+    public function testWithNullValue(): void
     {
         $constraint = new ValidConstraint();
 
         self::assertEquals([], $constraint->validate('valid', null, $this->getContext()));
     }
 
-    public function testWithMissingValidator()
+    public function testWithMissingValidator(): void
     {
         self::expectException(ValidatorLogicException::class);
         self::expectExceptionMessage('There is no validator at path: "valid"');
@@ -38,14 +40,14 @@ final class ValidConstraintTest extends TestCase
         $constraint->validate('valid', [], $this->getContext());
     }
 
-    public function testWithEmptyArrayValue()
+    public function testWithEmptyArrayValue(): void
     {
         $constraint = new ValidConstraint();
 
         self::assertEquals([], $constraint->validate('valid', [], $this->getContext(), $this->getValidator()));
     }
 
-    public function testWithArrayValue()
+    public function testWithArrayValue(): void
     {
         $constraint = new ValidConstraint();
 
@@ -60,7 +62,7 @@ final class ValidConstraintTest extends TestCase
         self::assertEquals([], $constraint->validate('valid', [$object], $context, $validator));
     }
 
-    public function testWithArrayCollectionValue()
+    public function testWithArrayCollectionValue(): void
     {
         $constraint = new ValidConstraint();
 
@@ -75,7 +77,7 @@ final class ValidConstraintTest extends TestCase
         self::assertEquals([], $constraint->validate('valid', new ArrayCollection([$object]), $context, $validator));
     }
 
-    public function testWithObjectValue()
+    public function testWithObjectValue(): void
     {
         $constraint = new ValidConstraint();
 
@@ -90,7 +92,7 @@ final class ValidConstraintTest extends TestCase
         self::assertEquals([], $constraint->validate('valid', $object, $context, $validator));
     }
 
-    public function testWithStringValue()
+    public function testWithStringValue(): void
     {
         $constraint = new ValidConstraint();
 
@@ -108,10 +110,8 @@ final class ValidConstraintTest extends TestCase
      */
     private function getContext(): ValidatorContextInterface
     {
-        /** @var ValidatorContextInterface|MockObject $context */
-        $context = $this->getMockByCalls(ValidatorContextInterface::class);
-
-        return $context;
+        /* @var ValidatorContextInterface|MockObject $context */
+        return $this->getMockByCalls(ValidatorContextInterface::class);
     }
 
     /**
@@ -121,10 +121,8 @@ final class ValidConstraintTest extends TestCase
      */
     private function getValidator(array $methods = []): ValidatorInterface
     {
-        /** @var ValidatorInterface|MockObject $validator */
-        $validator = $this->getMockByCalls(ValidatorInterface::class, $methods);
-
-        return $validator;
+        /* @var ValidatorInterface|MockObject $validator */
+        return $this->getMockByCalls(ValidatorInterface::class, $methods);
     }
 
     /**

@@ -16,7 +16,7 @@ final class ValidationPropertyMappingBuilder implements ValidationPropertyMappin
     private $name;
 
     /**
-     * @var ConstraintInterface[]
+     * @var array<ConstraintInterface>
      */
     private $constraints;
 
@@ -54,14 +54,6 @@ final class ValidationPropertyMappingBuilder implements ValidationPropertyMappin
     }
 
     /**
-     * @param ConstraintInterface $constraint
-     */
-    private function addConstraint(ConstraintInterface $constraint)
-    {
-        $this->constraints[] = $constraint;
-    }
-
-    /**
      * @param array $groups
      *
      * @return ValidationPropertyMappingBuilderInterface
@@ -96,5 +88,13 @@ final class ValidationPropertyMappingBuilder implements ValidationPropertyMappin
             $this->groups ?? [],
             $this->accessor ?? new PropertyAccessor($this->name)
         );
+    }
+
+    /**
+     * @param ConstraintInterface $constraint
+     */
+    private function addConstraint(ConstraintInterface $constraint): void
+    {
+        $this->constraints[] = $constraint;
     }
 }

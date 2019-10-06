@@ -13,12 +13,12 @@ use Chubbyphp\Validation\ValidatorLogicException;
 final class AllConstraint implements ConstraintInterface
 {
     /**
-     * @var ConstraintInterface[]
+     * @var array<ConstraintInterface>
      */
     private $constraints;
 
     /**
-     * @param ConstraintInterface[] $constraints
+     * @param array<ConstraintInterface> $constraints
      */
     public function __construct(array $constraints = [])
     {
@@ -29,22 +29,14 @@ final class AllConstraint implements ConstraintInterface
     }
 
     /**
-     * @param ConstraintInterface $constraint
-     */
-    private function addConstraint(ConstraintInterface $constraint)
-    {
-        $this->constraints[] = $constraint;
-    }
-
-    /**
      * @param string                    $path
      * @param mixed                     $value
      * @param ValidatorContextInterface $context
      * @param ValidatorInterface|null   $validator
      *
-     * @return ErrorInterface[]
-     *
      * @throws ValidatorLogicException
+     *
+     * @return array<ErrorInterface>
      */
     public function validate(
         string $path,
@@ -75,5 +67,13 @@ final class AllConstraint implements ConstraintInterface
         }
 
         return $errors;
+    }
+
+    /**
+     * @param ConstraintInterface $constraint
+     */
+    private function addConstraint(ConstraintInterface $constraint): void
+    {
+        $this->constraints[] = $constraint;
     }
 }

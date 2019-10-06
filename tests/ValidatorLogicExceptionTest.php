@@ -9,24 +9,26 @@ use PHPUnit\Framework\TestCase;
 
 /**
  * @covers \Chubbyphp\Validation\ValidatorLogicException
+ *
+ * @internal
  */
-class ValidatorLogicExceptionTest extends TestCase
+final class ValidatorLogicExceptionTest extends TestCase
 {
-    public function testCreateMissingDenormalizer()
+    public function testCreateMissingDenormalizer(): void
     {
         $exception = ValidatorLogicException::createMissingValidator('path1');
 
         self::assertSame('There is no validator at path: "path1"', $exception->getMessage());
     }
 
-    public function testCreateMissingMapping()
+    public function testCreateMissingMapping(): void
     {
         $exception = ValidatorLogicException::createMissingMapping(\stdClass::class);
 
         self::assertSame('There is no mapping for class: "stdClass"', $exception->getMessage());
     }
 
-    public function testCreateMissingMethod()
+    public function testCreateMissingMethod(): void
     {
         $exception = ValidatorLogicException::createMissingMethod(\stdClass::class, ['getName', 'hasName']);
 
@@ -36,7 +38,7 @@ class ValidatorLogicExceptionTest extends TestCase
         );
     }
 
-    public function testCreateMissingProperty()
+    public function testCreateMissingProperty(): void
     {
         $exception = ValidatorLogicException::createMissingProperty(\stdClass::class, 'name');
 

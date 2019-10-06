@@ -13,19 +13,21 @@ use PHPUnit\Framework\TestCase;
 
 /**
  * @covers \Chubbyphp\Validation\Constraint\CoordinateArrayConstraint
+ *
+ * @internal
  */
 final class CoordinateArrayConstraintTest extends TestCase
 {
     use MockByCallsTrait;
 
-    public function testWithNullValue()
+    public function testWithNullValue(): void
     {
         $constraint = new CoordinateArrayConstraint();
 
         self::assertEquals([], $constraint->validate('coordinatearray', null, $this->getContext()));
     }
 
-    public function testInvalidType()
+    public function testInvalidType(): void
     {
         $constraint = new CoordinateArrayConstraint();
 
@@ -34,7 +36,7 @@ final class CoordinateArrayConstraintTest extends TestCase
         self::assertEquals([$error], $constraint->validate('coordinatearray', '', $this->getContext()));
     }
 
-    public function testInvalidFormat()
+    public function testInvalidFormat(): void
     {
         $constraint = new CoordinateArrayConstraint();
 
@@ -48,7 +50,7 @@ final class CoordinateArrayConstraintTest extends TestCase
      *
      * @param array $coordinate
      */
-    public function testWithCoordinateArray(array $coordinate)
+    public function testWithCoordinateArray(array $coordinate): void
     {
         $constraint = new CoordinateArrayConstraint();
 
@@ -73,7 +75,7 @@ final class CoordinateArrayConstraintTest extends TestCase
      *
      * @param array $coordinate
      */
-    public function testWithInvalidCoordinateArray(array $coordinate)
+    public function testWithInvalidCoordinateArray(array $coordinate): void
     {
         $constraint = new CoordinateArrayConstraint();
 
@@ -100,9 +102,7 @@ final class CoordinateArrayConstraintTest extends TestCase
      */
     private function getContext(): ValidatorContextInterface
     {
-        /** @var ValidatorContextInterface|MockObject $context */
-        $context = $this->getMockByCalls(ValidatorContextInterface::class);
-
-        return $context;
+        /* @var ValidatorContextInterface|MockObject $context */
+        return $this->getMockByCalls(ValidatorContextInterface::class);
     }
 }

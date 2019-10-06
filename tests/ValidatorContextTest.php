@@ -9,17 +9,19 @@ use PHPUnit\Framework\TestCase;
 
 /**
  * @covers \Chubbyphp\Validation\ValidatorContext
+ *
+ * @internal
  */
-class ValidatorContextTest extends TestCase
+final class ValidatorContextTest extends TestCase
 {
-    public function testCreate()
+    public function testCreate(): void
     {
         $context = new ValidatorContext();
 
         self::assertSame([], $context->getGroups());
     }
 
-    public function testCreateWithOverridenSettings()
+    public function testCreateWithOverridenSettings(): void
     {
         $context = new ValidatorContext(['group1']);
 

@@ -17,12 +17,14 @@ use Symfony\Component\Validator\Context\ExecutionContextInterface;
 
 /**
  * @covers \Chubbyphp\Validation\Constraint\Symfony\ConstraintAdapter
+ *
+ * @internal
  */
 final class ConstraintAdapterTest extends TestCase
 {
     use MockByCallsTrait;
 
-    public function testValidate()
+    public function testValidate(): void
     {
         /** @var Constraint|MockObject $constraint */
         $constraint = $this->getMockByCalls(Constraint::class);

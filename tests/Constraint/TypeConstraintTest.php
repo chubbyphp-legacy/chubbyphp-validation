@@ -13,26 +13,28 @@ use PHPUnit\Framework\TestCase;
 
 /**
  * @covers \Chubbyphp\Validation\Constraint\TypeConstraint
+ *
+ * @internal
  */
 final class TypeConstraintTest extends TestCase
 {
     use MockByCallsTrait;
 
-    public function testWithNullValueAgainstString()
+    public function testWithNullValueAgainstString(): void
     {
         $constraint = new TypeConstraint('string');
 
         self::assertEquals([], $constraint->validate('string', null, $this->getContext()));
     }
 
-    public function testWithStringValueAgainstString()
+    public function testWithStringValueAgainstString(): void
     {
         $constraint = new TypeConstraint('string');
 
         self::assertEquals([], $constraint->validate('string', 'text', $this->getContext()));
     }
 
-    public function testWithIntegerValueAgainstString()
+    public function testWithIntegerValueAgainstString(): void
     {
         $constraint = new TypeConstraint('string');
 
@@ -41,14 +43,14 @@ final class TypeConstraintTest extends TestCase
         self::assertEquals([$error], $constraint->validate('string', 1, $this->getContext()));
     }
 
-    public function testWithStdClassValueAgainstStdClass()
+    public function testWithStdClassValueAgainstStdClass(): void
     {
         $constraint = new TypeConstraint(\stdClass::class);
 
         self::assertEquals([], $constraint->validate('stdClass', new \stdClass(), $this->getContext()));
     }
 
-    public function testWithDateTimeValueAgainstStdClass()
+    public function testWithDateTimeValueAgainstStdClass(): void
     {
         $constraint = new TypeConstraint(\stdClass::class);
 
@@ -72,9 +74,7 @@ final class TypeConstraintTest extends TestCase
      */
     private function getContext(): ValidatorContextInterface
     {
-        /** @var ValidatorContextInterface|MockObject $context */
-        $context = $this->getMockByCalls(ValidatorContextInterface::class);
-
-        return $context;
+        /* @var ValidatorContextInterface|MockObject $context */
+        return $this->getMockByCalls(ValidatorContextInterface::class);
     }
 }

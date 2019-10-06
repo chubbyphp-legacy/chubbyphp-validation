@@ -25,26 +25,20 @@ final class ValidationMappingProviderRegistry implements ValidationMappingProvid
     }
 
     /**
-     * @param ValidationMappingProviderInterface $objectMapping
-     */
-    private function addObjectMapping(ValidationMappingProviderInterface $objectMapping)
-    {
-        $this->objectMappings[$objectMapping->getClass()] = $objectMapping;
-    }
-
-    /**
      * @param string $class
      *
-     * @return ValidationMappingProviderInterface
-     *
      * @throws ValidatorLogicException
+     *
+     * @return ValidationMappingProviderInterface
      */
     public function provideMapping(string $class): ValidationMappingProviderInterface
     {
         $reflectionClass = new \ReflectionClass($class);
 
         if (in_array('Doctrine\Common\Persistence\Proxy', $reflectionClass->getInterfaceNames(), true)) {
-            $class = $reflectionClass->getParentClass()->name;
+            /** @var \ReflectionClass $parentReflectionClass */
+            $parentReflectionClass = $reflectionClass->getParentClass();
+            $class = $parentReflectionClass->getName();
         }
 
         if (isset($this->objectMappings[$class])) {
@@ -52,5 +46,13 @@ final class ValidationMappingProviderRegistry implements ValidationMappingProvid
         }
 
         throw ValidatorLogicException::createMissingMapping($class);
+    }
+
+    /**
+     * @param ValidationMappingProviderInterface $objectMapping
+     */
+    private function addObjectMapping(ValidationMappingProviderInterface $objectMapping): void
+    {
+        $this->objectMappings[$objectMapping->getClass()] = $objectMapping;
     }
 }

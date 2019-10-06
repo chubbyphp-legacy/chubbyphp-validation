@@ -7,7 +7,7 @@ namespace Chubbyphp\Validation\Error;
 final class NestedErrorMessages implements ErrorMessagesInterface
 {
     /**
-     * @var ErrorInterface[]
+     * @var array<ErrorInterface>
      */
     private $errors;
 
@@ -22,7 +22,7 @@ final class NestedErrorMessages implements ErrorMessagesInterface
     private $nestedErrorMessages;
 
     /**
-     * @param ErrorInterface[] $errors
+     * @param array<ErrorInterface> $errors
      */
     public function __construct(array $errors, callable $translate)
     {
@@ -31,14 +31,6 @@ final class NestedErrorMessages implements ErrorMessagesInterface
             $this->addError($error);
         }
         $this->translate = $translate;
-    }
-
-    /**
-     * @param ErrorInterface $error
-     */
-    private function addError(ErrorInterface $error)
-    {
-        $this->errors[] = $error;
     }
 
     /**
@@ -57,10 +49,18 @@ final class NestedErrorMessages implements ErrorMessagesInterface
     }
 
     /**
+     * @param ErrorInterface $error
+     */
+    private function addError(ErrorInterface $error): void
+    {
+        $this->errors[] = $error;
+    }
+
+    /**
      * @param array          $node
      * @param ErrorInterface $error
      */
-    private function assignErrorMessage(array &$node, ErrorInterface $error)
+    private function assignErrorMessage(array &$node, ErrorInterface $error): void
     {
         $pathParts = $this->parsePath($error->getPath());
         foreach ($pathParts as $pathPart) {

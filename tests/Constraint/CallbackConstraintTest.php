@@ -14,19 +14,21 @@ use PHPUnit\Framework\TestCase;
 
 /**
  * @covers \Chubbyphp\Validation\Constraint\CallbackConstraint
+ *
+ * @internal
  */
 final class CallbackConstraintTest extends TestCase
 {
     use MockByCallsTrait;
 
-    public function testWithNullValue()
+    public function testWithNullValue(): void
     {
         $constraint = new CallbackConstraint($this->getCallback());
 
         self::assertEquals([], $constraint->validate('callback', null, $this->getContext()));
     }
 
-    public function testWithOtherValue()
+    public function testWithOtherValue(): void
     {
         $constraint = new CallbackConstraint($this->getCallback());
 
@@ -61,9 +63,7 @@ final class CallbackConstraintTest extends TestCase
      */
     private function getContext(): ValidatorContextInterface
     {
-        /** @var ValidatorContextInterface|MockObject $context */
-        $context = $this->getMockByCalls(ValidatorContextInterface::class);
-
-        return $context;
+        /* @var ValidatorContextInterface|MockObject $context */
+        return $this->getMockByCalls(ValidatorContextInterface::class);
     }
 }

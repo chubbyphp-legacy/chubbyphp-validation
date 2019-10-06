@@ -5,10 +5,9 @@
          convertErrorsToExceptions="true"
          convertNoticesToExceptions="true"
          convertWarningsToExceptions="true"
+         executionOrder="random"
          processIsolation="false"
          stopOnFailure="false"
-         syntaxCheck="false"
-         bootstrap="tests/bootstrap.php"
         >
     <testsuites>
         <testsuite name="chubbyphp validation">

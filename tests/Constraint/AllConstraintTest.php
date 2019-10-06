@@ -5,8 +5,8 @@ declare(strict_types=1);
 namespace Chubbyphp\Tests\Validation\Constraint;
 
 use Chubbyphp\Mock\MockByCallsTrait;
-use Chubbyphp\Validation\Constraint\ConstraintInterface;
 use Chubbyphp\Validation\Constraint\AllConstraint;
+use Chubbyphp\Validation\Constraint\ConstraintInterface;
 use Chubbyphp\Validation\Error\Error;
 use Chubbyphp\Validation\ValidatorContextInterface;
 use Chubbyphp\Validation\ValidatorInterface;
@@ -15,19 +15,21 @@ use PHPUnit\Framework\TestCase;
 
 /**
  * @covers \Chubbyphp\Validation\Constraint\AllConstraint
+ *
+ * @internal
  */
 final class AllConstraintTest extends TestCase
 {
     use MockByCallsTrait;
 
-    public function testWithNullValue()
+    public function testWithNullValue(): void
     {
         $constraint = new AllConstraint();
 
         self::assertEquals([], $constraint->validate('traversable', null, $this->getContext()));
     }
 
-    public function testWithInvalidValue()
+    public function testWithInvalidValue(): void
     {
         $constraint = new AllConstraint();
 
@@ -36,21 +38,21 @@ final class AllConstraintTest extends TestCase
         ], $constraint->validate('traversable', 'string', $this->getContext()));
     }
 
-    public function testWithoutConstraint()
+    public function testWithoutConstraint(): void
     {
         $constraint = new AllConstraint([]);
 
         self::assertEquals([], $constraint->validate('traversable', ['string'], $this->getContext(), $this->getValidator()));
     }
 
-    public function testWithConstraint()
+    public function testWithConstraint(): void
     {
         $constraint = new AllConstraint([$this->getConstraint()]);
 
         self::assertEquals([], $constraint->validate('traversable', ['string'], $this->getContext(), $this->getValidator()));
     }
 
-    public function testWithConstraintAndError()
+    public function testWithConstraintAndError(): void
     {
         $constraint = new AllConstraint([$this->getConstraint(true)]);
 
@@ -64,10 +66,8 @@ final class AllConstraintTest extends TestCase
      */
     private function getValidator(): ValidatorInterface
     {
-        /** @var ValidatorInterface|MockObject $validator */
-        $validator = $this->getMockByCalls(ValidatorInterface::class);
-
-        return $validator;
+        /* @var ValidatorInterface|MockObject $validator */
+        return $this->getMockByCalls(ValidatorInterface::class);
     }
 
     /**
@@ -107,9 +107,7 @@ final class AllConstraintTest extends TestCase
      */
     private function getContext(): ValidatorContextInterface
     {
-        /** @var ValidatorContextInterface|MockObject $context */
-        $context = $this->getMockByCalls(ValidatorContextInterface::class);
-
-        return $context;
+        /* @var ValidatorContextInterface|MockObject $context */
+        return $this->getMockByCalls(ValidatorContextInterface::class);
     }
 }

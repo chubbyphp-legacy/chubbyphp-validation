@@ -37,7 +37,7 @@ final class PropertyAccessor implements AccessorInterface
 
         $getter = \Closure::bind(
             function ($property) {
-                return $this->$property;
+                return $this->{$property};
             },
             $object,
             $class
@@ -58,7 +58,10 @@ final class PropertyAccessor implements AccessorInterface
                 $object->__load();
             }
 
-            return (new \ReflectionClass($object))->getParentClass()->name;
+            /** @var \ReflectionClass $parentReflectionClass */
+            $parentReflectionClass = (new \ReflectionClass($object))->getParentClass();
+
+            return $parentReflectionClass->getName();
         }
 
         return get_class($object);

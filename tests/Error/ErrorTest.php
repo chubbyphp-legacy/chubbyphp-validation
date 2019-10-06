@@ -9,10 +9,12 @@ use PHPUnit\Framework\TestCase;
 
 /**
  * @covers \Chubbyphp\Validation\Error\Error
+ *
+ * @internal
  */
 final class ErrorTest extends TestCase
 {
-    public function testWithoutArguments()
+    public function testWithoutArguments(): void
     {
         $path = 'path';
         $key = 'key';
@@ -24,7 +26,7 @@ final class ErrorTest extends TestCase
         self::assertSame([], $error->getArguments());
     }
 
-    public function testWithArguments()
+    public function testWithArguments(): void
     {
         $path = 'path';
         $key = 'key';

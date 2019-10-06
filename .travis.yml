@@ -2,14 +2,6 @@ language: php
 
 matrix:
   include:
-    - php: 7.0
-      env: dependencies=lowest
-    - php: 7.0
-      env: dependencies=highest
-    - php: 7.1
-      env: dependencies=lowest
-    - php: 7.1
-      env: dependencies=highest
     - php: 7.2
       env: dependencies=lowest
     - php: 7.2
@@ -18,6 +10,12 @@ matrix:
       env: dependencies=lowest
     - php: 7.3
       env: dependencies=highest
+    - php: 7.4snapshot
+      env: dependencies=lowest
+    - php: 7.4snapshot
+      env: dependencies=highest
+  allow_failures:
+    - php: 7.4snapshot
 
 before_script:
   - echo 'Europe/Zurich' | sudo tee /etc/timezone
@@ -27,4 +25,12 @@ before_script:
   - if [ "$dependencies" = "lowest" ]; then composer update --prefer-lowest -n; fi;
   - if [ "$dependencies" = "highest" ]; then composer update -n; fi;
 
-script: vendor/bin/phpunit --coverage-text --verbose
+script:
+  - phpdbg -qrr vendor/bin/phpunit --coverage-text --verbose
+  - phpdbg -qrr vendor/bin/infection --threads=$(nproc) --min-msi=78 --verbose
+  - vendor/bin/phpstan analyse
+  - vendor/bin/phploc src --verbose
+  - vendor/bin/php-cs-fixer fix --dry-run --stop-on-violation
+  - if [ -z "$dependencies" ]; then vendor/bin/phpinsights analyse --no-interaction --min-quality=81; fi;
+  - if [ "$dependencies" = "highest" ]; then vendor/bin/phpinsights analyse --no-interaction --min-quality=81; fi;
+  - if [ "$dependencies" = "lowest" ]; then vendor/bin/phpinsights analyse --no-interaction --min-quality=81 --disable-security-check; fi;

@@ -12,12 +12,14 @@ use PHPUnit\Framework\TestCase;
 
 /**
  * @covers \Chubbyphp\Validation\Mapping\ValidationClassMapping
+ *
+ * @internal
  */
-class ValidationClassMappingTest extends TestCase
+final class ValidationClassMappingTest extends TestCase
 {
     use MockByCallsTrait;
 
-    public function testGetConstraints()
+    public function testGetConstraints(): void
     {
         $constraint = $this->getConstraint();
 
@@ -26,7 +28,7 @@ class ValidationClassMappingTest extends TestCase
         self::assertSame([$constraint], $classMapping->getConstraints());
     }
 
-    public function testGetGroups()
+    public function testGetGroups(): void
     {
         $constraint = $this->getConstraint();
 
@@ -40,9 +42,7 @@ class ValidationClassMappingTest extends TestCase
      */
     private function getConstraint(): ConstraintInterface
     {
-        /** @var ConstraintInterface|MockObject $constraint */
-        $constraint = $this->getMockByCalls(ConstraintInterface::class);
-
-        return $constraint;
+        /* @var ConstraintInterface|MockObject $constraint */
+        return $this->getMockByCalls(ConstraintInterface::class);
     }
 }

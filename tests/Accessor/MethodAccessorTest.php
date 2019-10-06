@@ -10,10 +10,12 @@ use PHPUnit\Framework\TestCase;
 
 /**
  * @covers \Chubbyphp\Validation\Accessor\MethodAccessor
+ *
+ * @internal
  */
-class MethodAccessorTest extends TestCase
+final class MethodAccessorTest extends TestCase
 {
-    public function testGetValue()
+    public function testGetValue(): void
     {
         $object = new class() {
             /**
@@ -32,7 +34,7 @@ class MethodAccessorTest extends TestCase
             /**
              * @param string $name
              */
-            public function setName(string $name)
+            public function setName(string $name): void
             {
                 $this->name = $name;
             }
@@ -45,7 +47,7 @@ class MethodAccessorTest extends TestCase
         self::assertSame('Name', $accessor->getValue($object));
     }
 
-    public function testHasValue()
+    public function testHasValue(): void
     {
         $object = new class() {
             /**
@@ -64,7 +66,7 @@ class MethodAccessorTest extends TestCase
             /**
              * @param string $name
              */
-            public function setName(string $name)
+            public function setName(string $name): void
             {
                 $this->name = $name;
             }
@@ -77,7 +79,7 @@ class MethodAccessorTest extends TestCase
         self::assertTrue($accessor->getValue($object));
     }
 
-    public function testIsValue()
+    public function testIsValue(): void
     {
         $object = new class() {
             /**
@@ -96,7 +98,7 @@ class MethodAccessorTest extends TestCase
             /**
              * @param string $name
              */
-            public function setName(string $name)
+            public function setName(string $name): void
             {
                 $this->name = $name;
             }
@@ -109,7 +111,7 @@ class MethodAccessorTest extends TestCase
         self::assertTrue($accessor->getValue($object));
     }
 
-    public function testMissingGet()
+    public function testMissingGet(): void
     {
         self::expectException(ValidatorLogicException::class);
 
