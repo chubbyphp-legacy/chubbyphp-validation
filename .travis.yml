@@ -27,7 +27,7 @@ before_script:
 
 script:
   - phpdbg -qrr vendor/bin/phpunit --coverage-text --verbose
-  - phpdbg -qrr vendor/bin/infection --threads=$(nproc) --min-msi=78 --verbose
+  - phpdbg -qrr vendor/bin/infection --threads=$(nproc) --min-msi=89 --verbose
   - vendor/bin/phpstan analyse
   - vendor/bin/phploc src --verbose
   - vendor/bin/php-cs-fixer fix --dry-run --stop-on-violation
