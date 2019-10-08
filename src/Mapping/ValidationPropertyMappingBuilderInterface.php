@@ -10,7 +10,7 @@ use Chubbyphp\Validation\Constraint\ConstraintInterface;
 interface ValidationPropertyMappingBuilderInterface
 {
     /**
-     * @param string                $name
+     * @param string                     $name
      * @param array<ConstraintInterface> $constraints)
      *
      * @return self

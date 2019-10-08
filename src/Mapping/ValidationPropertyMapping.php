@@ -30,10 +30,10 @@ final class ValidationPropertyMapping implements ValidationPropertyMappingInterf
     private $accessor;
 
     /**
-     * @param string                $name
+     * @param string                     $name
      * @param array<ConstraintInterface> $constraints
-     * @param array                 $groups
-     * @param AccessorInterface     $accessor
+     * @param array                      $groups
+     * @param AccessorInterface          $accessor
      */
     public function __construct(
         string $name,
