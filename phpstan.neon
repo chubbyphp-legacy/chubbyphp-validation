@@ -1,7 +1,4 @@
 parameters:
-    level: 7
-    paths:
-        - src
     ignoreErrors:
         -
             message: '/Method .* return string but returns string|null\./'
