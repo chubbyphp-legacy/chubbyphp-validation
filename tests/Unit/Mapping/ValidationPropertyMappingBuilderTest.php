@@ -48,18 +48,12 @@ final class ValidationPropertyMappingBuilderTest extends TestCase
         self::assertSame($accessor, $propertyMapping->getAccessor());
     }
 
-    /**
-     * @return ConstraintInterface
-     */
     private function getConstraint(): ConstraintInterface
     {
         /* @var ConstraintInterface|MockObject $constraint */
         return $this->getMockByCalls(ConstraintInterface::class);
     }
 
-    /**
-     * @return AccessorInterface
-     */
     private function getAccessor(): AccessorInterface
     {
         /* @var AccessorInterface|MockObject $accessor */

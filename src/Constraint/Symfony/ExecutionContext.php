@@ -38,9 +38,7 @@ final class ExecutionContext implements ExecutionContextInterface
     private $context;
 
     /**
-     * @param string                    $path
-     * @param mixed                     $value
-     * @param ValidatorContextInterface $context
+     * @param mixed $value
      */
     public function __construct(string $path, $value, ValidatorContextInterface $context)
     {
@@ -53,7 +51,6 @@ final class ExecutionContext implements ExecutionContextInterface
 
     /**
      * @param string $message
-     * @param array  $params
      */
     public function addViolation($message, array $params = []): void
     {
@@ -62,9 +59,6 @@ final class ExecutionContext implements ExecutionContextInterface
 
     /**
      * @param string $message
-     * @param array  $parameters
-     *
-     * @return ConstraintViolationBuilderInterface
      */
     public function buildViolation($message, array $parameters = []): ConstraintViolationBuilderInterface
     {
@@ -88,10 +82,9 @@ final class ExecutionContext implements ExecutionContextInterface
     }
 
     /**
-     * @param mixed                  $value
-     * @param object|null            $object
-     * @param MetadataInterface|null $metadata
-     * @param string                 $propertyPath
+     * @param mixed       $value
+     * @param object|null $object
+     * @param string      $propertyPath
      */
     public function setNode($value, $object, MetadataInterface $metadata = null, $propertyPath): void
     {
@@ -106,9 +99,6 @@ final class ExecutionContext implements ExecutionContextInterface
         throw new NotImplementedException(sprintf('Method "%s" is not implemented', __METHOD__));
     }
 
-    /**
-     * @param Constraint $constraint
-     */
     public function setConstraint(Constraint $constraint): void
     {
         throw new NotImplementedException(sprintf('Method "%s" is not implemented', __METHOD__));
@@ -164,17 +154,12 @@ final class ExecutionContext implements ExecutionContextInterface
 
     /**
      * @param string $cacheKey
-     *
-     * @return bool
      */
     public function isObjectInitialized($cacheKey): bool
     {
         throw new NotImplementedException(sprintf('Method "%s" is not implemented', __METHOD__));
     }
 
-    /**
-     * @return ConstraintViolationListInterface
-     */
     public function getViolations(): ConstraintViolationListInterface
     {
         return $this->violations;
@@ -201,9 +186,6 @@ final class ExecutionContext implements ExecutionContextInterface
         throw new NotImplementedException(sprintf('Method "%s" is not implemented', __METHOD__));
     }
 
-    /**
-     * @return string
-     */
     public function getGroup(): string
     {
         if ([] === $groups = $this->context->getGroups()) {
@@ -221,9 +203,6 @@ final class ExecutionContext implements ExecutionContextInterface
         return null;
     }
 
-    /**
-     * @return string
-     */
     public function getPropertyName(): string
     {
         $pathParts = explode('.', $this->path);
@@ -233,8 +212,6 @@ final class ExecutionContext implements ExecutionContextInterface
 
     /**
      * @param string $subPath
-     *
-     * @return string
      */
     public function getPropertyPath($subPath = ''): string
     {

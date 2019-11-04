@@ -71,9 +71,6 @@ final class NotNullConstraintTest extends TestCase
         self::assertEquals([], $constraint->validate('notnull', new \stdClass(), $this->getContext()));
     }
 
-    /**
-     * @return ValidatorContextInterface
-     */
     private function getContext(): ValidatorContextInterface
     {
         /* @var ValidatorContextInterface|MockObject $context */

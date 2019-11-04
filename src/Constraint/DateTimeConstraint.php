@@ -16,19 +16,13 @@ final class DateTimeConstraint implements ConstraintInterface
      */
     private $format;
 
-    /**
-     * @param string $format
-     */
     public function __construct(string $format = 'Y-m-d H:i:s')
     {
         $this->format = $format;
     }
 
     /**
-     * @param string                    $path
-     * @param mixed                     $value
-     * @param ValidatorContextInterface $context
-     * @param ValidatorInterface|null   $validator
+     * @param mixed $value
      *
      * @return array<ErrorInterface>
      */
@@ -79,9 +73,6 @@ final class DateTimeConstraint implements ConstraintInterface
     }
 
     /**
-     * @param string             $path
-     * @param \DateTimeInterface $value
-     *
      * @return array<ErrorInterface>
      */
     private function validateDateTime(string $path, \DateTimeInterface $value): array
@@ -107,12 +98,6 @@ final class DateTimeConstraint implements ConstraintInterface
     }
 
     /**
-     * @param string $path
-     * @param string $value
-     * @param string $errorType
-     * @param int    $dateTimeErrorCount
-     * @param array  $dateTimeErrors
-     *
      * @return array<ErrorInterface>
      */
     private function errorsByDateTimeLastErrors(

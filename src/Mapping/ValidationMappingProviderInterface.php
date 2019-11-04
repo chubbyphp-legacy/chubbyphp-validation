@@ -6,21 +6,14 @@ namespace Chubbyphp\Validation\Mapping;
 
 interface ValidationMappingProviderInterface
 {
-    /**
-     * @return string
-     */
     public function getClass(): string;
 
     /**
-     * @param string $path
-     *
      * @return ValidationClassMappingInterface|null
      */
     public function getValidationClassMapping(string $path);
 
     /**
-     * @param string $path
-     *
      * @return ValidationPropertyMappingInterface[]
      */
     public function getValidationPropertyMappings(string $path): array;

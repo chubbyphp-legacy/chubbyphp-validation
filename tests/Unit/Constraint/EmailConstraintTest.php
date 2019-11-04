@@ -68,9 +68,6 @@ final class EmailConstraintTest extends TestCase
         self::assertEquals([$error], $constraint->validate('email', 'name', $this->getContext()));
     }
 
-    /**
-     * @return ValidatorContextInterface
-     */
     private function getContext(): ValidatorContextInterface
     {
         /* @var ValidatorContextInterface|MockObject $context */

@@ -54,9 +54,6 @@ final class ValidationMappingProviderRegistryTest extends TestCase
         self::assertInstanceOf(ValidationMappingProviderInterface::class, $mapping);
     }
 
-    /**
-     * @return ValidationMappingProviderInterface
-     */
     private function getValidationObjectMapping(): ValidationMappingProviderInterface
     {
         /** @var ValidationMappingProviderInterface|MockObject $objectMapping */
@@ -76,9 +73,6 @@ final class ValidationMappingProviderRegistryTest extends TestCase
         return $objectMapping;
     }
 
-    /**
-     * @return ValidationMappingProviderInterface
-     */
     private function getValidationProxyObjectMapping(): ValidationMappingProviderInterface
     {
         /** @var ValidationMappingProviderInterface|MockObject $objectMapping */
@@ -117,11 +111,6 @@ final class ValidationMappingProviderRegistryTest extends TestCase
                 return $this->name;
             }
 
-            /**
-             * @param string $name
-             *
-             * @return self
-             */
             public function setName(string $name): self
             {
                 $this->name = $name;
@@ -165,19 +154,11 @@ abstract class AbstractManyModel
      */
     protected $name;
 
-    /**
-     * @return string
-     */
     public function getName(): string
     {
         return $this->name;
     }
 
-    /**
-     * @param string $name
-     *
-     * @return self
-     */
     public function setName(string $name): self
     {
         $this->name = $name;

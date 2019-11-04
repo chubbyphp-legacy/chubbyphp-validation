@@ -133,9 +133,6 @@ final class UniqueConstraintTest extends TestCase
         ], $constraint->validate('unique', $model, $this->getContext()));
     }
 
-    /**
-     * @return ValidatorContextInterface
-     */
     private function getContext(): ValidatorContextInterface
     {
         /* @var ValidatorContextInterface|MockObject $context */

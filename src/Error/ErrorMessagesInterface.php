@@ -6,8 +6,5 @@ namespace Chubbyphp\Validation\Error;
 
 interface ErrorMessagesInterface
 {
-    /**
-     * @return array
-     */
     public function getMessages(): array;
 }

@@ -15,9 +15,6 @@ final class ValidatorContextBuilder implements ValidatorContextBuilderInterface
     {
     }
 
-    /**
-     * @return ValidatorContextBuilderInterface
-     */
     public static function create(): ValidatorContextBuilderInterface
     {
         $self = new self();
@@ -28,8 +25,6 @@ final class ValidatorContextBuilder implements ValidatorContextBuilderInterface
 
     /**
      * @param string[] $groups
-     *
-     * @return ValidatorContextBuilderInterface
      */
     public function setGroups(array $groups): ValidatorContextBuilderInterface
     {
@@ -38,9 +33,6 @@ final class ValidatorContextBuilder implements ValidatorContextBuilderInterface
         return $this;
     }
 
-    /**
-     * @return ValidatorContextInterface
-     */
     public function getContext(): ValidatorContextInterface
     {
         return new ValidatorContext($this->groups);

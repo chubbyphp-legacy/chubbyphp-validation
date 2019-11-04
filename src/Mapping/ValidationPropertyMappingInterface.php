@@ -9,9 +9,6 @@ use Chubbyphp\Validation\Constraint\ConstraintInterface;
 
 interface ValidationPropertyMappingInterface extends ValidationGroupsInterface
 {
-    /**
-     * @return string
-     */
     public function getName(): string;
 
     /**
@@ -19,8 +16,5 @@ interface ValidationPropertyMappingInterface extends ValidationGroupsInterface
      */
     public function getConstraints(): array;
 
-    /**
-     * @return AccessorInterface
-     */
     public function getAccessor(): AccessorInterface;
 }

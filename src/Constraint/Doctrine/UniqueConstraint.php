@@ -25,8 +25,7 @@ final class UniqueConstraint implements ConstraintInterface
     private $uniqueProperties;
 
     /**
-     * @param ObjectManager $objectManager
-     * @param string[]      $uniqueProperties
+     * @param string[] $uniqueProperties
      */
     public function __construct(ObjectManager $objectManager, array $uniqueProperties)
     {
@@ -35,10 +34,7 @@ final class UniqueConstraint implements ConstraintInterface
     }
 
     /**
-     * @param string                    $path
-     * @param mixed                     $model
-     * @param ValidatorContextInterface $context
-     * @param ValidatorInterface|null   $validator
+     * @param mixed $model
      *
      * @return array<ErrorInterface>
      */
@@ -81,8 +77,6 @@ final class UniqueConstraint implements ConstraintInterface
 
     /**
      * @param object $model
-     *
-     * @return array
      */
     private function getCriteria($model): array
     {
@@ -95,11 +89,8 @@ final class UniqueConstraint implements ConstraintInterface
     }
 
     /**
-     * @param array  $identifierParts
      * @param object $model
      * @param object $persistedModel
-     *
-     * @return bool
      */
     private function isValueSameAsPersistedValue(array $identifierParts, $model, $persistedModel): bool
     {

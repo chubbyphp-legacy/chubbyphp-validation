@@ -24,7 +24,6 @@ final class Error implements ErrorInterface
     /**
      * @param string $path
      * @param string $key
-     * @param array  $arguments
      */
     public function __construct($path, $key, array $arguments = [])
     {
@@ -33,25 +32,16 @@ final class Error implements ErrorInterface
         $this->arguments = $arguments;
     }
 
-    /**
-     * @return string
-     */
     public function getPath(): string
     {
         return $this->path;
     }
 
-    /**
-     * @return string
-     */
     public function getKey(): string
     {
         return $this->key;
     }
 
-    /**
-     * @return array
-     */
     public function getArguments(): array
     {
         return $this->arguments;

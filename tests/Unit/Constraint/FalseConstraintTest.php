@@ -88,9 +88,6 @@ final class FalseConstraintTest extends TestCase
         self::assertEquals([$error], $constraint->validate('false', new \stdClass(), $this->getContext()));
     }
 
-    /**
-     * @return ValidatorContextInterface
-     */
     private function getContext(): ValidatorContextInterface
     {
         /* @var ValidatorContextInterface|MockObject $context */

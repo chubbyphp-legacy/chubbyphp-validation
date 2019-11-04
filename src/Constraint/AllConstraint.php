@@ -29,10 +29,7 @@ final class AllConstraint implements ConstraintInterface
     }
 
     /**
-     * @param string                    $path
-     * @param mixed                     $value
-     * @param ValidatorContextInterface $context
-     * @param ValidatorInterface|null   $validator
+     * @param mixed $value
      *
      * @throws ValidatorLogicException
      *
@@ -69,9 +66,6 @@ final class AllConstraint implements ConstraintInterface
         return $errors;
     }
 
-    /**
-     * @param ConstraintInterface $constraint
-     */
     private function addConstraint(ConstraintInterface $constraint): void
     {
         $this->constraints[] = $constraint;

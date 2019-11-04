@@ -78,9 +78,6 @@ final class BlankConstraintTest extends TestCase
         self::assertEquals([$error], $constraint->validate('blank', $object, $this->getContext()));
     }
 
-    /**
-     * @return ValidatorContextInterface
-     */
     private function getContext(): ValidatorContextInterface
     {
         /* @var ValidatorContextInterface|MockObject $context */

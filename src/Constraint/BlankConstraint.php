@@ -12,10 +12,7 @@ use Chubbyphp\Validation\ValidatorInterface;
 final class BlankConstraint implements ConstraintInterface
 {
     /**
-     * @param string                    $path
-     * @param mixed                     $value
-     * @param ValidatorContextInterface $context
-     * @param ValidatorInterface|null   $validator
+     * @param mixed $value
      *
      * @return array<ErrorInterface>
      */

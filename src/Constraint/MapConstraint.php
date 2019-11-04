@@ -42,10 +42,7 @@ final class MapConstraint implements ConstraintInterface
     }
 
     /**
-     * @param string                    $path
-     * @param mixed                     $value
-     * @param ValidatorContextInterface $context
-     * @param ValidatorInterface|null   $validator
+     * @param mixed $value
      *
      * @throws ValidatorLogicException
      *
@@ -95,7 +92,6 @@ final class MapConstraint implements ConstraintInterface
     }
 
     /**
-     * @param string                     $field
      * @param array<ConstraintInterface> $constraintsByField
      */
     private function addConstraintsByField(string $field, array $constraintsByField): void
@@ -106,10 +102,6 @@ final class MapConstraint implements ConstraintInterface
         }
     }
 
-    /**
-     * @param string              $field
-     * @param ConstraintInterface $constraint
-     */
     private function addConstraintByField(string $field, ConstraintInterface $constraint): void
     {
         $this->constraintsByFields[$field][] = $constraint;

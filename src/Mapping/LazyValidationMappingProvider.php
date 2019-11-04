@@ -24,9 +24,7 @@ final class LazyValidationMappingProvider implements ValidationMappingProviderIn
     private $class;
 
     /**
-     * @param ContainerInterface $container
-     * @param string             $serviceId
-     * @param string             $class
+     * @param string $serviceId
      */
     public function __construct(ContainerInterface $container, $serviceId, string $class)
     {
@@ -35,17 +33,12 @@ final class LazyValidationMappingProvider implements ValidationMappingProviderIn
         $this->class = $class;
     }
 
-    /**
-     * @return string
-     */
     public function getClass(): string
     {
         return $this->class;
     }
 
     /**
-     * @param string $path
-     *
      * @return ValidationClassMappingInterface|null
      */
     public function getValidationClassMapping(string $path)
@@ -54,8 +47,6 @@ final class LazyValidationMappingProvider implements ValidationMappingProviderIn
     }
 
     /**
-     * @param string $path
-     *
      * @return ValidationPropertyMappingInterface[]
      */
     public function getValidationPropertyMappings(string $path): array

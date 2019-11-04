@@ -34,12 +34,6 @@ final class ValidationPropertyMappingBuilder implements ValidationPropertyMappin
     {
     }
 
-    /**
-     * @param string $name
-     * @param array  $constraints
-     *
-     * @return ValidationPropertyMappingBuilderInterface
-     */
     public static function create(string $name, array $constraints): ValidationPropertyMappingBuilderInterface
     {
         $self = new self();
@@ -53,11 +47,6 @@ final class ValidationPropertyMappingBuilder implements ValidationPropertyMappin
         return $self;
     }
 
-    /**
-     * @param array $groups
-     *
-     * @return ValidationPropertyMappingBuilderInterface
-     */
     public function setGroups(array $groups): ValidationPropertyMappingBuilderInterface
     {
         $this->groups = $groups;
@@ -65,11 +54,6 @@ final class ValidationPropertyMappingBuilder implements ValidationPropertyMappin
         return $this;
     }
 
-    /**
-     * @param AccessorInterface $accessor
-     *
-     * @return ValidationPropertyMappingBuilderInterface
-     */
     public function setAccessor(AccessorInterface $accessor): ValidationPropertyMappingBuilderInterface
     {
         $this->accessor = $accessor;
@@ -77,9 +61,6 @@ final class ValidationPropertyMappingBuilder implements ValidationPropertyMappin
         return $this;
     }
 
-    /**
-     * @return ValidationPropertyMappingInterface
-     */
     public function getMapping(): ValidationPropertyMappingInterface
     {
         return new ValidationPropertyMapping(
@@ -90,9 +71,6 @@ final class ValidationPropertyMappingBuilder implements ValidationPropertyMappin
         );
     }
 
-    /**
-     * @param ConstraintInterface $constraint
-     */
     private function addConstraint(ConstraintInterface $constraint): void
     {
         $this->constraints[] = $constraint;

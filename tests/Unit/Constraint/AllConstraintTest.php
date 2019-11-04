@@ -61,20 +61,12 @@ final class AllConstraintTest extends TestCase
         ], $constraint->validate('traversable', ['string'], $this->getContext(), $this->getValidator()));
     }
 
-    /**
-     * @return ValidatorInterface
-     */
     private function getValidator(): ValidatorInterface
     {
         /* @var ValidatorInterface|MockObject $validator */
         return $this->getMockByCalls(ValidatorInterface::class);
     }
 
-    /**
-     * @param bool $error
-     *
-     * @return ConstraintInterface
-     */
     private function getConstraint(bool $error = false): ConstraintInterface
     {
         /** @var ConstraintInterface|MockObject $constraint */
@@ -102,9 +94,6 @@ final class AllConstraintTest extends TestCase
         return $constraint;
     }
 
-    /**
-     * @return ValidatorContextInterface
-     */
     private function getContext(): ValidatorContextInterface
     {
         /* @var ValidatorContextInterface|MockObject $context */

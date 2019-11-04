@@ -26,10 +26,6 @@ final class Validator implements ValidatorInterface
      */
     private $logger;
 
-    /**
-     * @param ValidationMappingProviderRegistryInterface $validatorObjectMappingRegistry
-     * @param LoggerInterface|null                       $logger
-     */
     public function __construct(
         ValidationMappingProviderRegistryInterface $validatorObjectMappingRegistry,
         LoggerInterface $logger = null
@@ -39,10 +35,6 @@ final class Validator implements ValidatorInterface
     }
 
     /**
-     * @param object                         $object
-     * @param ValidatorContextInterface|null $context
-     * @param string                         $path
-     *
      * @return array<ErrorInterface>
      */
     public function validate(object $object, ValidatorContextInterface $context = null, string $path = '')
@@ -73,11 +65,7 @@ final class Validator implements ValidatorInterface
     }
 
     /**
-     * @param string $class
-     *
      * @throws ValidatorLogicException
-     *
-     * @return ValidationMappingProviderInterface
      */
     private function getObjectMapping(string $class): ValidationMappingProviderInterface
     {
@@ -91,10 +79,7 @@ final class Validator implements ValidatorInterface
     }
 
     /**
-     * @param ValidatorContextInterface            $context
-     * @param ValidationClassMappingInterface|null $classMapping
-     * @param string                               $path
-     * @param object                               $object
+     * @param object $object
      *
      * @return array<ErrorInterface>
      */
@@ -129,10 +114,7 @@ final class Validator implements ValidatorInterface
     }
 
     /**
-     * @param ValidatorContextInterface          $context
-     * @param ValidationPropertyMappingInterface $propertyMapping
-     * @param string                             $path
-     * @param object                             $object
+     * @param object $object
      *
      * @return array<ErrorInterface>
      */
@@ -168,12 +150,6 @@ final class Validator implements ValidatorInterface
         return $errors;
     }
 
-    /**
-     * @param ValidatorContextInterface $context
-     * @param ValidationGroupsInterface $mapping
-     *
-     * @return bool
-     */
     private function isWithinGroup(
         ValidatorContextInterface $context,
         ValidationGroupsInterface $mapping
@@ -192,28 +168,18 @@ final class Validator implements ValidatorInterface
     }
 
     /**
-     * @param string     $path
      * @param string|int $name
-     *
-     * @return string
      */
     private function getSubPathByName(string $path, $name): string
     {
         return '' === $path ? (string) $name : $path.'.'.$name;
     }
 
-    /**
-     * @param string $path
-     */
     private function logPath(string $path): void
     {
         $this->logger->info('validate: path {path}', ['path' => $path]);
     }
 
-    /**
-     * @param string              $path
-     * @param ConstraintInterface $constraint
-     */
     private function logConstraint(string $path, ConstraintInterface $constraint): void
     {
         $this->logger->debug('validate: path {path}, constraint {constraint}', [
@@ -222,11 +188,6 @@ final class Validator implements ValidatorInterface
         ]);
     }
 
-    /**
-     * @param string              $path
-     * @param ConstraintInterface $constraint
-     * @param ErrorInterface      $error
-     */
     private function logError(string $path, ConstraintInterface $constraint, ErrorInterface $error): void
     {
         $this->logger->notice('validate: path {path}, constraint {constraint}, error {error}', [

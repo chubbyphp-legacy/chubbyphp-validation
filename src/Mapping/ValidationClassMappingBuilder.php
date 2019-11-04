@@ -22,11 +22,6 @@ final class ValidationClassMappingBuilder implements ValidationClassMappingBuild
     {
     }
 
-    /**
-     * @param array $constraints
-     *
-     * @return ValidationClassMappingBuilderInterface
-     */
     public static function create(array $constraints): ValidationClassMappingBuilderInterface
     {
         $self = new self();
@@ -38,11 +33,6 @@ final class ValidationClassMappingBuilder implements ValidationClassMappingBuild
         return $self;
     }
 
-    /**
-     * @param array $groups
-     *
-     * @return ValidationClassMappingBuilderInterface
-     */
     public function setGroups(array $groups): ValidationClassMappingBuilderInterface
     {
         $this->groups = $groups;
@@ -50,9 +40,6 @@ final class ValidationClassMappingBuilder implements ValidationClassMappingBuild
         return $this;
     }
 
-    /**
-     * @return ValidationClassMappingInterface
-     */
     public function getMapping(): ValidationClassMappingInterface
     {
         return new ValidationClassMapping(
@@ -61,9 +48,6 @@ final class ValidationClassMappingBuilder implements ValidationClassMappingBuild
         );
     }
 
-    /**
-     * @param ConstraintInterface $constraint
-     */
     private function addConstraint(ConstraintInterface $constraint): void
     {
         $this->constraints[] = $constraint;

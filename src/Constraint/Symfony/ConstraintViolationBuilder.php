@@ -50,12 +50,6 @@ final class ConstraintViolationBuilder implements ConstraintViolationBuilderInte
      */
     private $cause;
 
-    /**
-     * @param ConstraintViolationListInterface $violations
-     * @param string                           $message
-     * @param array                            $parameters
-     * @param string                           $path
-     */
     public function __construct(
         ConstraintViolationListInterface $violations,
         string $message,
@@ -95,8 +89,6 @@ final class ConstraintViolationBuilder implements ConstraintViolationBuilderInte
     }
 
     /**
-     * @param array $parameters
-     *
      * @return ConstraintViolationBuilder
      */
     public function setParameters(array $parameters): self

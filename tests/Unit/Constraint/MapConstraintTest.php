@@ -93,20 +93,12 @@ final class MapConstraintTest extends TestCase
         );
     }
 
-    /**
-     * @return ValidatorInterface
-     */
     private function getValidator(): ValidatorInterface
     {
         /* @var ValidatorInterface|MockObject $validator */
         return $this->getMockByCalls(ValidatorInterface::class);
     }
 
-    /**
-     * @param bool $error
-     *
-     * @return ConstraintInterface
-     */
     private function getConstraint(bool $error = false): ConstraintInterface
     {
         /** @var ConstraintInterface|MockObject $constraint */
@@ -134,9 +126,6 @@ final class MapConstraintTest extends TestCase
         return $constraint;
     }
 
-    /**
-     * @return ValidatorContextInterface
-     */
     private function getContext(): ValidatorContextInterface
     {
         /* @var ValidatorContextInterface|MockObject $context */

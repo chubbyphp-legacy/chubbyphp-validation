@@ -11,9 +11,6 @@ use Pimple\ServiceProviderInterface;
 
 final class ValidationProvider implements ServiceProviderInterface
 {
-    /**
-     * @param Container $container
-     */
     public function register(Container $container): void
     {
         $container['validator'] = function () use ($container) {

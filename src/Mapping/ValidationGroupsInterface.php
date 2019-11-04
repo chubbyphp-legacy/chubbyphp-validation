@@ -6,8 +6,5 @@ namespace Chubbyphp\Validation\Mapping;
 
 interface ValidationGroupsInterface
 {
-    /**
-     * @return array
-     */
     public function getGroups(): array;
 }

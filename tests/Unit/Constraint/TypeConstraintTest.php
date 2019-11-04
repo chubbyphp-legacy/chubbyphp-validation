@@ -69,9 +69,6 @@ final class TypeConstraintTest extends TestCase
         );
     }
 
-    /**
-     * @return ValidatorContextInterface
-     */
     private function getContext(): ValidatorContextInterface
     {
         /* @var ValidatorContextInterface|MockObject $context */

@@ -21,27 +21,18 @@ final class CallableValidationMappingProvider implements ValidationMappingProvid
      */
     private $mapping;
 
-    /**
-     * @param string   $class
-     * @param callable $callable
-     */
     public function __construct(string $class, callable $callable)
     {
         $this->class = $class;
         $this->callable = $callable;
     }
 
-    /**
-     * @return string
-     */
     public function getClass(): string
     {
         return $this->class;
     }
 
     /**
-     * @param string $path
-     *
      * @return ValidationClassMappingInterface|null
      */
     public function getValidationClassMapping(string $path)
@@ -50,8 +41,6 @@ final class CallableValidationMappingProvider implements ValidationMappingProvid
     }
 
     /**
-     * @param string $path
-     *
      * @return ValidationPropertyMappingInterface[]
      */
     public function getValidationPropertyMappings(string $path): array
@@ -59,9 +48,6 @@ final class CallableValidationMappingProvider implements ValidationMappingProvid
         return $this->getMapping()->getValidationPropertyMappings($path);
     }
 
-    /**
-     * @return ValidationMappingProviderInterface
-     */
     private function getMapping(): ValidationMappingProviderInterface
     {
         if (null === $this->mapping) {

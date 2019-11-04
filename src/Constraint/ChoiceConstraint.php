@@ -16,19 +16,13 @@ final class ChoiceConstraint implements ConstraintInterface
      */
     private $choices = [];
 
-    /**
-     * @param array $choices
-     */
     public function __construct(array $choices)
     {
         $this->choices = $choices;
     }
 
     /**
-     * @param string                    $path
-     * @param mixed                     $value
-     * @param ValidatorContextInterface $context
-     * @param ValidatorInterface|null   $validator
+     * @param mixed $value
      *
      * @return array<ErrorInterface>
      */

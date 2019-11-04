@@ -12,10 +12,7 @@ use Chubbyphp\Validation\ValidatorLogicException;
 interface ConstraintInterface
 {
     /**
-     * @param string                    $path
-     * @param mixed                     $value
-     * @param ValidatorContextInterface $context
-     * @param ValidatorInterface|null   $validator
+     * @param mixed $value
      *
      * @throws ValidatorLogicException
      *

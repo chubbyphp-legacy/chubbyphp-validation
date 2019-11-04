@@ -21,10 +21,6 @@ final class NumericRangeConstraint implements ConstraintInterface
      */
     private $max;
 
-    /**
-     * @param int|null $min
-     * @param int|null $max
-     */
     public function __construct(int $min = null, int $max = null)
     {
         $this->min = $min;
@@ -32,10 +28,7 @@ final class NumericRangeConstraint implements ConstraintInterface
     }
 
     /**
-     * @param string                    $path
-     * @param mixed                     $value
-     * @param ValidatorContextInterface $context
-     * @param ValidatorInterface|null   $validator
+     * @param mixed $value
      *
      * @return array<ErrorInterface>
      */

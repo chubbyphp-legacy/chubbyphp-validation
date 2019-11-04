@@ -23,10 +23,6 @@ final class ConstraintAdapter implements ConstraintInterface
      */
     private $symfonyConstraintValidator;
 
-    /**
-     * @param Constraint                   $symfonyConstraint
-     * @param ConstraintValidatorInterface $symfonyConstraintValidator
-     */
     public function __construct(Constraint $symfonyConstraint, ConstraintValidatorInterface $symfonyConstraintValidator)
     {
         $this->symfonyConstraint = $symfonyConstraint;
@@ -34,10 +30,7 @@ final class ConstraintAdapter implements ConstraintInterface
     }
 
     /**
-     * @param string                    $path
-     * @param mixed                     $value
-     * @param ValidatorContextInterface $context
-     * @param ValidatorInterface|null   $validator
+     * @param mixed $value
      *
      * @return array<ErrorInterface>
      */

@@ -37,9 +37,6 @@ final class CallbackConstraintTest extends TestCase
         ], $constraint->validate('callback', 'value', $this->getContext()));
     }
 
-    /**
-     * @return callable
-     */
     private function getCallback(): callable
     {
         return function (
@@ -58,9 +55,6 @@ final class CallbackConstraintTest extends TestCase
         };
     }
 
-    /**
-     * @return ValidatorContextInterface
-     */
     private function getContext(): ValidatorContextInterface
     {
         /* @var ValidatorContextInterface|MockObject $context */

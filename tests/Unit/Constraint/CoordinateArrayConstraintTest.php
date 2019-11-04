@@ -47,8 +47,6 @@ final class CoordinateArrayConstraintTest extends TestCase
 
     /**
      * @dataProvider getCoordinateArrays
-     *
-     * @param array $coordinate
      */
     public function testWithCoordinateArray(array $coordinate): void
     {
@@ -57,9 +55,6 @@ final class CoordinateArrayConstraintTest extends TestCase
         self::assertEquals([], $constraint->validate('coordinatearray', $coordinate, $this->getContext()));
     }
 
-    /**
-     * @return array
-     */
     public function getCoordinateArrays(): array
     {
         return [
@@ -72,8 +67,6 @@ final class CoordinateArrayConstraintTest extends TestCase
 
     /**
      * @dataProvider getInvalidCoordinateArrays
-     *
-     * @param array $coordinate
      */
     public function testWithInvalidCoordinateArray(array $coordinate): void
     {
@@ -84,9 +77,6 @@ final class CoordinateArrayConstraintTest extends TestCase
         self::assertEquals([$error], $constraint->validate('coordinatearray', $coordinate, $this->getContext()));
     }
 
-    /**
-     * @return array
-     */
     public function getInvalidCoordinateArrays(): array
     {
         return [
@@ -97,9 +87,6 @@ final class CoordinateArrayConstraintTest extends TestCase
         ];
     }
 
-    /**
-     * @return ValidatorContextInterface
-     */
     private function getContext(): ValidatorContextInterface
     {
         /* @var ValidatorContextInterface|MockObject $context */

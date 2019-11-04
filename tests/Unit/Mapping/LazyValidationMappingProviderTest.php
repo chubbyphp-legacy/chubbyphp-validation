@@ -42,11 +42,6 @@ final class LazyValidationMappingProviderTest extends TestCase
         self::assertSame($denormalizationPropertyMappings, $objectMapping->getValidationPropertyMappings('path'));
     }
 
-    /**
-     * @param array $services
-     *
-     * @return ContainerInterface
-     */
     private function getContainer(array $services): ContainerInterface
     {
         /** @var ContainerInterface|MockObject $container */
@@ -64,10 +59,7 @@ final class LazyValidationMappingProviderTest extends TestCase
     }
 
     /**
-     * @param ValidationClassMappingInterface|null $denormalizationClassMapping
      * @param ValidationPropertyMappingInterface[] $denormalizationPropertyMappings
-     *
-     * @return ValidationMappingProviderInterface
      */
     private function getValidationObjectMapping(
         ValidationClassMappingInterface $denormalizationClassMapping = null,

@@ -54,8 +54,6 @@ final class CoordinateConstraintTest extends TestCase
 
     /**
      * @dataProvider getCoordinates
-     *
-     * @param string $coordinate
      */
     public function testWithCoordinate(string $coordinate): void
     {
@@ -64,9 +62,6 @@ final class CoordinateConstraintTest extends TestCase
         self::assertEquals([], $constraint->validate('coordinate', $coordinate, $this->getContext()));
     }
 
-    /**
-     * @return array
-     */
     public function getCoordinates(): array
     {
         return [
@@ -79,10 +74,6 @@ final class CoordinateConstraintTest extends TestCase
 
     /**
      * @dataProvider getCoordinates
-     *
-     * @param string $coordinate
-     * @param string $latitude
-     * @param string $longitude
      */
     public function testGetLangitudeAndLongitude(string $coordinate, string $latitude, string $longitude): void
     {
@@ -95,8 +86,6 @@ final class CoordinateConstraintTest extends TestCase
 
     /**
      * @dataProvider getInvalidCoordinates
-     *
-     * @param string $coordinate
      */
     public function testWithInvalidCoordinate(string $coordinate): void
     {
@@ -107,9 +96,6 @@ final class CoordinateConstraintTest extends TestCase
         self::assertEquals([$error], $constraint->validate('coordinate', $coordinate, $this->getContext()));
     }
 
-    /**
-     * @return array
-     */
     public function getInvalidCoordinates(): array
     {
         return [
@@ -120,9 +106,6 @@ final class CoordinateConstraintTest extends TestCase
         ];
     }
 
-    /**
-     * @return ValidatorContextInterface
-     */
     private function getContext(): ValidatorContextInterface
     {
         /* @var ValidatorContextInterface|MockObject $context */

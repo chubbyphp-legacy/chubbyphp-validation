@@ -20,7 +20,6 @@ final class ValidationClassMapping implements ValidationClassMappingInterface
 
     /**
      * @param array<ConstraintInterface> $constraints
-     * @param array                      $groups
      */
     public function __construct(array $constraints, array $groups)
     {
@@ -36,9 +35,6 @@ final class ValidationClassMapping implements ValidationClassMappingInterface
         return $this->constraints;
     }
 
-    /**
-     * @return array
-     */
     public function getGroups(): array
     {
         return $this->groups;

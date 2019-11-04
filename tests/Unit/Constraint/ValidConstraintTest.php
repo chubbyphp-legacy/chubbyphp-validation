@@ -105,20 +105,12 @@ final class ValidConstraintTest extends TestCase
         self::assertEquals([$error], $constraint->validate('valid', 'test', $context, $validator));
     }
 
-    /**
-     * @return ValidatorContextInterface
-     */
     private function getContext(): ValidatorContextInterface
     {
         /* @var ValidatorContextInterface|MockObject $context */
         return $this->getMockByCalls(ValidatorContextInterface::class);
     }
 
-    /**
-     * @param array $methods
-     *
-     * @return ValidatorInterface
-     */
     private function getValidator(array $methods = []): ValidatorInterface
     {
         /* @var ValidatorInterface|MockObject $validator */
@@ -136,19 +128,11 @@ final class ValidConstraintTest extends TestCase
              */
             private $name;
 
-            /**
-             * @return string
-             */
             public function getName(): string
             {
                 return $this->name;
             }
 
-            /**
-             * @param string $name
-             *
-             * @return self
-             */
             public function setName(string $name): self
             {
                 $this->name = $name;

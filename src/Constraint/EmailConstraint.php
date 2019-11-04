@@ -17,10 +17,7 @@ final class EmailConstraint implements ConstraintInterface
     const PATTERN = '/^(.+)\@(\S+\.\S+)$/';
 
     /**
-     * @param string                    $path
-     * @param mixed                     $value
-     * @param ValidatorContextInterface $context
-     * @param ValidatorInterface|null   $validator
+     * @param mixed $value
      *
      * @return array<ErrorInterface>
      */

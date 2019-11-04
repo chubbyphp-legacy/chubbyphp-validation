@@ -30,10 +30,7 @@ final class ValidationPropertyMapping implements ValidationPropertyMappingInterf
     private $accessor;
 
     /**
-     * @param string                     $name
      * @param array<ConstraintInterface> $constraints
-     * @param array                      $groups
-     * @param AccessorInterface          $accessor
      */
     public function __construct(
         string $name,
@@ -47,9 +44,6 @@ final class ValidationPropertyMapping implements ValidationPropertyMappingInterf
         $this->accessor = $accessor;
     }
 
-    /**
-     * @return string
-     */
     public function getName(): string
     {
         return $this->name;
@@ -63,17 +57,11 @@ final class ValidationPropertyMapping implements ValidationPropertyMappingInterf
         return $this->constraints;
     }
 
-    /**
-     * @return array
-     */
     public function getGroups(): array
     {
         return $this->groups;
     }
 
-    /**
-     * @return AccessorInterface
-     */
     public function getAccessor(): AccessorInterface
     {
         return $this->accessor;

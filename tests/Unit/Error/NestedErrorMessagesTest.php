@@ -63,13 +63,6 @@ final class NestedErrorMessagesTest extends TestCase
         ], $errorMessages->getMessages());
     }
 
-    /**
-     * @param string $path
-     * @param string $key
-     * @param array  $arguments
-     *
-     * @return ErrorInterface
-     */
     private function getError(string $path, string $key, array $arguments = []): ErrorInterface
     {
         /* @var ErrorInterface|MockObject $error */

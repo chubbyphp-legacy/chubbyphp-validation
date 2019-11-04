@@ -30,7 +30,6 @@ final class ChoiceConstraintTest extends TestCase
     /**
      * @dataProvider choicesProvider
      *
-     * @param array $choices
      * @param mixed $choice
      */
     public function testWithChoice(array $choices, $choice): void
@@ -40,9 +39,6 @@ final class ChoiceConstraintTest extends TestCase
         self::assertEquals([], $constraint->validate('choice', $choice, $this->getContext()));
     }
 
-    /**
-     * @return array
-     */
     public function choicesProvider(): array
     {
         return [
@@ -56,7 +52,6 @@ final class ChoiceConstraintTest extends TestCase
     /**
      * @dataProvider invalidChoicesProvider
      *
-     * @param array $choices
      * @param mixed $choice
      */
     public function testWithInvalidChoice(array $choices, $choice): void
@@ -72,9 +67,6 @@ final class ChoiceConstraintTest extends TestCase
         self::assertEquals([$error], $constraint->validate('choice', $choice, $this->getContext()));
     }
 
-    /**
-     * @return array
-     */
     public function invalidChoicesProvider(): array
     {
         return [
@@ -85,19 +77,11 @@ final class ChoiceConstraintTest extends TestCase
         ];
     }
 
-    /**
-     * @param array $choices
-     *
-     * @return string
-     */
     private function implode(array $choices): string
     {
         return implode(', ', $choices);
     }
 
-    /**
-     * @return ValidatorContextInterface
-     */
     private function getContext(): ValidatorContextInterface
     {
         /* @var ValidatorContextInterface|MockObject $context */

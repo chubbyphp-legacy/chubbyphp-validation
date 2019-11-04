@@ -56,19 +56,11 @@ final class ValidatorTest extends TestCase
              */
             private $all;
 
-            /**
-             * @return string
-             */
             public function getNotBlank(): string
             {
                 return $this->notBlank;
             }
 
-            /**
-             * @param string $notBlank
-             *
-             * @return self
-             */
             public function setNotBlank(string $notBlank): self
             {
                 $this->notBlank = $notBlank;
@@ -76,9 +68,6 @@ final class ValidatorTest extends TestCase
                 return $this;
             }
 
-            /**
-             * @return int
-             */
             public function getNumeric(): int
             {
                 return $this->numeric;
@@ -86,8 +75,6 @@ final class ValidatorTest extends TestCase
 
             /**
              * @param int|string $numeric
-             *
-             * @return self
              */
             public function setNumeric($numeric): self
             {
@@ -96,19 +83,11 @@ final class ValidatorTest extends TestCase
                 return $this;
             }
 
-            /**
-             * @return string
-             */
             public function getCallback(): string
             {
                 return $this->callback;
             }
 
-            /**
-             * @param string $callback
-             *
-             * @return self
-             */
             public function setCallback(string $callback): self
             {
                 $this->callback = $callback;
@@ -116,19 +95,11 @@ final class ValidatorTest extends TestCase
                 return $this;
             }
 
-            /**
-             * @return \ArrayIterator
-             */
             public function getAll(): \ArrayIterator
             {
                 return $this->all;
             }
 
-            /**
-             * @param \ArrayIterator $all
-             *
-             * @return self
-             */
             public function setAll(\ArrayIterator $all): self
             {
                 $this->all = $all;
@@ -154,28 +125,17 @@ final class ValidatorTest extends TestCase
                     $this->object = $object;
                 }
 
-                /**
-                 * @return string
-                 */
                 public function getClass(): string
                 {
                     return get_class($this->object);
                 }
 
-                /**
-                 * @param string $path
-                 *
-                 * @return ValidationClassMappingInterface
-                 */
                 public function getValidationClassMapping(string $path): ValidationClassMappingInterface
                 {
                     return ValidationClassMappingBuilder::create([])->getMapping();
                 }
 
                 /**
-                 * @param string      $path
-                 * @param string|null $type
-                 *
                  * @return ValidationPropertyMappingInterface[]
                  */
                 public function getValidationPropertyMappings(string $path, string $type = null): array
@@ -222,9 +182,6 @@ final class ValidatorTest extends TestCase
                 $this->logs[] = ['level' => $level, 'message' => $message, 'context' => $context];
             }
 
-            /**
-             * @return array
-             */
             public function getLogs(): array
             {
                 return $this->logs;

@@ -260,11 +260,6 @@ final class ExecutionContextTest extends TestCase
         ], $error->getArguments());
     }
 
-    /**
-     * @param array $methods
-     *
-     * @return ValidatorContextInterface
-     */
     private function getContext(array $methods = []): ValidatorContextInterface
     {
         /* @var ValidatorContextInterface|MockObject $context */

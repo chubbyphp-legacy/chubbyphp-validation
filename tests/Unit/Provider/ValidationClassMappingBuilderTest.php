@@ -40,9 +40,6 @@ final class ValidationClassMappingBuilderTest extends TestCase
         self::assertSame(['group1'], $propertyMapping->getGroups());
     }
 
-    /**
-     * @return ConstraintInterface
-     */
     private function getConstraint(): ConstraintInterface
     {
         /* @var ConstraintInterface|MockObject $constraint */

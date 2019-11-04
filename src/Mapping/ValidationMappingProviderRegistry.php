@@ -13,9 +13,6 @@ final class ValidationMappingProviderRegistry implements ValidationMappingProvid
      */
     private $objectMappings;
 
-    /**
-     * @param array $objectMappings
-     */
     public function __construct(array $objectMappings)
     {
         $this->objectMappings = [];
@@ -25,11 +22,7 @@ final class ValidationMappingProviderRegistry implements ValidationMappingProvid
     }
 
     /**
-     * @param string $class
-     *
      * @throws ValidatorLogicException
-     *
-     * @return ValidationMappingProviderInterface
      */
     public function provideMapping(string $class): ValidationMappingProviderInterface
     {
@@ -48,9 +41,6 @@ final class ValidationMappingProviderRegistry implements ValidationMappingProvid
         throw ValidatorLogicException::createMissingMapping($class);
     }
 
-    /**
-     * @param ValidationMappingProviderInterface $objectMapping
-     */
     private function addObjectMapping(ValidationMappingProviderInterface $objectMapping): void
     {
         $this->objectMappings[$objectMapping->getClass()] = $objectMapping;

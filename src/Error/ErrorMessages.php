@@ -53,9 +53,6 @@ final class ErrorMessages implements ErrorMessagesInterface
         return $this->errorMessages;
     }
 
-    /**
-     * @param ErrorInterface $error
-     */
     private function addError(ErrorInterface $error): void
     {
         $this->errors[] = $error;

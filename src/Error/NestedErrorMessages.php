@@ -33,9 +33,6 @@ final class NestedErrorMessages implements ErrorMessagesInterface
         $this->translate = $translate;
     }
 
-    /**
-     * @return array
-     */
     public function getMessages(): array
     {
         if (null === $this->nestedErrorMessages) {
@@ -48,18 +45,11 @@ final class NestedErrorMessages implements ErrorMessagesInterface
         return $this->nestedErrorMessages;
     }
 
-    /**
-     * @param ErrorInterface $error
-     */
     private function addError(ErrorInterface $error): void
     {
         $this->errors[] = $error;
     }
 
-    /**
-     * @param array          $node
-     * @param ErrorInterface $error
-     */
     private function assignErrorMessage(array &$node, ErrorInterface $error): void
     {
         $pathParts = $this->parsePath($error->getPath());
@@ -75,11 +65,6 @@ final class NestedErrorMessages implements ErrorMessagesInterface
         $node[] = $translate($error->getKey(), $error->getArguments());
     }
 
-    /**
-     * @param string $path
-     *
-     * @return array
-     */
     private function parsePath(string $path): array
     {
         $pathParts = [];

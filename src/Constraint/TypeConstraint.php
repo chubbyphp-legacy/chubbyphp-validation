@@ -16,19 +16,13 @@ final class TypeConstraint implements ConstraintInterface
      */
     private $wishedType;
 
-    /**
-     * @param string $wishedType
-     */
     public function __construct(string $wishedType)
     {
         $this->wishedType = $wishedType;
     }
 
     /**
-     * @param string                    $path
-     * @param mixed                     $value
-     * @param ValidatorContextInterface $context
-     * @param ValidatorInterface|null   $validator
+     * @param mixed $value
      *
      * @return array<ErrorInterface>
      */
@@ -59,12 +53,6 @@ final class TypeConstraint implements ConstraintInterface
         return [$this->getInvalidTypeErrorByPathAndType($path, $type)];
     }
 
-    /**
-     * @param string $path
-     * @param string $type
-     *
-     * @return Error
-     */
     private function getInvalidTypeErrorByPathAndType(string $path, string $type): Error
     {
         return new Error(
