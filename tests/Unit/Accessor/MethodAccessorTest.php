@@ -96,6 +96,9 @@ final class MethodAccessorTest extends TestCase
     public function testMissingGet(): void
     {
         self::expectException(ValidatorLogicException::class);
+        self::expectExceptionMessageMatches(
+            '/There are no accessible method\(s\) "getName", "hasName", "isName", within class\: "[^"]+"/'
+        );
 
         $object = new class() {
         };

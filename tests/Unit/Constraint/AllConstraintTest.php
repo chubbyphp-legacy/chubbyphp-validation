@@ -54,9 +54,10 @@ final class AllConstraintTest extends TestCase
 
     public function testWithConstraintAndError(): void
     {
-        $constraint = new AllConstraint([$this->getConstraint(true)]);
+        $constraint = new AllConstraint([$this->getConstraint(true), $this->getConstraint(true)]);
 
         self::assertEquals([
+            new Error('traversable[0]', 'key', ['value' => 'string']),
             new Error('traversable[0]', 'key', ['value' => 'string']),
         ], $constraint->validate('traversable', ['string'], $this->getContext(), $this->getValidator()));
     }

@@ -13,18 +13,18 @@ final class ValidationProvider implements ServiceProviderInterface
 {
     public function register(Container $container): void
     {
-        $container['validator'] = function () use ($container) {
+        $container['validator'] = static function () use ($container) {
             return new Validator(
                 $container['validator.mappingproviderregistry'],
                 $container['logger'] ?? null
             );
         };
 
-        $container['validator.mappingproviderregistry'] = function () use ($container) {
+        $container['validator.mappingproviderregistry'] = static function () use ($container) {
             return new ValidationMappingProviderRegistry($container['validator.mappings']);
         };
 
-        $container['validator.mappings'] = function () {
+        $container['validator.mappings'] = static function () {
             return [];
         };
     }

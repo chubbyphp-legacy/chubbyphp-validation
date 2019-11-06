@@ -11,7 +11,7 @@ use Chubbyphp\Validation\ValidatorInterface;
 
 final class CoordinateConstraint implements ConstraintInterface
 {
-    const PATTERN = '/^([-+]?\d+(\.\d+)?)\s*,\s*([-+]?\d+(\.\d+)?)$/';
+    public const PATTERN = '/^([-+]?\d+(\.\d+)?)\s*,\s*([-+]?\d+(\.\d+)?)$/';
 
     /**
      * @param mixed $value

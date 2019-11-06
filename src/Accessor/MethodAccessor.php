@@ -27,22 +27,24 @@ final class MethodAccessor implements AccessorInterface
      */
     public function getValue($object)
     {
-        $get = 'get'.ucfirst($this->property);
-        $has = 'has'.ucfirst($this->property);
-        $is = 'is'.ucfirst($this->property);
+        $getMethodName = 'get'.ucfirst($this->property);
+        $hasMethodName = 'has'.ucfirst($this->property);
+        $isMethodName = 'is'.ucfirst($this->property);
 
-        if (method_exists($object, $get)) {
-            return $object->{$get}();
+        if (method_exists($object, $getMethodName)) {
+            return $object->{$getMethodName}();
         }
 
-        if (method_exists($object, $has)) {
-            return $object->{$has}();
+        if (method_exists($object, $hasMethodName)) {
+            return $object->{$hasMethodName}();
         }
 
-        if (method_exists($object, $is)) {
-            return $object->{$is}();
+        if (method_exists($object, $isMethodName)) {
+            return $object->{$isMethodName}();
         }
 
-        throw ValidatorLogicException::createMissingMethod(get_class($object), [$get, $has, $is]);
+        throw ValidatorLogicException::createMissingMethod(
+            get_class($object), [$getMethodName, $hasMethodName, $isMethodName]
+        );
     }
 }

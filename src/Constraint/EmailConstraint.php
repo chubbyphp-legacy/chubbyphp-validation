@@ -14,7 +14,7 @@ final class EmailConstraint implements ConstraintInterface
     /**
      * @deprecated this pattern is not in use anymore in favor of filter_var($value, FILTER_VALIDATE_EMAIL)
      */
-    const PATTERN = '/^(.+)\@(\S+\.\S+)$/';
+    public const PATTERN = '/^(.+)\@(\S+\.\S+)$/';
 
     /**
      * @param mixed $value

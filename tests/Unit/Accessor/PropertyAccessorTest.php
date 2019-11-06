@@ -30,8 +30,14 @@ final class PropertyAccessorTest extends TestCase
     public function testGetValueCanAccessPrivatePropertyThroughDoctrineProxyClass(): void
     {
         $object = new class() extends Model implements Proxy {
+            /**
+             * @var bool
+             */
+            private $initialized = false;
+
             public function __load(): void
             {
+                $this->initialized = true;
             }
 
             /**
@@ -39,7 +45,7 @@ final class PropertyAccessorTest extends TestCase
              */
             public function __isInitialized()
             {
-                return false;
+                return $this->initialized;
             }
         };
 
@@ -48,6 +54,7 @@ final class PropertyAccessorTest extends TestCase
         $accessor = new PropertyAccessor('name');
 
         self::assertSame('Name', $accessor->getValue($object));
+        self::assertTrue($object->__isInitialized());
     }
 
     public function testMissingGet(): void
