@@ -13,9 +13,6 @@
         "php": "^7.2",
         "psr/log": "^1.0"
     },
-    "conflict": {
-        "symfony/validator": "<3.4,>=6.0"
-    },
     "require-dev": {
         "chubbyphp/chubbyphp-mock": "^1.4.2",
         "doctrine/common": "^2.7",
