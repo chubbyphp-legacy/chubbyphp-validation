@@ -2,25 +2,25 @@
 
 declare(strict_types=1);
 
-namespace Chubbyphp\Tests\Validation\Unit\Provider;
+namespace Chubbyphp\Tests\Validation\Unit\ServiceProvider;
 
 use Chubbyphp\Validation\Mapping\ValidationMappingProviderRegistry;
-use Chubbyphp\Validation\Provider\ValidationProvider;
+use Chubbyphp\Validation\ServiceProvider\ValidationServiceProvider;
 use Chubbyphp\Validation\Validator;
 use PHPUnit\Framework\TestCase;
 use Pimple\Container;
 
 /**
- * @covers \Chubbyphp\Validation\Provider\ValidationProvider
+ * @covers \Chubbyphp\Validation\ServiceProvider\ValidationServiceProvider
  *
  * @internal
  */
-final class ValidationProviderTest extends TestCase
+final class ValidationServiceProviderTest extends TestCase
 {
     public function testRegister(): void
     {
         $container = new Container();
-        $container->register(new ValidationProvider());
+        $container->register(new ValidationServiceProvider());
 
         self::assertTrue(isset($container['validator.mappings']));
         self::assertTrue(isset($container['validator.mappingproviderregistry']));

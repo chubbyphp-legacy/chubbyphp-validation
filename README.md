@@ -26,7 +26,7 @@ A simple validation.
 Through [Composer](http://getcomposer.org) as [chubbyphp/chubbyphp-validation][1].
 
 ```sh
-composer require chubbyphp/chubbyphp-validation "^3.5"
+composer require chubbyphp/chubbyphp-validation "^3.6"
 ```
 
 ## Usage
@@ -155,9 +155,9 @@ final class ModelValidationMappingProvider implements ValidationMappingProviderI
 }
 ```
 
-### Provider
+### ServiceProvider
 
- * [ValidationProvider][14]
+ * [ValidationServiceProvider][14]
 
 ### Validator
 
@@ -241,7 +241,7 @@ Dominik Zogg 2018
 [12]: doc/Mapping/ValidationPropertyMapping.md
 [13]: doc/Mapping/ValidationPropertyMappingBuilder.md
 
-[14]: doc/Provider/ValidationProvider.md
+[14]: doc/ServiceProvider/ValidationServiceProvider.md
 
 [15]: doc/ValidatorContext.md
 [16]: doc/ValidatorContextBuilder.md

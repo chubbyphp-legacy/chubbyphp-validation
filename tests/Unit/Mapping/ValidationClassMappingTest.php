@@ -2,7 +2,7 @@
 
 declare(strict_types=1);
 
-namespace Chubbyphp\Tests\Validation\Unit\Provider;
+namespace Chubbyphp\Tests\Validation\Unit\Mapping;
 
 use Chubbyphp\Mock\MockByCallsTrait;
 use Chubbyphp\Validation\Constraint\ConstraintInterface;

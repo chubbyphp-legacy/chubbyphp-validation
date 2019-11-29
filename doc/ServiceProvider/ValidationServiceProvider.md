@@ -1,14 +1,14 @@
-# ValidationProvider
+# ValidationServiceProvider
 
 ```php
 <?php
 
-use Chubbyphp\Validation\Provider\ValidationProvider;
+use Chubbyphp\Validation\ServiceProvider\ValidationServiceProvider;
 use Chubbyphp\Validation\ValidatorContextInterface;
 use Pimple\Container;
 
 $container = new Container();
-$container->register(new ValidationProvider);
+$container->register(new ValidationServiceProvider);
 
 $object = ...;
 
