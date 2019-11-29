@@ -18,8 +18,9 @@ A simple validation.
 
 ## Suggest
 
- * psr/container: ^1.0
+ * chubbyphp/chubbyphp-container: ^1.0
  * pimple/pimple: ^3.2.3
+ * psr/container: ^1.0
 
 ## Installation
 
@@ -155,14 +156,18 @@ final class ModelValidationMappingProvider implements ValidationMappingProviderI
 }
 ```
 
+### ServiceFactory
+
+ * [ValidationServiceFactory][14]
+
 ### ServiceProvider
 
- * [ValidationServiceProvider][14]
+ * [ValidationServiceProvider][15]
 
 ### Validator
 
- * [ValidatorContext][15]
- * [ValidatorContextBuilder][16]
+ * [ValidatorContext][16]
+ * [ValidatorContextBuilder][17]
 
 ```php
 <?php
@@ -241,7 +246,8 @@ Dominik Zogg 2018
 [12]: doc/Mapping/ValidationPropertyMapping.md
 [13]: doc/Mapping/ValidationPropertyMappingBuilder.md
 
-[14]: doc/ServiceProvider/ValidationServiceProvider.md
+[14]: doc/ServiceFactory/ValidationServiceFactory.md
+[15]: doc/ServiceProvider/ValidationServiceProvider.md
 
-[15]: doc/ValidatorContext.md
-[16]: doc/ValidatorContextBuilder.md
+[16]: doc/ValidatorContext.md
+[17]: doc/ValidatorContextBuilder.md
