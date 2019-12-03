@@ -2,6 +2,26 @@
 
 declare(strict_types=1);
 
-use Chubbyphp\Validation\ServiceProvider\ValidationServiceProvider;
+namespace Chubbyphp\Validation\Provider;
 
-class_alias(ValidationServiceProvider::class, 'Chubbyphp\Validation\Provider\ValidationProvider');
+use Chubbyphp\Validation\ServiceProvider\ValidationServiceProvider;
+use Pimple\Container;
+use Pimple\ServiceProviderInterface;
+
+final class ValidationProvider implements ServiceProviderInterface
+{
+    /**
+     * @var ValidationServiceProvider
+     */
+    private $serviceProvider;
+
+    public function __construct()
+    {
+        $this->serviceProvider = new ValidationServiceProvider();
+    }
+
+    public function register(Container $container): void
+    {
+        $this->serviceProvider->register($container);
+    }
+}
