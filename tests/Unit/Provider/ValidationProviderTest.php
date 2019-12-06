@@ -17,6 +17,23 @@ use Pimple\Container;
  */
 final class ValidationProviderTest extends TestCase
 {
+    public function testAdapter(): void
+    {
+        error_clear_last();
+
+        new ValidationProvider();
+
+        $error = error_get_last();
+
+        self::assertNotNull($error);
+
+        self::assertSame(E_USER_DEPRECATED, $error['type']);
+        self::assertSame(
+            'Use "Chubbyphp\Validation\ServiceProvider\ValidationServiceProvider" instead.',
+            $error['message']
+        );
+    }
+
     public function testRegister(): void
     {
         $container = new Container();

@@ -8,6 +8,9 @@ use Chubbyphp\Validation\ServiceProvider\ValidationServiceProvider;
 use Pimple\Container;
 use Pimple\ServiceProviderInterface;
 
+/**
+ * @deprecated use \Chubbyphp\Validation\ServiceProvider\ValidationServiceProvider
+ */
 final class ValidationProvider implements ServiceProviderInterface
 {
     /**
@@ -17,6 +20,11 @@ final class ValidationProvider implements ServiceProviderInterface
 
     public function __construct()
     {
+        @trigger_error(
+            sprintf('Use "%s" instead.', ValidationServiceProvider::class),
+            E_USER_DEPRECATED
+        );
+
         $this->serviceProvider = new ValidationServiceProvider();
     }
 
