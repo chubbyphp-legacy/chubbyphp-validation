@@ -5,7 +5,7 @@ declare(strict_types=1);
 namespace Chubbyphp\Validation\Accessor;
 
 use Chubbyphp\Validation\ValidatorLogicException;
-use Doctrine\Common\Persistence\Proxy;
+use Doctrine\Persistence\Proxy;
 
 final class PropertyAccessor implements AccessorInterface
 {
@@ -48,7 +48,7 @@ final class PropertyAccessor implements AccessorInterface
      */
     private function getClass($object): string
     {
-        if (interface_exists('Doctrine\Common\Persistence\Proxy') && $object instanceof Proxy) {
+        if (interface_exists('Doctrine\Persistence\Proxy') && $object instanceof Proxy) {
             if (!$object->__isInitialized()) {
                 $object->__load();
             }

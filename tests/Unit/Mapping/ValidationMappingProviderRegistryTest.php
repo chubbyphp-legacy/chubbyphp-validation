@@ -7,7 +7,7 @@ namespace Chubbyphp\Tests\Validation\Unit\Mapping;
 use Chubbyphp\Validation\Mapping\ValidationMappingProviderInterface;
 use Chubbyphp\Validation\Mapping\ValidationMappingProviderRegistry;
 use Chubbyphp\Validation\ValidatorLogicException;
-use Doctrine\Common\Persistence\Proxy;
+use Doctrine\Persistence\Proxy;
 use PHPUnit\Framework\MockObject\MockObject;
 use PHPUnit\Framework\TestCase;
 

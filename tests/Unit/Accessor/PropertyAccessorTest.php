@@ -6,7 +6,7 @@ namespace Chubbyphp\Tests\Validation\Unit\Accessor;
 
 use Chubbyphp\Validation\Accessor\PropertyAccessor;
 use Chubbyphp\Validation\ValidatorLogicException;
-use Doctrine\Common\Persistence\Proxy;
+use Doctrine\Persistence\Proxy;
 use PHPUnit\Framework\TestCase;
 
 /**
