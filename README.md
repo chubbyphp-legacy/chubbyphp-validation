@@ -27,7 +27,7 @@ A simple validation.
 Through [Composer](http://getcomposer.org) as [chubbyphp/chubbyphp-validation][1].
 
 ```sh
-composer require chubbyphp/chubbyphp-validation "^3.6"
+composer require chubbyphp/chubbyphp-validation "^3.7"
 ```
 
 ## Usage
@@ -69,19 +69,20 @@ composer require chubbyphp/chubbyphp-validation "^3.6"
 
 ### Error
 
- * [Error][4]
- * [ErrorMessages][5]
- * [NestedErrorMessages][6]
+ * [ApiProblemErrorMessages][4]
+ * [Error][5]
+ * [ErrorMessages][6]
+ * [NestedErrorMessages][7]
 
 ### Mapping
 
- * [CallableValidationMappingProvider][7]
- * [LazyValidationMappingProvider][8]
- * [ValidationClassMapping][9]
- * [ValidationClassMappingBuilder][10]
- * [ValidationMappingProviderRegistry][11]
- * [ValidationPropertyMapping][12]
- * [ValidationPropertyMappingBuilder][13]
+ * [CallableValidationMappingProvider][8]
+ * [LazyValidationMappingProvider][9]
+ * [ValidationClassMapping][10]
+ * [ValidationClassMappingBuilder][11]
+ * [ValidationMappingProviderRegistry][12]
+ * [ValidationPropertyMapping][13]
+ * [ValidationPropertyMappingBuilder][14]
 
 #### ValidationMappingProvider
 
@@ -158,16 +159,16 @@ final class ModelValidationMappingProvider implements ValidationMappingProviderI
 
 ### ServiceFactory
 
- * [ValidationServiceFactory][14]
+ * [ValidationServiceFactory][15]
 
 ### ServiceProvider
 
- * [ValidationServiceProvider][15]
+ * [ValidationServiceProvider][16]
 
 ### Validator
 
- * [ValidatorContext][16]
- * [ValidatorContextBuilder][17]
+ * [ValidatorContext][17]
+ * [ValidatorContextBuilder][18]
 
 ```php
 <?php
@@ -234,20 +235,21 @@ Dominik Zogg 2018
 
 [121]: doc/Constraint/Symfony/ConstraintAdapter.md
 
-[4]: doc/Error/Error.md
-[5]: doc/Error/ErrorMessages.md
-[6]: doc/Error/NestedErrorMessages.md
+[4]: doc/Error/ApiProblemErrorMessages.md
+[5]: doc/Error/Error.md
+[6]: doc/Error/ErrorMessages.md
+[7]: doc/Error/NestedErrorMessages.md
 
-[7]: doc/Mapping/CallableValidationMappingProvider.md
-[8]: doc/Mapping/LazyValidationMappingProvider.md
-[9]: doc/Mapping/ValidationClassMapping.md
-[10]: doc/Mapping/ValidationClassMappingBuilder.md
-[11]: doc/Mapping/ValidationMappingProviderRegistry.md
-[12]: doc/Mapping/ValidationPropertyMapping.md
-[13]: doc/Mapping/ValidationPropertyMappingBuilder.md
+[8]: doc/Mapping/CallableValidationMappingProvider.md
+[9]: doc/Mapping/LazyValidationMappingProvider.md
+[10]: doc/Mapping/ValidationClassMapping.md
+[11]: doc/Mapping/ValidationClassMappingBuilder.md
+[12]: doc/Mapping/ValidationMappingProviderRegistry.md
+[13]: doc/Mapping/ValidationPropertyMapping.md
+[14]: doc/Mapping/ValidationPropertyMappingBuilder.md
 
-[14]: doc/ServiceFactory/ValidationServiceFactory.md
-[15]: doc/ServiceProvider/ValidationServiceProvider.md
+[15]: doc/ServiceFactory/ValidationServiceFactory.md
+[16]: doc/ServiceProvider/ValidationServiceProvider.md
 
-[16]: doc/ValidatorContext.md
-[17]: doc/ValidatorContextBuilder.md
+[17]: doc/ValidatorContext.md
+[18]: doc/ValidatorContextBuilder.md
