@@ -5,13 +5,14 @@ declare(strict_types=1);
 namespace Chubbyphp\Validation\Constraint\Symfony;
 
 use Symfony\Component\Validator\ConstraintViolation;
+use Symfony\Component\Validator\ConstraintViolationInterface;
 use Symfony\Component\Validator\ConstraintViolationListInterface;
 use Symfony\Component\Validator\Violation\ConstraintViolationBuilderInterface;
 
 final class ConstraintViolationBuilder implements ConstraintViolationBuilderInterface
 {
     /**
-     * @var ConstraintViolationListInterface
+     * @var ConstraintViolationListInterface<int, ConstraintViolationInterface>
      */
     private $violations;
 
@@ -26,7 +27,7 @@ final class ConstraintViolationBuilder implements ConstraintViolationBuilderInte
     private $message;
 
     /**
-     * @var array
+     * @var array<mixed>
      */
     private $parameters;
 
@@ -50,6 +51,10 @@ final class ConstraintViolationBuilder implements ConstraintViolationBuilderInte
      */
     private $cause;
 
+    /**
+     * @param ConstraintViolationListInterface<int, ConstraintViolationInterface> $violations
+     * @param array<mixed>                                                        $parameters
+     */
     public function __construct(
         ConstraintViolationListInterface $violations,
         string $message,
@@ -89,6 +94,8 @@ final class ConstraintViolationBuilder implements ConstraintViolationBuilderInte
     }
 
     /**
+     * @param array<mixed> $parameters
+     *
      * @return ConstraintViolationBuilder
      */
     public function setParameters(array $parameters): self

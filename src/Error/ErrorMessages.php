@@ -34,7 +34,7 @@ final class ErrorMessages implements ErrorMessagesInterface
     }
 
     /**
-     * @return array<string, array<string>>
+     * @return array<mixed>
      */
     public function getMessages(): array
     {

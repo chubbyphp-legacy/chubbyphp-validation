@@ -15,12 +15,12 @@ final class ValidationPropertyMapping implements ValidationPropertyMappingInterf
     private $name;
 
     /**
-     * @var array<ConstraintInterface>
+     * @var array<int, ConstraintInterface>
      */
     private $constraints;
 
     /**
-     * @var array
+     * @var array<int, string>
      */
     private $groups;
 
@@ -30,7 +30,8 @@ final class ValidationPropertyMapping implements ValidationPropertyMappingInterf
     private $accessor;
 
     /**
-     * @param array<ConstraintInterface> $constraints
+     * @param array<int, ConstraintInterface> $constraints
+     * @param array<int, string>              $groups
      */
     public function __construct(
         string $name,
@@ -57,6 +58,9 @@ final class ValidationPropertyMapping implements ValidationPropertyMappingInterf
         return $this->constraints;
     }
 
+    /**
+     * @return array<int, string>
+     */
     public function getGroups(): array
     {
         return $this->groups;

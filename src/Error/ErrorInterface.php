@@ -10,5 +10,8 @@ interface ErrorInterface
 
     public function getKey(): string;
 
+    /**
+     * @return array<string, mixed>
+     */
     public function getArguments(): array;
 }

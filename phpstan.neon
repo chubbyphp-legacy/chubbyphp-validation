@@ -1,5 +1,14 @@
 parameters:
     ignoreErrors:
         -
-            message: '/Method .* return string but returns string|null\./'
-            path: %currentWorkingDirectory%/src/Constraint/Symfony/ExecutionContext.php
+            message: '/PHPDoc tag @var for variable \$parentReflectionClass contains generic class ReflectionClass but does not specify its types\: T/'
+            path: %currentWorkingDirectory%/src/Accessor/PropertyAccessor.php
+        -
+            message: '/Call to static method DateTime\:\:createFromFormat\(\) on a separate line has no effect\./'
+            path: %currentWorkingDirectory%/src/Constraint/DateTimeConstraint.php
+        -
+            message: '/Parameter \#1 \$argument of class ReflectionClass constructor expects class\-string<T of object>\|T of object, string given\./'
+            path: %currentWorkingDirectory%/src/Mapping/ValidationMappingProviderRegistry.php
+        -
+            message: '/PHPDoc tag @var for variable \$parentReflectionClass contains generic class ReflectionClass but does not specify its types\: T/'
+            path: %currentWorkingDirectory%/src/Mapping/ValidationMappingProviderRegistry.php

@@ -16,12 +16,12 @@ final class ValidationPropertyMappingBuilder implements ValidationPropertyMappin
     private $name;
 
     /**
-     * @var array<ConstraintInterface>
+     * @var array<int, ConstraintInterface>
      */
     private $constraints;
 
     /**
-     * @var array
+     * @var array<int, string>
      */
     private $groups;
 
@@ -47,6 +47,9 @@ final class ValidationPropertyMappingBuilder implements ValidationPropertyMappin
         return $self;
     }
 
+    /**
+     * @param array<int, string> $groups
+     */
     public function setGroups(array $groups): ValidationPropertyMappingBuilderInterface
     {
         $this->groups = $groups;

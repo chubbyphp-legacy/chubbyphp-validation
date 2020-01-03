@@ -9,10 +9,13 @@ use Chubbyphp\Validation\ValidatorLogicException;
 final class ValidationMappingProviderRegistry implements ValidationMappingProviderRegistryInterface
 {
     /**
-     * @var ValidationMappingProviderInterface[]
+     * @var array<string, ValidationMappingProviderInterface>
      */
     private $objectMappings;
 
+    /**
+     * @param array<int, ValidationMappingProviderInterface> $objectMappings
+     */
     public function __construct(array $objectMappings)
     {
         $this->objectMappings = [];

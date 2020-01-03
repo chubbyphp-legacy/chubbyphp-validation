@@ -28,7 +28,7 @@ final class ApiProblemErrorMessages implements ErrorMessagesInterface
     }
 
     /**
-     * @return array<int, array<string, string|array>>
+     * @return array<mixed>
      */
     public function getMessages(): array
     {

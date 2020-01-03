@@ -76,9 +76,9 @@ final class UniqueConstraint implements ConstraintInterface
     }
 
     /**
-     * @param object $model
+     * @return array<string, mixed>
      */
-    private function getCriteria($model): array
+    private function getCriteria(object $model): array
     {
         $criteria = [];
         foreach ($this->uniqueProperties as $uniqueProperty) {
@@ -89,10 +89,9 @@ final class UniqueConstraint implements ConstraintInterface
     }
 
     /**
-     * @param object $model
-     * @param object $persistedModel
+     * @param array<int, string> $identifierParts
      */
-    private function isValueSameAsPersistedValue(array $identifierParts, $model, $persistedModel): bool
+    private function isValueSameAsPersistedValue(array $identifierParts, object $model, object $persistedModel): bool
     {
         foreach ($identifierParts as $identifierPart) {
             $accessor = new PropertyAccessor($identifierPart);

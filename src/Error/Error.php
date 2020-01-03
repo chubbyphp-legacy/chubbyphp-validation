@@ -17,15 +17,14 @@ final class Error implements ErrorInterface
     private $key;
 
     /**
-     * @var array
+     * @var array<string, mixed>
      */
     private $arguments;
 
     /**
-     * @param string $path
-     * @param string $key
+     * @param array<string, mixed> $arguments
      */
-    public function __construct($path, $key, array $arguments = [])
+    public function __construct(string $path, string $key, array $arguments = [])
     {
         $this->path = $path;
         $this->key = $key;
@@ -42,6 +41,9 @@ final class Error implements ErrorInterface
         return $this->key;
     }
 
+    /**
+     * @return array<string, mixed>
+     */
     public function getArguments(): array
     {
         return $this->arguments;

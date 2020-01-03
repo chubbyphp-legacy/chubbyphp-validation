@@ -10,10 +10,13 @@ use Chubbyphp\Validation\Constraint\ConstraintInterface;
 interface ValidationPropertyMappingBuilderInterface
 {
     /**
-     * @param array<ConstraintInterface> $constraints)
+     * @param array<int, ConstraintInterface> $constraints)
      */
     public static function create(string $name, array $constraints): self;
 
+    /**
+     * @param array<int, string> $groups
+     */
     public function setGroups(array $groups): self;
 
     public function setAccessor(AccessorInterface $accessor): self;

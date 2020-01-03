@@ -8,6 +8,7 @@ use Chubbyphp\Validation\Error\Error;
 use Chubbyphp\Validation\Error\ErrorInterface;
 use Chubbyphp\Validation\ValidatorContextInterface;
 use Symfony\Component\Validator\Constraint;
+use Symfony\Component\Validator\ConstraintViolation;
 use Symfony\Component\Validator\ConstraintViolationList;
 use Symfony\Component\Validator\ConstraintViolationListInterface;
 use Symfony\Component\Validator\Context\ExecutionContextInterface;
@@ -18,7 +19,7 @@ use Symfony\Component\Validator\Violation\ConstraintViolationBuilderInterface;
 final class ExecutionContext implements ExecutionContextInterface
 {
     /**
-     * @var ConstraintViolationListInterface
+     * @var ConstraintViolationListInterface<int, ConstraintViolation>
      */
     private $violations;
 
@@ -50,15 +51,17 @@ final class ExecutionContext implements ExecutionContextInterface
     }
 
     /**
-     * @param string $message
+     * @param string       $message
+     * @param array<mixed> $parameters
      */
-    public function addViolation($message, array $params = []): void
+    public function addViolation($message, array $parameters = []): void
     {
-        (new ConstraintViolationBuilder($this->violations, $message, $params, $this->path))->addViolation();
+        (new ConstraintViolationBuilder($this->violations, $message, $parameters, $this->path))->addViolation();
     }
 
     /**
-     * @param string $message
+     * @param string       $message
+     * @param array<mixed> $parameters
      */
     public function buildViolation($message, array $parameters = []): ConstraintViolationBuilderInterface
     {
@@ -160,6 +163,9 @@ final class ExecutionContext implements ExecutionContextInterface
         throw new NotImplementedException(sprintf('Method "%s" is not implemented', __METHOD__));
     }
 
+    /**
+     * @return ConstraintViolationListInterface<int, ConstraintViolation>
+     */
     public function getViolations(): ConstraintViolationListInterface
     {
         return $this->violations;
@@ -223,7 +229,7 @@ final class ExecutionContext implements ExecutionContextInterface
     }
 
     /**
-     * @return array<ErrorInterface>
+     * @return array<int, ErrorInterface>
      */
     public function getErrors(): array
     {
@@ -231,7 +237,7 @@ final class ExecutionContext implements ExecutionContextInterface
         foreach ($this->violations as $violation) {
             $errors[] = new Error(
                 $violation->getPropertyPath(),
-                $violation->getMessage(),
+                (string) $violation->getMessage(),
                 [
                     'parameters' => $violation->getParameters(),
                     'plural' => $violation->getPlural(),
