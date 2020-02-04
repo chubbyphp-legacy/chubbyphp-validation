@@ -11,5 +11,5 @@ interface ValidatorInterface
     /**
      * @return array<ErrorInterface>
      */
-    public function validate(object $object, ValidatorContextInterface $context = null, string $path = '');
+    public function validate(object $object, ?ValidatorContextInterface $context = null, string $path = '');
 }

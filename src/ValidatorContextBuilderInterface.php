@@ -9,7 +9,7 @@ interface ValidatorContextBuilderInterface
     public static function create(): self;
 
     /**
-     * @param string[] $groups
+     * @param array<int, string> $groups
      */
     public function setGroups(array $groups): self;
 

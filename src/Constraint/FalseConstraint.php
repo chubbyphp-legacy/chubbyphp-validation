@@ -20,7 +20,7 @@ final class FalseConstraint implements ConstraintInterface
         string $path,
         $value,
         ValidatorContextInterface $context,
-        ValidatorInterface $validator = null
+        ?ValidatorInterface $validator = null
     ) {
         if (null === $value) {
             return [];

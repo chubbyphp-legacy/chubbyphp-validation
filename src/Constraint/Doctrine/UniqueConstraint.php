@@ -20,12 +20,12 @@ final class UniqueConstraint implements ConstraintInterface
     private $objectManager;
 
     /**
-     * @var string[]
+     * @var array<int, string>
      */
     private $uniqueProperties;
 
     /**
-     * @param string[] $uniqueProperties
+     * @param array<int, string> $uniqueProperties
      */
     public function __construct(ObjectManager $objectManager, array $uniqueProperties)
     {
@@ -42,7 +42,7 @@ final class UniqueConstraint implements ConstraintInterface
         string $path,
         $model,
         ValidatorContextInterface $context,
-        ValidatorInterface $validator = null
+        ?ValidatorInterface $validator = null
     ) {
         if (null === $model) {
             return [];

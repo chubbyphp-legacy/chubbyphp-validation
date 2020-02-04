@@ -14,7 +14,7 @@ interface ValidationMappingProviderInterface
     public function getValidationClassMapping(string $path);
 
     /**
-     * @return ValidationPropertyMappingInterface[]
+     * @return array<int, ValidationPropertyMappingInterface>
      */
     public function getValidationPropertyMappings(string $path): array;
 }

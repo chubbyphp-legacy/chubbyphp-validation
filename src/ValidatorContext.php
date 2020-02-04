@@ -7,12 +7,12 @@ namespace Chubbyphp\Validation;
 final class ValidatorContext implements ValidatorContextInterface
 {
     /**
-     * @var string[]
+     * @var array<int, string>
      */
     private $groups = [];
 
     /**
-     * @param string[] $groups
+     * @param array<int, string> $groups
      */
     public function __construct(array $groups = [])
     {
@@ -20,7 +20,7 @@ final class ValidatorContext implements ValidatorContextInterface
     }
 
     /**
-     * @return string[]
+     * @return array<int, string>
      */
     public function getGroups(): array
     {

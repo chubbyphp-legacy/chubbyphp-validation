@@ -21,7 +21,7 @@ final class NumericRangeConstraint implements ConstraintInterface
      */
     private $max;
 
-    public function __construct(int $min = null, int $max = null)
+    public function __construct(?int $min = null, ?int $max = null)
     {
         $this->min = $min;
         $this->max = $max;
@@ -36,7 +36,7 @@ final class NumericRangeConstraint implements ConstraintInterface
         string $path,
         $value,
         ValidatorContextInterface $context,
-        ValidatorInterface $validator = null
+        ?ValidatorInterface $validator = null
     ) {
         if (!is_numeric($value)) {
             return [];

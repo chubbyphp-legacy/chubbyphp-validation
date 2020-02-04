@@ -7,7 +7,7 @@ namespace Chubbyphp\Validation;
 final class ValidatorContextBuilder implements ValidatorContextBuilderInterface
 {
     /**
-     * @var string[]
+     * @var array<int, string>
      */
     private $groups;
 
@@ -24,7 +24,7 @@ final class ValidatorContextBuilder implements ValidatorContextBuilderInterface
     }
 
     /**
-     * @param string[] $groups
+     * @param array<int, string> $groups
      */
     public function setGroups(array $groups): ValidatorContextBuilderInterface
     {

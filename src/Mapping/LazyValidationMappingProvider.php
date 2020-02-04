@@ -47,7 +47,7 @@ final class LazyValidationMappingProvider implements ValidationMappingProviderIn
     }
 
     /**
-     * @return ValidationPropertyMappingInterface[]
+     * @return array<int, ValidationPropertyMappingInterface>
      */
     public function getValidationPropertyMappings(string $path): array
     {

@@ -20,7 +20,7 @@ final class NotNullConstraint implements ConstraintInterface
         string $path,
         $value,
         ValidatorContextInterface $context,
-        ValidatorInterface $validator = null
+        ?ValidatorInterface $validator = null
     ) {
         if (null === $value) {
             return [new Error($path, 'constraint.notnull.null')];

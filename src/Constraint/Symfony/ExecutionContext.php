@@ -89,7 +89,7 @@ final class ExecutionContext implements ExecutionContextInterface
      * @param object|null $object
      * @param string      $propertyPath
      */
-    public function setNode($value, $object, MetadataInterface $metadata = null, $propertyPath): void
+    public function setNode($value, $object, ?MetadataInterface $metadata, $propertyPath): void
     {
         throw new NotImplementedException(sprintf('Method "%s" is not implemented', __METHOD__));
     }

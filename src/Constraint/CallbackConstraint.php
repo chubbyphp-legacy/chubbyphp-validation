@@ -29,7 +29,7 @@ final class CallbackConstraint implements ConstraintInterface
         string $path,
         $value,
         ValidatorContextInterface $context,
-        ValidatorInterface $validator = null
+        ?ValidatorInterface $validator = null
     ) {
         $callback = $this->callback;
 

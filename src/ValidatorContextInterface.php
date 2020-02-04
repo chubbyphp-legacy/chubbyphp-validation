@@ -7,7 +7,7 @@ namespace Chubbyphp\Validation;
 interface ValidatorContextInterface
 {
     /**
-     * @return string[]
+     * @return array<int, string>
      */
     public function getGroups(): array;
 }

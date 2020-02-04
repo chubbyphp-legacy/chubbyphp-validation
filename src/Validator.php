@@ -28,7 +28,7 @@ final class Validator implements ValidatorInterface
 
     public function __construct(
         ValidationMappingProviderRegistryInterface $validatorObjectMappingRegistry,
-        LoggerInterface $logger = null
+        ?LoggerInterface $logger = null
     ) {
         $this->validatorObjectMappingRegistry = $validatorObjectMappingRegistry;
         $this->logger = $logger ?? new NullLogger();
@@ -37,7 +37,7 @@ final class Validator implements ValidatorInterface
     /**
      * @return array<ErrorInterface>
      */
-    public function validate(object $object, ValidatorContextInterface $context = null, string $path = '')
+    public function validate(object $object, ?ValidatorContextInterface $context = null, string $path = '')
     {
         $context = $context ?? ValidatorContextBuilder::create()->getContext();
 
@@ -85,7 +85,7 @@ final class Validator implements ValidatorInterface
      */
     private function validateClass(
         ValidatorContextInterface $context,
-        ValidationClassMappingInterface $classMapping = null,
+        ?ValidationClassMappingInterface $classMapping,
         string $path,
         $object
     ) {

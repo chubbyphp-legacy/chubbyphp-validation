@@ -38,7 +38,7 @@ final class ConstraintAdapter implements ConstraintInterface
         string $path,
         $value,
         ValidatorContextInterface $context,
-        ValidatorInterface $validator = null
+        ?ValidatorInterface $validator = null
     ) {
         $executionContext = new ExecutionContext($path, $value, $context);
 
