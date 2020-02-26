@@ -60,7 +60,7 @@ final class MapConstraint implements ConstraintInterface
 
         if (!is_array($value) && !$value instanceof \Traversable) {
             return [new Error(
-                $path.'[_all]',
+                $path,
                 'constraint.map.invalidtype',
                 ['type' => is_object($value) ? get_class($value) : gettype($value)]
             )];
@@ -68,7 +68,7 @@ final class MapConstraint implements ConstraintInterface
 
         $errors = [];
         foreach ($value as $field => $subValue) {
-            $subPath = $path.'['.$field.']';
+            $subPath = $path.'.'.$field;
 
             if (!isset($this->constraintsByFields[$field])) {
                 $errors[] = new Error(

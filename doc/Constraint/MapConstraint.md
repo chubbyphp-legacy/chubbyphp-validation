@@ -35,7 +35,7 @@ $errors = $constraint->validate(
 );
 // [
 //     new Error(
-//         'path.to.property[name]',
+//         'path.to.property.name',
 //         'constraint.type.invalidtype',
 //         ['type' => 'int', 'wishedType' => 'string']
 //     )

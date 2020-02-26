@@ -34,7 +34,7 @@ final class MapConstraintTest extends TestCase
         $constraint = new MapConstraint();
 
         self::assertEquals([
-            new Error('map[_all]', 'constraint.map.invalidtype', ['type' => 'string']),
+            new Error('map', 'constraint.map.invalidtype', ['type' => 'string']),
         ], $constraint->validate('map', 'string', $this->getContext()));
     }
 
@@ -44,7 +44,7 @@ final class MapConstraintTest extends TestCase
 
         self::assertEquals([
             new Error(
-                'map[name2]', 'constraint.map.field.notallowed',
+                'map.name2', 'constraint.map.field.notallowed',
                 ['field' => 'name2', 'allowedFields' => ['name']]
             ),
         ], $constraint->validate('map', ['name2' => 'example'], $this->getContext(), $this->getValidator()));
@@ -65,7 +65,7 @@ final class MapConstraintTest extends TestCase
         $constraint = new MapConstraint(['name' => [$this->getConstraint(true)]]);
 
         self::assertEquals([
-            new Error('map[name]', 'key', ['value' => 'example']),
+            new Error('map.name', 'key', ['value' => 'example']),
         ], $constraint->validate('map', ['name' => 'example'], $this->getContext(), $this->getValidator()));
     }
 
