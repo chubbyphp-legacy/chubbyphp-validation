@@ -27,7 +27,7 @@ A simple validation.
 Through [Composer](http://getcomposer.org) as [chubbyphp/chubbyphp-validation][1].
 
 ```sh
-composer require chubbyphp/chubbyphp-validation "^3.8"
+composer require chubbyphp/chubbyphp-validation "^3.9"
 ```
 
 ## Usage
