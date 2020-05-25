@@ -10,7 +10,6 @@ use Chubbyphp\Validation\ValidatorContextInterface;
 use Symfony\Component\Validator\Constraint;
 use Symfony\Component\Validator\ConstraintViolation;
 use Symfony\Component\Validator\ConstraintViolationList;
-use Symfony\Component\Validator\ConstraintViolationListInterface;
 use Symfony\Component\Validator\Context\ExecutionContextInterface;
 use Symfony\Component\Validator\Mapping\MetadataInterface;
 use Symfony\Component\Validator\Validator\ValidatorInterface;
@@ -19,7 +18,7 @@ use Symfony\Component\Validator\Violation\ConstraintViolationBuilderInterface;
 final class ExecutionContext implements ExecutionContextInterface
 {
     /**
-     * @var ConstraintViolationListInterface<int, ConstraintViolation>
+     * @var ConstraintViolationList
      */
     private $violations;
 
@@ -163,10 +162,7 @@ final class ExecutionContext implements ExecutionContextInterface
         throw new NotImplementedException(sprintf('Method "%s" is not implemented', __METHOD__));
     }
 
-    /**
-     * @return ConstraintViolationListInterface<int, ConstraintViolation>
-     */
-    public function getViolations(): ConstraintViolationListInterface
+    public function getViolations(): ConstraintViolationList
     {
         return $this->violations;
     }
@@ -234,6 +230,7 @@ final class ExecutionContext implements ExecutionContextInterface
     public function getErrors(): array
     {
         $errors = [];
+        /** @var ConstraintViolation $violation */
         foreach ($this->violations as $violation) {
             $errors[] = new Error(
                 $violation->getPropertyPath(),

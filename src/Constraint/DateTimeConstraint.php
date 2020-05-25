@@ -98,7 +98,7 @@ final class DateTimeConstraint implements ConstraintInterface
     }
 
     /**
-     * @param array<string, array<int, string>|int> $dateTimeErrors
+     * @param array<int, string> $dateTimeErrors
      *
      * @return array<int, ErrorInterface>
      */
