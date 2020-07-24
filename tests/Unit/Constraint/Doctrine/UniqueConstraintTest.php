@@ -9,9 +9,9 @@ use Chubbyphp\Mock\MockByCallsTrait;
 use Chubbyphp\Validation\Constraint\Doctrine\UniqueConstraint;
 use Chubbyphp\Validation\Error\Error;
 use Chubbyphp\Validation\ValidatorContextInterface;
-use Doctrine\Common\Persistence\Mapping\ClassMetadata;
-use Doctrine\Common\Persistence\ObjectManager;
-use Doctrine\Common\Persistence\ObjectRepository;
+use Doctrine\Persistence\Mapping\ClassMetadata;
+use Doctrine\Persistence\ObjectManager;
+use Doctrine\Persistence\ObjectRepository;
 use PHPUnit\Framework\MockObject\MockObject;
 use PHPUnit\Framework\TestCase;
 

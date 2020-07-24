@@ -10,7 +10,7 @@ use Chubbyphp\Validation\Error\Error;
 use Chubbyphp\Validation\Error\ErrorInterface;
 use Chubbyphp\Validation\ValidatorContextInterface;
 use Chubbyphp\Validation\ValidatorInterface;
-use Doctrine\Common\Persistence\ObjectManager;
+use Doctrine\Persistence\ObjectManager;
 
 final class UniqueConstraint implements ConstraintInterface
 {
