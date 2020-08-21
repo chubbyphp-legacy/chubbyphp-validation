@@ -27,7 +27,7 @@ A simple validation.
 Through [Composer](http://getcomposer.org) as [chubbyphp/chubbyphp-validation][1].
 
 ```sh
-composer require chubbyphp/chubbyphp-validation "^3.9"
+composer require chubbyphp/chubbyphp-validation "^3.10"
 ```
 
 ## Usage
@@ -66,6 +66,11 @@ composer require chubbyphp/chubbyphp-validation "^3.9"
 #### Symfony
 
  * [ConstraintAdapter][121]
+
+### Container
+
+ * [ValidationMappingProviderRegistryFactory][30]
+ * [ValidatorFactory][31]
 
 ### Error
 
@@ -253,3 +258,6 @@ Dominik Zogg 2020
 
 [17]: doc/ValidatorContext.md
 [18]: doc/ValidatorContextBuilder.md
+
+[30]: doc/Container/ValidationMappingProviderRegistryFactory.md
+[31]: doc/Container/ValidatorFactory.md
