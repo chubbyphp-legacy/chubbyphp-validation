@@ -10,6 +10,9 @@ use Chubbyphp\Validation\ValidatorInterface;
 use Psr\Container\ContainerInterface;
 use Psr\Log\LoggerInterface;
 
+/**
+ * @deprecated \Chubbyphp\Validation\ServiceFactory\ValidatorFactory
+ */
 final class ValidatorFactory
 {
     public function __invoke(ContainerInterface $container): ValidatorInterface

@@ -27,7 +27,7 @@ A simple validation.
 Through [Composer](http://getcomposer.org) as [chubbyphp/chubbyphp-validation][1].
 
 ```sh
-composer require chubbyphp/chubbyphp-validation "^3.10"
+composer require chubbyphp/chubbyphp-validation "^3.11"
 ```
 
 ## Usage
@@ -66,11 +66,6 @@ composer require chubbyphp/chubbyphp-validation "^3.10"
 #### Symfony
 
  * [ConstraintAdapter][121]
-
-### Container
-
- * [ValidationMappingProviderRegistryFactory][30]
- * [ValidatorFactory][31]
 
 ### Error
 
@@ -164,16 +159,23 @@ final class ModelValidationMappingProvider implements ValidationMappingProviderI
 
 ### ServiceFactory
 
+#### chubbyphp-container
+
  * [ValidationServiceFactory][15]
+
+#### chubbyphp-laminas-config-factory
+
+ * [ValidationMappingProviderRegistryFactory][16]
+ * [ValidatorFactory][17]
 
 ### ServiceProvider
 
- * [ValidationServiceProvider][16]
+ * [ValidationServiceProvider][18]
 
 ### Validator
 
- * [ValidatorContext][17]
- * [ValidatorContextBuilder][18]
+ * [ValidatorContext][19]
+ * [ValidatorContextBuilder][20]
 
 ```php
 <?php
@@ -254,10 +256,10 @@ Dominik Zogg 2020
 [14]: doc/Mapping/ValidationPropertyMappingBuilder.md
 
 [15]: doc/ServiceFactory/ValidationServiceFactory.md
-[16]: doc/ServiceProvider/ValidationServiceProvider.md
+[16]: doc/ServiceFactory/ValidationMappingProviderRegistryFactory.md
+[17]: doc/ServiceFactory/ValidatorFactory.md
 
-[17]: doc/ValidatorContext.md
-[18]: doc/ValidatorContextBuilder.md
+[18]: doc/ServiceProvider/ValidationServiceProvider.md
 
-[30]: doc/Container/ValidationMappingProviderRegistryFactory.md
-[31]: doc/Container/ValidatorFactory.md
+[19]: doc/ValidatorContext.md
+[20]: doc/ValidatorContextBuilder.md
