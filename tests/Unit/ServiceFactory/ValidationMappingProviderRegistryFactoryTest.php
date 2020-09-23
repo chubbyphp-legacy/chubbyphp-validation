@@ -13,7 +13,7 @@ use PHPUnit\Framework\TestCase;
 use Psr\Container\ContainerInterface;
 
 /**
- * @covers \Chubbyphp\Validation\Container\ValidationMappingProviderRegistryFactory
+ * @covers \Chubbyphp\Validation\ServiceFactory\ValidationMappingProviderRegistryFactory
  *
  * @internal
  */
