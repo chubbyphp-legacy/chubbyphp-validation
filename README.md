@@ -2,10 +2,23 @@
 
 [![Build Status](https://api.travis-ci.org/chubbyphp/chubbyphp-validation.png?branch=master)](https://travis-ci.org/chubbyphp/chubbyphp-validation)
 [![Coverage Status](https://coveralls.io/repos/github/chubbyphp/chubbyphp-validation/badge.svg?branch=master)](https://coveralls.io/github/chubbyphp/chubbyphp-validation?branch=master)
+[![Infection MSI](https://badge.stryker-mutator.io/github.com/chubbyphp/chubbyphp-validation/master)](https://travis-ci.org/chubbyphp/chubbyphp-validation)
 [![Latest Stable Version](https://poser.pugx.org/chubbyphp/chubbyphp-validation/v/stable.png)](https://packagist.org/packages/chubbyphp/chubbyphp-validation)
 [![Total Downloads](https://poser.pugx.org/chubbyphp/chubbyphp-validation/downloads.png)](https://packagist.org/packages/chubbyphp/chubbyphp-validation)
 [![Monthly Downloads](https://poser.pugx.org/chubbyphp/chubbyphp-validation/d/monthly)](https://packagist.org/packages/chubbyphp/chubbyphp-validation)
-[![Daily Downloads](https://poser.pugx.org/chubbyphp/chubbyphp-validation/d/daily)](https://packagist.org/packages/chubbyphp/chubbyphp-validation)
+
+[![bugs](https://sonarcloud.io/api/project_badges/measure?project=chubbyphp_chubbyphp-validation&metric=bugs)](https://sonarcloud.io/dashboard?id=chubbyphp_chubbyphp-validation)
+[![code_smells](https://sonarcloud.io/api/project_badges/measure?project=chubbyphp_chubbyphp-validation&metric=code_smells)](https://sonarcloud.io/dashboard?id=chubbyphp_chubbyphp-validation)
+[![coverage](https://sonarcloud.io/api/project_badges/measure?project=chubbyphp_chubbyphp-validation&metric=coverage)](https://sonarcloud.io/dashboard?id=chubbyphp_chubbyphp-validation)
+[![duplicated_lines_density](https://sonarcloud.io/api/project_badges/measure?project=chubbyphp_chubbyphp-validation&metric=duplicated_lines_density)](https://sonarcloud.io/dashboard?id=chubbyphp_chubbyphp-validation)
+[![ncloc](https://sonarcloud.io/api/project_badges/measure?project=chubbyphp_chubbyphp-validation&metric=ncloc)](https://sonarcloud.io/dashboard?id=chubbyphp_chubbyphp-validation)
+[![sqale_rating](https://sonarcloud.io/api/project_badges/measure?project=chubbyphp_chubbyphp-validation&metric=sqale_rating)](https://sonarcloud.io/dashboard?id=chubbyphp_chubbyphp-validation)
+[![alert_status](https://sonarcloud.io/api/project_badges/measure?project=chubbyphp_chubbyphp-validation&metric=alert_status)](https://sonarcloud.io/dashboard?id=chubbyphp_chubbyphp-validation)
+[![reliability_rating](https://sonarcloud.io/api/project_badges/measure?project=chubbyphp_chubbyphp-validation&metric=reliability_rating)](https://sonarcloud.io/dashboard?id=chubbyphp_chubbyphp-validation)
+[![security_rating](https://sonarcloud.io/api/project_badges/measure?project=chubbyphp_chubbyphp-validation&metric=security_rating)](https://sonarcloud.io/dashboard?id=chubbyphp_chubbyphp-validation)
+[![sqale_index](https://sonarcloud.io/api/project_badges/measure?project=chubbyphp_chubbyphp-validation&metric=sqale_index)](https://sonarcloud.io/dashboard?id=chubbyphp_chubbyphp-validation)
+[![vulnerabilities](https://sonarcloud.io/api/project_badges/measure?project=chubbyphp_chubbyphp-validation&metric=vulnerabilities)](https://sonarcloud.io/dashboard?id=chubbyphp_chubbyphp-validation)
+
 
 ## Description
 
@@ -13,7 +26,7 @@ A simple validation.
 
 ## Requirements
 
- * php: ^7.2
+ * php: ^7.2|^8.0
  * psr/log: ^1.0
 
 ## Suggest
