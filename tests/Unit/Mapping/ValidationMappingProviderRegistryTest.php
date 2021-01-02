@@ -65,9 +65,7 @@ final class ValidationMappingProviderRegistryTest extends TestCase
         $object = $this->getObject();
 
         $objectMapping->expects(self::any())->method('getClass')->willReturnCallback(
-            function () use ($object) {
-                return get_class($object);
-            }
+            fn () => get_class($object)
         );
 
         return $objectMapping;
@@ -84,9 +82,7 @@ final class ValidationMappingProviderRegistryTest extends TestCase
         $object = $this->getProxyObject();
 
         $objectMapping->expects(self::any())->method('getClass')->willReturnCallback(
-            function () use ($object) {
-                return AbstractManyModel::class;
-            }
+            fn () => AbstractManyModel::class
         );
 
         return $objectMapping;
@@ -98,10 +94,7 @@ final class ValidationMappingProviderRegistryTest extends TestCase
     private function getObject()
     {
         return new class() {
-            /**
-             * @var string
-             */
-            private $name;
+            private ?string $name = null;
 
             /**
              * @return string|null
@@ -149,10 +142,7 @@ final class ValidationMappingProviderRegistryTest extends TestCase
 
 abstract class AbstractManyModel
 {
-    /**
-     * @var string
-     */
-    protected $name;
+    protected ?string $name = null;
 
     public function getName(): string
     {

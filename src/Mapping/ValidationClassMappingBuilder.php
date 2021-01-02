@@ -11,12 +11,12 @@ final class ValidationClassMappingBuilder implements ValidationClassMappingBuild
     /**
      * @var array<int, ConstraintInterface>
      */
-    private $constraints;
+    private ?array $constraints = [];
 
     /**
      * @var array<int, string>
      */
-    private $groups;
+    private ?array $groups = [];
 
     private function __construct()
     {
@@ -25,7 +25,6 @@ final class ValidationClassMappingBuilder implements ValidationClassMappingBuild
     public static function create(array $constraints): ValidationClassMappingBuilderInterface
     {
         $self = new self();
-        $self->constraints = [];
         foreach ($constraints as $constraint) {
             $self->addConstraint($constraint);
         }
@@ -44,7 +43,7 @@ final class ValidationClassMappingBuilder implements ValidationClassMappingBuild
     {
         return new ValidationClassMapping(
             $this->constraints,
-            $this->groups ?? []
+            $this->groups
         );
     }
 

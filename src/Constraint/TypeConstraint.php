@@ -11,10 +11,7 @@ use Chubbyphp\Validation\ValidatorInterface;
 
 final class TypeConstraint implements ConstraintInterface
 {
-    /**
-     * @var string
-     */
-    private $wishedType;
+    private string $wishedType;
 
     public function __construct(string $wishedType)
     {

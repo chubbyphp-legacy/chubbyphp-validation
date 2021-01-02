@@ -15,7 +15,7 @@ final class AllConstraint implements ConstraintInterface
     /**
      * @var array<ConstraintInterface>
      */
-    private $constraints;
+    private array $constraints;
 
     /**
      * @param array<ConstraintInterface> $constraints

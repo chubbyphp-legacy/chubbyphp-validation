@@ -8,20 +8,11 @@ use Psr\Container\ContainerInterface;
 
 final class LazyValidationMappingProvider implements ValidationMappingProviderInterface
 {
-    /**
-     * @var ContainerInterface
-     */
-    private $container;
+    private ContainerInterface $container;
 
-    /**
-     * @var string
-     */
-    private $serviceId;
+    private string $serviceId;
 
-    /**
-     * @var string
-     */
-    private $class;
+    private string $class;
 
     /**
      * @param string $serviceId

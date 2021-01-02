@@ -16,15 +16,9 @@ use Psr\Log\NullLogger;
 
 final class Validator implements ValidatorInterface
 {
-    /**
-     * @var \Chubbyphp\Validation\Mapping\ValidationMappingProviderRegistryInterface
-     */
-    private $validatorObjectMappingRegistry;
+    private ValidationMappingProviderRegistryInterface $validatorObjectMappingRegistry;
 
-    /**
-     * @var LoggerInterface
-     */
-    private $logger;
+    private LoggerInterface $logger;
 
     public function __construct(
         ValidationMappingProviderRegistryInterface $validatorObjectMappingRegistry,
@@ -39,7 +33,7 @@ final class Validator implements ValidatorInterface
      */
     public function validate(object $object, ?ValidatorContextInterface $context = null, string $path = '')
     {
-        $context = $context ?? ValidatorContextBuilder::create()->getContext();
+        $context ??= ValidatorContextBuilder::create()->getContext();
 
         $class = get_class($object);
 

@@ -36,25 +36,16 @@ final class ValidatorTest extends TestCase
     public function testValidator(): void
     {
         $object = new class() {
-            /**
-             * @var string
-             */
-            private $notBlank;
+            private ?string $notBlank = null;
 
             /**
              * @var int
              */
             private $numeric;
 
-            /**
-             * @var string
-             */
-            private $callback;
+            private ?string $callback = null;
 
-            /**
-             * @var \ArrayIterator
-             */
-            private $all;
+            private ?\ArrayIterator $all = null;
 
             public function getNotBlank(): string
             {
@@ -115,7 +106,7 @@ final class ValidatorTest extends TestCase
 
         $validatorObjectMappingRegistry = new ValidationMappingProviderRegistry([
             new class($object) implements ValidationMappingProviderInterface {
-                private $object;
+                private object $object;
 
                 /**
                  * @param object $object
@@ -172,10 +163,7 @@ final class ValidatorTest extends TestCase
         ]);
 
         $logger = new class() extends AbstractLogger {
-            /**
-             * @var array
-             */
-            private $logs;
+            private ?array $logs = null;
 
             public function log($level, $message, array $context = []): void
             {

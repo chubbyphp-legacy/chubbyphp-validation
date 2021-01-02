@@ -9,7 +9,7 @@ final class ErrorMessages implements ErrorMessagesInterface
     /**
      * @var array<ErrorInterface>
      */
-    private $errors;
+    private array $errors;
 
     /**
      * @var callable
@@ -19,7 +19,7 @@ final class ErrorMessages implements ErrorMessagesInterface
     /**
      * @var array<string, array<string>>
      */
-    private $errorMessages;
+    private ?array $errorMessages = null;
 
     /**
      * @param array<ErrorInterface> $errors

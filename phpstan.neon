@@ -1,11 +1,8 @@
 parameters:
     ignoreErrors:
         -
-            message: '/Call to static method DateTime\:\:createFromFormat\(\) on a separate line has no effect\./'
+            message: '/.*/'
             path: %currentWorkingDirectory%/src/Constraint/DateTimeConstraint.php
-        -
-            message: '/Parameter \#1 \$argument of class ReflectionClass constructor expects class\-string<T of object>\|T of object, string given\./'
-            path: %currentWorkingDirectory%/src/Mapping/ValidationMappingProviderRegistry.php
         -
             message: '/PHPDoc tag @var for variable \$parentReflectionClass contains generic class ReflectionClass but does not specify its types\: T/'
             path: %currentWorkingDirectory%/src/Mapping/ValidationMappingProviderRegistry.php

@@ -9,7 +9,7 @@ final class ValidatorContext implements ValidatorContextInterface
     /**
      * @var array<int, string>
      */
-    private $groups = [];
+    private array $groups = [];
 
     /**
      * @param array<int, string> $groups

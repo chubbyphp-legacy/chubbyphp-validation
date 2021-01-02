@@ -15,7 +15,7 @@ final class MapConstraint implements ConstraintInterface
     /**
      * @var array<string, array<ConstraintInterface>>
      */
-    private $constraintsByFields;
+    private array $constraintsByFields;
 
     /**
      * @param array<string, ConstraintInterface|array<ConstraintInterface>> $constraintsByFields

@@ -16,18 +16,12 @@ final class ValidationServiceFactory
     public function __invoke(): array
     {
         return [
-            'validator' => static function (ContainerInterface $container) {
-                return new Validator(
-                    $container->get('validator.mappingproviderregistry'),
-                    $container->has('logger') ? $container->get('logger') : null
-                );
-            },
-            'validator.mappingproviderregistry' => static function (ContainerInterface $container) {
-                return new ValidationMappingProviderRegistry($container->get('validator.mappings'));
-            },
-            'validator.mappings' => static function () {
-                return [];
-            },
+            'validator' => static fn (ContainerInterface $container) => new Validator(
+                $container->get('validator.mappingproviderregistry'),
+                $container->has('logger') ? $container->get('logger') : null
+            ),
+            'validator.mappingproviderregistry' => static fn (ContainerInterface $container) => new ValidationMappingProviderRegistry($container->get('validator.mappings')),
+            'validator.mappings' => static fn () => [],
         ];
     }
 }

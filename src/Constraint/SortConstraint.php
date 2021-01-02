@@ -17,7 +17,7 @@ final class SortConstraint implements ConstraintInterface
     /**
      * @var array<string>
      */
-    private $allowedFields;
+    private array $allowedFields;
 
     /**
      * @param array<string> $allowedFields
@@ -51,7 +51,7 @@ final class SortConstraint implements ConstraintInterface
         $errors = [];
 
         foreach ($sort as $field => $order) {
-            $errors = array_merge($errors, $this->validateFieldAndOrder($path, $field, $order));
+            $errors = [...$errors, ...$this->validateFieldAndOrder($path, $field, $order)];
         }
 
         return $errors;

@@ -30,10 +30,7 @@ final class PropertyAccessorTest extends TestCase
     public function testGetValueCanAccessPrivatePropertyThroughDoctrineProxyClass(): void
     {
         $object = new class() extends Model implements Proxy {
-            /**
-             * @var bool
-             */
-            private $initialized = false;
+            private bool $initialized = false;
 
             public function __load(): void
             {
@@ -71,10 +68,7 @@ final class PropertyAccessorTest extends TestCase
 
 class Model
 {
-    /**
-     * @var string
-     */
-    protected $name;
+    protected ?string $name = null;
 
     public function setName(string $name): void
     {

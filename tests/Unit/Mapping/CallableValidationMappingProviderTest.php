@@ -32,11 +32,9 @@ final class CallableValidationMappingProviderTest extends TestCase
     {
         $classMapping = $this->getMockByCalls(ValidationClassMappingInterface::class);
 
-        $mapping = new CallableValidationMappingProvider(\stdClass::class, function () use ($classMapping) {
-            return $this->getMockByCalls(ValidationMappingProviderInterface::class, [
-                Call::create('getValidationClassMapping')->with('path')->willReturn($classMapping),
-            ]);
-        });
+        $mapping = new CallableValidationMappingProvider(\stdClass::class, fn () => $this->getMockByCalls(ValidationMappingProviderInterface::class, [
+            Call::create('getValidationClassMapping')->with('path')->willReturn($classMapping),
+        ]));
 
         self::assertSame($classMapping, $mapping->getValidationClassMapping('path'));
     }
@@ -45,11 +43,9 @@ final class CallableValidationMappingProviderTest extends TestCase
     {
         $propertyMapping = $this->getMockByCalls(ValidationPropertyMappingInterface::class);
 
-        $mapping = new CallableValidationMappingProvider(\stdClass::class, function () use ($propertyMapping) {
-            return $this->getMockByCalls(ValidationMappingProviderInterface::class, [
-                Call::create('getValidationPropertyMappings')->with('path')->willReturn([$propertyMapping]),
-            ]);
-        });
+        $mapping = new CallableValidationMappingProvider(\stdClass::class, fn () => $this->getMockByCalls(ValidationMappingProviderInterface::class, [
+            Call::create('getValidationPropertyMappings')->with('path')->willReturn([$propertyMapping]),
+        ]));
 
         self::assertSame($propertyMapping, $mapping->getValidationPropertyMappings('path')[0]);
     }

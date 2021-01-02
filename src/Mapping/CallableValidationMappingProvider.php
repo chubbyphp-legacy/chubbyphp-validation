@@ -6,10 +6,7 @@ namespace Chubbyphp\Validation\Mapping;
 
 final class CallableValidationMappingProvider implements ValidationMappingProviderInterface
 {
-    /**
-     * @var string
-     */
-    private $class;
+    private string $class;
 
     /**
      * @var callable

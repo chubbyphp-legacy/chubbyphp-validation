@@ -11,15 +11,9 @@ use Chubbyphp\Validation\ValidatorInterface;
 
 final class NumericRangeConstraint implements ConstraintInterface
 {
-    /**
-     * @var int|null
-     */
-    private $min;
+    private ?int $min = null;
 
-    /**
-     * @var int|null
-     */
-    private $max;
+    private ?int $max = null;
 
     public function __construct(?int $min = null, ?int $max = null)
     {

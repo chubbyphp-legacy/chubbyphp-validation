@@ -9,7 +9,7 @@ final class NestedErrorMessages implements ErrorMessagesInterface
     /**
      * @var array<int, ErrorInterface>
      */
-    private $errors;
+    private array $errors;
 
     /**
      * @var callable
@@ -17,9 +17,9 @@ final class NestedErrorMessages implements ErrorMessagesInterface
     private $translate;
 
     /**
-     * @var array<string, array>
+     * @var array<string, array>|null
      */
-    private $nestedErrorMessages;
+    private ?array $nestedErrorMessages = null;
 
     /**
      * @param array<ErrorInterface> $errors

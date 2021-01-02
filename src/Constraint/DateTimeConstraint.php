@@ -11,10 +11,7 @@ use Chubbyphp\Validation\ValidatorInterface;
 
 final class DateTimeConstraint implements ConstraintInterface
 {
-    /**
-     * @var string
-     */
-    private $format;
+    private string $format;
 
     public function __construct(string $format = 'Y-m-d H:i:s')
     {
@@ -54,22 +51,19 @@ final class DateTimeConstraint implements ConstraintInterface
 
         $dateTimeErrors = \DateTime::getLastErrors();
 
-        return array_merge(
-            $this->errorsByDateTimeLastErrors(
-                $path,
-                $value,
-                'error',
-                $dateTimeErrors['error_count'],
-                $dateTimeErrors['errors']
-            ),
-            $this->errorsByDateTimeLastErrors(
-                $path,
-                $value,
-                'warning',
-                $dateTimeErrors['warning_count'],
-                $dateTimeErrors['warnings']
-            )
-        );
+        return [...$this->errorsByDateTimeLastErrors(
+            $path,
+            $value,
+            'error',
+            $dateTimeErrors['error_count'],
+            $dateTimeErrors['errors']
+        ), ...$this->errorsByDateTimeLastErrors(
+            $path,
+            $value,
+            'warning',
+            $dateTimeErrors['warning_count'],
+            $dateTimeErrors['warnings']
+        )];
     }
 
     /**

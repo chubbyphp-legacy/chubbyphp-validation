@@ -9,7 +9,7 @@ final class ValidatorContextBuilder implements ValidatorContextBuilderInterface
     /**
      * @var array<int, string>
      */
-    private $groups;
+    private ?array $groups = [];
 
     private function __construct()
     {
@@ -17,10 +17,7 @@ final class ValidatorContextBuilder implements ValidatorContextBuilderInterface
 
     public static function create(): ValidatorContextBuilderInterface
     {
-        $self = new self();
-        $self->groups = [];
-
-        return $self;
+        return new self();
     }
 
     /**

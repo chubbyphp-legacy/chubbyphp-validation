@@ -37,8 +37,8 @@ final class UniqueConstraintTest extends TestCase
     public function testWithNewModel(): void
     {
         $model = new class() {
-            private $id = '81b003cd-3f66-47b9-9526-d6227c122366';
-            private $name = 'name';
+            private string $id = '81b003cd-3f66-47b9-9526-d6227c122366';
+            private string $name = 'name';
         };
 
         $modelClass = get_class($model);
@@ -61,8 +61,8 @@ final class UniqueConstraintTest extends TestCase
     public function testWithSameExistingModel(): void
     {
         $model = new class() {
-            private $id = '81b003cd-3f66-47b9-9526-d6227c122366';
-            private $name = 'name';
+            private string $id = '81b003cd-3f66-47b9-9526-d6227c122366';
+            private string $name = 'name';
         };
 
         $modelClass = get_class($model);
@@ -93,13 +93,13 @@ final class UniqueConstraintTest extends TestCase
     public function testWithSameDifferentModel(): void
     {
         $model = new class() {
-            private $id = '81b003cd-3f66-47b9-9526-d6227c122366';
-            private $name = 'name';
+            private string $id = '81b003cd-3f66-47b9-9526-d6227c122366';
+            private string $name = 'name';
         };
 
         $anotherModel = new class() {
-            private $id = 'ab31de6d-e005-469a-9a4e-8066a7ceb178';
-            private $name = 'name';
+            private string $id = 'ab31de6d-e005-469a-9a4e-8066a7ceb178';
+            private string $name = 'name';
         };
 
         $modelClass = get_class($model);

@@ -11,7 +11,7 @@ final class ValidationMappingProviderRegistry implements ValidationMappingProvid
     /**
      * @var array<string, ValidationMappingProviderInterface>
      */
-    private $objectMappings;
+    private array $objectMappings;
 
     /**
      * @param array<int, ValidationMappingProviderInterface> $objectMappings
@@ -25,6 +25,8 @@ final class ValidationMappingProviderRegistry implements ValidationMappingProvid
     }
 
     /**
+     * @param class-string $class
+     *
      * @throws ValidatorLogicException
      */
     public function provideMapping(string $class): ValidationMappingProviderInterface

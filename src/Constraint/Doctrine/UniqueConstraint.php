@@ -14,15 +14,12 @@ use Doctrine\Persistence\ObjectManager;
 
 final class UniqueConstraint implements ConstraintInterface
 {
-    /**
-     * @var ObjectManager
-     */
-    private $objectManager;
+    private ObjectManager $objectManager;
 
     /**
      * @var array<int, string>
      */
-    private $uniqueProperties;
+    private array $uniqueProperties;
 
     /**
      * @param array<int, string> $uniqueProperties

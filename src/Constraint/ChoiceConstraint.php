@@ -14,7 +14,7 @@ final class ChoiceConstraint implements ConstraintInterface
     /**
      * @var array<int, int|string>
      */
-    private $choices = [];
+    private array $choices = [];
 
     /**
      * @param array<int, int|string> $choices

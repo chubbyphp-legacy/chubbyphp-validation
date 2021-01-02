@@ -16,35 +16,23 @@ final class ConstraintViolationBuilder implements ConstraintViolationBuilderInte
      */
     private $violations;
 
-    /**
-     * @var string
-     */
-    private $path;
+    private string $path;
 
-    /**
-     * @var string
-     */
-    private $message;
+    private string $message;
 
     /**
      * @var array<mixed>
      */
-    private $parameters;
+    private array $parameters;
 
     /**
      * @var mixed
      */
     private $invalidValue;
 
-    /**
-     * @var int
-     */
-    private $plural;
+    private ?int $plural = null;
 
-    /**
-     * @var string|null
-     */
-    private $code;
+    private ?string $code = null;
 
     /**
      * @var mixed

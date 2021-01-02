@@ -26,7 +26,7 @@ A simple validation.
 
 ## Requirements
 
- * php: ^7.2|^8.0
+ * php: ^7.4|^8.0
  * psr/log: ^1.0
 
 ## Suggest
@@ -40,7 +40,7 @@ A simple validation.
 Through [Composer](http://getcomposer.org) as [chubbyphp/chubbyphp-validation][1].
 
 ```sh
-composer require chubbyphp/chubbyphp-validation "^3.11"
+composer require chubbyphp/chubbyphp-validation "^3.12"
 ```
 
 ## Usage

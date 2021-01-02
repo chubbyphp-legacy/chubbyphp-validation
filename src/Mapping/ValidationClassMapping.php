@@ -11,12 +11,12 @@ final class ValidationClassMapping implements ValidationClassMappingInterface
     /**
      * @var array<int, ConstraintInterface>
      */
-    private $constraints;
+    private array $constraints;
 
     /**
      * @var array<int, string>
      */
-    private $groups;
+    private array $groups;
 
     /**
      * @param array<int, ConstraintInterface> $constraints

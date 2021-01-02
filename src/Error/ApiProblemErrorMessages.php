@@ -9,12 +9,12 @@ final class ApiProblemErrorMessages implements ErrorMessagesInterface
     /**
      * @var array<ErrorInterface>
      */
-    private $errors;
+    private array $errors;
 
     /**
-     * @var array<int, array<string, string|array>>
+     * @var array<int, array<string, string|array>>|null
      */
-    private $errorMessages;
+    private ?array $errorMessages = null;
 
     /**
      * @param array<ErrorInterface> $errors

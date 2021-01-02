@@ -17,25 +17,16 @@ use Symfony\Component\Validator\Violation\ConstraintViolationBuilderInterface;
 
 final class ExecutionContext implements ExecutionContextInterface
 {
-    /**
-     * @var ConstraintViolationList
-     */
-    private $violations;
+    private ConstraintViolationList $violations;
 
-    /**
-     * @var string
-     */
-    private $path;
+    private string $path;
 
     /**
      * @var mixed
      */
     private $value;
 
-    /**
-     * @var ValidatorContextInterface
-     */
-    private $context;
+    private ValidatorContextInterface $context;
 
     /**
      * @param mixed $value

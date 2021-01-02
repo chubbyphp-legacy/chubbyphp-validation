@@ -13,10 +13,7 @@ use Pimple\ServiceProviderInterface;
  */
 final class ValidationProvider implements ServiceProviderInterface
 {
-    /**
-     * @var ValidationServiceProvider
-     */
-    private $serviceProvider;
+    private ValidationServiceProvider $serviceProvider;
 
     public function __construct()
     {
