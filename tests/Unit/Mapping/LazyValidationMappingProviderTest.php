@@ -50,7 +50,7 @@ final class LazyValidationMappingProviderTest extends TestCase
         $container
             ->expects(self::any())
             ->method('get')
-            ->willReturnCallback(fn (string $id) => $services[$id])
+            ->willReturnCallback(static fn (string $id) => $services[$id])
         ;
 
         return $container;

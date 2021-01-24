@@ -78,7 +78,7 @@ final class AllConstraintTest extends TestCase
         ;
 
         $constraint->expects(self::any())->method('validate')->willReturnCallback(
-            function (
+            static function (
             string $path,
             $value,
             ValidatorContextInterface $context,

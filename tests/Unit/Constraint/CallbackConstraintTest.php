@@ -39,7 +39,7 @@ final class CallbackConstraintTest extends TestCase
 
     private function getCallback(): callable
     {
-        return function (
+        return static function (
             string $path,
             $value,
             ValidatorContextInterface $context,

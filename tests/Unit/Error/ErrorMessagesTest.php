@@ -22,7 +22,7 @@ final class ErrorMessagesTest extends TestCase
 
     public function testWithoutMessages(): void
     {
-        $errorMessages = new ErrorMessages([], fn (string $key, array $arguments) => $key);
+        $errorMessages = new ErrorMessages([], static fn (string $key, array $arguments) => $key);
 
         self::assertEquals([], $errorMessages->getMessages());
     }
@@ -39,7 +39,7 @@ final class ErrorMessagesTest extends TestCase
 
         $errorMessages = new ErrorMessages(
             $errors,
-            fn (string $key, array $arguments) => $key
+            static fn (string $key, array $arguments) => $key
         );
 
         self::assertEquals([

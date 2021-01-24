@@ -141,7 +141,7 @@ final class ValidatorTest extends TestCase
                         ValidationPropertyMappingBuilder::create('callback', [
                             new ConstraintAdapter(
                                 new Callback([
-                                    'callback' => function ($object, ExecutionContextInterface $context): void {
+                                    'callback' => static function ($object, ExecutionContextInterface $context): void {
                                         if ('callback' === $object) {
                                             $context->addViolation('callback');
                                         }

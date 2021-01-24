@@ -22,7 +22,7 @@ final class NestedErrorMessagesTest extends TestCase
 
     public function testWithoutMessages(): void
     {
-        $errorMessages = new NestedErrorMessages([], fn (string $key, array $arguments) => $key);
+        $errorMessages = new NestedErrorMessages([], static fn (string $key, array $arguments) => $key);
 
         self::assertEquals([], $errorMessages->getMessages());
     }
@@ -39,7 +39,7 @@ final class NestedErrorMessagesTest extends TestCase
 
         $errorMessages = new NestedErrorMessages(
             $errors,
-            fn (string $key, array $arguments) => $key
+            static fn (string $key, array $arguments) => $key
         );
 
         self::assertEquals([

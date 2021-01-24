@@ -23,7 +23,7 @@ final class CallableValidationMappingProviderTest extends TestCase
 
     public function testGetClass(): void
     {
-        $mapping = new CallableValidationMappingProvider(\stdClass::class, function (): void {});
+        $mapping = new CallableValidationMappingProvider(\stdClass::class, static function (): void {});
 
         self::assertSame(\stdClass::class, $mapping->getClass());
     }

@@ -65,7 +65,7 @@ final class ValidationMappingProviderRegistryTest extends TestCase
         $object = $this->getObject();
 
         $objectMapping->expects(self::any())->method('getClass')->willReturnCallback(
-            fn () => get_class($object)
+            static fn () => get_class($object)
         );
 
         return $objectMapping;
@@ -82,7 +82,7 @@ final class ValidationMappingProviderRegistryTest extends TestCase
         $object = $this->getProxyObject();
 
         $objectMapping->expects(self::any())->method('getClass')->willReturnCallback(
-            fn () => AbstractManyModel::class
+            static fn () => AbstractManyModel::class
         );
 
         return $objectMapping;
