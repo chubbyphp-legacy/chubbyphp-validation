@@ -1,8 +1,8 @@
 # chubbyphp-validation
 
-[![Build Status](https://api.travis-ci.org/chubbyphp/chubbyphp-validation.png?branch=master)](https://travis-ci.org/chubbyphp/chubbyphp-validation)
+[![CI](https://github.com/chubbyphp/chubbyphp-validation/workflows/CI/badge.svg?branch=master)](https://github.com/chubbyphp/chubbyphp-validation/actions?query=workflow%3ACI)
 [![Coverage Status](https://coveralls.io/repos/github/chubbyphp/chubbyphp-validation/badge.svg?branch=master)](https://coveralls.io/github/chubbyphp/chubbyphp-validation?branch=master)
-[![Infection MSI](https://badge.stryker-mutator.io/github.com/chubbyphp/chubbyphp-validation/master)](https://travis-ci.org/chubbyphp/chubbyphp-validation)
+[![Infection MSI](https://badge.stryker-mutator.io/github.com/chubbyphp/chubbyphp-validation/master)](https://dashboard.stryker-mutator.io/reports/github.com/chubbyphp/chubbyphp-validation/master)
 [![Latest Stable Version](https://poser.pugx.org/chubbyphp/chubbyphp-validation/v/stable.png)](https://packagist.org/packages/chubbyphp/chubbyphp-validation)
 [![Total Downloads](https://poser.pugx.org/chubbyphp/chubbyphp-validation/downloads.png)](https://packagist.org/packages/chubbyphp/chubbyphp-validation)
 [![Monthly Downloads](https://poser.pugx.org/chubbyphp/chubbyphp-validation/d/monthly)](https://packagist.org/packages/chubbyphp/chubbyphp-validation)
