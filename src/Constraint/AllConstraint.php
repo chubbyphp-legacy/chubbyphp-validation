@@ -45,11 +45,11 @@ final class AllConstraint implements ConstraintInterface
             return [];
         }
 
-        if (!is_array($value) && !$value instanceof \Traversable) {
+        if (!\is_array($value) && !$value instanceof \Traversable) {
             return [new Error(
                 $path.'[_all]',
                 'constraint.all.invalidtype',
-                ['type' => is_object($value) ? get_class($value) : gettype($value)]
+                ['type' => \is_object($value) ? \get_class($value) : \gettype($value)]
             )];
         }
 

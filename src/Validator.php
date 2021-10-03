@@ -35,7 +35,7 @@ final class Validator implements ValidatorInterface
     {
         $context ??= ValidatorContextBuilder::create()->getContext();
 
-        $class = get_class($object);
+        $class = \get_class($object);
 
         $objectMapping = $this->getObjectMapping($class);
 
@@ -73,15 +73,13 @@ final class Validator implements ValidatorInterface
     }
 
     /**
-     * @param object $object
-     *
      * @return array<ErrorInterface>
      */
     private function validateClass(
         ValidatorContextInterface $context,
         ?ValidationClassMappingInterface $classMapping,
         string $path,
-        $object
+        object $object
     ) {
         if (null === $classMapping) {
             return [];
@@ -108,15 +106,13 @@ final class Validator implements ValidatorInterface
     }
 
     /**
-     * @param object $object
-     *
      * @return array<ErrorInterface>
      */
     private function validateProperty(
         ValidatorContextInterface $context,
         ValidationPropertyMappingInterface $propertyMapping,
         string $path,
-        $object
+        object $object
     ): array {
         if (!$this->isWithinGroup($context, $propertyMapping)) {
             return [];
@@ -153,7 +149,7 @@ final class Validator implements ValidatorInterface
         }
 
         foreach ($mapping->getGroups() as $group) {
-            if (in_array($group, $groups, true)) {
+            if (\in_array($group, $groups, true)) {
                 return true;
             }
         }
@@ -162,7 +158,7 @@ final class Validator implements ValidatorInterface
     }
 
     /**
-     * @param string|int $name
+     * @param int|string $name
      */
     private function getSubPathByName(string $path, $name): string
     {
@@ -178,7 +174,7 @@ final class Validator implements ValidatorInterface
     {
         $this->logger->debug('validate: path {path}, constraint {constraint}', [
             'path' => $path,
-            'constraint' => get_class($constraint),
+            'constraint' => \get_class($constraint),
         ]);
     }
 
@@ -186,7 +182,7 @@ final class Validator implements ValidatorInterface
     {
         $this->logger->notice('validate: path {path}, constraint {constraint}, error {error}', [
             'path' => $path,
-            'constraint' => get_class($constraint),
+            'constraint' => \get_class($constraint),
             'error' => [
                 'key' => $error->getKey(),
                 'arguments' => $error->getArguments(),

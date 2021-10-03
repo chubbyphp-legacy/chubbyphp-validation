@@ -26,11 +26,11 @@ final class CoordinateArrayConstraint implements ConstraintInterface
             return [];
         }
 
-        if (!is_array($value)) {
+        if (!\is_array($value)) {
             return [new Error(
                 $path,
                 'constraint.coordinatearray.invalidtype',
-                ['type' => is_object($value) ? get_class($value) : gettype($value)]
+                ['type' => \is_object($value) ? \get_class($value) : \gettype($value)]
             )];
         }
 

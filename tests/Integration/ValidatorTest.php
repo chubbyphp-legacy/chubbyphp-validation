@@ -38,10 +38,7 @@ final class ValidatorTest extends TestCase
         $object = new class() {
             private ?string $notBlank = null;
 
-            /**
-             * @var int
-             */
-            private $numeric;
+            private int $numeric;
 
             private ?string $callback = null;
 
@@ -108,17 +105,14 @@ final class ValidatorTest extends TestCase
             new class($object) implements ValidationMappingProviderInterface {
                 private object $object;
 
-                /**
-                 * @param object $object
-                 */
-                public function __construct($object)
+                public function __construct(object $object)
                 {
                     $this->object = $object;
                 }
 
                 public function getClass(): string
                 {
-                    return get_class($this->object);
+                    return \get_class($this->object);
                 }
 
                 public function getValidationClassMapping(string $path): ValidationClassMappingInterface
@@ -129,7 +123,7 @@ final class ValidatorTest extends TestCase
                 /**
                  * @return ValidationPropertyMappingInterface[]
                  */
-                public function getValidationPropertyMappings(string $path, string $type = null): array
+                public function getValidationPropertyMappings(string $path, ?string $type = null): array
                 {
                     return [
                         ValidationPropertyMappingBuilder::create('notBlank', [

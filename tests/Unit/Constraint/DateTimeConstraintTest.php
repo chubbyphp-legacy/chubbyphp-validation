@@ -38,7 +38,7 @@ final class DateTimeConstraintTest extends TestCase
     {
         $constraint = new DateTimeConstraint('Y-m-d');
 
-        $date = new \DateTime('2018-05-21');
+        $date = new \DateTimeImmutable('2018-05-21');
         $date->setTime(0, 0, 0);
 
         self::assertEquals([], $constraint->validate('date', $date, $this->getContext()));
@@ -48,8 +48,8 @@ final class DateTimeConstraintTest extends TestCase
     {
         $constraint = new DateTimeConstraint('Y-m-d');
 
-        $date = new \DateTime('2018-05-21T00:00:00+02:00');
-        $date->setTime(2, 0, 0);
+        $date = new \DateTimeImmutable('2018-05-21T00:00:00+02:00');
+        $date = $date->setTime(2, 0, 0);
 
         $error = new Error(
             'date',
@@ -67,7 +67,7 @@ final class DateTimeConstraintTest extends TestCase
     {
         $constraint = new DateTimeConstraint();
 
-        $date = new \DateTime('2018-05-21');
+        $date = new \DateTimeImmutable('2018-05-21');
         $date->setTime(2, 0, 0);
 
         self::assertEquals([], $constraint->validate('date', $date, $this->getContext()));
@@ -149,7 +149,7 @@ final class DateTimeConstraintTest extends TestCase
 
     private function getContext(): ValidatorContextInterface
     {
-        /* @var ValidatorContextInterface|MockObject $context */
+        // @var ValidatorContextInterface|MockObject $context
         return $this->getMockByCalls(ValidatorContextInterface::class);
     }
 }

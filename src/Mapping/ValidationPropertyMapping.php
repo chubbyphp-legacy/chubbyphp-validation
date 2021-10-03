@@ -31,8 +31,8 @@ final class ValidationPropertyMapping implements ValidationPropertyMappingInterf
         string $name,
         array $constraints,
         array $groups,
-        AccessorInterface $accessor)
-    {
+        AccessorInterface $accessor
+    ) {
         $this->name = $name;
         $this->constraints = $constraints;
         $this->groups = $groups;

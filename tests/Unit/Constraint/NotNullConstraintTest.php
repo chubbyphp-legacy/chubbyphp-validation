@@ -73,7 +73,7 @@ final class NotNullConstraintTest extends TestCase
 
     private function getContext(): ValidatorContextInterface
     {
-        /* @var ValidatorContextInterface|MockObject $context */
+        // @var ValidatorContextInterface|MockObject $context
         return $this->getMockByCalls(ValidatorContextInterface::class);
     }
 }

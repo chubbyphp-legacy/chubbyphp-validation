@@ -13,10 +13,7 @@ final class CallableValidationMappingProvider implements ValidationMappingProvid
      */
     private $callable;
 
-    /**
-     * @var ValidationMappingProviderInterface|null
-     */
-    private $mapping;
+    private ?ValidationMappingProviderInterface $mapping = null;
 
     public function __construct(string $class, callable $callable)
     {
@@ -30,7 +27,7 @@ final class CallableValidationMappingProvider implements ValidationMappingProvid
     }
 
     /**
-     * @return ValidationClassMappingInterface|null
+     * @return null|ValidationClassMappingInterface
      */
     public function getValidationClassMapping(string $path)
     {

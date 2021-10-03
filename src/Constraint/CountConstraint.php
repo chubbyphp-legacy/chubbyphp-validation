@@ -36,15 +36,15 @@ final class CountConstraint implements ConstraintInterface
             return [];
         }
 
-        if (!is_array($value) && !$value instanceof \Countable) {
+        if (!\is_array($value) && !$value instanceof \Countable) {
             return [new Error(
                 $path,
                 'constraint.count.invalidtype',
-                ['type' => is_object($value) ? get_class($value) : gettype($value)]
+                ['type' => \is_object($value) ? \get_class($value) : \gettype($value)]
             )];
         }
 
-        $count = count($value);
+        $count = \count($value);
 
         if (null !== $this->min && $count < $this->min || null !== $this->max && $count > $this->max) {
             return [

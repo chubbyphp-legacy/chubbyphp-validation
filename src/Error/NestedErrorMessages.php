@@ -17,7 +17,7 @@ final class NestedErrorMessages implements ErrorMessagesInterface
     private $translate;
 
     /**
-     * @var array<string, array>|null
+     * @var null|array<string, array>
      */
     private ?array $nestedErrorMessages = null;
 

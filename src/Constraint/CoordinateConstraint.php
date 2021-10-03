@@ -28,11 +28,11 @@ final class CoordinateConstraint implements ConstraintInterface
             return [];
         }
 
-        if (!is_scalar($value) && !(is_object($value) && method_exists($value, '__toString'))) {
+        if (!is_scalar($value) && !(\is_object($value) && method_exists($value, '__toString'))) {
             return [new Error(
                 $path,
                 'constraint.coordinate.invalidtype',
-                ['type' => is_object($value) ? get_class($value) : gettype($value)]
+                ['type' => \is_object($value) ? \get_class($value) : \gettype($value)]
             )];
         }
 

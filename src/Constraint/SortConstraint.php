@@ -40,11 +40,11 @@ final class SortConstraint implements ConstraintInterface
         ValidatorContextInterface $context,
         ?ValidatorInterface $validator = null
     ): array {
-        if (!is_array($sort)) {
+        if (!\is_array($sort)) {
             return [new Error(
                 $path,
                 'constraint.sort.invalidtype',
-                ['type' => is_object($sort) ? get_class($sort) : gettype($sort)]
+                ['type' => \is_object($sort) ? \get_class($sort) : \gettype($sort)]
             )];
         }
 
@@ -66,7 +66,7 @@ final class SortConstraint implements ConstraintInterface
     {
         $errors = [];
 
-        if (!in_array($field, $this->allowedFields, true)) {
+        if (!\in_array($field, $this->allowedFields, true)) {
             $errors[] = new Error(
                 $path.'.'.$field,
                 'constraint.sort.field.notallowed',
@@ -74,17 +74,17 @@ final class SortConstraint implements ConstraintInterface
             );
         }
 
-        if (!is_string($order)) {
+        if (!\is_string($order)) {
             $errors[] = new Error(
                 $path.'.'.$field,
                 'constraint.sort.order.invalidtype',
-                ['field' => $field, 'type' => is_object($order) ? get_class($order) : gettype($order)]
+                ['field' => $field, 'type' => \is_object($order) ? \get_class($order) : \gettype($order)]
             );
 
             return $errors;
         }
 
-        if (!in_array($order, self::ALLOWED_ORDERS, true)) {
+        if (!\in_array($order, self::ALLOWED_ORDERS, true)) {
             $errors[] = new Error(
                 $path.'.'.$field,
                 'constraint.sort.order.notallowed',

@@ -26,7 +26,7 @@ final class UniqueConstraintTest extends TestCase
 
     public function testWithNullValue(): void
     {
-        /** @var ObjectManager|MockObject $objectManager */
+        /** @var MockObject|ObjectManager $objectManager */
         $objectManager = $this->getMockByCalls(ObjectManager::class);
 
         $constraint = new UniqueConstraint($objectManager, ['name']);
@@ -41,14 +41,14 @@ final class UniqueConstraintTest extends TestCase
             private string $name = 'name';
         };
 
-        $modelClass = get_class($model);
+        $modelClass = \get_class($model);
 
-        /** @var ObjectRepository|MockObject $repository */
+        /** @var MockObject|ObjectRepository $repository */
         $repository = $this->getMockByCalls(ObjectRepository::class, [
             Call::create('findOneBy')->with(['name' => 'name'])->willReturn(null),
         ]);
 
-        /** @var ObjectManager|MockObject $objectManager */
+        /** @var MockObject|ObjectManager $objectManager */
         $objectManager = $this->getMockByCalls(ObjectManager::class, [
             Call::create('getRepository')->with($modelClass)->willReturn($repository),
         ]);
@@ -65,9 +65,9 @@ final class UniqueConstraintTest extends TestCase
             private string $name = 'name';
         };
 
-        $modelClass = get_class($model);
+        $modelClass = \get_class($model);
 
-        /** @var ObjectRepository|MockObject $repository */
+        /** @var MockObject|ObjectRepository $repository */
         $repository = $this->getMockByCalls(ObjectRepository::class, [
             Call::create('findOneBy')
                 ->with(['name' => 'name'])
@@ -79,7 +79,7 @@ final class UniqueConstraintTest extends TestCase
             Call::create('getIdentifier')->with()->willReturn(['id']),
         ]);
 
-        /** @var ObjectManager|MockObject $objectManager */
+        /** @var MockObject|ObjectManager $objectManager */
         $objectManager = $this->getMockByCalls(ObjectManager::class, [
             Call::create('getRepository')->with($modelClass)->willReturn($repository),
             Call::create('getClassMetadata')->with($modelClass)->willReturn($classMetadata),
@@ -102,9 +102,9 @@ final class UniqueConstraintTest extends TestCase
             private string $name = 'name';
         };
 
-        $modelClass = get_class($model);
+        $modelClass = \get_class($model);
 
-        /** @var ObjectRepository|MockObject $repository */
+        /** @var MockObject|ObjectRepository $repository */
         $repository = $this->getMockByCalls(ObjectRepository::class, [
             Call::create('findOneBy')
                 ->with(['name' => 'name'])
@@ -116,7 +116,7 @@ final class UniqueConstraintTest extends TestCase
             Call::create('getIdentifier')->with()->willReturn(['id']),
         ]);
 
-        /** @var ObjectManager|MockObject $objectManager */
+        /** @var MockObject|ObjectManager $objectManager */
         $objectManager = $this->getMockByCalls(ObjectManager::class, [
             Call::create('getRepository')->with($modelClass)->willReturn($repository),
             Call::create('getClassMetadata')->with($modelClass)->willReturn($classMetadata),
@@ -135,7 +135,7 @@ final class UniqueConstraintTest extends TestCase
 
     private function getContext(): ValidatorContextInterface
     {
-        /* @var ValidatorContextInterface|MockObject $context */
+        // @var ValidatorContextInterface|MockObject $context
         return $this->getMockByCalls(ValidatorContextInterface::class);
     }
 }

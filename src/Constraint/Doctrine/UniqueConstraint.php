@@ -47,7 +47,7 @@ final class UniqueConstraint implements ConstraintInterface
 
         $criteria = $this->getCriteria($model);
 
-        $modelClass = get_class($model);
+        $modelClass = \get_class($model);
 
         if (null === $persistedModel = $this->objectManager->getRepository($modelClass)->findOneBy($criteria)) {
             return [];

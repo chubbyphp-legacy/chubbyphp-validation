@@ -16,13 +16,11 @@ final class MethodAccessor implements AccessorInterface
     }
 
     /**
-     * @param object $object
-     *
      * @throws ValidatorLogicException
      *
      * @return mixed
      */
-    public function getValue($object)
+    public function getValue(object $object)
     {
         $getMethodName = 'get'.ucfirst($this->property);
         $hasMethodName = 'has'.ucfirst($this->property);
@@ -41,7 +39,8 @@ final class MethodAccessor implements AccessorInterface
         }
 
         throw ValidatorLogicException::createMissingMethod(
-            get_class($object), [$getMethodName, $hasMethodName, $isMethodName]
+            \get_class($object),
+            [$getMethodName, $hasMethodName, $isMethodName]
         );
     }
 }

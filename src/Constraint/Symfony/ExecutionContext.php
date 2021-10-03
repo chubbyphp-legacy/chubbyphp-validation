@@ -67,16 +67,15 @@ final class ExecutionContext implements ExecutionContextInterface
     }
 
     /**
-     * @return object|null
+     * @return null|object
      */
     public function getObject()
     {
-        return null;
     }
 
     /**
      * @param mixed       $value
-     * @param object|null $object
+     * @param null|object $object
      * @param string      $propertyPath
      */
     public function setNode($value, $object, ?MetadataInterface $metadata, $propertyPath): void
@@ -85,7 +84,7 @@ final class ExecutionContext implements ExecutionContextInterface
     }
 
     /**
-     * @param string|null $group
+     * @param null|string $group
      */
     public function setGroup($group): void
     {
@@ -172,7 +171,7 @@ final class ExecutionContext implements ExecutionContextInterface
     }
 
     /**
-     * @return MetadataInterface|null
+     * @return null|MetadataInterface
      */
     public function getMetadata()
     {
@@ -189,11 +188,10 @@ final class ExecutionContext implements ExecutionContextInterface
     }
 
     /**
-     * @return string|null
+     * @return null|string
      */
     public function getClassName()
     {
-        return null;
     }
 
     public function getPropertyName(): string

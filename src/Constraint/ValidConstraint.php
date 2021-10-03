@@ -33,7 +33,7 @@ final class ValidConstraint implements ConstraintInterface
             throw ValidatorLogicException::createMissingValidator($path);
         }
 
-        if (is_array($value) || $value instanceof \Traversable) {
+        if (\is_array($value) || $value instanceof \Traversable) {
             $errors = [];
             foreach ($value as $i => $subValue) {
                 $errors = array_merge($errors, $validator->validate($subValue, $context, $path.'['.$i.']'));
@@ -42,14 +42,14 @@ final class ValidConstraint implements ConstraintInterface
             return $errors;
         }
 
-        if (is_object($value)) {
+        if (\is_object($value)) {
             return $validator->validate($value, $context, $path);
         }
 
         return [new Error(
-             $path,
+            $path,
             'constraint.valid.invalidtype',
-            ['type' => is_object($value) ? get_class($value) : gettype($value)]
+            ['type' => \is_object($value) ? \get_class($value) : \gettype($value)]
         )];
     }
 }

@@ -44,7 +44,8 @@ final class MapConstraintTest extends TestCase
 
         self::assertEquals([
             new Error(
-                'map.name2', 'constraint.map.field.notallowed',
+                'map.name2',
+                'constraint.map.field.notallowed',
                 ['field' => 'name2', 'allowedFields' => ['name']]
             ),
         ], $constraint->validate('map', ['name2' => 'example'], $this->getContext(), $this->getValidator()));
@@ -95,7 +96,7 @@ final class MapConstraintTest extends TestCase
 
     private function getValidator(): ValidatorInterface
     {
-        /* @var ValidatorInterface|MockObject $validator */
+        // @var ValidatorInterface|MockObject $validator
         return $this->getMockByCalls(ValidatorInterface::class);
     }
 
@@ -110,11 +111,11 @@ final class MapConstraintTest extends TestCase
 
         $constraint->expects(self::any())->method('validate')->willReturnCallback(
             static function (
-            string $path,
-            $value,
-            ValidatorContextInterface $context,
-            ValidatorInterface $validator = null
-        ) use ($error) {
+                string $path,
+                $value,
+                ValidatorContextInterface $context,
+                ?ValidatorInterface $validator = null
+            ) use ($error) {
                 if (!$error) {
                     return [];
                 }
@@ -128,7 +129,7 @@ final class MapConstraintTest extends TestCase
 
     private function getContext(): ValidatorContextInterface
     {
-        /* @var ValidatorContextInterface|MockObject $context */
+        // @var ValidatorContextInterface|MockObject $context
         return $this->getMockByCalls(ValidatorContextInterface::class);
     }
 }

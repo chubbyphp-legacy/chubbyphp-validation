@@ -39,7 +39,7 @@ final class ValidationClassMappingTest extends TestCase
 
     private function getConstraint(): ConstraintInterface
     {
-        /* @var ConstraintInterface|MockObject $constraint */
+        // @var ConstraintInterface|MockObject $constraint
         return $this->getMockByCalls(ConstraintInterface::class);
     }
 }

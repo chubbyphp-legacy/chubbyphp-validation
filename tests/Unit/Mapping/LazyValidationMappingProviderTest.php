@@ -60,10 +60,10 @@ final class LazyValidationMappingProviderTest extends TestCase
      * @param ValidationPropertyMappingInterface[] $denormalizationPropertyMappings
      */
     private function getValidationObjectMapping(
-        ValidationClassMappingInterface $denormalizationClassMapping = null,
+        ?ValidationClassMappingInterface $denormalizationClassMapping,
         array $denormalizationPropertyMappings
     ): ValidationMappingProviderInterface {
-        /* @var ValidationMappingProviderInterface|MockObject $mapping */
+        // @var ValidationMappingProviderInterface|MockObject $mapping
         return $this->getMockByCalls(ValidationMappingProviderInterface::class, [
             Call::create('getValidationClassMapping')->with('path')->willReturn($denormalizationClassMapping),
             Call::create('getValidationPropertyMappings')->with('path')->willReturn($denormalizationPropertyMappings),
@@ -71,7 +71,7 @@ final class LazyValidationMappingProviderTest extends TestCase
     }
 
     /**
-     * @return ValidationClassMappingInterface|MockObject
+     * @return MockObject|ValidationClassMappingInterface
      */
     private function getValidationClassMapping(): ValidationClassMappingInterface
     {
@@ -79,7 +79,7 @@ final class LazyValidationMappingProviderTest extends TestCase
     }
 
     /**
-     * @return ValidationPropertyMappingInterface|MockObject
+     * @return MockObject|ValidationPropertyMappingInterface
      */
     private function getValidationPropertyMapping(): ValidationPropertyMappingInterface
     {

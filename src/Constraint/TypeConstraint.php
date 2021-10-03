@@ -33,14 +33,14 @@ final class TypeConstraint implements ConstraintInterface
             return [];
         }
 
-        $type = gettype($value);
+        $type = \gettype($value);
 
         if ('object' === $type) {
             if ($value instanceof $this->wishedType) {
                 return [];
             }
 
-            return [$this->getInvalidTypeErrorByPathAndType($path, get_class($value))];
+            return [$this->getInvalidTypeErrorByPathAndType($path, \get_class($value))];
         }
 
         if ($type === $this->wishedType) {

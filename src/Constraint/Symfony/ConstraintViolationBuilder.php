@@ -14,7 +14,7 @@ final class ConstraintViolationBuilder implements ConstraintViolationBuilderInte
     /**
      * @var ConstraintViolationListInterface<int, ConstraintViolationInterface>
      */
-    private $violations;
+    private ConstraintViolationListInterface $violations;
 
     private string $path;
 
@@ -128,7 +128,7 @@ final class ConstraintViolationBuilder implements ConstraintViolationBuilderInte
     }
 
     /**
-     * @param string|null $code
+     * @param null|string $code
      *
      * @return ConstraintViolationBuilder
      */

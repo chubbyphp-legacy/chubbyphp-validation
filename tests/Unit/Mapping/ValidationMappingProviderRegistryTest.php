@@ -26,7 +26,7 @@ final class ValidationMappingProviderRegistryTest extends TestCase
             $this->getValidationObjectMapping(),
         ]);
 
-        $mapping = $registry->provideMapping(get_class($object));
+        $mapping = $registry->provideMapping(\get_class($object));
 
         self::assertInstanceOf(ValidationMappingProviderInterface::class, $mapping);
     }
@@ -38,7 +38,7 @@ final class ValidationMappingProviderRegistryTest extends TestCase
 
         $registry = new ValidationMappingProviderRegistry([]);
 
-        $registry->provideMapping(get_class(new \stdClass()));
+        $registry->provideMapping(\get_class(new \stdClass()));
     }
 
     public function testGetObjectMappingFromDoctrineProxy(): void
@@ -49,14 +49,14 @@ final class ValidationMappingProviderRegistryTest extends TestCase
             $this->getValidationProxyObjectMapping(),
         ]);
 
-        $mapping = $registry->provideMapping(get_class($object));
+        $mapping = $registry->provideMapping(\get_class($object));
 
         self::assertInstanceOf(ValidationMappingProviderInterface::class, $mapping);
     }
 
     private function getValidationObjectMapping(): ValidationMappingProviderInterface
     {
-        /** @var ValidationMappingProviderInterface|MockObject $objectMapping */
+        /** @var MockObject|ValidationMappingProviderInterface $objectMapping */
         $objectMapping = $this->getMockBuilder(ValidationMappingProviderInterface::class)
             ->setMethods([])
             ->getMockForAbstractClass()
@@ -65,7 +65,7 @@ final class ValidationMappingProviderRegistryTest extends TestCase
         $object = $this->getObject();
 
         $objectMapping->expects(self::any())->method('getClass')->willReturnCallback(
-            static fn () => get_class($object)
+            static fn () => \get_class($object)
         );
 
         return $objectMapping;
@@ -73,7 +73,7 @@ final class ValidationMappingProviderRegistryTest extends TestCase
 
     private function getValidationProxyObjectMapping(): ValidationMappingProviderInterface
     {
-        /** @var ValidationMappingProviderInterface|MockObject $objectMapping */
+        /** @var MockObject|ValidationMappingProviderInterface $objectMapping */
         $objectMapping = $this->getMockBuilder(ValidationMappingProviderInterface::class)
             ->setMethods([])
             ->getMockForAbstractClass()
@@ -97,7 +97,7 @@ final class ValidationMappingProviderRegistryTest extends TestCase
             private ?string $name = null;
 
             /**
-             * @return string|null
+             * @return null|string
              */
             public function getName()
             {

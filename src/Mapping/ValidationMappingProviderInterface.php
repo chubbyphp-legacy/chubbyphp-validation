@@ -9,7 +9,7 @@ interface ValidationMappingProviderInterface
     public function getClass(): string;
 
     /**
-     * @return ValidationClassMappingInterface|null
+     * @return null|ValidationClassMappingInterface
      */
     public function getValidationClassMapping(string $path);
 

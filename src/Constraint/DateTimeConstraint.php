@@ -37,19 +37,19 @@ final class DateTimeConstraint implements ConstraintInterface
             return $this->validateDateTime($path, $value);
         }
 
-        if (!is_scalar($value) && !(is_object($value) && method_exists($value, '__toString'))) {
+        if (!is_scalar($value) && !(\is_object($value) && method_exists($value, '__toString'))) {
             return [new Error(
                 $path,
                 'constraint.datetime.invalidtype',
-                ['type' => is_object($value) ? get_class($value) : gettype($value)]
+                ['type' => \is_object($value) ? \get_class($value) : \gettype($value)]
             )];
         }
 
         $value = trim((string) $value);
 
-        \DateTime::createFromFormat('!'.$this->format, $value);
+        \DateTimeImmutable::createFromFormat('!'.$this->format, $value);
 
-        $dateTimeErrors = \DateTime::getLastErrors();
+        $dateTimeErrors = \DateTimeImmutable::getLastErrors();
 
         return [...$this->errorsByDateTimeLastErrors(
             $path,
@@ -72,7 +72,7 @@ final class DateTimeConstraint implements ConstraintInterface
     private function validateDateTime(string $path, \DateTimeInterface $value): array
     {
         /** @var \DateTime $expectedValue */
-        $expectedValue = \DateTime::createFromFormat(
+        $expectedValue = \DateTimeImmutable::createFromFormat(
             '!'.$this->format,
             $value->format($this->format),
             $value->getTimezone()

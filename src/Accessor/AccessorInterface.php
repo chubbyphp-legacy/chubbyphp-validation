@@ -9,11 +9,9 @@ use Chubbyphp\Validation\ValidatorLogicException;
 interface AccessorInterface
 {
     /**
-     * @param object $object
-     *
      * @throws ValidatorLogicException
      *
      * @return mixed
      */
-    public function getValue($object);
+    public function getValue(object $object);
 }

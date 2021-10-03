@@ -18,7 +18,7 @@ final class MapConstraint implements ConstraintInterface
     private array $constraintsByFields;
 
     /**
-     * @param array<string, ConstraintInterface|array<ConstraintInterface>> $constraintsByFields
+     * @param array<string, array<ConstraintInterface>|ConstraintInterface> $constraintsByFields
      */
     public function __construct(array $constraintsByFields = [])
     {
@@ -58,11 +58,11 @@ final class MapConstraint implements ConstraintInterface
             return [];
         }
 
-        if (!is_array($value) && !$value instanceof \Traversable) {
+        if (!\is_array($value) && !$value instanceof \Traversable) {
             return [new Error(
                 $path,
                 'constraint.map.invalidtype',
-                ['type' => is_object($value) ? get_class($value) : gettype($value)]
+                ['type' => \is_object($value) ? \get_class($value) : \gettype($value)]
             )];
         }
 

@@ -107,13 +107,13 @@ final class ValidConstraintTest extends TestCase
 
     private function getContext(): ValidatorContextInterface
     {
-        /* @var ValidatorContextInterface|MockObject $context */
+        // @var ValidatorContextInterface|MockObject $context
         return $this->getMockByCalls(ValidatorContextInterface::class);
     }
 
     private function getValidator(array $methods = []): ValidatorInterface
     {
-        /* @var ValidatorInterface|MockObject $validator */
+        // @var ValidatorInterface|MockObject $validator
         return $this->getMockByCalls(ValidatorInterface::class, $methods);
     }
 

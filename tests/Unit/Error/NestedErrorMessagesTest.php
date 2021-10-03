@@ -65,7 +65,7 @@ final class NestedErrorMessagesTest extends TestCase
 
     private function getError(string $path, string $key, array $arguments = []): ErrorInterface
     {
-        /* @var ErrorInterface|MockObject $error */
+        // @var ErrorInterface|MockObject $error
         return $this->getMockByCalls(ErrorInterface::class, [
             Call::create('getPath')->with()->willReturn($path),
             Call::create('getKey')->with()->willReturn($key),

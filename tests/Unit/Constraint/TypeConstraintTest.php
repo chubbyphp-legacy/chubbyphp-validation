@@ -58,20 +58,20 @@ final class TypeConstraintTest extends TestCase
             'stdClass',
             'constraint.type.invalidtype',
             [
-                'type' => \DateTime::class,
+                'type' => \DateTimeImmutable::class,
                 'wishedType' => \stdClass::class,
             ]
         );
 
         self::assertEquals(
             [$error],
-            $constraint->validate('stdClass', new \DateTime('2004-02-12T15:19:21+00:00'), $this->getContext())
+            $constraint->validate('stdClass', new \DateTimeImmutable('2004-02-12T15:19:21+00:00'), $this->getContext())
         );
     }
 
     private function getContext(): ValidatorContextInterface
     {
-        /* @var ValidatorContextInterface|MockObject $context */
+        // @var ValidatorContextInterface|MockObject $context
         return $this->getMockByCalls(ValidatorContextInterface::class);
     }
 }

@@ -62,13 +62,13 @@ final class ValidationPropertyMappingTest extends TestCase
 
     private function getConstraint(): ConstraintInterface
     {
-        /* @var ConstraintInterface|MockObject $constraint */
+        // @var ConstraintInterface|MockObject $constraint
         return $this->getMockByCalls(ConstraintInterface::class);
     }
 
     private function getAccessor(): AccessorInterface
     {
-        /* @var AccessorInterface|MockObject $accessor */
+        // @var AccessorInterface|MockObject $accessor
         return $this->getMockByCalls(AccessorInterface::class);
     }
 }

@@ -43,7 +43,7 @@ final class CallbackConstraintTest extends TestCase
             string $path,
             $value,
             ValidatorContextInterface $context,
-            ValidatorInterface $validator = null
+            ?ValidatorInterface $validator = null
         ) {
             if (null === $value) {
                 return [];
@@ -57,7 +57,7 @@ final class CallbackConstraintTest extends TestCase
 
     private function getContext(): ValidatorContextInterface
     {
-        /* @var ValidatorContextInterface|MockObject $context */
+        // @var ValidatorContextInterface|MockObject $context
         return $this->getMockByCalls(ValidatorContextInterface::class);
     }
 }

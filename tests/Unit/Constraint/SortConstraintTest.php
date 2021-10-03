@@ -22,7 +22,7 @@ final class SortConstraintTest extends TestCase
 
     public function testValidateWithString(): void
     {
-        /** @var ValidatorContextInterface|MockObject $context */
+        /** @var MockObject|ValidatorContextInterface $context */
         $context = $this->getMockByCalls(ValidatorContextInterface::class);
 
         $constraint = new SortConstraint(['name']);
@@ -35,7 +35,7 @@ final class SortConstraintTest extends TestCase
 
     public function testValidateWithStdClass(): void
     {
-        /** @var ValidatorContextInterface|MockObject $context */
+        /** @var MockObject|ValidatorContextInterface $context */
         $context = $this->getMockByCalls(ValidatorContextInterface::class);
 
         $constraint = new SortConstraint(['name']);
@@ -48,7 +48,7 @@ final class SortConstraintTest extends TestCase
 
     public function testValidateWithUnsupportedFieldAndUnsupportedOrder(): void
     {
-        /** @var ValidatorContextInterface|MockObject $context */
+        /** @var MockObject|ValidatorContextInterface $context */
         $context = $this->getMockByCalls(ValidatorContextInterface::class);
 
         $constraint = new SortConstraint(['name']);
@@ -72,7 +72,7 @@ final class SortConstraintTest extends TestCase
 
     public function testValidateWithUnsupportedFieldAndUnsupportedOrderType(): void
     {
-        /** @var ValidatorContextInterface|MockObject $context */
+        /** @var MockObject|ValidatorContextInterface $context */
         $context = $this->getMockByCalls(ValidatorContextInterface::class);
 
         $constraint = new SortConstraint(['name']);
@@ -106,7 +106,7 @@ final class SortConstraintTest extends TestCase
 
     public function testValidate(): void
     {
-        /** @var ValidatorContextInterface|MockObject $context */
+        /** @var MockObject|ValidatorContextInterface $context */
         $context = $this->getMockByCalls(ValidatorContextInterface::class);
 
         $constraint = new SortConstraint(['name']);

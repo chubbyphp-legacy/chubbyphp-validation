@@ -39,7 +39,7 @@ final class ChoiceConstraint implements ConstraintInterface
             return [];
         }
 
-        if (!in_array($value, $this->choices, true)) {
+        if (!\in_array($value, $this->choices, true)) {
             return [
                 new Error(
                     $path,
