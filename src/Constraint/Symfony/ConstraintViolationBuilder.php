@@ -57,11 +57,9 @@ final class ConstraintViolationBuilder implements ConstraintViolationBuilderInte
     }
 
     /**
-     * @param string $path
-     *
      * @return ConstraintViolationBuilder
      */
-    public function atPath($path): self
+    public function atPath(string $path): static
     {
         $this->path = $path;
 
@@ -69,12 +67,9 @@ final class ConstraintViolationBuilder implements ConstraintViolationBuilderInte
     }
 
     /**
-     * @param string $key
-     * @param string $value
-     *
      * @return ConstraintViolationBuilder
      */
-    public function setParameter($key, $value): self
+    public function setParameter(string $key, string $value): static
     {
         $this->parameters[$key] = $value;
 
@@ -86,7 +81,7 @@ final class ConstraintViolationBuilder implements ConstraintViolationBuilderInte
      *
      * @return ConstraintViolationBuilder
      */
-    public function setParameters(array $parameters): self
+    public function setParameters(array $parameters): static
     {
         $this->parameters = $parameters;
 
@@ -94,21 +89,17 @@ final class ConstraintViolationBuilder implements ConstraintViolationBuilderInte
     }
 
     /**
-     * @param string $translationDomain
-     *
      * @return ConstraintViolationBuilder
      */
-    public function setTranslationDomain($translationDomain): self
+    public function setTranslationDomain(string $translationDomain): static
     {
         return $this;
     }
 
     /**
-     * @param mixed $invalidValue
-     *
      * @return ConstraintViolationBuilder
      */
-    public function setInvalidValue($invalidValue): self
+    public function setInvalidValue(mixed $invalidValue): static
     {
         $this->invalidValue = $invalidValue;
 
@@ -116,11 +107,9 @@ final class ConstraintViolationBuilder implements ConstraintViolationBuilderInte
     }
 
     /**
-     * @param int $number
-     *
      * @return ConstraintViolationBuilder
      */
-    public function setPlural($number): self
+    public function setPlural(int $number): static
     {
         $this->plural = $number;
 
@@ -128,11 +117,9 @@ final class ConstraintViolationBuilder implements ConstraintViolationBuilderInte
     }
 
     /**
-     * @param null|string $code
-     *
      * @return ConstraintViolationBuilder
      */
-    public function setCode($code): self
+    public function setCode(?string $code): static
     {
         $this->code = $code;
 
@@ -140,11 +127,9 @@ final class ConstraintViolationBuilder implements ConstraintViolationBuilderInte
     }
 
     /**
-     * @param mixed $cause
-     *
      * @return ConstraintViolationBuilder
      */
-    public function setCause($cause): self
+    public function setCause(mixed $cause): static
     {
         $this->cause = $cause;
 

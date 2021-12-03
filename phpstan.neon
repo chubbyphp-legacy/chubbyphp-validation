@@ -1,14 +1,11 @@
 parameters:
     ignoreErrors:
         -
+            message: '/no value type specified in iterable type array/'
+            path: %currentWorkingDirectory%/src/*.php
+        -
             message: '/.*/'
             path: %currentWorkingDirectory%/src/Constraint/DateTimeConstraint.php
         -
             message: '/PHPDoc tag @var for variable \$parentReflectionClass contains generic class ReflectionClass but does not specify its types\: T/'
             path: %currentWorkingDirectory%/src/Mapping/ValidationMappingProviderRegistry.php
-        -
-            message: '/Method Chubbyphp\\Validation\\Constraint\\Symfony\\ExecutionContext\:\:getObject\(\) should return object\|null but return statement is missing\./'
-            path: %currentWorkingDirectory%/src/Constraint/Symfony/ExecutionContext.php
-        -
-            message: '/Method Chubbyphp\\Validation\\Constraint\\Symfony\\ExecutionContext\:\:getClassName\(\) should return string\|null but return statement is missing\./'
-            path: %currentWorkingDirectory%/src/Constraint/Symfony/ExecutionContext.php

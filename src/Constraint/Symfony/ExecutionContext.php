@@ -41,44 +41,32 @@ final class ExecutionContext implements ExecutionContextInterface
     }
 
     /**
-     * @param string       $message
      * @param array<mixed> $parameters
      */
-    public function addViolation($message, array $parameters = []): void
+    public function addViolation(string $message, array $parameters = []): void
     {
         (new ConstraintViolationBuilder($this->violations, $message, $parameters, $this->path))->addViolation();
     }
 
     /**
-     * @param string       $message
      * @param array<mixed> $parameters
      */
-    public function buildViolation($message, array $parameters = []): ConstraintViolationBuilderInterface
+    public function buildViolation(string $message, array $parameters = []): ConstraintViolationBuilderInterface
     {
         return new ConstraintViolationBuilder($this->violations, $message, $parameters, $this->path);
     }
 
-    /**
-     * @return ValidatorInterface
-     */
-    public function getValidator()
+    public function getValidator(): ValidatorInterface
     {
         throw new NotImplementedException(sprintf('Method "%s" is not implemented', __METHOD__));
     }
 
-    /**
-     * @return null|object
-     */
-    public function getObject()
+    public function getObject(): ?object
     {
+        return null;
     }
 
-    /**
-     * @param mixed       $value
-     * @param null|object $object
-     * @param string      $propertyPath
-     */
-    public function setNode($value, $object, ?MetadataInterface $metadata, $propertyPath): void
+    public function setNode(mixed $value, ?object $object, ?MetadataInterface $metadata, string $propertyPath): void
     {
         throw new NotImplementedException(sprintf('Method "%s" is not implemented', __METHOD__));
     }
@@ -96,58 +84,32 @@ final class ExecutionContext implements ExecutionContextInterface
         throw new NotImplementedException(sprintf('Method "%s" is not implemented', __METHOD__));
     }
 
-    /**
-     * @param string $cacheKey
-     * @param string $groupHash
-     */
-    public function markGroupAsValidated($cacheKey, $groupHash): void
+    public function markGroupAsValidated(string $cacheKey, string $groupHash): void
     {
         throw new NotImplementedException(sprintf('Method "%s" is not implemented', __METHOD__));
     }
 
-    /**
-     * @param string $cacheKey
-     * @param string $groupHash
-     *
-     * @return bool
-     */
-    public function isGroupValidated($cacheKey, $groupHash)
+    public function isGroupValidated(string $cacheKey, string $groupHash): bool
     {
         throw new NotImplementedException(sprintf('Method "%s" is not implemented', __METHOD__));
     }
 
-    /**
-     * @param string $cacheKey
-     * @param string $constraintHash
-     */
-    public function markConstraintAsValidated($cacheKey, $constraintHash): void
+    public function markConstraintAsValidated(string $cacheKey, string $constraintHash): void
     {
         throw new NotImplementedException(sprintf('Method "%s" is not implemented', __METHOD__));
     }
 
-    /**
-     * @param string $cacheKey
-     * @param string $constraintHash
-     *
-     * @return bool|void
-     */
-    public function isConstraintValidated($cacheKey, $constraintHash)
+    public function isConstraintValidated(string $cacheKey, string $constraintHash): bool
     {
         throw new NotImplementedException(sprintf('Method "%s" is not implemented', __METHOD__));
     }
 
-    /**
-     * @param string $cacheKey
-     */
-    public function markObjectAsInitialized($cacheKey): void
+    public function markObjectAsInitialized(string $cacheKey): void
     {
         throw new NotImplementedException(sprintf('Method "%s" is not implemented', __METHOD__));
     }
 
-    /**
-     * @param string $cacheKey
-     */
-    public function isObjectInitialized($cacheKey): bool
+    public function isObjectInitialized(string $cacheKey): bool
     {
         throw new NotImplementedException(sprintf('Method "%s" is not implemented', __METHOD__));
     }
@@ -157,23 +119,17 @@ final class ExecutionContext implements ExecutionContextInterface
         return $this->violations;
     }
 
-    public function getRoot(): void
+    public function getRoot(): mixed
     {
         throw new NotImplementedException(sprintf('Method "%s" is not implemented', __METHOD__));
     }
 
-    /**
-     * @return mixed
-     */
-    public function getValue()
+    public function getValue(): mixed
     {
         return $this->value;
     }
 
-    /**
-     * @return null|MetadataInterface
-     */
-    public function getMetadata()
+    public function getMetadata(): MetadataInterface
     {
         throw new NotImplementedException(sprintf('Method "%s" is not implemented', __METHOD__));
     }
@@ -187,11 +143,9 @@ final class ExecutionContext implements ExecutionContextInterface
         return array_shift($groups);
     }
 
-    /**
-     * @return null|string
-     */
-    public function getClassName()
+    public function getClassName(): ?string
     {
+        return null;
     }
 
     public function getPropertyName(): string
@@ -201,10 +155,7 @@ final class ExecutionContext implements ExecutionContextInterface
         return array_pop($pathParts);
     }
 
-    /**
-     * @param string $subPath
-     */
-    public function getPropertyPath($subPath = ''): string
+    public function getPropertyPath(string $subPath = ''): string
     {
         if ('' !== $subPath) {
             $subPath = '.'.$subPath;

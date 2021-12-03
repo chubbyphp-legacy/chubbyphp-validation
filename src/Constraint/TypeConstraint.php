@@ -40,7 +40,7 @@ final class TypeConstraint implements ConstraintInterface
                 return [];
             }
 
-            return [$this->getInvalidTypeErrorByPathAndType($path, \get_class($value))];
+            return [$this->getInvalidTypeErrorByPathAndType($path, (string) \get_class($value))];
         }
 
         if ($type === $this->wishedType) {

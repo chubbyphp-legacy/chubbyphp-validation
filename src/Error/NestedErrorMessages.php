@@ -39,10 +39,7 @@ final class NestedErrorMessages implements ErrorMessagesInterface
     public function getMessages(): array
     {
         if (null === $this->nestedErrorMessages) {
-            $this->nestedErrorMessages = [];
-            foreach ($this->errors as $error) {
-                $this->assignErrorMessage($this->nestedErrorMessages, $error);
-            }
+            $this->nestedErrorMessages = $this->nestErrorMessages($this->errors);
         }
 
         return $this->nestedErrorMessages;
@@ -54,21 +51,30 @@ final class NestedErrorMessages implements ErrorMessagesInterface
     }
 
     /**
-     * @param array<string, array> $node
+     * @param array<int, ErrorInterface> $errors
+     *
+     * @return array<string, array>
      */
-    private function assignErrorMessage(array &$node, ErrorInterface $error): void
+    private function nestErrorMessages(array $errors): array
     {
-        $pathParts = $this->parsePath($error->getPath());
-        foreach ($pathParts as $pathPart) {
-            if (!isset($node[$pathPart])) {
-                $node[$pathPart] = [];
+        /** @var array<string, array> $nestedErrors */
+        $nestedErrors = [];
+
+        foreach ($errors as $error) {
+            $node = &$nestedErrors;
+
+            $pathParts = $this->parsePath($error->getPath());
+            foreach ($pathParts as $pathPart) {
+                if (!isset($node[$pathPart])) {
+                    $node[$pathPart] = [];
+                }
+                $node = &$node[$pathPart];
             }
-            $node = &$node[$pathPart];
+
+            $node[] = ($this->translate)($error->getKey(), $error->getArguments());
         }
 
-        $translate = $this->translate;
-
-        $node[] = $translate($error->getKey(), $error->getArguments());
+        return $nestedErrors;
     }
 
     /**
