@@ -97,7 +97,7 @@ final class SortConstraintTest extends TestCase
                 new Error(
                     'path.unknown2',
                     'constraint.sort.order.invalidtype',
-                    ['field' => 'unknown2', 'type' => 'integer']
+                    ['field' => 'unknown2', 'type' => 'int']
                 ),
             ],
             $constraint->validate('path', ['name' => 'asc', 'unknown1' => new \stdClass(), 'unknown2' => 1], $context)

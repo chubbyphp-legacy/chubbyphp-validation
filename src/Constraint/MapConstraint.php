@@ -62,7 +62,7 @@ final class MapConstraint implements ConstraintInterface
             return [new Error(
                 $path,
                 'constraint.map.invalidtype',
-                ['type' => \is_object($value) ? \get_class($value) : \gettype($value)]
+                ['type' => get_debug_type($value)]
             )];
         }
 

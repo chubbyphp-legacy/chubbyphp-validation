@@ -26,7 +26,7 @@ final class ValidationMappingProviderRegistryTest extends TestCase
             $this->getValidationObjectMapping(),
         ]);
 
-        $mapping = $registry->provideMapping(\get_class($object));
+        $mapping = $registry->provideMapping($object::class);
 
         self::assertInstanceOf(ValidationMappingProviderInterface::class, $mapping);
     }
@@ -38,7 +38,7 @@ final class ValidationMappingProviderRegistryTest extends TestCase
 
         $registry = new ValidationMappingProviderRegistry([]);
 
-        $registry->provideMapping(\get_class(new \stdClass()));
+        $registry->provideMapping((new \stdClass())::class);
     }
 
     public function testGetObjectMappingFromDoctrineProxy(): void
@@ -49,7 +49,7 @@ final class ValidationMappingProviderRegistryTest extends TestCase
             $this->getValidationProxyObjectMapping(),
         ]);
 
-        $mapping = $registry->provideMapping(\get_class($object));
+        $mapping = $registry->provideMapping($object::class);
 
         self::assertInstanceOf(ValidationMappingProviderInterface::class, $mapping);
     }
@@ -65,7 +65,7 @@ final class ValidationMappingProviderRegistryTest extends TestCase
         $object = $this->getObject();
 
         $objectMapping->expects(self::any())->method('getClass')->willReturnCallback(
-            static fn () => \get_class($object)
+            static fn () => $object::class
         );
 
         return $objectMapping;

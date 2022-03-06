@@ -9,34 +9,16 @@ use Chubbyphp\Validation\Constraint\ConstraintInterface;
 
 final class ValidationPropertyMapping implements ValidationPropertyMappingInterface
 {
-    private string $name;
-
-    /**
-     * @var array<int, ConstraintInterface>
-     */
-    private array $constraints;
-
-    /**
-     * @var array<int, string>
-     */
-    private array $groups;
-
-    private AccessorInterface $accessor;
-
     /**
      * @param array<int, ConstraintInterface> $constraints
      * @param array<int, string>              $groups
      */
     public function __construct(
-        string $name,
-        array $constraints,
-        array $groups,
-        AccessorInterface $accessor
+        private string $name,
+        private array $constraints,
+        private array $groups,
+        private AccessorInterface $accessor
     ) {
-        $this->name = $name;
-        $this->constraints = $constraints;
-        $this->groups = $groups;
-        $this->accessor = $accessor;
     }
 
     public function getName(): string

@@ -13,14 +13,8 @@ use Symfony\Component\Validator\ConstraintValidatorInterface;
 
 final class ConstraintAdapter implements ConstraintInterface
 {
-    private Constraint $symfonyConstraint;
-
-    private ConstraintValidatorInterface $symfonyConstraintValidator;
-
-    public function __construct(Constraint $symfonyConstraint, ConstraintValidatorInterface $symfonyConstraintValidator)
+    public function __construct(private Constraint $symfonyConstraint, private ConstraintValidatorInterface $symfonyConstraintValidator)
     {
-        $this->symfonyConstraint = $symfonyConstraint;
-        $this->symfonyConstraintValidator = $symfonyConstraintValidator;
     }
 
     /**

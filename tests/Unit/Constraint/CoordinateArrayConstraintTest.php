@@ -72,7 +72,7 @@ final class CoordinateArrayConstraintTest extends TestCase
     {
         $constraint = new CoordinateArrayConstraint();
 
-        $error = new Error('coordinatearray', 'constraint.coordinatearray.invalidvalue', ['value' => json_encode($coordinate)]);
+        $error = new Error('coordinatearray', 'constraint.coordinatearray.invalidvalue', ['value' => json_encode($coordinate, JSON_THROW_ON_ERROR)]);
 
         self::assertEquals([$error], $constraint->validate('coordinatearray', $coordinate, $this->getContext()));
     }

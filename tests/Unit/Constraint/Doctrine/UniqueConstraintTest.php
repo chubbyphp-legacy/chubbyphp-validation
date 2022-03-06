@@ -41,7 +41,7 @@ final class UniqueConstraintTest extends TestCase
             private string $name = 'name';
         };
 
-        $modelClass = \get_class($model);
+        $modelClass = $model::class;
 
         /** @var MockObject|ObjectRepository $repository */
         $repository = $this->getMockByCalls(ObjectRepository::class, [
@@ -65,7 +65,7 @@ final class UniqueConstraintTest extends TestCase
             private string $name = 'name';
         };
 
-        $modelClass = \get_class($model);
+        $modelClass = $model::class;
 
         /** @var MockObject|ObjectRepository $repository */
         $repository = $this->getMockByCalls(ObjectRepository::class, [
@@ -102,7 +102,7 @@ final class UniqueConstraintTest extends TestCase
             private string $name = 'name';
         };
 
-        $modelClass = \get_class($model);
+        $modelClass = $model::class;
 
         /** @var MockObject|ObjectRepository $repository */
         $repository = $this->getMockByCalls(ObjectRepository::class, [

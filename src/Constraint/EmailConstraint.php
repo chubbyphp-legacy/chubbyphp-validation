@@ -35,7 +35,7 @@ final class EmailConstraint implements ConstraintInterface
             return [new Error(
                 $path,
                 'constraint.email.invalidtype',
-                ['type' => \is_object($value) ? \get_class($value) : \gettype($value)]
+                ['type' => get_debug_type($value)]
             )];
         }
 

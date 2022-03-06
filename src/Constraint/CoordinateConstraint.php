@@ -32,7 +32,7 @@ final class CoordinateConstraint implements ConstraintInterface
             return [new Error(
                 $path,
                 'constraint.coordinate.invalidtype',
-                ['type' => \is_object($value) ? \get_class($value) : \gettype($value)]
+                ['type' => get_debug_type($value)]
             )];
         }
 

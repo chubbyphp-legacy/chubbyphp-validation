@@ -12,16 +12,10 @@ use Chubbyphp\Validation\ValidatorInterface;
 final class ChoiceConstraint implements ConstraintInterface
 {
     /**
-     * @var array<int, int|string>
-     */
-    private array $choices = [];
-
-    /**
      * @param array<int, int|string> $choices
      */
-    public function __construct(array $choices)
+    public function __construct(private array $choices)
     {
-        $this->choices = $choices;
     }
 
     /**

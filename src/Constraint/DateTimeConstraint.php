@@ -11,11 +11,8 @@ use Chubbyphp\Validation\ValidatorInterface;
 
 final class DateTimeConstraint implements ConstraintInterface
 {
-    private string $format;
-
-    public function __construct(string $format = 'Y-m-d H:i:s')
+    public function __construct(private string $format = 'Y-m-d H:i:s')
     {
-        $this->format = $format;
     }
 
     /**
@@ -41,7 +38,7 @@ final class DateTimeConstraint implements ConstraintInterface
             return [new Error(
                 $path,
                 'constraint.datetime.invalidtype',
-                ['type' => \is_object($value) ? \get_class($value) : \gettype($value)]
+                ['type' => get_debug_type($value)]
             )];
         }
 

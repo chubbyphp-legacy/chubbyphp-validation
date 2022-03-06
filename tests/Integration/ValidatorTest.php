@@ -61,10 +61,7 @@ final class ValidatorTest extends TestCase
                 return $this->numeric;
             }
 
-            /**
-             * @param int|string $numeric
-             */
-            public function setNumeric($numeric): self
+            public function setNumeric(int|string $numeric): self
             {
                 $this->numeric = $numeric;
 
@@ -103,16 +100,13 @@ final class ValidatorTest extends TestCase
 
         $validatorObjectMappingRegistry = new ValidationMappingProviderRegistry([
             new class($object) implements ValidationMappingProviderInterface {
-                private object $object;
-
-                public function __construct(object $object)
+                public function __construct(private object $object)
                 {
-                    $this->object = $object;
                 }
 
                 public function getClass(): string
                 {
-                    return \get_class($this->object);
+                    return $this->object::class;
                 }
 
                 public function getValidationClassMapping(string $path): ValidationClassMappingInterface

@@ -6,23 +6,11 @@ namespace Chubbyphp\Validation\Error;
 
 final class Error implements ErrorInterface
 {
-    private string $path;
-
-    private string $key;
-
-    /**
-     * @var array<string, mixed>
-     */
-    private array $arguments;
-
     /**
      * @param array<string, mixed> $arguments
      */
-    public function __construct(string $path, string $key, array $arguments = [])
+    public function __construct(private string $path, private string $key, private array $arguments = [])
     {
-        $this->path = $path;
-        $this->key = $key;
-        $this->arguments = $arguments;
     }
 
     public function getPath(): string

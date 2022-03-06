@@ -49,7 +49,7 @@ final class AllConstraint implements ConstraintInterface
             return [new Error(
                 $path.'[_all]',
                 'constraint.all.invalidtype',
-                ['type' => \is_object($value) ? \get_class($value) : \gettype($value)]
+                ['type' => get_debug_type($value)]
             )];
         }
 

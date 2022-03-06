@@ -32,7 +32,7 @@ final class ValidatorTest extends TestCase
     public function testValidateMissingMappingExpectValidatorLogicException(): void
     {
         $model = $this->getModel();
-        $class = \get_class($model);
+        $class = $model::class;
 
         $exceptionMessage = sprintf('There is no mapping for class: "%s"', $class);
 
@@ -58,7 +58,7 @@ final class ValidatorTest extends TestCase
     public function testValidateWithoutClassMappingAndWithoutPropertyMapping(): void
     {
         $model = $this->getModel();
-        $class = \get_class($model);
+        $class = $model::class;
 
         /** @var ValidationMappingProviderInterface $mapping */
         $mapping = $this->getMockByCalls(ValidationMappingProviderInterface::class, [
@@ -82,7 +82,7 @@ final class ValidatorTest extends TestCase
     public function testValidateWithClassMappingAndWithPropertyMapping(): void
     {
         $model = $this->getModel();
-        $class = \get_class($model);
+        $class = $model::class;
 
         /** @var ErrorInterface $classError */
         $classError = $this->getMockByCalls(ErrorInterface::class, [
@@ -153,26 +153,26 @@ final class ValidatorTest extends TestCase
             Call::create('info')->with('validate: path {path}', ['path' => '']),
             Call::create('debug')->with(
                 'validate: path {path}, constraint {constraint}',
-                ['path' => '', 'constraint' => \get_class($classConstraint)]
+                ['path' => '', 'constraint' => $classConstraint::class]
             ),
             Call::create('notice')->with(
                 'validate: path {path}, constraint {constraint}, error {error}',
                 [
                     'path' => '',
-                    'constraint' => \get_class($classConstraint),
+                    'constraint' => $classConstraint::class,
                     'error' => ['key' => 'key', 'arguments' => ['key' => 'value']],
                 ]
             ),
             Call::create('info')->with('validate: path {path}', ['path' => 'name']),
             Call::create('debug')->with(
                 'validate: path {path}, constraint {constraint}',
-                ['path' => 'name', 'constraint' => \get_class($propertyConstraint)]
+                ['path' => 'name', 'constraint' => $propertyConstraint::class]
             ),
             Call::create('notice')->with(
                 'validate: path {path}, constraint {constraint}, error {error}',
                 [
                     'path' => 'name',
-                    'constraint' => \get_class($propertyConstraint),
+                    'constraint' => $propertyConstraint::class,
                     'error' => ['key' => 'key', 'arguments' => ['key' => 'value']],
                 ]
             ),
@@ -191,7 +191,7 @@ final class ValidatorTest extends TestCase
     public function testValidateWithClassMappingAndWithPropertyMappingWithoutUsedGroup(): void
     {
         $model = $this->getModel();
-        $class = \get_class($model);
+        $class = $model::class;
 
         /** @var ValidationClassMappingInterface $classMapping */
         $classMapping = $this->getMockByCalls(ValidationClassMappingInterface::class, [
@@ -230,7 +230,7 @@ final class ValidatorTest extends TestCase
     public function testValidateWithClassMappingAndWithPropertyMappingWithUsedGroup(): void
     {
         $model = $this->getModel();
-        $class = \get_class($model);
+        $class = $model::class;
 
         /** @var ErrorInterface $classError */
         $classError = $this->getMockByCalls(ErrorInterface::class, [
@@ -303,26 +303,26 @@ final class ValidatorTest extends TestCase
             Call::create('info')->with('validate: path {path}', ['path' => '']),
             Call::create('debug')->with(
                 'validate: path {path}, constraint {constraint}',
-                ['path' => '', 'constraint' => \get_class($classConstraint)]
+                ['path' => '', 'constraint' => $classConstraint::class]
             ),
             Call::create('notice')->with(
                 'validate: path {path}, constraint {constraint}, error {error}',
                 [
                     'path' => '',
-                    'constraint' => \get_class($classConstraint),
+                    'constraint' => $classConstraint::class,
                     'error' => ['key' => 'key', 'arguments' => ['key' => 'value']],
                 ]
             ),
             Call::create('info')->with('validate: path {path}', ['path' => 'name']),
             Call::create('debug')->with(
                 'validate: path {path}, constraint {constraint}',
-                ['path' => 'name', 'constraint' => \get_class($propertyConstraint)]
+                ['path' => 'name', 'constraint' => $propertyConstraint::class]
             ),
             Call::create('notice')->with(
                 'validate: path {path}, constraint {constraint}, error {error}',
                 [
                     'path' => 'name',
-                    'constraint' => \get_class($propertyConstraint),
+                    'constraint' => $propertyConstraint::class,
                     'error' => ['key' => 'key', 'arguments' => ['key' => 'value']],
                 ]
             ),

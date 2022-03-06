@@ -8,11 +8,8 @@ use Chubbyphp\Validation\ValidatorLogicException;
 
 final class MethodAccessor implements AccessorInterface
 {
-    private string $property;
-
-    public function __construct(string $property)
+    public function __construct(private string $property)
     {
-        $this->property = $property;
     }
 
     /**
@@ -39,7 +36,7 @@ final class MethodAccessor implements AccessorInterface
         }
 
         throw ValidatorLogicException::createMissingMethod(
-            \get_class($object),
+            $object::class,
             [$getMethodName, $hasMethodName, $isMethodName]
         );
     }

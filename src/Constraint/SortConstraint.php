@@ -15,16 +15,10 @@ final class SortConstraint implements ConstraintInterface
     private const ALLOWED_ORDERS = ['asc', 'desc'];
 
     /**
-     * @var array<string>
-     */
-    private array $allowedFields;
-
-    /**
      * @param array<string> $allowedFields
      */
-    public function __construct(array $allowedFields)
+    public function __construct(private array $allowedFields)
     {
-        $this->allowedFields = $allowedFields;
     }
 
     /**
@@ -44,7 +38,7 @@ final class SortConstraint implements ConstraintInterface
             return [new Error(
                 $path,
                 'constraint.sort.invalidtype',
-                ['type' => \is_object($sort) ? \get_class($sort) : \gettype($sort)]
+                ['type' => get_debug_type($sort)]
             )];
         }
 
@@ -78,7 +72,7 @@ final class SortConstraint implements ConstraintInterface
             $errors[] = new Error(
                 $path.'.'.$field,
                 'constraint.sort.order.invalidtype',
-                ['field' => $field, 'type' => \is_object($order) ? \get_class($order) : \gettype($order)]
+                ['field' => $field, 'type' => get_debug_type($order)]
             );
 
             return $errors;

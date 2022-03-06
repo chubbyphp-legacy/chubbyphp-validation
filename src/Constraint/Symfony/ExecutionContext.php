@@ -19,25 +19,12 @@ final class ExecutionContext implements ExecutionContextInterface
 {
     private ConstraintViolationList $violations;
 
-    private string $path;
-
-    /**
-     * @var mixed
-     */
-    private $value;
-
-    private ValidatorContextInterface $context;
-
     /**
      * @param mixed $value
      */
-    public function __construct(string $path, $value, ValidatorContextInterface $context)
+    public function __construct(private string $path, private $value, private ValidatorContextInterface $context)
     {
         $this->violations = new ConstraintViolationList();
-
-        $this->path = $path;
-        $this->value = $value;
-        $this->context = $context;
     }
 
     /**
@@ -170,6 +157,7 @@ final class ExecutionContext implements ExecutionContextInterface
     public function getErrors(): array
     {
         $errors = [];
+
         /** @var ConstraintViolation $violation */
         foreach ($this->violations as $violation) {
             $errors[] = new Error(

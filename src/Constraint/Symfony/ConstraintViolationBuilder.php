@@ -11,54 +11,26 @@ use Symfony\Component\Validator\Violation\ConstraintViolationBuilderInterface;
 
 final class ConstraintViolationBuilder implements ConstraintViolationBuilderInterface
 {
-    /**
-     * @var ConstraintViolationListInterface<int, ConstraintViolationInterface>
-     */
-    private ConstraintViolationListInterface $violations;
-
-    private string $path;
-
-    private string $message;
-
-    /**
-     * @var array<mixed>
-     */
-    private array $parameters;
-
-    /**
-     * @var mixed
-     */
-    private $invalidValue;
+    private mixed $invalidValue = null;
 
     private ?int $plural = null;
 
     private ?string $code = null;
 
-    /**
-     * @var mixed
-     */
-    private $cause;
+    private mixed $cause = null;
 
     /**
      * @param ConstraintViolationListInterface<int, ConstraintViolationInterface> $violations
      * @param array<mixed>                                                        $parameters
      */
     public function __construct(
-        ConstraintViolationListInterface $violations,
-        string $message,
-        array $parameters,
-        string $path
+        private ConstraintViolationListInterface $violations,
+        private string $message,
+        private array $parameters,
+        private string $path
     ) {
-        $this->violations = $violations;
-
-        $this->message = $message;
-        $this->parameters = $parameters;
-        $this->path = $path;
     }
 
-    /**
-     * @return ConstraintViolationBuilder
-     */
     public function atPath(string $path): static
     {
         $this->path = $path;
@@ -66,9 +38,6 @@ final class ConstraintViolationBuilder implements ConstraintViolationBuilderInte
         return $this;
     }
 
-    /**
-     * @return ConstraintViolationBuilder
-     */
     public function setParameter(string $key, string $value): static
     {
         $this->parameters[$key] = $value;
@@ -78,8 +47,6 @@ final class ConstraintViolationBuilder implements ConstraintViolationBuilderInte
 
     /**
      * @param array<mixed> $parameters
-     *
-     * @return ConstraintViolationBuilder
      */
     public function setParameters(array $parameters): static
     {
@@ -88,17 +55,11 @@ final class ConstraintViolationBuilder implements ConstraintViolationBuilderInte
         return $this;
     }
 
-    /**
-     * @return ConstraintViolationBuilder
-     */
     public function setTranslationDomain(string $translationDomain): static
     {
         return $this;
     }
 
-    /**
-     * @return ConstraintViolationBuilder
-     */
     public function setInvalidValue(mixed $invalidValue): static
     {
         $this->invalidValue = $invalidValue;
@@ -106,9 +67,6 @@ final class ConstraintViolationBuilder implements ConstraintViolationBuilderInte
         return $this;
     }
 
-    /**
-     * @return ConstraintViolationBuilder
-     */
     public function setPlural(int $number): static
     {
         $this->plural = $number;
@@ -116,9 +74,6 @@ final class ConstraintViolationBuilder implements ConstraintViolationBuilderInte
         return $this;
     }
 
-    /**
-     * @return ConstraintViolationBuilder
-     */
     public function setCode(?string $code): static
     {
         $this->code = $code;
@@ -126,9 +81,6 @@ final class ConstraintViolationBuilder implements ConstraintViolationBuilderInte
         return $this;
     }
 
-    /**
-     * @return ConstraintViolationBuilder
-     */
     public function setCause(mixed $cause): static
     {
         $this->cause = $cause;

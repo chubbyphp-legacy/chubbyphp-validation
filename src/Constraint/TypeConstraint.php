@@ -11,11 +11,8 @@ use Chubbyphp\Validation\ValidatorInterface;
 
 final class TypeConstraint implements ConstraintInterface
 {
-    private string $wishedType;
-
-    public function __construct(string $wishedType)
+    public function __construct(private string $wishedType)
     {
-        $this->wishedType = $wishedType;
     }
 
     /**
@@ -40,7 +37,7 @@ final class TypeConstraint implements ConstraintInterface
                 return [];
             }
 
-            return [$this->getInvalidTypeErrorByPathAndType($path, (string) \get_class($value))];
+            return [$this->getInvalidTypeErrorByPathAndType($path, (string) $value::class)];
         }
 
         if ($type === $this->wishedType) {

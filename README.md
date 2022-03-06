@@ -26,14 +26,14 @@ A simple validation.
 
 ## Requirements
 
- * php: ^7.4|^8.0
- * psr/log: ^1.0
+ * php: ^8.0
+ * psr/log: ^1.1.4|^2.0|^3.0
 
 ## Suggest
 
- * chubbyphp/chubbyphp-container: ^1.0
- * pimple/pimple: ^3.2.3
- * psr/container: ^1.0
+ * chubbyphp/chubbyphp-container: ^2.1
+ * pimple/pimple: ^3.5
+ * psr/container: ^1.1.2|^2.0.2
 
 ## Installation
 
@@ -223,7 +223,7 @@ $errors = $validator->validate(
 
 ## Copyright
 
-Dominik Zogg 2021
+Dominik Zogg 2022
 
 
 [1]: https://packagist.org/packages/chubbyphp/chubbyphp-validation

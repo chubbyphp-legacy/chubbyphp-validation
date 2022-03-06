@@ -14,20 +14,11 @@ use Doctrine\Persistence\ObjectManager;
 
 final class UniqueConstraint implements ConstraintInterface
 {
-    private ObjectManager $objectManager;
-
-    /**
-     * @var array<int, string>
-     */
-    private array $uniqueProperties;
-
     /**
      * @param array<int, string> $uniqueProperties
      */
-    public function __construct(ObjectManager $objectManager, array $uniqueProperties)
+    public function __construct(private ObjectManager $objectManager, private array $uniqueProperties)
     {
-        $this->objectManager = $objectManager;
-        $this->uniqueProperties = $uniqueProperties;
     }
 
     /**
@@ -48,7 +39,7 @@ final class UniqueConstraint implements ConstraintInterface
         $criteria = $this->getCriteria($model);
 
         /** @var class-string $modelClass */
-        $modelClass = \get_class($model);
+        $modelClass = $model::class;
 
         if (null === $persistedModel = $this->objectManager->getRepository($modelClass)->findOneBy($criteria)) {
             return [];

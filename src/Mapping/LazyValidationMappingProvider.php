@@ -8,20 +8,11 @@ use Psr\Container\ContainerInterface;
 
 final class LazyValidationMappingProvider implements ValidationMappingProviderInterface
 {
-    private ContainerInterface $container;
-
-    private string $serviceId;
-
-    private string $class;
-
     /**
      * @param string $serviceId
      */
-    public function __construct(ContainerInterface $container, $serviceId, string $class)
+    public function __construct(private ContainerInterface $container, private $serviceId, private string $class)
     {
-        $this->container = $container;
-        $this->serviceId = $serviceId;
-        $this->class = $class;
     }
 
     public function getClass(): string
