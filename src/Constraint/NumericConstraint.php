@@ -26,7 +26,7 @@ final class NumericConstraint implements ConstraintInterface
             return [];
         }
 
-        if (!is_scalar($value) && !(\is_object($value) && method_exists($value, '__toString'))) {
+        if (!\is_scalar($value) && !(\is_object($value) && method_exists($value, '__toString'))) {
             return [new Error(
                 $path,
                 'constraint.numeric.invalidtype',

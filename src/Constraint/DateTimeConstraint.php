@@ -34,7 +34,7 @@ final class DateTimeConstraint implements ConstraintInterface
             return $this->validateDateTime($path, $value);
         }
 
-        if (!is_scalar($value) && !(\is_object($value) && method_exists($value, '__toString'))) {
+        if (!\is_scalar($value) && !(\is_object($value) && method_exists($value, '__toString'))) {
             return [new Error(
                 $path,
                 'constraint.datetime.invalidtype',
