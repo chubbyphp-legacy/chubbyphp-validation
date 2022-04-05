@@ -9,6 +9,3 @@ parameters:
         -
             message: '/PHPDoc tag @var for variable \$parentReflectionClass contains generic class ReflectionClass but does not specify its types\: T/'
             path: %currentWorkingDirectory%/src/Mapping/ValidationMappingProviderRegistry.php
-        -
-            message: '/Property Chubbyphp\\Validation\\Error\\ErrorMessages\:\:\$errorMessages \(array\<string, array\<string\>\>\|null\) does not accept array\<string, array\>\./'
-            path: %currentWorkingDirectory%/src/Error/ErrorMessages.php
