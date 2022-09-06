@@ -24,9 +24,9 @@ final class SortConstraint implements ConstraintInterface
     /**
      * @param mixed $sort
      *
-     * @throws ValidatorLogicException
-     *
      * @return array<ErrorInterface>
+     *
+     * @throws ValidatorLogicException
      */
     public function validate(
         string $path,

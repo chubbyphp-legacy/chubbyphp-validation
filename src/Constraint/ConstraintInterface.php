@@ -14,9 +14,9 @@ interface ConstraintInterface
     /**
      * @param mixed $value
      *
-     * @throws ValidatorLogicException
-     *
      * @return array<ErrorInterface>
+     *
+     * @throws ValidatorLogicException
      */
     public function validate(
         string $path,

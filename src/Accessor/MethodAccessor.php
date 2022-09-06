@@ -13,9 +13,9 @@ final class MethodAccessor implements AccessorInterface
     }
 
     /**
-     * @throws ValidatorLogicException
-     *
      * @return mixed
+     *
+     * @throws ValidatorLogicException
      */
     public function getValue(object $object)
     {

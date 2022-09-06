@@ -23,6 +23,7 @@ use Psr\Log\LoggerInterface;
 
 /**
  * @internal
+ *
  * @covers \Chubbyphp\Validation\Validator
  */
 final class ValidatorTest extends TestCase

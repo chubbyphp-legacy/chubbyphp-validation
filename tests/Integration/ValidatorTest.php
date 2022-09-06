@@ -29,6 +29,7 @@ use Symfony\Component\Validator\Context\ExecutionContextInterface;
 
 /**
  * @internal
+ *
  * @coversNothing
  */
 final class ValidatorTest extends TestCase
