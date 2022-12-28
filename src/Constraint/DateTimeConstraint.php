@@ -48,6 +48,10 @@ final class DateTimeConstraint implements ConstraintInterface
 
         $dateTimeErrors = \DateTimeImmutable::getLastErrors();
 
+        if (!$dateTimeErrors) {
+            return [];
+        }
+
         return [...$this->errorsByDateTimeLastErrors(
             $path,
             $value,
