@@ -9,9 +9,7 @@ final class Error implements ErrorInterface
     /**
      * @param array<string, mixed> $arguments
      */
-    public function __construct(private string $path, private string $key, private array $arguments = [])
-    {
-    }
+    public function __construct(private string $path, private string $key, private array $arguments = []) {}
 
     public function getPath(): string
     {

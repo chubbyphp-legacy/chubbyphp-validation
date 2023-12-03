@@ -53,7 +53,7 @@ final class CoordinateConstraintTest extends TestCase
     }
 
     /**
-     * @dataProvider getCoordinates
+     * @dataProvider provideCoodinates
      */
     public function testWithCoordinate(string $coordinate): void
     {
@@ -62,7 +62,7 @@ final class CoordinateConstraintTest extends TestCase
         self::assertEquals([], $constraint->validate('coordinate', $coordinate, $this->getContext()));
     }
 
-    public function getCoordinates(): array
+    public static function provideCoodinates(): iterable
     {
         return [
             ['coordinate' => '-90, -180', 'latitude' => '-90', 'longitude' => '-180'],
@@ -73,7 +73,7 @@ final class CoordinateConstraintTest extends TestCase
     }
 
     /**
-     * @dataProvider getCoordinates
+     * @dataProvider provideCoodinates
      */
     public function testGetLangitudeAndLongitude(string $coordinate, string $latitude, string $longitude): void
     {
@@ -85,7 +85,7 @@ final class CoordinateConstraintTest extends TestCase
     }
 
     /**
-     * @dataProvider getInvalidCoordinates
+     * @dataProvider provideWithInvalidCoordinateCases
      */
     public function testWithInvalidCoordinate(string $coordinate): void
     {
@@ -96,7 +96,7 @@ final class CoordinateConstraintTest extends TestCase
         self::assertEquals([$error], $constraint->validate('coordinate', $coordinate, $this->getContext()));
     }
 
-    public function getInvalidCoordinates(): array
+    public static function provideWithInvalidCoordinateCases(): iterable
     {
         return [
             ['coordinate' => '-91, -181'],

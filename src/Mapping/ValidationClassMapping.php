@@ -12,9 +12,7 @@ final class ValidationClassMapping implements ValidationClassMappingInterface
      * @param array<int, ConstraintInterface> $constraints
      * @param array<int, string>              $groups
      */
-    public function __construct(private array $constraints, private array $groups)
-    {
-    }
+    public function __construct(private array $constraints, private array $groups) {}
 
     /**
      * @return array<ConstraintInterface>

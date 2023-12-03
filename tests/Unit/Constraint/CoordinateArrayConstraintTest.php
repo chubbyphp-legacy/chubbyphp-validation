@@ -46,7 +46,7 @@ final class CoordinateArrayConstraintTest extends TestCase
     }
 
     /**
-     * @dataProvider getCoordinateArrays
+     * @dataProvider provideWithCoordinateArrayCases
      */
     public function testWithCoordinateArray(array $coordinate): void
     {
@@ -55,7 +55,7 @@ final class CoordinateArrayConstraintTest extends TestCase
         self::assertEquals([], $constraint->validate('coordinatearray', $coordinate, $this->getContext()));
     }
 
-    public function getCoordinateArrays(): array
+    public static function provideWithCoordinateArrayCases(): iterable
     {
         return [
             ['coordinate' => ['lat' => '-90', 'lon' => '-180']],
@@ -66,7 +66,7 @@ final class CoordinateArrayConstraintTest extends TestCase
     }
 
     /**
-     * @dataProvider getInvalidCoordinateArrays
+     * @dataProvider provideWithInvalidCoordinateArrayCases
      */
     public function testWithInvalidCoordinateArray(array $coordinate): void
     {
@@ -77,7 +77,7 @@ final class CoordinateArrayConstraintTest extends TestCase
         self::assertEquals([$error], $constraint->validate('coordinatearray', $coordinate, $this->getContext()));
     }
 
-    public function getInvalidCoordinateArrays(): array
+    public static function provideWithInvalidCoordinateArrayCases(): iterable
     {
         return [
             ['coordinate' => ['lat' => '-91', 'lon' => '-181']],

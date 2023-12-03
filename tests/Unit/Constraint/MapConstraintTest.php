@@ -70,30 +70,6 @@ final class MapConstraintTest extends TestCase
         ], $constraint->validate('map', ['name' => 'example'], $this->getContext(), $this->getValidator()));
     }
 
-    public function testWithConstraintButWithoutArray(): void
-    {
-        error_clear_last();
-
-        $constraint = new MapConstraint(['name' => $this->getConstraint()]);
-
-        $error = error_get_last();
-
-        error_clear_last();
-
-        self::assertNotNull($error);
-
-        self::assertSame(E_USER_DEPRECATED, $error['type']);
-        self::assertSame(
-            'Constraints by field "name" should be an array of "Chubbyphp\Validation\Constraint\ConstraintInterface"',
-            $error['message']
-        );
-
-        self::assertEquals(
-            [],
-            $constraint->validate('map', ['name' => 'example'], $this->getContext(), $this->getValidator())
-        );
-    }
-
     private function getValidator(): ValidatorInterface
     {
         // @var ValidatorInterface|MockObject $validator
@@ -105,7 +81,6 @@ final class MapConstraintTest extends TestCase
         /** @var ConstraintInterface|MockObject $constraint */
         $constraint = $this
             ->getMockBuilder(ConstraintInterface::class)
-            ->setMethods([])
             ->getMockForAbstractClass()
         ;
 

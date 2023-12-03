@@ -11,9 +11,7 @@ use Chubbyphp\Validation\ValidatorInterface;
 
 final class TypeConstraint implements ConstraintInterface
 {
-    public function __construct(private string $wishedType)
-    {
-    }
+    public function __construct(private string $wishedType) {}
 
     /**
      * @param mixed $value

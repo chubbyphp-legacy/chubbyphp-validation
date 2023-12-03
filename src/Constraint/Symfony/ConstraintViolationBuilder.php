@@ -28,8 +28,7 @@ final class ConstraintViolationBuilder implements ConstraintViolationBuilderInte
         private string $message,
         private array $parameters,
         private string $path
-    ) {
-    }
+    ) {}
 
     public function atPath(string $path): static
     {
@@ -52,6 +51,11 @@ final class ConstraintViolationBuilder implements ConstraintViolationBuilderInte
     {
         $this->parameters = $parameters;
 
+        return $this;
+    }
+
+    public function disableTranslation(): static
+    {
         return $this;
     }
 

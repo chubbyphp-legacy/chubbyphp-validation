@@ -24,9 +24,7 @@ final class ValidationPropertyMappingBuilder implements ValidationPropertyMappin
 
     private ?AccessorInterface $accessor = null;
 
-    private function __construct()
-    {
-    }
+    private function __construct() {}
 
     public static function create(string $name, array $constraints): ValidationPropertyMappingBuilderInterface
     {

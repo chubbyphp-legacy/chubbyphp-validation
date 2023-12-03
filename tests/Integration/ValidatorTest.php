@@ -101,9 +101,7 @@ final class ValidatorTest extends TestCase
 
         $validatorObjectMappingRegistry = new ValidationMappingProviderRegistry([
             new class($object) implements ValidationMappingProviderInterface {
-                public function __construct(private object $object)
-                {
-                }
+                public function __construct(private object $object) {}
 
                 public function getClass(): string
                 {

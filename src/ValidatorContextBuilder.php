@@ -11,9 +11,7 @@ final class ValidatorContextBuilder implements ValidatorContextBuilderInterface
      */
     private ?array $groups = [];
 
-    private function __construct()
-    {
-    }
+    private function __construct() {}
 
     public static function create(): ValidatorContextBuilderInterface
     {

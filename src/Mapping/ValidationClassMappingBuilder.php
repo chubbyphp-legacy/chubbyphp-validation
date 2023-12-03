@@ -18,9 +18,7 @@ final class ValidationClassMappingBuilder implements ValidationClassMappingBuild
      */
     private ?array $groups = [];
 
-    private function __construct()
-    {
-    }
+    private function __construct() {}
 
     public static function create(array $constraints): ValidationClassMappingBuilderInterface
     {

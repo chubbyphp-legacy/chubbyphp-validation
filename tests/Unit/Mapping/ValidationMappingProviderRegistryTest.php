@@ -58,7 +58,6 @@ final class ValidationMappingProviderRegistryTest extends TestCase
     {
         /** @var MockObject|ValidationMappingProviderInterface $objectMapping */
         $objectMapping = $this->getMockBuilder(ValidationMappingProviderInterface::class)
-            ->setMethods([])
             ->getMockForAbstractClass()
         ;
 
@@ -75,7 +74,6 @@ final class ValidationMappingProviderRegistryTest extends TestCase
     {
         /** @var MockObject|ValidationMappingProviderInterface $objectMapping */
         $objectMapping = $this->getMockBuilder(ValidationMappingProviderInterface::class)
-            ->setMethods([])
             ->getMockForAbstractClass()
         ;
 
@@ -124,18 +122,14 @@ final class ValidationMappingProviderRegistryTest extends TestCase
              *
              * Acts as a no-op if already initialized.
              */
-            public function __load(): void
-            {
-            }
+            public function __load(): void {}
 
             /**
              * Returns whether this proxy is initialized or not.
              *
              * @return bool
              */
-            public function __isInitialized()
-            {
-            }
+            public function __isInitialized() {}
         };
     }
 }

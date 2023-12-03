@@ -11,9 +11,7 @@ use Chubbyphp\Validation\ValidatorInterface;
 
 final class DateTimeConstraint implements ConstraintInterface
 {
-    public function __construct(private string $format = 'Y-m-d H:i:s')
-    {
-    }
+    public function __construct(private string $format = 'Y-m-d H:i:s') {}
 
     /**
      * @param mixed $value

@@ -11,9 +11,7 @@ final class LazyValidationMappingProvider implements ValidationMappingProviderIn
     /**
      * @param string $serviceId
      */
-    public function __construct(private ContainerInterface $container, private $serviceId, private string $class)
-    {
-    }
+    public function __construct(private ContainerInterface $container, private $serviceId, private string $class) {}
 
     public function getClass(): string
     {

@@ -28,7 +28,7 @@ final class ChoiceConstraintTest extends TestCase
     }
 
     /**
-     * @dataProvider choicesProvider
+     * @dataProvider provideWithChoiceCases
      *
      * @param mixed $choice
      */
@@ -39,7 +39,7 @@ final class ChoiceConstraintTest extends TestCase
         self::assertEquals([], $constraint->validate('choice', $choice, $this->getContext()));
     }
 
-    public function choicesProvider(): array
+    public static function provideWithChoiceCases(): iterable
     {
         return [
             ['choices' => ['active', 'inactive'], 'choice' => 'active'],
@@ -50,7 +50,7 @@ final class ChoiceConstraintTest extends TestCase
     }
 
     /**
-     * @dataProvider invalidChoicesProvider
+     * @dataProvider provideWithInvalidChoiceCases
      *
      * @param mixed $choice
      */
@@ -67,7 +67,7 @@ final class ChoiceConstraintTest extends TestCase
         self::assertEquals([$error], $constraint->validate('choice', $choice, $this->getContext()));
     }
 
-    public function invalidChoicesProvider(): array
+    public static function provideWithInvalidChoiceCases(): iterable
     {
         return [
             ['choices' => ['active', 'inactive'], 'choice' => 'test'],

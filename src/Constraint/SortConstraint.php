@@ -17,9 +17,7 @@ final class SortConstraint implements ConstraintInterface
     /**
      * @param array<string> $allowedFields
      */
-    public function __construct(private array $allowedFields)
-    {
-    }
+    public function __construct(private array $allowedFields) {}
 
     /**
      * @param mixed $sort

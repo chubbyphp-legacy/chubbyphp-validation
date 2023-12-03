@@ -73,7 +73,6 @@ final class AllConstraintTest extends TestCase
         /** @var ConstraintInterface|MockObject $constraint */
         $constraint = $this
             ->getMockBuilder(ConstraintInterface::class)
-            ->setMethods([])
             ->getMockForAbstractClass()
         ;
 

@@ -58,8 +58,7 @@ final class PropertyAccessorTest extends TestCase
     {
         self::expectException(ValidatorLogicException::class);
 
-        $object = new class() {
-        };
+        $object = new class() {};
 
         $accessor = new PropertyAccessor('name');
         $accessor->getValue($object);

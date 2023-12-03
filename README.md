@@ -2,7 +2,7 @@
 
 [![CI](https://github.com/chubbyphp/chubbyphp-validation/workflows/CI/badge.svg?branch=master)](https://github.com/chubbyphp/chubbyphp-validation/actions?query=workflow%3ACI)
 [![Coverage Status](https://coveralls.io/repos/github/chubbyphp/chubbyphp-validation/badge.svg?branch=master)](https://coveralls.io/github/chubbyphp/chubbyphp-validation?branch=master)
-[![Infection MSI](https://badge.stryker-mutator.io/github.com/chubbyphp/chubbyphp-validation/master)](https://dashboard.stryker-mutator.io/reports/github.com/chubbyphp/chubbyphp-validation/master)
+[![Mutation testing badge](https://img.shields.io/endpoint?style=flat&url=https%3A%2F%2Fbadge-api.stryker-mutator.io%2Fgithub.com%2Fchubbyphp%2Fchubbyphp-validation%2Fmaster)](https://dashboard.stryker-mutator.io/reports/github.com/chubbyphp/chubbyphp-validation/master)[![Latest Stable Version](https://poser.pugx.org/chubbyphp/chubbyphp-validation/v/stable.png)](https://packagist.org/packages/chubbyphp/chubbyphp-validation)
 [![Latest Stable Version](https://poser.pugx.org/chubbyphp/chubbyphp-validation/v/stable.png)](https://packagist.org/packages/chubbyphp/chubbyphp-validation)
 [![Total Downloads](https://poser.pugx.org/chubbyphp/chubbyphp-validation/downloads.png)](https://packagist.org/packages/chubbyphp/chubbyphp-validation)
 [![Monthly Downloads](https://poser.pugx.org/chubbyphp/chubbyphp-validation/d/monthly)](https://packagist.org/packages/chubbyphp/chubbyphp-validation)
@@ -26,21 +26,21 @@ A simple validation.
 
 ## Requirements
 
- * php: ^8.0
- * psr/log: ^1.1.4|^2.0|^3.0
+ * php: ^8.1
+ * psr/log: ^2.0|^3.0
 
 ## Suggest
 
- * chubbyphp/chubbyphp-container: ^2.1
+ * chubbyphp/chubbyphp-container: ^2.2
  * pimple/pimple: ^3.5
- * psr/container: ^1.1.2|^2.0.2
+ * psr/container: ^2.0.2
 
 ## Installation
 
 Through [Composer](http://getcomposer.org) as [chubbyphp/chubbyphp-validation][1].
 
 ```sh
-composer require chubbyphp/chubbyphp-validation "^3.12"
+composer require chubbyphp/chubbyphp-validation "^4.0"
 ```
 
 ## Usage

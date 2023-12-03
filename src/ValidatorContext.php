@@ -9,9 +9,7 @@ final class ValidatorContext implements ValidatorContextInterface
     /**
      * @param array<int, string> $groups
      */
-    public function __construct(private array $groups = [])
-    {
-    }
+    public function __construct(private array $groups = []) {}
 
     /**
      * @return array<int, string>

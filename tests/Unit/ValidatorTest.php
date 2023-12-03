@@ -346,7 +346,6 @@ final class ValidatorTest extends TestCase
 
     private function getModel()
     {
-        return new class() {
-        };
+        return new class() {};
     }
 }

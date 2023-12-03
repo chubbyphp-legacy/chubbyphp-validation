@@ -8,7 +8,6 @@ use Chubbyphp\Mock\MockByCallsTrait;
 use Chubbyphp\Validation\Constraint\EmailConstraint;
 use Chubbyphp\Validation\Error\Error;
 use Chubbyphp\Validation\ValidatorContextInterface;
-use PHPUnit\Framework\MockObject\MockObject;
 use PHPUnit\Framework\TestCase;
 
 /**
@@ -48,15 +47,6 @@ final class EmailConstraintTest extends TestCase
         $constraint = new EmailConstraint();
 
         self::assertEquals([], $constraint->validate('email', 'firstname.lastname@domain.tld', $this->getContext()));
-    }
-
-    public function testPattern(): void
-    {
-        $matches = [];
-        preg_match(EmailConstraint::PATTERN, 'firstname.lastname@domain.tld', $matches);
-
-        self::assertSame('firstname.lastname', $matches[1]);
-        self::assertSame('domain.tld', $matches[2]);
     }
 
     public function testWithInvalidEmail(): void

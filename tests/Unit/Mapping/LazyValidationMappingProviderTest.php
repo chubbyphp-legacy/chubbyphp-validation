@@ -45,7 +45,7 @@ final class LazyValidationMappingProviderTest extends TestCase
     private function getContainer(array $services): ContainerInterface
     {
         /** @var ContainerInterface|MockObject $container */
-        $container = $this->getMockBuilder(ContainerInterface::class)->setMethods(['get'])->getMockForAbstractClass();
+        $container = $this->getMockBuilder(ContainerInterface::class)->getMockForAbstractClass();
 
         $container
             ->expects(self::any())

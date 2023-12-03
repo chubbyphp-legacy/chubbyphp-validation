@@ -18,8 +18,7 @@ final class ValidationPropertyMapping implements ValidationPropertyMappingInterf
         private array $constraints,
         private array $groups,
         private AccessorInterface $accessor
-    ) {
-    }
+    ) {}
 
     public function getName(): string
     {

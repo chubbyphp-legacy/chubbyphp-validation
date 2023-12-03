@@ -14,9 +14,7 @@ final class ChoiceConstraint implements ConstraintInterface
     /**
      * @param array<int, int|string> $choices
      */
-    public function __construct(private array $choices)
-    {
-    }
+    public function __construct(private array $choices) {}
 
     /**
      * @param mixed $value

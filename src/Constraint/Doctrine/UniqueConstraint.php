@@ -17,9 +17,7 @@ final class UniqueConstraint implements ConstraintInterface
     /**
      * @param array<int, string> $uniqueProperties
      */
-    public function __construct(private ObjectManager $objectManager, private array $uniqueProperties)
-    {
-    }
+    public function __construct(private ObjectManager $objectManager, private array $uniqueProperties) {}
 
     /**
      * @param mixed $model

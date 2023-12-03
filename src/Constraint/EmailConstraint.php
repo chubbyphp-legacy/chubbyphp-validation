@@ -12,11 +12,6 @@ use Chubbyphp\Validation\ValidatorInterface;
 final class EmailConstraint implements ConstraintInterface
 {
     /**
-     * @deprecated this pattern is not in use anymore in favor of filter_var($value, FILTER_VALIDATE_EMAIL)
-     */
-    public const PATTERN = '/^(.+)\@(\S+\.\S+)$/';
-
-    /**
      * @param mixed $value
      *
      * @return array<ErrorInterface>

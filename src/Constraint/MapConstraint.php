@@ -18,25 +18,12 @@ final class MapConstraint implements ConstraintInterface
     private array $constraintsByFields;
 
     /**
-     * @param array<string, array<ConstraintInterface>|ConstraintInterface> $constraintsByFields
+     * @param array<string, array<ConstraintInterface>> $constraintsByFields
      */
     public function __construct(array $constraintsByFields = [])
     {
         $this->constraintsByFields = [];
         foreach ($constraintsByFields as $field => $constraintsByField) {
-            if ($constraintsByField instanceof ConstraintInterface) {
-                @trigger_error(
-                    sprintf(
-                        'Constraints by field "%s" should be an array of "%s"',
-                        $field,
-                        ConstraintInterface::class
-                    ),
-                    E_USER_DEPRECATED
-                );
-
-                $constraintsByField = [$constraintsByField];
-            }
-
             $this->addConstraintsByField($field, $constraintsByField);
         }
     }

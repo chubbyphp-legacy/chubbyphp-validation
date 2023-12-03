@@ -126,6 +126,34 @@ final class ConstraintViolationBuilderTest extends TestCase
         self::assertNull($violation->getCause());
     }
 
+    public function testWithDisableTranslation(): void
+    {
+        $violations = new ConstraintViolationList();
+
+        $violationBuilder = (new ConstraintViolationBuilder($violations, 'message', ['key' => 'value'], 'path'))
+            ->disableTranslation()
+        ;
+
+        $violationBuilder->addViolation();
+
+        self::assertSame(1, $violations->count());
+
+        /** @var ConstraintViolation $violation */
+        $violation = $violations->get(0);
+
+        self::assertInstanceOf(ConstraintViolation::class, $violation);
+
+        self::assertSame('message', $violation->getMessage());
+        self::assertSame('message', $violation->getMessageTemplate());
+        self::assertSame(['key' => 'value'], $violation->getParameters());
+        self::assertNull($violation->getPlural());
+        self::assertNull($violation->getRoot());
+        self::assertSame('path', $violation->getPropertyPath());
+        self::assertNull($violation->getInvalidValue());
+        self::assertNull($violation->getCode());
+        self::assertNull($violation->getCause());
+    }
+
     public function testWithSetTranslationDomain(): void
     {
         $violations = new ConstraintViolationList();

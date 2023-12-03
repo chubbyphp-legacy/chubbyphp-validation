@@ -91,8 +91,7 @@ final class MethodAccessorTest extends TestCase
             '/There are no accessible method\(s\) "getName", "hasName", "isName", within class\: "[^"]+"/'
         );
 
-        $object = new class() {
-        };
+        $object = new class() {};
 
         $accessor = new MethodAccessor('name');
         $accessor->getValue($object);
