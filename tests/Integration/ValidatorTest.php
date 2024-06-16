@@ -218,7 +218,7 @@ final class ValidatorTest extends TestCase
                 'message' => 'validate: path {path}, constraint {constraint}',
                 'context' => [
                     'path' => 'notBlank',
-                    'constraint' => 'Chubbyphp\\Validation\\Constraint\\Symfony\\ConstraintAdapter',
+                    'constraint' => 'Chubbyphp\Validation\Constraint\Symfony\ConstraintAdapter',
                 ],
             ],
             [
@@ -226,7 +226,7 @@ final class ValidatorTest extends TestCase
                 'message' => 'validate: path {path}, constraint {constraint}, error {error}',
                 'context' => [
                     'path' => 'notBlank',
-                    'constraint' => 'Chubbyphp\\Validation\\Constraint\\Symfony\\ConstraintAdapter',
+                    'constraint' => 'Chubbyphp\Validation\Constraint\Symfony\ConstraintAdapter',
                     'error' => [
                         'key' => 'This value should not be blank.',
                         'arguments' => [
@@ -253,7 +253,7 @@ final class ValidatorTest extends TestCase
                 'message' => 'validate: path {path}, constraint {constraint}',
                 'context' => [
                     'path' => 'numeric',
-                    'constraint' => 'Chubbyphp\\Validation\\Constraint\\NumericRangeConstraint',
+                    'constraint' => 'Chubbyphp\Validation\Constraint\NumericRangeConstraint',
                 ],
             ],
             [
@@ -261,7 +261,7 @@ final class ValidatorTest extends TestCase
                 'message' => 'validate: path {path}, constraint {constraint}, error {error}',
                 'context' => [
                     'path' => 'numeric',
-                    'constraint' => 'Chubbyphp\\Validation\\Constraint\\NumericRangeConstraint',
+                    'constraint' => 'Chubbyphp\Validation\Constraint\NumericRangeConstraint',
                     'error' => [
                         'key' => 'constraint.numericrange.outofrange',
                         'arguments' => [
@@ -284,7 +284,7 @@ final class ValidatorTest extends TestCase
                 'message' => 'validate: path {path}, constraint {constraint}',
                 'context' => [
                     'path' => 'callback',
-                    'constraint' => 'Chubbyphp\\Validation\\Constraint\\Symfony\\ConstraintAdapter',
+                    'constraint' => 'Chubbyphp\Validation\Constraint\Symfony\ConstraintAdapter',
                 ],
             ],
             [
@@ -292,7 +292,7 @@ final class ValidatorTest extends TestCase
                 'message' => 'validate: path {path}, constraint {constraint}, error {error}',
                 'context' => [
                     'path' => 'callback',
-                    'constraint' => 'Chubbyphp\\Validation\\Constraint\\Symfony\\ConstraintAdapter',
+                    'constraint' => 'Chubbyphp\Validation\Constraint\Symfony\ConstraintAdapter',
                     'error' => [
                         'key' => 'callback',
                         'arguments' => [
@@ -318,7 +318,7 @@ final class ValidatorTest extends TestCase
                 'message' => 'validate: path {path}, constraint {constraint}',
                 'context' => [
                     'path' => 'all',
-                    'constraint' => 'Chubbyphp\\Validation\\Constraint\\AllConstraint',
+                    'constraint' => 'Chubbyphp\Validation\Constraint\AllConstraint',
                 ],
             ],
             [
@@ -326,7 +326,7 @@ final class ValidatorTest extends TestCase
                 'message' => 'validate: path {path}, constraint {constraint}, error {error}',
                 'context' => [
                     'path' => 'all',
-                    'constraint' => 'Chubbyphp\\Validation\\Constraint\\AllConstraint',
+                    'constraint' => 'Chubbyphp\Validation\Constraint\AllConstraint',
                     'error' => [
                         'key' => 'constraint.datetime.warning',
                         'arguments' => [
