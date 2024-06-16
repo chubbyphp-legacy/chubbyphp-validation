@@ -53,16 +53,16 @@ final class CoordinateConstraintTest extends TestCase
     }
 
     /**
-     * @dataProvider provideCoodinates
+     * @dataProvider provideCoordinates
      */
-    public function testWithCoordinate(string $coordinate): void
+    public function testWithCoordinate(string $coordinate, string $latitude, string $longitude): void
     {
         $constraint = new CoordinateConstraint();
 
         self::assertEquals([], $constraint->validate('coordinate', $coordinate, $this->getContext()));
     }
 
-    public static function provideCoodinates(): iterable
+    public static function provideCoordinates(): iterable
     {
         return [
             ['coordinate' => '-90, -180', 'latitude' => '-90', 'longitude' => '-180'],
@@ -73,9 +73,9 @@ final class CoordinateConstraintTest extends TestCase
     }
 
     /**
-     * @dataProvider provideCoodinates
+     * @dataProvider provideCoordinates
      */
-    public function testGetLangitudeAndLongitude(string $coordinate, string $latitude, string $longitude): void
+    public function testGetLatitudeAndLongitude(string $coordinate, string $latitude, string $longitude): void
     {
         $matches = [];
         preg_match(CoordinateConstraint::PATTERN, $coordinate, $matches);
