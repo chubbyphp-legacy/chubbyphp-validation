@@ -24,6 +24,9 @@
 
 A simple validation.
 
+DEPRECATED: No personal interest anymore and based on stats nobody seems to use it. Feel free to create an issue if you disagree.
+Please take a look to [chubbyphp-parsing][30] its a different concept. But i believe parsing is the way to go instead of deserialze/validate.
+
 ## Requirements
 
  * php: ^8.1
@@ -276,3 +279,5 @@ $errors = $validator->validate(
 
 [19]: doc/ValidatorContext.md
 [20]: doc/ValidatorContextBuilder.md
+
+[30]: https://github.com/chubbyphp/chubbyphp-parsing
